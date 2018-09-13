@@ -1,0 +1,10 @@
+<resources>
+
+    <dimen name="mb_padding_small">8dp</dimen>
+    <dimen name="mb_padding_standard">16dp</dimen>
+    <dimen name="mb_padding_double">32dp</dimen>
+
+    <dimen name="mb_padding_country_select_container_side">16dp</dimen>
+    <dimen name="mb_height_top_bars">56dp</dimen>
+
+</resources>

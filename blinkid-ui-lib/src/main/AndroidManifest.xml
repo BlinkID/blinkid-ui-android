@@ -1,0 +1,12 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.microblink.documentscanflow" >
+
+    <application>
+        <activity
+            android:name="com.microblink.documentscanflow.ui.documentchooser.defaultimplementation.ChooseCountryActivity"
+            android:screenOrientation="portrait"
+            android:label="@string/mb_title_activity_country_choose"
+            android:windowSoftInputMode="adjustNothing"/>
+    </application>
+
+</manifest>

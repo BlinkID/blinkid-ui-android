@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="horizontal"
+              android:baselineAligned="false">
+    
+    <ListView
+        android:id="@android:id/list"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:divider="@null"
+        android:dividerHeight="0dp"
+        android:scrollbars="none"
+        android:fastScrollEnabled="false"
+        android:drawSelectorOnTop="true"/>
+
+    <FrameLayout
+        android:id="@+id/alphabetIndexerContainer"
+        android:layout_width="40dp"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:id="@+id/alphabetIndexer"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"/>
+
+    </FrameLayout>
+
+
+</LinearLayout>

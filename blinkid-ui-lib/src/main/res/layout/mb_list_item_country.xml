@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:paddingBottom="@dimen/mb_padding_standard"
+    android:paddingLeft="@dimen/mb_padding_standard"
+    android:paddingRight="@dimen/mb_padding_standard"
+    android:paddingTop="@dimen/mb_padding_standard">
+
+    <TextView
+        android:id="@+id/sectionName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="left|center"
+        android:layout_marginLeft="4dp"
+        android:textAppearance="@style/MbTextCountrySectionName"
+        android:visibility="invisible"
+        tools:ignore="SelectableText"
+        tools:text="C"
+        tools:visibility="visible" />
+
+    <TextView
+        android:id="@+id/countryName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="left|center"
+        android:layout_marginLeft="56dp"
+        android:layout_marginRight="36dp"
+        android:textAppearance="@style/MbTextCountryName"
+        tools:ignore="SelectableText"
+        tools:text="Croatia" />
+
+    <ImageView
+        android:id="@+id/itemSelectedIcon"
+        android:layout_width="28dp"
+        android:layout_height="28dp"
+        android:layout_gravity="right|center"
+        android:src="@drawable/mb_ic_checkmark"
+        android:visibility="gone"
+        tools:ignore="ContentDescription"
+        tools:visibility="visible" />
+
+</FrameLayout>

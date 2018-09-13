@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="primary">#00796B</color>
+    <color name="primaryDark">#004D40</color>
+    <color name="accentLight">#1DE9B6</color>
+    <color name="accentDark">#00BFA5</color>
+
+    <color name="bgLight">#616161</color>
+    <color name="bgDark">#424242</color>
+
+    <color name="textPrimaryLight">#FFFFFF</color>
+    <color name="textSecondaryLight">#AAFFFFFF</color>
+
+    <!-- Overriding library colors-->
+    <color name="mbBgFlipCard">@color/accentLight</color>
+    <color name="mbTabIndicator">@color/accentDark</color>
+    <color name="mbTextSelectedTab">@color/accentDark</color>
+    <color name="mbBgDocTypeSelection">@color/bgLight</color>
+    <color name="mbBgChooseCountryNormal">@color/primary</color>
+    <color name="mbBgChooseCountryPressed">@color/primaryDark</color>
+    <color name="mbTextSelectedCountry">@color/textPrimaryLight</color>
+    <color name="mbTextSelectCountryLabel">@color/textPrimaryLight</color>
+    <color name="mbIconSelectCountry">@color/accentLight</color>
+    <color name="mbIconScanLine">@color/accentLight</color>
+
+    <color name="mbBgChooseCountryActivity">@color/bgLight</color>
+    <color name="mbTextCountryName">@color/textPrimaryLight</color>
+    <color name="mbTextIndexLetterSelected">@color/accentDark</color>
+    <color name="mbTextIndexLetterNormal">@color/textSecondaryLight</color>
+    <color name="mbTextCountrySectionName">@color/accentDark</color>
+    <color name="mbIconSelectedCountryCheckMark">@color/accentLight</color>
+
+</resources>

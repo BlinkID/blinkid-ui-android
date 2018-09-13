@@ -1,0 +1,27 @@
+<resources>
+
+    <style name="MbBlinkIdUiTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/mbPrimary</item>
+        <item name="colorPrimaryDark">@color/mbPrimaryDark</item>
+        <item name="colorAccent">@color/mbAccent</item>
+    </style>
+
+    <style name="MbBlinkIdUiTheme.FullScreen"/>
+
+    <style name="MbPopupTheme" parent="ThemeOverlay.AppCompat.Dark">
+    </style>
+
+    <style name="MbToolbarTheme" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
+        <item name="colorAccent">#000000</item>
+    </style>
+
+    <style name="MbToolbarTheme.Transparent">
+        <item name="android:background">@android:color/transparent</item>
+    </style>
+
+    <style name="MbErrorAlertDialogTheme" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="colorAccent">#bf0c34</item>
+        <item name="textAllCaps">false</item>
+    </style>
+
+</resources>

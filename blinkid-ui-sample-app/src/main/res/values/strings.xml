@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">BlinkID UI Sample</string>
+    <string name="change_country_label">Change selected country</string>
+</resources>

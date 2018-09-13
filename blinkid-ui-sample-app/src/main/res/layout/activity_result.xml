@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bgLight">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="@dimen/mb_padding_standard">
+
+        <TextView
+            android:id="@+id/results"
+            android:textSize="14sp"
+            android:textColor="#FFFFFF"
+            android:lineSpacingMultiplier="1.2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <ImageView
+            android:id="@+id/card_front_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:scaleType="fitCenter"
+            android:layout_marginBottom="@dimen/mb_padding_small"/>
+
+        <ImageView
+            android:id="@+id/card_back_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:scaleType="fitCenter"
+            android:layout_marginBottom="@dimen/mb_padding_small"/>
+
+        <ImageView
+            android:id="@+id/face_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:scaleType="fitCenter"
+            android:layout_marginBottom="@dimen/mb_padding_small"/>
+
+        <ImageView
+            android:id="@+id/signature_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:scaleType="fitCenter"
+            android:layout_marginBottom="@dimen/mb_padding_small"/>
+
+    </LinearLayout>
+</android.support.v4.widget.NestedScrollView>

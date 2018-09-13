@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Scan screen -->
+    <style name="MbTextDocumentTypeTab" parent="TextAppearance.Design.Tab">
+        <item name="android:textSize">13sp</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+    </style>
+
+    <style name="MbTextScanInstructions">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/mbTextScanInstructions</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="MbTextSelectedCountry">
+        <item name="android:textSize">18sp</item>
+        <item name="android:textColor">@color/mbTextSelectedCountry</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+    </style>
+
+    <style name="MbTextCountrySelectionLabel">
+        <item name="android:textSize">13sp</item>
+        <item name="android:textColor">@color/mbTextSelectCountryLabel</item>
+    </style>
+
+    <!-- Country selection screen -->
+    <style name="MbTextCountryName">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/mbTextCountryName</item>
+    </style>
+
+    <style name="MbTextCountrySectionName">
+        <item name="android:textSize">24sp</item>
+        <item name="android:textColor">@color/mbTextCountrySectionName</item>
+    </style>
+
+
+</resources>

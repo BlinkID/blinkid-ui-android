@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/content_root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.microblink.view.recognition.RecognizerRunnerView
+            android:id="@+id/recognizerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:mb_animateRotation="true"
+            app:mb_animationDuration="250"
+            app:mb_initialOrientation="portrait"
+            tools:ignore="MissingRegistered" />
+
+        <include
+            layout="@layout/mb_include_camera_overlay"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </RelativeLayout>
+
+    <include
+        layout="@layout/mb_include_splash_overlay"
+        tools:visibility="invisible" />
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbarActivityScan"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fitsSystemWindows="true"
+        android:layout_gravity="top"
+        android:theme="@style/MbToolbarTheme.Transparent"
+        app:popupTheme="@style/MbPopupTheme"/>
+
+</FrameLayout>

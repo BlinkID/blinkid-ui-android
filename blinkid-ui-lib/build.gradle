@@ -1,0 +1,82 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+
+
+ext.altDependencyProperty = "ALTERNATIVE_BLINK_ID_DEPENDENCY"
+ext.isAltDependencyProjectProperty = "IS_ALTERNATIVE_BLINK_ID_DEPENDENCY_PROJECT"
+
+ext.missingDimensionProperty = "MISSING_DIMENSION"
+ext.missingDimensionRequestedValueProperty = "MISSING_DIMENSION_REQUESTED_VALUE"
+
+android {
+    compileSdkVersion 27
+    buildToolsVersion "27.0.3"
+
+    defaultConfig {
+        minSdkVersion 16
+        targetSdkVersion 27
+        versionCode 1
+        versionName "1.0"
+
+        if (project.hasProperty(missingDimensionProperty)) {
+            missingDimensionStrategy project.property(missingDimensionProperty), project.property(missingDimensionRequestedValueProperty)
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+        distribute {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    sourceSets {
+        main.java.srcDirs += 'src/main/kotlin'
+    }
+}
+
+ext.kotlin_version = '1.2.51'
+ext.anko_version = '0.10.4'
+ext.appCompatVersion = "27.1.1"
+
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+
+    implementation "com.android.support:appcompat-v7:$appCompatVersion"
+    implementation "com.android.support:percent:$appCompatVersion"
+    implementation "com.android.support:design:$appCompatVersion"
+
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    implementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
+    implementation "org.jetbrains.anko:anko-common:$anko_version"
+
+    if (isBlinkIdDependencyProject()) {
+        implementation project(getBlinkIdDependency())
+    } else {
+        api(getBlinkIdDependency()) {
+            transitive = true
+        }
+    }
+}
+
+String getBlinkIdDependency() {
+    if (project.hasProperty(altDependencyProperty)) {
+        return project.property(altDependencyProperty)
+    } else {
+        return "com.microblink:blinkid:4.2.0@aar"
+    }
+}
+
+boolean isBlinkIdDependencyProject() {
+    if (project.hasProperty(altDependencyProperty)
+            && project.hasProperty(isAltDependencyProjectProperty)) {
+        return project.property(isAltDependencyProjectProperty).toBoolean()
+    } else {
+        return false
+    }
+}

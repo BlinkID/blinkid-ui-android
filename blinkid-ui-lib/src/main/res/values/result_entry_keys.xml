@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- MRZ -->
+    <string name="keyDocumentType">Document type</string>
+    <string name="keyPrimaryId">Primary ID</string>
+    <string name="keySecondaryId">Secondary ID</string>
+    <string name="keyDateOfBirth">Date of birth</string>
+    <string name="keyDateOfExpiry">Date of expiry</string>
+    <string name="keyDocumentCode">Document code</string>
+    <string name="keyDocumentNumber">Document number</string>
+    <string name="keyDocumentVersion">Document version</string>
+    <string name="keyOpt1">Optional field 1</string>
+    <string name="keyOpt2">Optional field 2</string>
+    <string name="keySex">Sex</string>
+    <string name="keyNationality">Nationality</string>
+    <string name="keyCitizenship">Citizenship</string>
+    <string name="keyIssuer">Issuer</string>
+    <string name="keyMRZText">MRZ text</string>
+    <string name="keyAlienNumber">ALien number</string>
+    <string name="keyApplicationReceiptNumber">Application receipt number</string>
+    <string name="keyImmigrantCaseNumber">Immigrant case number</string>
+    <!-- ID -->
+    <string name="validForever">Forever</string>
+    <string name="keyFirstName">First name</string>
+    <string name="keyLastName">Last name</string>
+    <string name="keyFamilyName">Family name</string>
+    <string name="keyParentNames">Parent names</string>
+    <string name="keyFatherName">Father name</string>
+    <string name="keyMotherName">Mother name</string>
+    <string name="keySurnameAtBirth">Surname at birth</string>
+    <string name="keyIssuingAuthority">Issuing authority</string>
+    <string name="keyIssuedBy">Issued by</string>
+    <string name="keyPlaceOfIssue">Place of issue</string>
+    <string name="keyAuthority">Authority</string>
+    <string name="keyAddress">Address</string>
+    <string name="keyPlaceOfBirth">Place of birth</string>
+    <string name="keyBirthData">Birth data</string>
+    <string name="keyPlaceOfOrigin">Place of origin</string>
+    <string name="keyIssueDate">Date of issuance</string>
+    <string name="keySignature">Signature</string>
+    <string name="keyHeight">Height</string>
+    <string name="keyPrincipalResidenceAtIssuance">Principal residence at issuance</string>
+    <string name="keyEyeColor">Eye color</string>
+    <string name="keyPersonalNumber">Personal number</string>
+    <string name="keyBloodGroup">Blood group</string>
+    <string name="keyFullName">Full name</string>
+    <string name="keyRace">Race</string>
+    <string name="keyCountryOfBirth">Country of birth</string>
+    <string name="keySpecialRemarks">Special remarks</string>
+    <string name="keyNricNumber">NRIC number</string>
+    <string name="keyExtendedNricNumber">Extended NRIC number</string>
+    <string name="keyArmyNumber">Army number</string>
+    <string name="keyReligion">Religion</string>
+    <string name="keyCity">City</string>
+    <string name="keyDistrict">District</string>
+    <string name="keyProvince">Province</string>
+    <string name="keyRt">RT</string>
+    <string name="keyRw">RW</string>
+    <string name="keyKelDesa">Kel/Desa</string>
+    <string name="keyMaritalStatus">Marital status</string>
+    <string name="keyOccupation">Occupation</string>
+    <string name="keyDateOfExpiryPermanent">Date of Expiry Permanent</string>
+    <string name="keyDonorIndicator">Donor indicator</string>
+    <string name="keyCommercialCode">Commercial code</string>
+    <string name="keyIdentityNumber">Identity number</string>
+    <string name="keyNationalNumber">National number</string>
+    <string name="keyClass">Class</string>
+    <string name="keyReferenceNumber">Reference number</string>
+    <string name="keyLicenceCategories">Licence categories</string>
+    <string name="keyLicenceNumber">Licence number</string>
+    <string name="keyLicencingAuthority">Licencing Authority</string>
+    <string name="keyCivilStatusNumber">Civil status number</string>
+    <string name="keyCivilIdNumber">Civil ID number</string>
+    <!-- EUDL -->
+    <string name="keyDriverNumber">Driver number</string>
+    <!-- iKad -->
+    <string name="keyEmployer">Employer</string>
+    <string name="keyPassportNumber">Passport number</string>
+    <string name="keySector">Sector</string>
+    <!-- Barcode -->
+    <string name="keyBarcodeString">Barcode data</string>
+</resources>

@@ -1,0 +1,16 @@
+<resources>
+
+    <!-- Overriding library theme-->
+    <style name="MbBlinkIdUiTheme" parent="Theme.AppCompat.NoActionBar">
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorPrimaryDark">@color/primaryDark</item>
+        <item name="colorAccent">@color/accentDark</item>
+        <item name="android:windowBackground">@color/bgDark</item>
+    </style>
+
+    <!-- Overriding library theme-->
+    <style name="MbToolbarTheme" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
+        <item name="colorAccent">@color/accentLight</item>
+    </style>
+
+</resources>
