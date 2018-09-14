@@ -71,6 +71,7 @@
     <string name="keyLicencingAuthority">Licencing Authority</string>
     <string name="keyCivilStatusNumber">Civil status number</string>
     <string name="keyCivilIdNumber">Civil ID number</string>
+    <string name="keySerialNumber">Serial number</string>
     <!-- EUDL -->
     <string name="keyDriverNumber">Driver number</string>
     <!-- iKad -->
