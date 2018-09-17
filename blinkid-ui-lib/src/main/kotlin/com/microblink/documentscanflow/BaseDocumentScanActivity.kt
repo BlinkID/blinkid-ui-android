@@ -132,6 +132,7 @@ abstract class BaseDocumentScanActivity : AppCompatActivity(), ScanResultListene
 
     protected fun getCurrentDocument() = currentDocument
 
+    @UiThread
     protected fun updateDocument(document: Document) {
         val isSameCountry = currentDocument.country == document.country
         currentDocument = document
@@ -146,8 +147,10 @@ abstract class BaseDocumentScanActivity : AppCompatActivity(), ScanResultListene
     @AnyThread
     protected fun pauseScanning() {
         scanTimeoutHandler.onScanPaused()
-        recognizerView.pauseScanning()
-        runOnUiThread { scanLineAnimator.onScanPause() }
+        runOnUiThread {
+            recognizerView.pauseScanning()
+            scanLineAnimator.onScanPause()
+        }
     }
 
     protected fun resumeScanning() {
@@ -284,6 +287,7 @@ abstract class BaseDocumentScanActivity : AppCompatActivity(), ScanResultListene
         })
     }
 
+    @UiThread
     private fun startScan(shouldClearHandlerScanFlowState: Boolean = true) {
         scanLineAnimator.onScanStart()
 
@@ -297,9 +301,7 @@ abstract class BaseDocumentScanActivity : AppCompatActivity(), ScanResultListene
         }
 
         prepareScanning(currentDocument)
-        runOnUiThread {
-            startScanningNextSide()
-        }
+        startScanningNextSide()
     }
 
     @AnyThread
@@ -412,7 +414,7 @@ abstract class BaseDocumentScanActivity : AppCompatActivity(), ScanResultListene
 
     override fun onScanningDone(recognitionSuccessType: RecognitionSuccessType) {
         if (recognitionSuccessType != RecognitionSuccessType.SUCCESSFUL) {
-            restartScanning()
+            runOnUiThread { restartScanning() }
             return
         }
         pauseScanning()
@@ -522,6 +524,7 @@ abstract class BaseDocumentScanActivity : AppCompatActivity(), ScanResultListene
         }
     }
 
+    @UiThread
     private fun restartScanning(shouldClearHandlerScanFlowState: Boolean = true) {
         recognizerView.resetRecognitionState()
         startScan(shouldClearHandlerScanFlowState)
