@@ -25,7 +25,7 @@
     <!-- Scan timeout dialog -->
     <string name="mb_timeout_title">Having trouble scanning?</string>
     <string name="mb_timeout_message">Make sure you have good lighting and that you’ve selected the correct document.</string>
-    <string name="mb_timeout_retry">Scan again</string>
+    <string name="mb_timeout_retry">Continue</string>
     <string name="mb_timeout_change_country">Change country</string>
 
     <!-- Dialogs -->
