@@ -56,33 +56,33 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
                 android:layout_alignParentTop="true"
-                android:src="@drawable/mb_ic_hook_top_left" />
+                android:src="@drawable/mb_ic_hook_top_left"
+                tools:ignore="RtlHardcoded" />
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentTop="true"
-                android:src="@drawable/mb_ic_hook_top_right" />
+                android:src="@drawable/mb_ic_hook_top_right"
+                tools:ignore="RtlHardcoded"/>
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
                 android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:src="@drawable/mb_ic_hook_bottom_left" />
+                android:src="@drawable/mb_ic_hook_bottom_left"
+                tools:ignore="RtlHardcoded"/>
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
-                android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
-                android:src="@drawable/mb_ic_hook_bottom_right" />
+                android:src="@drawable/mb_ic_hook_bottom_right"
+                tools:ignore="RtlHardcoded"/>
         </RelativeLayout>
 
         <View
@@ -128,7 +128,7 @@
             android:gravity="center"
             android:padding="@dimen/mb_padding_standard"
             tools:background="#000000"
-            tools:ignore="SelectableText, RtlHardcoded" />
+            tools:ignore="SelectableText" />
     </android.support.percent.PercentRelativeLayout>
 
     <FrameLayout
@@ -190,8 +190,7 @@
 
                 <TextView
                     android:id="@+id/selectedCountryTv"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
+                    android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:gravity="center_vertical"
                     android:layout_gravity="center_vertical"
@@ -203,6 +202,11 @@
                     android:includeFontPadding="false"
                     tools:text="Croatia" />
 
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"/>
+
                 <ImageView
                     android:id="@+id/arrowRight"
                     android:layout_width="wrap_content"
@@ -212,6 +216,7 @@
                     android:paddingLeft="@dimen/mb_padding_country_select_container_side"
                     android:paddingRight="@dimen/mb_padding_country_select_container_side"
                     android:paddingTop="@dimen/mb_padding_small"
+                    android:rotationY="@integer/locale_mirror_flip"
                     android:src="@drawable/mb_ic_arrow_right" />
             </LinearLayout>
 
