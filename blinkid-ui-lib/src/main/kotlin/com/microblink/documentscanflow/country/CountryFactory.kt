@@ -22,7 +22,7 @@ object CountryFactory {
 
         val countryCodes: Array<String> = Locale.getISOCountries()
         for (countryCode in countryCodes) {
-            val countryCodeLowercase = countryCode.toLowerCase()
+            val countryCodeLowercase = countryCode.toLowerCase(Locale.US)
             if (!countriesByCode.containsKey(countryCodeLowercase)) {
                 val country = GenericCountry(countryCodeLowercase)
                 if (!country.getLocalisedName().isEmpty()) {
@@ -33,7 +33,8 @@ object CountryFactory {
     }
 
     fun getCountryForCode(countryCode: String): Country? {
-        return countriesByCode[countryCode]
+        val lowercaseCode = countryCode.toLowerCase(Locale.US)
+        return countriesByCode[lowercaseCode]
     }
 
     fun getSortedCountries(countryFilter: CountryFilter): List<Country> {
