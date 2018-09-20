@@ -289,6 +289,8 @@ abstract class BaseDocumentScanActivity : AppCompatActivity(), ScanResultListene
 
     @UiThread
     private fun startScan(shouldClearHandlerScanFlowState: Boolean = true) {
+        scanFlowListener.onScanStarted()
+
         scanLineAnimator.onScanStart()
 
         recognizerManager.clear()

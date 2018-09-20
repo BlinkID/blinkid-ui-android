@@ -6,6 +6,8 @@ import com.microblink.image.Image
 
 interface ScanFlowListener {
 
+    fun onScanStarted()
+
     fun onFirstSideScanned(recognitionResult: RecognitionResult, successFrame: Image?)
 
     fun onEntireDocumentScanned(recognitionResult: RecognitionResult, successFrame: Image?)
