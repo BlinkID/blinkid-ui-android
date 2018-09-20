@@ -28,7 +28,7 @@ class MalaysiaDlRecognition : BaseRecognition() {
         add(R.string.keyNationality, result.nationality)
         add(R.string.keyClass, result.dlClass)
         add(R.string.keyIssueDate, result.validFrom)
-        addDateOfExpiry(result.validUntil)
+        addDateOfExpiry(result.validUntil.date)
         add(R.string.keyAddress, result.fullAddress)
         
         return result.name
