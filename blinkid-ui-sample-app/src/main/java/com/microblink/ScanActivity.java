@@ -54,6 +54,10 @@ public class ScanActivity extends BaseDocumentScanActivity {
     public ScanFlowListener createScanFlowListener() {
         return new ScanFlowListener() {
             @Override
+            public void onScanStarted() {
+            }
+
+            @Override
             public void onSelectedDocumentChanged(@NonNull Document newDocument) {
             }
 
