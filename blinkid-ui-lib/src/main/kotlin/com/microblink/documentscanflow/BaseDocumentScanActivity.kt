@@ -164,7 +164,7 @@ abstract class BaseDocumentScanActivity : AppCompatActivity(), ScanResultListene
      * {@link DetectorRecognizer} of {@link DocumentFaceRecognizer} to prevent immediate scanning done event.
      */
     private fun resumeScanning(minimumDelay : Long) {
-        val activeRecognizers = recognizerView.recognizerBundle.recognizers
+        val activeRecognizers = recognizerView.recognizerBundle?.recognizers
         if (activeRecognizers == null) {
             resumeScanningImmediately()
             return
@@ -381,7 +381,7 @@ abstract class BaseDocumentScanActivity : AppCompatActivity(), ScanResultListene
 
     private fun initRecognizerRunnerView() {
         recognizerView.aspectMode = CameraAspectMode.ASPECT_FILL
-        recognizerView.scanResultListener = this
+        recognizerView.setScanResultListener(this)
         recognizerView.cameraEventsListener = createCameraEventsListener()
         recognizerView.initialOrientation = Orientation.ORIENTATION_PORTRAIT
         recognizerView.isPinchToZoomAllowed = true
