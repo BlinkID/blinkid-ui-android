@@ -29,6 +29,7 @@
     <string name="keyMotherName">Mother name</string>
     <string name="keySurnameAtBirth">Surname at birth</string>
     <string name="keyIssuingAuthority">Issuing authority</string>
+    <string name="keyIssuingAgency">Issuing agency</string>
     <string name="keyIssuedBy">Issued by</string>
     <string name="keyPlaceOfIssue">Place of issue</string>
     <string name="keyAuthority">Authority</string>
@@ -72,6 +73,8 @@
     <string name="keyCivilStatusNumber">Civil status number</string>
     <string name="keyCivilIdNumber">Civil ID number</string>
     <string name="keySerialNumber">Serial number</string>
+    <string name="keyDriverRestrictions">Driver restrictions</string>
+    <string name="keyVehicleCategories">Vehicle categories</string>
     <!-- EUDL -->
     <string name="keyDriverNumber">Driver number</string>
     <!-- iKad -->
