@@ -18,12 +18,6 @@ internal class GenericDocumentDescriptions {
                 GenericRecognition.faceMrtd()
         )
 
-        val drivingLicenceMrtd = DocumentDescription(
-                false,
-                R.string.mb_driver_license,
-                GenericRecognition.faceMrtd()
-        )
-
         val drivingLicenceId1FormatUnsupported = DocumentDescription(
                 false,
                 R.string.mb_driver_license,

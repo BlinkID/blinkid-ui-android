@@ -20,7 +20,7 @@ enum class SupportedCountry(override val code: String, override val documentDesc
     AUSTRIA("at",
             DocumentDescriptionBuilder()
                     .id(AustriaIdRecognition())
-                    .drivingLicence(EudlRecognition(EudlCountry.EUDL_COUNTRY_AUSTRIA))
+                    .drivingLicence(AustriaDlRecognition())
                     .passport(AustriaPassportRecognition())
                     .build()),
 
@@ -33,7 +33,7 @@ enum class SupportedCountry(override val code: String, override val documentDesc
     COLOMBIA("co",
             DocumentDescriptionBuilder()
                     .id(ColombiaIdRecognition())
-                    .drivingLicence(GenericDocumentDescriptions.drivingLicenceId1FormatUnsupported)
+                    .drivingLicence(ColombiaDlRecognition())
                     .build()),
 
     CROATIA("hr",
@@ -87,10 +87,15 @@ enum class SupportedCountry(override val code: String, override val documentDesc
                     .drivingLicence(GenericDocumentDescriptions.drivingLicenceId1FormatSupported)
                     .build()),
 
+    IRELAND("ie",
+            DocumentDescriptionBuilder()
+                    .drivingLicence(IrelandDlRecognition())
+                    .build()),
+
     ITALY("it",
             DocumentDescriptionBuilder()
                     .id(GenericRecognition.mrtdId1(), fullySupported = false)
-                    .drivingLicence(GenericDocumentDescriptions.drivingLicenceId1FormatUnsupported)
+                    .drivingLicence(ItalyDlRecognition())
                     .build()),
 
     JORDAN("jo",

@@ -56,7 +56,7 @@ class SingaporeIdRecognition: BaseTwoSideRecognition() {
         add(R.string.keyDateOfBirth, combinedResult.dateOfBirth)
         add(R.string.keySex, combinedResult.sex)
         add(R.string.keyCountryOfBirth, combinedResult.countryOfBirth)
-        add(R.string.keyBloodGroup, combinedResult.bloodType)
+        add(R.string.keyBloodGroup, combinedResult.bloodGroup)
         add(R.string.keyIssueDate, combinedResult.dateOfIssue)
         add(R.string.keyAddress, combinedResult.address)
     }
@@ -80,7 +80,7 @@ class SingaporeIdRecognition: BaseTwoSideRecognition() {
         }
 
         add(R.string.keyDocumentNumber, backResult.cardNumber)
-        add(R.string.keyBloodGroup, backResult.bloodType)
+        add(R.string.keyBloodGroup, backResult.bloodGroup)
         add(R.string.keyIssueDate, backResult.dateOfIssue)
         add(R.string.keyAddress, backResult.address)
     }
