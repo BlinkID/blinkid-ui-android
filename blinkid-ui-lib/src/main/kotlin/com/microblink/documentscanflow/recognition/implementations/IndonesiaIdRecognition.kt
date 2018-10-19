@@ -37,8 +37,8 @@ class IndonesiaIdRecognition : BaseRecognition() {
         add(R.string.keyMaritalStatus, result.maritalStatus)
         add(R.string.keyOccupation, result.occupation)
         add(R.string.keyCitizenship, result.citizenship)
-        add(R.string.keyDateOfExpiry, result.validUntil)
-        add(R.string.keyDateOfExpiryPermanent, result.validUntilPermanent)
+        add(R.string.keyDateOfExpiry, result.dateOfExpiry)
+        add(R.string.keyDateOfExpiryPermanent, result.isDateOfExpiryPermanent)
         
         return result.name
     }

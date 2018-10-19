@@ -10,7 +10,7 @@ internal class DocumentDescriptionBuilder {
 
     init {
         id(GenericDocumentDescriptions.id)
-        drivingLicence(GenericDocumentDescriptions.drivingLicenceMrtd)
+        drivingLicence(GenericDocumentDescriptions.drivingLicenceId1FormatUnsupported)
         passport(GenericDocumentDescriptions.passport)
         visa(GenericDocumentDescriptions.visa)
     }
