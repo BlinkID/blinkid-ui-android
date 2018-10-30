@@ -638,7 +638,7 @@ abstract class BaseDocumentScanActivity : AppCompatActivity(), ScanResultListene
         private const val DELAY_DOCUMENT_FACE_RESUME = 500L
         const val REQ_CODE_CHOOSE_DOC = 123
 
-        private const val SCAN_TIMEOUT_MILLIS = 10000L
+        private const val SCAN_TIMEOUT_MILLIS = 16_000L
     }
 
 }
