@@ -5,12 +5,10 @@ import android.support.annotation.UiThread
 import android.support.v4.content.ContextCompat
 import android.view.View
 import android.view.animation.Animation
-import com.microblink.documentscanflow.ui.utils.AccelerateDecelerateReverseInterpolator
 import android.view.animation.Transformation
 import android.widget.ImageView
 import com.microblink.documentscanflow.R
-import com.microblink.documentscanflow.R.id.arrowRight
-import kotlinx.android.synthetic.main.mb_include_camera_overlay.*
+import com.microblink.documentscanflow.ui.utils.AccelerateDecelerateReverseInterpolator
 import org.jetbrains.anko.px2dip
 
 
