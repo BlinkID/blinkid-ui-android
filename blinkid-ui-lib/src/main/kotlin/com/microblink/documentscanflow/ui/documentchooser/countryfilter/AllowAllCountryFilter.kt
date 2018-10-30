@@ -12,7 +12,7 @@ class AllowAllCountryFilter() : CountryFilter, Parcelable {
 
     override fun describeContents() = 0
 
-    override fun writeToParcel(dest: Parcel, flags: Int) = with(dest) {}
+    override fun writeToParcel(dest: Parcel, flags: Int) {}
 
     companion object {
         @JvmField

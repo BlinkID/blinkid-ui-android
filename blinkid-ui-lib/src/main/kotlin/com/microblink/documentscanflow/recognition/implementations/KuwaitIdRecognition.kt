@@ -1,13 +1,9 @@
 package com.microblink.documentscanflow.recognition.implementations
 
 import com.microblink.documentscanflow.R
-import com.microblink.documentscanflow.buildDetectorRecognizerFromPreset
-import com.microblink.documentscanflow.isEmpty
 import com.microblink.documentscanflow.isNotEmpty
-import com.microblink.documentscanflow.recognition.BaseRecognition
 import com.microblink.documentscanflow.recognition.BaseTwoSideRecognition
 import com.microblink.documentscanflow.recognition.ResultValidator
-import com.microblink.entities.detectors.quad.document.DocumentSpecificationPreset
 import com.microblink.entities.recognizers.Recognizer
 import com.microblink.entities.recognizers.blinkid.kuwait.KuwaitIdBackRecognizer
 import com.microblink.entities.recognizers.blinkid.kuwait.KuwaitIdFrontRecognizer
