@@ -20,11 +20,23 @@
             app:mb_initialOrientation="portrait"
             tools:ignore="MissingRegistered" />
 
-        <include
-            layout="@layout/mb_include_camera_overlay"
+        <View
+            android:id="@+id/topBarsSpace"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="@dimen/mb_height_top_bars"
+            android:layout_alignParentTop="true"
+            android:background="@color/mbBgCameraOverlay" />
 
+        <com.microblink.documentscanflow.ui.view.ScanFrameLayout
+            android:id="@+id/scanFrameLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@+id/bottomContainerFrame"
+            android:layout_below="@+id/topBarsSpace" />
+
+        <include
+            android:id="@+id/bottomContainerFrame"
+            layout="@layout/mb_include_scan_bottom_container" />
     </RelativeLayout>
 
     <include
@@ -35,9 +47,9 @@
         android:id="@+id/toolbarActivityScan"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fitsSystemWindows="true"
         android:layout_gravity="top"
+        android:fitsSystemWindows="true"
         android:theme="@style/MbToolbarTheme.Transparent"
-        app:popupTheme="@style/MbPopupTheme"/>
+        app:popupTheme="@style/MbPopupTheme" />
 
 </FrameLayout>

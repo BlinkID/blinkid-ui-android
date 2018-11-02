@@ -12,7 +12,7 @@ import android.view.animation.Animation
 import android.view.animation.Transformation
 import android.widget.FrameLayout
 import com.microblink.documentscanflow.ui.utils.AccelerateDecelerateReverseInterpolator
-import kotlinx.android.synthetic.main.view_scan_frame.view.*
+import kotlinx.android.synthetic.main.mb_view_scan_frame.view.*
 import org.jetbrains.anko.px2dip
 
 class ScanFrameLayout(context : Context, attrs : AttributeSet?, styleAttrs : Int) : FrameLayout(context, attrs, styleAttrs) {
@@ -24,7 +24,7 @@ class ScanFrameLayout(context : Context, attrs : AttributeSet?, styleAttrs : Int
     private var scanAnimation = createLineAnimation()
 
     init {
-        inflate(getContext(), R.layout.view_scan_frame, this);
+        inflate(getContext(), R.layout.mb_view_scan_frame, this);
         scanLineImg.drawable.mutate().setColorFilter(ContextCompat.getColor(context, R.color.mbIconScanLine), PorterDuff.Mode.MULTIPLY)
     }
 
