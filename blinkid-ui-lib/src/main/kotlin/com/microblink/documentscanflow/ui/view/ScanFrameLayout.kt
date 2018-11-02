@@ -57,13 +57,13 @@ class ScanFrameLayout(context : Context, attrs : AttributeSet?, styleAttrs : Int
 
     override fun onLayout(changed: Boolean, left: Int, top: Int, right: Int, bottom: Int) {
         super.onLayout(changed, left, top, right, bottom)
-        moveScanLineToTopOfTransparentRect()
-    }
 
-    // it starts centered in parent so move it up for simpler animation
-    private fun moveScanLineToTopOfTransparentRect() {
+        // scan line starts centered in parent so move it up for simpler animation
         scanLineImg.y = height / 2 - scanRect.height() / 2 - scanLineImg.height / 2
         scanLineInitialY = scanLineImg.y
+
+        // instructions also start centered so move them up
+        scanInstructionsTv.y = height / 2 - scanRect.height() / 2 - scanInstructionsTv.height
     }
 
     private fun loadAspectRatioFromDimens(): Float {
