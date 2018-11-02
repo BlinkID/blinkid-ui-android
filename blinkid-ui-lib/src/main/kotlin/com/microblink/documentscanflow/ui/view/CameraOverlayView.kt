@@ -10,10 +10,10 @@ import com.microblink.documentscanflow.R
 
 class CameraOverlayView(context : Context, attrs : AttributeSet?, styleAttrs : Int) : View(context, attrs, styleAttrs)  {
 
-    private val cutPaint = Paint(Paint.ANTI_ALIAS_FLAG)
+    private val scanRectPaint = Paint(Paint.ANTI_ALIAS_FLAG)
     private val hookPaint = Paint()
 
-    private val bgColor : Int = ContextCompat.getColor(context, R.color.mbBgCameraOverlay)
+    private val overlayColor : Int = ContextCompat.getColor(context, R.color.mbBgCameraOverlay)
 
     private val hookLengthVertical = resources.getDimension(R.dimen.mb_hook_length_vertical).toInt()
     private val hookLengthHorizontal= resources.getDimension(R.dimen.mb_hook_length_horizontal).toInt()
@@ -23,7 +23,7 @@ class CameraOverlayView(context : Context, attrs : AttributeSet?, styleAttrs : I
     private var scanRect: RectF = RectF()
 
     init {
-        cutPaint.xfermode = PorterDuffXfermode(PorterDuff.Mode.CLEAR)
+        scanRectPaint.xfermode = PorterDuffXfermode(PorterDuff.Mode.CLEAR)
         hookPaint.style = Paint.Style.STROKE
         hookPaint.color = ContextCompat.getColor(context, R.color.mbIconHook)
         hookPaint.strokeWidth = hookWidth
@@ -43,22 +43,25 @@ class CameraOverlayView(context : Context, attrs : AttributeSet?, styleAttrs : I
             return
         }
 
-        val w = width
-        val h = height
-
-        val bitmap = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888)
+        val bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
         val internalCanvas = Canvas(bitmap!!)
 
-        internalCanvas.drawColor(bgColor)
-
-        internalCanvas.drawRect(scanRect, cutPaint)
-
-        drawTopLeftHook(canvas, scanRect.left, scanRect.top)
-        drawTopRightHook(canvas, scanRect.right, scanRect.top)
-        drawBottomLefHook(canvas, scanRect.left, scanRect.bottom)
-        drawBottomRightHook(canvas, scanRect.right, scanRect.bottom)
+        drawOverlay(internalCanvas)
+        drawScanRect(internalCanvas)
+        drawTopLeftHook(internalCanvas, scanRect.left, scanRect.top)
+        drawTopRightHook(internalCanvas, scanRect.right, scanRect.top)
+        drawBottomLefHook(internalCanvas, scanRect.left, scanRect.bottom)
+        drawBottomRightHook(internalCanvas, scanRect.right, scanRect.bottom)
 
         canvas.drawBitmap(bitmap, 0f, 0f, null)
+    }
+
+    private fun drawOverlay(internalCanvas: Canvas) {
+        internalCanvas.drawColor(overlayColor)
+    }
+
+    private fun drawScanRect(internalCanvas: Canvas) {
+        internalCanvas.drawRect(scanRect, scanRectPaint)
     }
 
     private fun drawTopLeftHook(canvas: Canvas, left : Float, top : Float) {
