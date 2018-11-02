@@ -6,6 +6,7 @@ import android.util.AttributeSet
 import android.support.v4.content.ContextCompat
 import com.microblink.documentscanflow.R
 import android.util.TypedValue
+import android.view.Gravity
 import android.view.View
 import android.view.animation.Animation
 import android.view.animation.Transformation
@@ -46,6 +47,12 @@ class ScanFrameLayout(context : Context, attrs : AttributeSet?, styleAttrs : Int
         scanRect = RectF(rectLeft, rectTop, rectRight, rectBottom)
 
         cameraOverlay.setScanRect(scanRect)
+
+        val params = FrameLayout.LayoutParams(flipCardView.layoutParams)
+        params.width = (w * 0.75f).toInt()
+        params.height = (params.width / scanRectAspectRatio).toInt()
+        params.gravity = Gravity.CENTER
+        flipCardView.layoutParams = params
     }
 
     override fun onLayout(changed: Boolean, left: Int, top: Int, right: Int, bottom: Int) {
