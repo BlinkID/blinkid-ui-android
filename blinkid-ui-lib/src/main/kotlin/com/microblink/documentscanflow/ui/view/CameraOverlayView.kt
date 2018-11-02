@@ -3,16 +3,14 @@ package com.microblink.documentscanflow.ui.view
 import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.*
+import android.support.v4.content.ContextCompat
 import android.util.AttributeSet
 import android.view.View
-import android.graphics.Paint.ANTI_ALIAS_FLAG
-import android.support.v4.content.ContextCompat
 import com.microblink.documentscanflow.R
-import android.util.TypedValue
 
-class CameraOverlayView(context : Context, attrs : AttributeSet?, styleAttrs : Int) : View(context, attrs, styleAttrs) {
+class CameraOverlayView(context : Context, attrs : AttributeSet?, styleAttrs : Int) : View(context, attrs, styleAttrs)  {
 
-    private val cutPaint = Paint(ANTI_ALIAS_FLAG)
+    private val cutPaint = Paint(Paint.ANTI_ALIAS_FLAG)
     private val hookPaint = Paint()
 
     private val bgColor : Int = ContextCompat.getColor(context, R.color.mbBgCameraOverlay)
@@ -21,9 +19,8 @@ class CameraOverlayView(context : Context, attrs : AttributeSet?, styleAttrs : I
     private val hookLengthHorizontal= resources.getDimension(R.dimen.mb_hook_length_horizontal).toInt()
     private val hookWidth = resources.getDimension(R.dimen.mb_hook_stroke_width)
     private val halfHookWidth = hookWidth / 2
-    private val aspectRatio = loadAspectRatioFromDimens()
 
-    val sizeCalculatedListeners = mutableListOf<OnSizeCalculatedListener>()
+    private var scanRect: RectF = RectF()
 
     init {
         cutPaint.xfermode = PorterDuffXfermode(PorterDuff.Mode.CLEAR)
@@ -36,38 +33,30 @@ class CameraOverlayView(context : Context, attrs : AttributeSet?, styleAttrs : I
 
     constructor(context : Context) : this(context, null, 0)
 
+    fun setScanRect(scanRect: RectF) {
+        this.scanRect = scanRect
+    }
+
     @SuppressLint("DrawAllocation")
     override fun onDraw(canvas: Canvas) {
+        if (scanRect.height() == 0f) {
+            return
+        }
+
         val w = width
         val h = height
-
 
         val bitmap = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888)
         val internalCanvas = Canvas(bitmap!!)
 
         internalCanvas.drawColor(bgColor)
 
-        val rectWidthPercent = 0.90f
-        val sideOffset = ((1 - rectWidthPercent) / 2f)
-        val rectLeft = w * sideOffset
-        val rectRight = w * (rectWidthPercent + sideOffset)
+        internalCanvas.drawRect(scanRect, cutPaint)
 
-        val rectWidth = w * rectWidthPercent
-        val rectHeight = rectWidth / aspectRatio
-
-        for (listener in sizeCalculatedListeners) {
-            listener.onScanRectSizeCalculated(rectWidth, rectHeight)
-        }
-
-        val rectTop = (h - rectHeight) / 2.0f
-        val rectBottom = rectTop + rectHeight
-
-        internalCanvas.drawRect(rectLeft, rectTop, rectRight, rectBottom, cutPaint)
-
-        drawTopLeftHook(canvas, rectLeft, rectTop)
-        drawTopRightHook(canvas, rectRight, rectTop)
-        drawBottomLefHook(canvas, rectLeft, rectBottom)
-        drawBottomRightHook(canvas, rectRight, rectBottom)
+        drawTopLeftHook(canvas, scanRect.left, scanRect.top)
+        drawTopRightHook(canvas, scanRect.right, scanRect.top)
+        drawBottomLefHook(canvas, scanRect.left, scanRect.bottom)
+        drawBottomRightHook(canvas, scanRect.right, scanRect.bottom)
 
         canvas.drawBitmap(bitmap, 0f, 0f, null)
     }
@@ -106,16 +95,6 @@ class CameraOverlayView(context : Context, attrs : AttributeSet?, styleAttrs : I
                 x, y + hookLengthVertical,
                 hookPaint
         )
-    }
-
-    private fun loadAspectRatioFromDimens(): Float {
-        val outValue = TypedValue()
-        resources.getValue(R.dimen.mb_scan_rect_aspect_ratio, outValue, true)
-        return outValue.float
-    }
-
-    interface OnSizeCalculatedListener {
-        fun onScanRectSizeCalculated(width: Float, height: Float)
     }
 
 }
