@@ -5,26 +5,26 @@ import android.graphics.*
 import android.util.AttributeSet
 import android.support.v4.content.ContextCompat
 import com.microblink.documentscanflow.R
-import android.util.TypedValue
 import android.view.Gravity
 import android.view.View
 import android.view.animation.Animation
 import android.view.animation.Transformation
 import android.widget.FrameLayout
+import com.microblink.documentscanflow.getFloatValue
 import com.microblink.documentscanflow.ui.utils.AccelerateDecelerateReverseInterpolator
 import kotlinx.android.synthetic.main.mb_view_scan_frame.view.*
 import org.jetbrains.anko.px2dip
 
 class ScanFrameLayout(context : Context, attrs : AttributeSet?, styleAttrs : Int) : FrameLayout(context, attrs, styleAttrs) {
 
-    private val scanRectAspectRatio = loadAspectRatioFromDimens()
+    private val scanRectAspectRatio = resources.getFloatValue(R.dimen.mb_scan_rect_aspect_ratio)
     private lateinit var scanRect : RectF
 
     private var scanLineInitialY: Float = 0f
     private var scanAnimation = createLineAnimation()
 
     init {
-        inflate(getContext(), R.layout.mb_view_scan_frame, this);
+        inflate(getContext(), R.layout.mb_view_scan_frame, this)
         scanLineImg.drawable.mutate().setColorFilter(ContextCompat.getColor(context, R.color.mbIconScanLine), PorterDuff.Mode.MULTIPLY)
     }
 
@@ -66,12 +66,6 @@ class ScanFrameLayout(context : Context, attrs : AttributeSet?, styleAttrs : Int
         scanInstructionsTv.y = height / 2 - scanRect.height() / 2 - scanInstructionsTv.height
     }
 
-    private fun loadAspectRatioFromDimens(): Float {
-        val outValue = TypedValue()
-        resources.getValue(R.dimen.mb_scan_rect_aspect_ratio, outValue, true)
-        return outValue.float
-    }
-
     fun startLineAnimation() {
         if (!this::scanRect.isInitialized) {
             return
@@ -103,8 +97,8 @@ class ScanFrameLayout(context : Context, attrs : AttributeSet?, styleAttrs : Int
     private fun createLineAnimation(): Animation {
         return object : Animation() {
             override fun applyTransformation(interpolatedTime: Float, t: Transformation) {
-                val translateHeight = scanRect.height() * interpolatedTime
-                scanLineImg.y = scanLineInitialY + translateHeight
+                val translateY = scanRect.height() * interpolatedTime
+                scanLineImg.y = scanLineInitialY + translateY
             }
         }
     }
