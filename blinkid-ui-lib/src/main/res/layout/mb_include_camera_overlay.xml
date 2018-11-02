@@ -14,20 +14,24 @@
         android:layout_alignParentTop="true"
         android:background="@color/mbBgCameraOverlay" />
 
-    <android.support.percent.PercentRelativeLayout
-        android:id="@+id/viewfinderContainer"
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/bottomContainerFrame"
         android:layout_below="@+id/topBarsSpace">
 
+        <com.microblink.documentscanflow.ui.view.CameraOverlayView
+            android:id="@+id/cameraOverlayView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
         <FrameLayout
             android:id="@+id/flipCardView"
-            android:layout_centerInParent="true"
             android:alpha="0"
+            android:layout_gravity="center"
             android:background="@color/mbBgFlipCard"
-            app:layout_aspectRatio="158.577251%"
-            app:layout_widthPercent="75%">
+            android:layout_width="300dp"
+            android:layout_height="200dp">
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -36,100 +40,26 @@
                 android:src="@drawable/mb_ic_flip_card" />
         </FrameLayout>
 
-        <RelativeLayout
-            android:id="@+id/viewfinder"
-            android:layout_centerInParent="true"
-            app:layout_aspectRatio="158.577251%"
-            app:layout_widthPercent="90%"
-            tools:ignore="MissingRegistered">
-
-            <ImageView
-                android:id="@+id/scanLineImg"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:visibility="gone"
-                tools:visibility="visible"
-                android:src="@drawable/mb_scan_line" />
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentTop="true"
-                android:src="@drawable/mb_ic_hook_top_left"
-                tools:ignore="RtlHardcoded" />
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentTop="true"
-                android:src="@drawable/mb_ic_hook_top_right"
-                tools:ignore="RtlHardcoded"/>
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentLeft="true"
-                android:src="@drawable/mb_ic_hook_bottom_left"
-                tools:ignore="RtlHardcoded"/>
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentRight="true"
-                android:src="@drawable/mb_ic_hook_bottom_right"
-                tools:ignore="RtlHardcoded"/>
-        </RelativeLayout>
-
-        <View
-            android:id="@+id/shadowLeft"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_toLeftOf="@+id/viewfinder"
-            android:background="@color/mbBgCameraOverlay"
-            tools:ignore="RtlHardcoded" />
-
-        <View
-            android:id="@+id/shadowRight"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_toRightOf="@+id/viewfinder"
-            android:background="@color/mbBgCameraOverlay"
-            tools:ignore="RtlHardcoded" />
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_above="@+id/viewfinder"
-            android:layout_toLeftOf="@id/shadowRight"
-            android:layout_toRightOf="@id/shadowLeft"
-            android:background="@color/mbBgCameraOverlay"
-            tools:ignore="RtlHardcoded" />
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@+id/viewfinder"
-            android:layout_toLeftOf="@id/shadowRight"
-            android:layout_toRightOf="@id/shadowLeft"
-            android:background="@color/mbBgCameraOverlay"
-            tools:ignore="RtlHardcoded" />
-
         <TextSwitcher xmlns:android="http://schemas.android.com/apk/res/android"
             xmlns:tools="http://schemas.android.com/tools"
             android:id="@+id/scanInstructionsTv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_above="@id/viewfinder"
+            android:layout_gravity="center"
             android:gravity="center"
             android:padding="@dimen/mb_padding_standard"
             tools:background="#000000"
             tools:ignore="SelectableText" />
-    </android.support.percent.PercentRelativeLayout>
+
+        <ImageView
+            android:id="@+id/scanLineImg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:visibility="gone"
+            tools:visibility="visible"
+            android:src="@drawable/mb_scan_line" />
+    </FrameLayout>
 
     <FrameLayout
         android:layout_width="match_parent"
