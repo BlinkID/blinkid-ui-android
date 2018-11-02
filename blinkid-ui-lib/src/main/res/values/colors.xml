@@ -6,6 +6,7 @@
 
     <!-- Scan screen -->
     <color name="mbBgCameraOverlay">#4d000000</color>
+    <color name="mbIconHook">#FFFFFF</color>
     <color name="mbBgScanWindow">#000000</color>
     <color name="mbBgDocTypeSelection">#96000000</color>
     <color name="mbBgFlipCard">#cc48B2E8</color>

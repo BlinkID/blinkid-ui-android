@@ -7,4 +7,9 @@
     <dimen name="mb_padding_country_select_container_side">16dp</dimen>
     <dimen name="mb_height_top_bars">56dp</dimen>
 
+    <item name="mb_scan_rect_aspect_ratio" format="float" type="dimen">1.58577251</item>
+    <dimen name="mb_hook_length_vertical">16dp</dimen>
+    <dimen name="mb_hook_length_horizontal">24dp</dimen>
+    <dimen name="mb_hook_stroke_width">5dp</dimen>
+
 </resources>

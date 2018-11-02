@@ -9,22 +9,25 @@ import android.view.animation.Transformation
 import android.widget.ImageView
 import com.microblink.documentscanflow.R
 import com.microblink.documentscanflow.ui.utils.AccelerateDecelerateReverseInterpolator
+import com.microblink.documentscanflow.ui.view.CameraOverlayView
 import org.jetbrains.anko.px2dip
 
 
 class DefaultScanLineAnimator(private val scanLineView: ImageView,
-                              private val scanContainer: View) : ScanLineAnimator {
+                              private val scanContainer: CameraOverlayView) : ScanLineAnimator {
 
-    private var containerHeight = 0f
+    private var scanRectHeight = 0f
     private var scanLineHeight = 0f
     private var scanAnimation = createAnimation()
+    private var scanLineInitialY = 0f
 
     init {
-        scanContainer.addOnLayoutChangeListener(object : View.OnLayoutChangeListener {
-            override fun onLayoutChange(v: View?, left: Int, top: Int, right: Int, bottom: Int, oldLeft: Int, oldTop: Int, oldRight: Int, oldBottom: Int) {
-                containerHeight = scanContainer.height * 1.0f
-                if (containerHeight > 0) {
-                    scanContainer.removeOnLayoutChangeListener(this)
+        scanContainer.sizeCalculatedListeners.add(object : CameraOverlayView.OnSizeCalculatedListener {
+            override fun onScanRectSizeCalculated(width: Float, height: Float) {
+                scanRectHeight = height
+                scanContainer.sizeCalculatedListeners.remove(this)
+                if (scanLineHeight > 0) {
+                    moveScanLineToScanRectTop()
                 }
                 startAnimation()
             }
@@ -33,16 +36,27 @@ class DefaultScanLineAnimator(private val scanLineView: ImageView,
         scanLineView.visibility = View.VISIBLE
         scanLineView.addOnLayoutChangeListener(object : View.OnLayoutChangeListener {
             override fun onLayoutChange(v: View?, left: Int, top: Int, right: Int, bottom: Int, oldLeft: Int, oldTop: Int, oldRight: Int, oldBottom: Int) {
-                scanLineHeight = scanLineView.height * 1.0f
+                scanLineHeight = scanLineView.height.toFloat()
                 if (scanLineHeight > 0) {
                     scanLineView.removeOnLayoutChangeListener(this)
                 }
+
+                if (scanRectHeight > 0) {
+                    scanLineView.y = scanLineView.y - scanRectHeight / 2
+                    scanLineInitialY = scanLineView.y
+                }
+
                 startAnimation()
             }
         })
 
         scanLineView.drawable.mutate()
                 .setColorFilter(ContextCompat.getColor(scanLineView.context, R.color.mbIconScanLine), PorterDuff.Mode.MULTIPLY)
+    }
+
+    private fun moveScanLineToScanRectTop() {
+        scanLineView.y = scanLineView.y - scanRectHeight / 2
+        scanLineInitialY = scanLineView.y
     }
 
     @UiThread
@@ -61,19 +75,18 @@ class DefaultScanLineAnimator(private val scanLineView: ImageView,
         startAnimation()
     }
 
-    private fun canStartAnimation() = containerHeight > 0 && scanLineHeight > 0
+    private fun canStartAnimation() = scanRectHeight > 0 && scanLineHeight > 0
 
     private fun startAnimation() {
         if (!canStartAnimation()) {
             return
         }
-
         if (scanAnimation.hasStarted()) {
             scanAnimation.cancel()
             scanAnimation = createAnimation()
         }
 
-        val previewHeightDp = scanContainer.px2dip(containerHeight.toInt())
+        val previewHeightDp = scanContainer.px2dip(scanRectHeight.toInt())
         val scanLineAnimDuration = 4.167f * previewHeightDp + 1250
 
         scanAnimation.apply {
@@ -88,8 +101,8 @@ class DefaultScanLineAnimator(private val scanLineView: ImageView,
     private fun createAnimation(): Animation {
         return object : Animation() {
             override fun applyTransformation(interpolatedTime: Float, t: Transformation) {
-                val translateHeight = containerHeight * interpolatedTime - scanLineHeight / 2
-                scanLineView.translationY = translateHeight
+                val translateHeight = scanRectHeight * interpolatedTime
+                scanLineView.y = scanLineInitialY + translateHeight
             }
         }
     }

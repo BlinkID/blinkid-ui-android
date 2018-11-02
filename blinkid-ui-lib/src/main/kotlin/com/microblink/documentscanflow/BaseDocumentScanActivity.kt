@@ -125,7 +125,7 @@ abstract class BaseDocumentScanActivity : AppCompatActivity(), ScanResultListene
 
     protected open fun createSplashOverlaySettings(): SplashOverlaySettings = InvisibleSplashOverlaySettings()
     protected open fun createScanSuccessSoundPlayer(): ScanSuccessPlayer = SoundPoolScanSuccessPlayer(this, R.raw.beep)
-    protected open fun createScanLineAnimator(): ScanLineAnimator = DefaultScanLineAnimator(scanLineImg, viewfinder)
+    protected open fun createScanLineAnimator(): ScanLineAnimator = DefaultScanLineAnimator(scanLineImg, cameraOverlayView)
     protected open fun getLayoutId() = R.layout.mb_activity_scan_document
 
     protected fun getScanFlowState() = scanFlowState
