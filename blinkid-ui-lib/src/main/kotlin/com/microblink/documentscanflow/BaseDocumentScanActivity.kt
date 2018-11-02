@@ -66,9 +66,9 @@ import com.microblink.view.CameraEventsListener
 import com.microblink.view.ocrResult.OcrResultDotsView
 import com.microblink.view.recognition.ScanResultListener
 import kotlinx.android.synthetic.main.mb_activity_scan_document.*
-import kotlinx.android.synthetic.main.mb_include_camera_overlay.*
 import kotlinx.android.synthetic.main.mb_include_splash_overlay.*
-import kotlinx.android.synthetic.main.view_scan_frame.view.*
+import kotlinx.android.synthetic.main.mb_include_scan_bottom_container.*
+import kotlinx.android.synthetic.main.mb_view_scan_frame.view.*
 import java.util.*
 import kotlin.math.max
 
