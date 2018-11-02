@@ -48,7 +48,6 @@ dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
 
     implementation "com.android.support:appcompat-v7:$appCompatVersion"
-    implementation "com.android.support:percent:$appCompatVersion"
     implementation "com.android.support:design:$appCompatVersion"
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
