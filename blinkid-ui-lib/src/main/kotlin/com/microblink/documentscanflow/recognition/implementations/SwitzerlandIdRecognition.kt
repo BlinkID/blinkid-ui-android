@@ -23,7 +23,7 @@ class SwitzerlandIdRecognition: BaseTwoSideRecognition() {
     }
 
     override fun createValidator(): ResultValidator {
-        return ResultValidator().match(frontResult.dateOfBirth, backResult.dateOfBirth)
+        return ResultValidator().match(frontResult.dateOfBirth.date, backResult.dateOfBirth)
     }
 
     override fun extractFields() {

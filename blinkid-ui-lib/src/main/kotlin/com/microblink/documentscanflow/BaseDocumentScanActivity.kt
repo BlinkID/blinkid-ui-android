@@ -613,7 +613,7 @@ abstract class BaseDocumentScanActivity : AppCompatActivity(), ScanResultListene
                 cameraPermissionManager.askForCameraPermission()
             }
 
-            override fun onError(exc: Throwable?) {
+            override fun onError(exc: Throwable) {
                 cameraErrorHandler.handleCameraError(exc)
                 onCameraError(exc)
             }

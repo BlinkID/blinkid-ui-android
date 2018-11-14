@@ -61,13 +61,13 @@ class GermanyIdRecognition : BaseTwoSideRecognition() {
     }
 
     private fun extractFrontSide() {
-        add(R.string.keyLastName, frontResult.lastName)
-        add(R.string.keyFirstName, frontResult.firstName)
+        add(R.string.keyLastName, frontResult.surname)
+        add(R.string.keyFirstName, frontResult.givenNames)
         add(R.string.keyNationality, frontResult.nationality)
         add(R.string.keyPlaceOfBirth, frontResult.placeOfBirth)
         add(R.string.keyDateOfBirth, frontResult.dateOfBirth)
         add(R.string.keyDocumentNumber, frontResult.documentNumber)
-        addDateOfExpiry(frontResult.dateOfExpiry)
+        addDateOfExpiry(frontResult.dateOfExpiry.date)
     }
 
     private fun extractBackSide() {
@@ -86,7 +86,7 @@ class GermanyIdRecognition : BaseTwoSideRecognition() {
     override fun getResultTitle(): String? {
         return when {
             combinedResult.isNotEmpty() -> FormattingUtils.formatResultTitle(combinedResult.firstName, combinedResult.lastName)
-            frontResult.isNotEmpty() -> FormattingUtils.formatResultTitle(frontResult.firstName, frontResult.lastName)
+            frontResult.isNotEmpty() -> FormattingUtils.formatResultTitle(frontResult.givenNames, frontResult.surname)
             backResult.isNotEmpty() -> FormattingUtils.formatResultTitle(backResult.secondaryId, backResult.primaryId)
             else -> null
         }
