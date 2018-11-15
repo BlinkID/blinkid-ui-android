@@ -76,4 +76,7 @@
     <string name="keyPassportNumber">Passport number</string>
     <string name="keySector">Sector</string>
     <string name="keyBarcodeString">Barcode data</string>
+    <string name="keyElectorKey">Elector key</string>
+    <string name="keyCurp">CURP</string>
+    <string name="keyDateOfIssueBCategory">Date of issuance for B category</string>
 </resources>

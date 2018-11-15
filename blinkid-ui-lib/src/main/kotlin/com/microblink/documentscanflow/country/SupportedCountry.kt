@@ -70,7 +70,7 @@ enum class SupportedCountry(override val code: String, override val documentDesc
     GERMANY("de",
             DocumentDescriptionBuilder()
                     .id(GermanyIdRecognition())
-                    .drivingLicence(EudlRecognition(EudlCountry.EUDL_COUNTRY_GERMANY))
+                    .drivingLicence(GermanyDlRecognition())
                     .oldId(GermanyOldIdRecognition())
                     .residencePermit(GenericDocumentDescriptions.residencePermit)
                     .build()),
@@ -116,6 +116,12 @@ enum class SupportedCountry(override val code: String, override val documentDesc
                     .add(DocumentType.IMMIGRATOR_ID, DocumentDescription(true, R.string.mb_custom_ikad, MalaysiaIkadRecognition()))
                     .add(DocumentType.MILITARY_ID, DocumentDescription(true, R.string.mb_custom_mytentera, MalaysiaTenteraRecognition()))
                     .build()),
+
+    MEXICO("mx",
+            DocumentDescriptionBuilder()
+                    .id(MexicoIdRecognition())
+                    .build()
+    ),
 
     MOROCCO("ma",
             DocumentDescriptionBuilder()
