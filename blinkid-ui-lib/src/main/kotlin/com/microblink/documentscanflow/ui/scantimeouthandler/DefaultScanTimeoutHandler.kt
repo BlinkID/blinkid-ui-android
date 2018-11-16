@@ -1,6 +1,7 @@
 package com.microblink.documentscanflow.ui.scantimeouthandler
 
 import android.app.Activity
+import android.app.ProgressDialog.show
 import android.os.CountDownTimer
 import android.support.v7.app.AlertDialog
 import com.microblink.documentscanflow.R
@@ -39,18 +40,17 @@ class DefaultScanTimeoutHandler(private val activity: Activity,
         // timeout duration has been updated so we want a new timer
         destroyCurrentTimeoutTimer()
 
-        if (activity.isFinishing) {
-            return
-        }
-
-        AlertDialog.Builder(activity).apply {
+        val dialogBuilder = AlertDialog.Builder(activity).apply {
             setCancelable(true)
             setMessage(R.string.mb_timeout_message)
             setTitle(R.string.mb_timeout_title)
             setPositiveButton(R.string.mb_timeout_retry) { _, _ -> listener.onRetry() }
             setNeutralButton(R.string.mb_timeout_change_country) { _, _ -> listener.onChangeCountry() }
             setOnCancelListener { listener.onRetry() }
-            show()
+        }
+
+        if (!activity.isFinishing) {
+            dialogBuilder.show()
         }
     }
 
