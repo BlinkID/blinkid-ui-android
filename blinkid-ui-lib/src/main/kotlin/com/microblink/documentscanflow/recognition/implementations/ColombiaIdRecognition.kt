@@ -23,7 +23,7 @@ class ColombiaIdRecognition
     }
 
     override fun createValidator(): ResultValidator {
-        val frontDocNumberWithoutDots = frontResult.documentNumber.replace("", "")
+        val frontDocNumberWithoutDots = frontResult.documentNumber.replace(".", "")
         return ResultValidator().match(frontDocNumberWithoutDots, backResult.documentNumber)
     }
 
