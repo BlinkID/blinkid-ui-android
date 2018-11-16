@@ -11,9 +11,9 @@ import android.view.animation.Animation
 import android.view.animation.Transformation
 import android.widget.FrameLayout
 import com.microblink.documentscanflow.getFloatValue
+import com.microblink.documentscanflow.pxToDp
 import com.microblink.documentscanflow.ui.utils.AccelerateDecelerateReverseInterpolator
 import kotlinx.android.synthetic.main.mb_view_scan_frame.view.*
-import org.jetbrains.anko.px2dip
 
 class ScanFrameLayout(context : Context, attrs : AttributeSet?, styleAttrs : Int) : FrameLayout(context, attrs, styleAttrs) {
 
@@ -77,7 +77,7 @@ class ScanFrameLayout(context : Context, attrs : AttributeSet?, styleAttrs : Int
         }
 
         scanLineImg.visibility = View.VISIBLE
-        val previewHeightDp = px2dip(scanRect.height().toInt())
+        val previewHeightDp = pxToDp(scanRect.height())
         val scanLineAnimDuration = 4.167f * previewHeightDp + 1250
 
         scanAnimation.apply {

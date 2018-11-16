@@ -103,3 +103,7 @@ internal fun Resources.getFloatValue(id : Int) : Float {
     getValue(id, outValue, true)
     return outValue.float
 }
+
+fun View.pxToDp(px: Float): Float {
+    return px / resources.displayMetrics.density
+}
