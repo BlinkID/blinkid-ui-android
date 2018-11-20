@@ -23,7 +23,7 @@ open class DefaultDocumentChooser(private val scanActivity: Activity) : Document
             country.getSupportedDocumentTypes().contains(documentType)
 
     override fun geChooseCountryLabel() =
-            scanActivity.getString(R.string.mb_supported_countries_label)!!
+            scanActivity.getString(R.string.mb_supported_countries_label)
 
     override fun getDefaultDocumentTypeForCountry(country: Country) =
             country.getSupportedDocumentTypes()[0]

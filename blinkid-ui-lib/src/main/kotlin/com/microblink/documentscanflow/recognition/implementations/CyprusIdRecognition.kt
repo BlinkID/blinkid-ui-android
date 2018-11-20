@@ -48,5 +48,6 @@ class CyprusIdRecognition : BaseTwoSideRecognition() {
     private fun extractBack(result: CyprusIdBackRecognizer.Result) {
         add(R.string.keyDateOfBirth, result.dateOfBirth)
         add(R.string.keySex, result.sex)
+        add(R.string.keyDateOfExpiry, result.expiresOn)
     }
 }

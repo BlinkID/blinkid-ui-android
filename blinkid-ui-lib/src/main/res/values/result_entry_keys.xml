@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- MRZ -->
-    <string name="keyDocumentType">Document type</string>
     <string name="keyPrimaryId">Primary ID</string>
     <string name="keySecondaryId">Secondary ID</string>
     <string name="keyDateOfBirth">Date of birth</string>
@@ -19,8 +17,6 @@
     <string name="keyAlienNumber">ALien number</string>
     <string name="keyApplicationReceiptNumber">Application receipt number</string>
     <string name="keyImmigrantCaseNumber">Immigrant case number</string>
-    <!-- ID -->
-    <string name="validForever">Forever</string>
     <string name="keyFirstName">First name</string>
     <string name="keyLastName">Last name</string>
     <string name="keyFamilyName">Family name</string>
@@ -75,12 +71,12 @@
     <string name="keySerialNumber">Serial number</string>
     <string name="keyDriverRestrictions">Driver restrictions</string>
     <string name="keyVehicleCategories">Vehicle categories</string>
-    <!-- EUDL -->
     <string name="keyDriverNumber">Driver number</string>
-    <!-- iKad -->
     <string name="keyEmployer">Employer</string>
     <string name="keyPassportNumber">Passport number</string>
     <string name="keySector">Sector</string>
-    <!-- Barcode -->
     <string name="keyBarcodeString">Barcode data</string>
+    <string name="keyElectorKey">Elector key</string>
+    <string name="keyCurp">CURP</string>
+    <string name="keyDateOfIssueBCategory">Date of issuance for B category</string>
 </resources>
