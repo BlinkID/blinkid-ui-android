@@ -40,20 +40,17 @@ android {
     }
 }
 
-ext.kotlin_version = '1.2.71'
-ext.anko_version = '0.10.4'
+ext.kotlin_version = '1.3.10'
 ext.appCompatVersion = "28.0.0"
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
 
     implementation "com.android.support:appcompat-v7:$appCompatVersion"
-    implementation "com.android.support:percent:$appCompatVersion"
     implementation "com.android.support:design:$appCompatVersion"
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     implementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
-    implementation "org.jetbrains.anko:anko-common:$anko_version"
 
     if (isBlinkIdDependencyProject()) {
         implementation project(getBlinkIdDependency())
@@ -68,7 +65,7 @@ String getBlinkIdDependency() {
     if (project.hasProperty(altDependencyProperty)) {
         return project.property(altDependencyProperty)
     } else {
-        return "com.microblink:blinkid:4.3.0@aar"
+        return "com.microblink:blinkid:4.4.0@aar"
     }
 }
 

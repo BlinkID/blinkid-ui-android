@@ -4,7 +4,6 @@
     <string name="mb_locale_language_code">en</string>
 
     <!-- Document names -->
-    <string name="mb_document">Document</string>
     <string name="mb_id_card">ID card</string>
     <string name="mb_new_id_card">New ID card</string>
     <string name="mb_old_id_card">Old ID card</string>

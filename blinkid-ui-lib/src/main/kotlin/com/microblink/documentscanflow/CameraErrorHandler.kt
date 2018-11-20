@@ -3,7 +3,6 @@ package com.microblink.documentscanflow
 import android.content.Context
 import android.support.annotation.StringRes
 import android.support.v7.app.AlertDialog
-import com.microblink.documentscanflow.recognition.util.ImageStorage
 import com.microblink.hardware.camera.AutoFocusRequiredButNotSupportedException
 import com.microblink.hardware.camera.CameraResolutionTooSmallException
 import com.microblink.recognition.FeatureNotSupportedException

@@ -11,9 +11,7 @@ class WhitelistCountryFilter(private val whitelistedCountryCodes : Set<String>) 
     constructor(parcel: Parcel) : this(mutableSetOf<String>(*parcel.createStringArray()))
 
     override fun writeToParcel(dest: Parcel, flags: Int) {
-        with(dest) {
-            dest.writeStringArray(whitelistedCountryCodes.toTypedArray())
-        }
+        dest.writeStringArray(whitelistedCountryCodes.toTypedArray())
     }
 
     override fun describeContents(): Int {

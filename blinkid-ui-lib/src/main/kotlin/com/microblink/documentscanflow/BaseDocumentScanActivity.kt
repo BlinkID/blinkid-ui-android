@@ -66,8 +66,9 @@ import com.microblink.view.CameraEventsListener
 import com.microblink.view.ocrResult.OcrResultDotsView
 import com.microblink.view.recognition.ScanResultListener
 import kotlinx.android.synthetic.main.mb_activity_scan_document.*
-import kotlinx.android.synthetic.main.mb_include_camera_overlay.*
 import kotlinx.android.synthetic.main.mb_include_splash_overlay.*
+import kotlinx.android.synthetic.main.mb_include_scan_bottom_container.*
+import kotlinx.android.synthetic.main.mb_view_scan_frame.view.*
 import java.util.*
 import kotlin.math.max
 
@@ -86,7 +87,7 @@ abstract class BaseDocumentScanActivity : AppCompatActivity(), ScanResultListene
     private val torchButtonHandler = TorchButtonHandler()
     private val recognizerManager by lazy { RecognizerManager(getFrameGrabberMode(), createFrameCallback()) }
     private val cameraErrorHandler by lazy { CameraErrorHandler(this) {finish()} }
-    private val instructionsHandler by lazy { InstructionsHandler(this, currentDocument, scanInstructionsTv, flipCardView) }
+    private val instructionsHandler by lazy { InstructionsHandler(this, currentDocument, scanFrameLayout.scanInstructionsTv, scanFrameLayout.flipCardView) }
     private val scanLineAnimator by lazy { createScanLineAnimator() }
 
     private val handler = Handler()
@@ -125,7 +126,7 @@ abstract class BaseDocumentScanActivity : AppCompatActivity(), ScanResultListene
 
     protected open fun createSplashOverlaySettings(): SplashOverlaySettings = InvisibleSplashOverlaySettings()
     protected open fun createScanSuccessSoundPlayer(): ScanSuccessPlayer = SoundPoolScanSuccessPlayer(this, R.raw.beep)
-    protected open fun createScanLineAnimator(): ScanLineAnimator = DefaultScanLineAnimator(scanLineImg, viewfinder)
+    protected open fun createScanLineAnimator(): ScanLineAnimator = DefaultScanLineAnimator(scanFrameLayout)
     protected open fun getLayoutId() = R.layout.mb_activity_scan_document
 
     protected fun getScanFlowState() = scanFlowState
@@ -612,7 +613,7 @@ abstract class BaseDocumentScanActivity : AppCompatActivity(), ScanResultListene
                 cameraPermissionManager.askForCameraPermission()
             }
 
-            override fun onError(exc: Throwable?) {
+            override fun onError(exc: Throwable) {
                 cameraErrorHandler.handleCameraError(exc)
                 onCameraError(exc)
             }
@@ -638,7 +639,7 @@ abstract class BaseDocumentScanActivity : AppCompatActivity(), ScanResultListene
         private const val DELAY_DOCUMENT_FACE_RESUME = 500L
         const val REQ_CODE_CHOOSE_DOC = 123
 
-        private const val SCAN_TIMEOUT_MILLIS = 10000L
+        private const val SCAN_TIMEOUT_MILLIS = 16_000L
     }
 
 }

@@ -1,6 +1,8 @@
 package com.microblink.documentscanflow
 
+import android.content.res.Resources
 import android.support.annotation.LayoutRes
+import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -94,4 +96,14 @@ internal fun buildDetectorRecognizerFromPreset(documentSpecPreset: DocumentSpeci
     detectorRecognizer.setTemplatingClasses(documentClass)
 
     return detectorRecognizer
+}
+
+internal fun Resources.getFloatValue(id : Int) : Float {
+    val outValue = TypedValue()
+    getValue(id, outValue, true)
+    return outValue.float
+}
+
+fun View.pxToDp(px: Float): Float {
+    return px / resources.displayMetrics.density
 }

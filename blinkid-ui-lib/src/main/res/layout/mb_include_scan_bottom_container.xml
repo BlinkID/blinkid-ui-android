@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_alignParentBottom="true"
+    android:background="@color/mbBgCameraOverlay"
+    tools:showIn="@layout/mb_activity_scan_document">
+
+    <LinearLayout
+        android:id="@+id/bottomContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        tools:ignore="UselessParent"> <!-- slide from bottom animation wont work if merged with parent-->
+
+        <android.support.design.widget.TabLayout
+            android:id="@+id/documentTypeTabs"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:background="@color/mbBgDocTypeSelection"
+            android:clipToPadding="false"
+            android:paddingLeft="@dimen/mb_padding_small"
+            android:paddingRight="@dimen/mb_padding_small"
+            android:paddingBottom="@dimen/mb_padding_small"
+            android:visibility="gone"
+            app:tabGravity="center"
+            app:tabIndicatorColor="@color/mbTabIndicator"
+            app:tabMinWidth="0dp"
+            app:tabMode="scrollable"
+            app:tabSelectedTextColor="@color/mbTextSelectedTab"
+            app:tabTextAppearance="@style/MbTextDocumentTypeTab"
+            app:tabTextColor="@color/mbTextNormalTab" />
+
+        <RelativeLayout
+            android:id="@+id/countryContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/mb_bg_choose_country"
+            android:paddingTop="@dimen/mb_padding_standard"
+            android:paddingBottom="@dimen/mb_padding_small">
+
+            <TextView
+                android:id="@+id/countryLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="@dimen/mb_padding_country_select_container_side"
+                android:paddingRight="@dimen/mb_padding_country_select_container_side"
+                android:text="@string/mb_supported_countries_label"
+                android:textAppearance="@style/MbTextCountrySelectionLabel" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/countryLabel"
+                android:orientation="horizontal"
+                android:paddingTop="@dimen/mb_padding_small"
+                android:paddingBottom="@dimen/mb_padding_small">
+
+                <TextView
+                    android:id="@+id/selectedCountryTv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:ellipsize="end"
+                    android:gravity="center_vertical"
+                    android:includeFontPadding="false"
+                    android:maxLines="1"
+                    android:paddingLeft="@dimen/mb_padding_country_select_container_side"
+                    android:paddingRight="@dimen/mb_padding_country_select_container_side"
+                    android:textAppearance="@style/MbTextSelectedCountry"
+                    tools:text="Croatia" />
+
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_weight="1" />
+
+                <ImageView
+                    android:id="@+id/arrowRight"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:paddingLeft="@dimen/mb_padding_country_select_container_side"
+                    android:paddingTop="@dimen/mb_padding_small"
+                    android:paddingRight="@dimen/mb_padding_country_select_container_side"
+                    android:paddingBottom="@dimen/mb_padding_small"
+                    android:rotationY="@integer/locale_mirror_flip"
+                    android:src="@drawable/mb_ic_arrow_right" />
+            </LinearLayout>
+        </RelativeLayout>
+    </LinearLayout>
+</FrameLayout>
