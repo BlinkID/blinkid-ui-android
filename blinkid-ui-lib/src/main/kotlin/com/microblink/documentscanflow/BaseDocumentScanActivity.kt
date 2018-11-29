@@ -2,6 +2,7 @@ package com.microblink.documentscanflow
 
 import android.annotation.TargetApi
 import android.app.Activity
+import android.arch.lifecycle.Lifecycle
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
@@ -95,7 +96,6 @@ abstract class BaseDocumentScanActivity : AppCompatActivity(), ScanResultListene
 
     private val ocrView by lazy { OcrResultDotsView(this, recognizerView.hostScreenOrientation, recognizerView.initialOrientation) }
 
-    private var activityState = ActivityState.DESTROYED
     private var scanFlowState: ScanFlowState = ScanFlowState.NOT_STARTED
     private lateinit var currentDocument: Document
     private var recognitionError = RecognitionError.NONE
@@ -221,8 +221,6 @@ abstract class BaseDocumentScanActivity : AppCompatActivity(), ScanResultListene
 
         volumeControlStream = AudioManager.STREAM_MUSIC
 
-        activityState = ActivityState.CREATED
-
         currentDocument = getInitialDocument()
         updateDocumentTypeSelectionTabs(currentDocument)
         selectedCountryTv.text = currentDocument.country.getLocalisedName()
@@ -332,13 +330,11 @@ abstract class BaseDocumentScanActivity : AppCompatActivity(), ScanResultListene
 
     override fun onStart() {
         super.onStart()
-        activityState = ActivityState.STARTED
         recognizerView.start()
     }
 
     override fun onResume() {
         super.onResume()
-        activityState = ActivityState.RESUMED
         recognizerView.resume()
         // always restart scanning when resuming activity, must be called after recognizer_view.resume()
         restartScanning()
@@ -353,21 +349,18 @@ abstract class BaseDocumentScanActivity : AppCompatActivity(), ScanResultListene
 
     override fun onPause() {
         super.onPause()
-        activityState = ActivityState.STARTED
         recognizerView.pause()
         scanTimeoutHandler.onScanDone()
     }
 
     override fun onStop() {
         super.onStop()
-        activityState = ActivityState.CREATED
         recognizerView.stop()
     }
 
     override fun onDestroy() {
         unregisterReceiver(localeBroadcastReceiver)
         super.onDestroy()
-        activityState = ActivityState.DESTROYED
         recognizerView.destroy()
         scanSuccessPlayer.cleanup()
         instructionsHandler.clear(true)
@@ -598,7 +591,8 @@ abstract class BaseDocumentScanActivity : AppCompatActivity(), ScanResultListene
                     splash_overlay.fadeOut(splashOverlaySettings.getDurationMillis())
                 }
 
-                if (activityState == ActivityState.RESUMED) {
+
+                if (lifecycle.currentState == Lifecycle.State.RESUMED) {
                     recognizerView.setMeteringAreas(arrayOf(RectF(0.33f, 0.33f, 0.66f, 0.66f)), true)
                 }
 
