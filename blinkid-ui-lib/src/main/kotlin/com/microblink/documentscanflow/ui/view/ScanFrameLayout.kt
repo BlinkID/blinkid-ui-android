@@ -58,6 +58,10 @@ class ScanFrameLayout(context : Context, attrs : AttributeSet?, styleAttrs : Int
     override fun onLayout(changed: Boolean, left: Int, top: Int, right: Int, bottom: Int) {
         super.onLayout(changed, left, top, right, bottom)
 
+        if (!::scanRect.isInitialized) {
+            return
+        }
+
         // scan line starts centered in parent so move it up for simpler animation
         scanLineImg.y = height / 2 - scanRect.height() / 2 - scanLineImg.height / 2
         scanLineInitialY = scanLineImg.y
