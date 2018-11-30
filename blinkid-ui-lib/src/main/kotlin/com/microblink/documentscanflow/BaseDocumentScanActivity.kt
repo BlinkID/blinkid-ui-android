@@ -596,7 +596,6 @@ abstract class BaseDocumentScanActivity : AppCompatActivity(), ScanResultListene
     private fun createCameraEventsListener(): CameraEventsListener? {
         return object: CameraEventsListener {
 
-            @CallSuper
             override fun onCameraPreviewStarted() {
                 if (recognizerView.isCameraTorchSupported) {
                     torchButtonHandler.onTorchSupported()
@@ -605,7 +604,6 @@ abstract class BaseDocumentScanActivity : AppCompatActivity(), ScanResultListene
                 if (splash_overlay.visibility == View.VISIBLE) {
                     splash_overlay.fadeOut(splashOverlaySettings.getDurationMillis())
                 }
-
 
                 if (lifecycle.currentState == Lifecycle.State.RESUMED) {
                     recognizerView.setMeteringAreas(arrayOf(RectF(0.33f, 0.33f, 0.66f, 0.66f)), true)
@@ -617,7 +615,6 @@ abstract class BaseDocumentScanActivity : AppCompatActivity(), ScanResultListene
 
             override fun onCameraPreviewStopped() {}
 
-            @CallSuper
             override fun onCameraPermissionDenied() {
                 cameraPermissionManager.askForCameraPermission()
             }
