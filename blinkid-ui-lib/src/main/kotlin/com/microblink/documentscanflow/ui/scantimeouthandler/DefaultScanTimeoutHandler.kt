@@ -1,13 +1,16 @@
 package com.microblink.documentscanflow.ui.scantimeouthandler
 
 import android.os.CountDownTimer
-import com.microblink.util.Log
 
-class DefaultScanTimeoutHandler(private var scanTimeoutMillis: Long,
-                                private val listener: Listener): ScanTimeoutHandler {
+class DefaultScanTimeoutHandler(private var scanTimeoutMillis: Long): ScanTimeoutHandler {
 
     private var timeoutTimer : CountDownTimer? = null
     private var currentTimerTimeoutMillis = 0L
+    private var listener: ScanTimeoutHandler.Listener? = null
+
+    override fun registerListener(listener: ScanTimeoutHandler.Listener?) {
+        this.listener = listener
+    }
 
     override fun onScanStart() {
         updateTimerIfTimeoutUpdated()
@@ -28,7 +31,7 @@ class DefaultScanTimeoutHandler(private var scanTimeoutMillis: Long,
     }
 
     private fun onTimeout() {
-        listener.onTimeout()
+        listener?.onTimeout()
 
         // each next timeout should be longer
         scanTimeoutMillis *= 2
@@ -39,7 +42,6 @@ class DefaultScanTimeoutHandler(private var scanTimeoutMillis: Long,
 
     private fun destroyCurrentTimeoutTimer() {
         timeoutTimer?.cancel()
-        Log.w("DISI", "destroying " + timeoutTimer?.hashCode())
         timeoutTimer = null
     }
 
@@ -47,7 +49,6 @@ class DefaultScanTimeoutHandler(private var scanTimeoutMillis: Long,
         if (currentTimerTimeoutMillis != scanTimeoutMillis) {
             currentTimerTimeoutMillis = scanTimeoutMillis
             timeoutTimer = createTimeoutTimer()
-            Log.w("DISI", "new timer " + timeoutTimer.hashCode())
         }
     }
 
@@ -59,10 +60,6 @@ class DefaultScanTimeoutHandler(private var scanTimeoutMillis: Long,
         override fun onTick(millisUntilFinished: Long) {
             // don't care
         }
-    }
-
-    interface Listener {
-        fun onTimeout()
     }
 
 }

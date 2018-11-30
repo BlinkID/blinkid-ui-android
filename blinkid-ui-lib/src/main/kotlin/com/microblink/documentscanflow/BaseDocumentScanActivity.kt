@@ -108,7 +108,7 @@ abstract class BaseDocumentScanActivity : AppCompatActivity(), ScanResultListene
     protected open fun getFrameGrabberMode(): FrameGrabberMode = FrameGrabberMode.NOTHING
     protected open fun createFrameListener(): FrameListener = FrameListener.EMPTY
     protected open fun createDocumentChooser() : DocumentChooser = DefaultDocumentChooser(this)
-    protected open fun createScanTimeoutHandler() : ScanTimeoutHandler = DefaultScanTimeoutHandler(SCAN_TIMEOUT_MILLIS, createScanTimeoutListener())
+    protected open fun createScanTimeoutHandler() : ScanTimeoutHandler = DefaultScanTimeoutHandler(SCAN_TIMEOUT_MILLIS)
     protected open fun createScanTimeoutListener() = createDefaultScanTimeoutListener()
 
     protected open fun createSplashOverlaySettings(): SplashOverlaySettings = InvisibleSplashOverlaySettings()
@@ -211,6 +211,8 @@ abstract class BaseDocumentScanActivity : AppCompatActivity(), ScanResultListene
         currentDocument = getInitialDocument()
         updateDocumentTypeSelectionTabs(currentDocument)
         selectedCountryTv.text = currentDocument.country.getLocalisedName()
+
+        scanTimeoutHandler.registerListener(createScanTimeoutListener())
 
         startScan()
         recognizerView.create()
@@ -347,6 +349,7 @@ abstract class BaseDocumentScanActivity : AppCompatActivity(), ScanResultListene
 
     override fun onDestroy() {
         unregisterReceiver(localeBroadcastReceiver)
+        scanTimeoutHandler.registerListener(null)
         super.onDestroy()
         recognizerView.destroy()
         scanSuccessPlayer.cleanup()
@@ -546,8 +549,8 @@ abstract class BaseDocumentScanActivity : AppCompatActivity(), ScanResultListene
         }
     }
 
-    private fun createDefaultScanTimeoutListener(): DefaultScanTimeoutHandler.Listener {
-        return object : DefaultScanTimeoutHandler.Listener {
+    private fun createDefaultScanTimeoutListener(): ScanTimeoutHandler.Listener {
+        return object : ScanTimeoutHandler.Listener {
             override fun onTimeout() {
                 pauseScanning()
 
