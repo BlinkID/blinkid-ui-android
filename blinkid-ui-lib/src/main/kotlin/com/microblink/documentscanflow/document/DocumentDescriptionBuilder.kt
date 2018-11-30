@@ -4,6 +4,12 @@ import com.microblink.documentscanflow.R
 import com.microblink.documentscanflow.recognition.BaseRecognition
 import java.util.LinkedHashMap
 
+internal fun documentDescriptions(init: DocumentDescriptionBuilder.() -> Unit): Map<DocumentType, DocumentDescription> {
+    val documentDescriptionBuilder = DocumentDescriptionBuilder()
+    documentDescriptionBuilder.init()
+    return documentDescriptionBuilder.build()
+}
+
 internal class DocumentDescriptionBuilder {
 
     private val documentDescriptions = LinkedHashMap<DocumentType, DocumentDescription>()
