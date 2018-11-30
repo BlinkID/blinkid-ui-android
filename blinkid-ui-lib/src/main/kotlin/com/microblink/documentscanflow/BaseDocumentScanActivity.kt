@@ -134,7 +134,7 @@ abstract class BaseDocumentScanActivity : AppCompatActivity(), ScanResultListene
 
     @AnyThread
     protected fun pauseScanning() {
-        scanTimeoutHandler.onScanPaused()
+        scanTimeoutHandler.stopTimer()
         runOnUiThread {
             recognizerView.pauseScanning()
             scanLineAnimator.onScanPause()
@@ -296,7 +296,7 @@ abstract class BaseDocumentScanActivity : AppCompatActivity(), ScanResultListene
 
     @AnyThread
     private fun resumeScanningImmediately() {
-        scanTimeoutHandler.onScanResumed()
+        scanTimeoutHandler.startTimer()
 
         // resetting combined will revert it to first side scan and we don't want that
         val shouldResetState = !recognizerManager.isCombinedRecognition(scanFlowState)
@@ -339,7 +339,7 @@ abstract class BaseDocumentScanActivity : AppCompatActivity(), ScanResultListene
     override fun onPause() {
         super.onPause()
         recognizerView.pause()
-        scanTimeoutHandler.onScanDone()
+        scanTimeoutHandler.stopTimer()
     }
 
     override fun onStop() {
@@ -393,8 +393,8 @@ abstract class BaseDocumentScanActivity : AppCompatActivity(), ScanResultListene
         }
 
         val recognitionResult = currentDocument.getRecognition().extractResult(this, false)
-        scanTimeoutHandler.onScanDone()
-        scanTimeoutHandler.onScanStart()
+        scanTimeoutHandler.stopTimer()
+        scanTimeoutHandler.startTimer()
         scanFlowListener.onFirstSideScanned(recognitionResult, null)
     }
 
@@ -422,7 +422,7 @@ abstract class BaseDocumentScanActivity : AppCompatActivity(), ScanResultListene
     }
 
     private fun onAllSidesScanned() {
-        scanTimeoutHandler.onScanDone()
+        scanTimeoutHandler.stopTimer()
 
         val recognition = currentDocument.getRecognition()
         try {
@@ -447,7 +447,7 @@ abstract class BaseDocumentScanActivity : AppCompatActivity(), ScanResultListene
     }
 
     private fun onFirstSideScanned() {
-        scanTimeoutHandler.onScanDone()
+        scanTimeoutHandler.stopTimer()
         val successFrame = recognizerManager.getSuccessFrame(scanFlowState)
         val recognitionResult = currentDocument.getRecognition().extractResult(this, false)
         scanFlowListener.onFirstSideScanned(recognitionResult, successFrame)
@@ -529,7 +529,7 @@ abstract class BaseDocumentScanActivity : AppCompatActivity(), ScanResultListene
     @UiThread
     private fun startScanningNextSide(): Long {
         var cardFlippingDelay = 0L
-        scanTimeoutHandler.onScanStart()
+        scanTimeoutHandler.startTimer()
         if (!shouldScanBothDocumentSides()) {
             instructionsHandler.setAnySideInstructions(currentDocument)
         } else {

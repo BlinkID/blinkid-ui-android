@@ -12,21 +12,12 @@ class DefaultScanTimeoutHandler(private var scanTimeoutMillis: Long): ScanTimeou
         this.listener = listener
     }
 
-    override fun onScanStart() {
+    override fun startTimer() {
         updateTimerIfTimeoutUpdated()
         timeoutTimer?.start()
     }
 
-    override fun onScanPaused() {
-        timeoutTimer?.cancel()
-    }
-
-    override fun onScanResumed() {
-        updateTimerIfTimeoutUpdated()
-        timeoutTimer?.start()
-    }
-
-    override fun onScanDone() {
+    override fun stopTimer() {
         timeoutTimer?.cancel()
     }
 

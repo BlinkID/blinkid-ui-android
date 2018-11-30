@@ -4,13 +4,9 @@ interface ScanTimeoutHandler {
 
     fun registerListener(listener: Listener?)
 
-    fun onScanStart()
+    fun startTimer()
 
-    fun onScanDone()
-
-    fun onScanPaused()
-
-    fun onScanResumed()
+    fun stopTimer()
 
     interface Listener {
         fun onTimeout()
