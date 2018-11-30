@@ -1,13 +1,9 @@
 package com.microblink.documentscanflow.ui.scantimeouthandler
 
-import android.app.Activity
-import android.app.ProgressDialog.show
 import android.os.CountDownTimer
-import android.support.v7.app.AlertDialog
-import com.microblink.documentscanflow.R
+import com.microblink.util.Log
 
-class DefaultScanTimeoutHandler(private val activity: Activity,
-                                private var scanTimeoutMillis: Long,
+class DefaultScanTimeoutHandler(private var scanTimeoutMillis: Long,
                                 private val listener: Listener): ScanTimeoutHandler {
 
     private var timeoutTimer : CountDownTimer? = null
@@ -39,23 +35,11 @@ class DefaultScanTimeoutHandler(private val activity: Activity,
 
         // timeout duration has been updated so we want a new timer
         destroyCurrentTimeoutTimer()
-
-        val dialogBuilder = AlertDialog.Builder(activity).apply {
-            setCancelable(true)
-            setMessage(R.string.mb_timeout_message)
-            setTitle(R.string.mb_timeout_title)
-            setPositiveButton(R.string.mb_timeout_retry) { _, _ -> listener.onRetry() }
-            setNeutralButton(R.string.mb_timeout_change_country) { _, _ -> listener.onChangeCountry() }
-            setOnCancelListener { listener.onRetry() }
-        }
-
-        if (!activity.isFinishing) {
-            dialogBuilder.show()
-        }
     }
 
     private fun destroyCurrentTimeoutTimer() {
         timeoutTimer?.cancel()
+        Log.w("DISI", "destroying " + timeoutTimer?.hashCode())
         timeoutTimer = null
     }
 
@@ -63,6 +47,7 @@ class DefaultScanTimeoutHandler(private val activity: Activity,
         if (currentTimerTimeoutMillis != scanTimeoutMillis) {
             currentTimerTimeoutMillis = scanTimeoutMillis
             timeoutTimer = createTimeoutTimer()
+            Log.w("DISI", "new timer " + timeoutTimer.hashCode())
         }
     }
 
@@ -78,8 +63,6 @@ class DefaultScanTimeoutHandler(private val activity: Activity,
 
     interface Listener {
         fun onTimeout()
-        fun onRetry()
-        fun onChangeCountry()
     }
 
 }

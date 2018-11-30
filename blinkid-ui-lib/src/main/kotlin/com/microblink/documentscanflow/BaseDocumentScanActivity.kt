@@ -108,21 +108,8 @@ abstract class BaseDocumentScanActivity : AppCompatActivity(), ScanResultListene
     protected open fun getFrameGrabberMode(): FrameGrabberMode = FrameGrabberMode.NOTHING
     protected open fun createFrameListener(): FrameListener = FrameListener.EMPTY
     protected open fun createDocumentChooser() : DocumentChooser = DefaultDocumentChooser(this)
-    protected open fun createScanTimeoutHandler() : ScanTimeoutHandler = DefaultScanTimeoutHandler(this, SCAN_TIMEOUT_MILLIS, createScanTimeoutListener())
-    protected open fun createScanTimeoutListener() = object: DefaultScanTimeoutHandler.Listener {
-        override fun onTimeout() {
-            pauseScanning()
-        }
-
-        override fun onRetry() {
-            resumeScanningImmediately()
-        }
-
-        override fun onChangeCountry() {
-            resumeScanningImmediately()
-            documentChooser.onChooseCountryClick(currentDocument)
-        }
-    }
+    protected open fun createScanTimeoutHandler() : ScanTimeoutHandler = DefaultScanTimeoutHandler(SCAN_TIMEOUT_MILLIS, createScanTimeoutListener())
+    protected open fun createScanTimeoutListener() = createDefaultScanTimeoutListener()
 
     protected open fun createSplashOverlaySettings(): SplashOverlaySettings = InvisibleSplashOverlaySettings()
     protected open fun createScanSuccessSoundPlayer(): ScanSuccessPlayer = SoundPoolScanSuccessPlayer(this, R.raw.beep)
@@ -556,6 +543,34 @@ abstract class BaseDocumentScanActivity : AppCompatActivity(), ScanResultListene
             recognizerView.reconfigureRecognizers(recognizerBundle)
         } else if (recognizerView.cameraViewState == BaseCameraView.CameraViewState.DESTROYED) {
             recognizerView.recognizerBundle = recognizerBundle
+        }
+    }
+
+    private fun createDefaultScanTimeoutListener(): DefaultScanTimeoutHandler.Listener {
+        return object : DefaultScanTimeoutHandler.Listener {
+            override fun onTimeout() {
+                pauseScanning()
+
+                val dialogBuilder = AlertDialog.Builder(this@BaseDocumentScanActivity).apply {
+                    setCancelable(true)
+                    setMessage(R.string.mb_timeout_message)
+                    setTitle(R.string.mb_timeout_title)
+                    setPositiveButton(R.string.mb_timeout_retry) { _, _ -> onRetry() }
+                    setNeutralButton(R.string.mb_timeout_change_country) { _, _ ->
+                        resumeScanningImmediately()
+                        documentChooser.onChooseCountryClick(currentDocument)
+                    }
+                    setOnCancelListener { onRetry() }
+                }
+
+                if (!isFinishing) {
+                    dialogBuilder.show()
+                }
+            }
+
+            fun onRetry() {
+                resumeScanningImmediately()
+            }
         }
     }
 
