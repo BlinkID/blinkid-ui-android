@@ -247,12 +247,13 @@ abstract class BaseDocumentScanActivity : AppCompatActivity(), ScanResultListene
         documentTypeTabs.clearOnTabSelectedListeners()
         documentTypeTabs.removeAllTabs()
 
-        for ((docType, docDesc) in document.country.documentDescriptions) {
-            if (!documentChooser.isDocumentTypeSupportedForCountry(docType, document.country)) {
+        val country = document.country
+        for (docType in country.getSupportedDocumentTypes()) {
+            if (!documentChooser.isDocumentTypeSupportedForCountry(docType, country)) {
                 continue
             }
 
-            val documentName = docDesc.documentNameResourceID
+            val documentName = Document.getDocumentNameStringId(country, docType)
             val tab = documentTypeTabs.newTab().setText(documentName).setTag(docType)
             documentTypeTabs.addTab(tab)
             if (docType == document.documentType) {
