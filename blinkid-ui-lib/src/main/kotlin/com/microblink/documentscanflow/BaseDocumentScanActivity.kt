@@ -386,17 +386,17 @@ abstract class BaseDocumentScanActivity : AppCompatActivity(), ScanResultListene
 
     // special case for combined recognizer
     private fun onCombinedRecognizerFirstSideDone() {
+        val recognitionResult = currentDocument.getRecognition().extractResult(this, false)
+        scanTimeoutHandler.stopTimer()
+        scanTimeoutHandler.startTimer()
+        scanFlowListener.onFirstSideScanned(recognitionResult, null)
+
         scanFlowState = ScanFlowState.BACK_SIDE_SCAN
         runOnUiThread {
             val delay = instructionsHandler.updateSideInstructions(currentDocument, scanFlowState)
             scanLineAnimator.onScanPause()
             handler.postDelayed({ scanLineAnimator.onScanResume() }, delay)
         }
-
-        val recognitionResult = currentDocument.getRecognition().extractResult(this, false)
-        scanTimeoutHandler.stopTimer()
-        scanTimeoutHandler.startTimer()
-        scanFlowListener.onFirstSideScanned(recognitionResult, null)
     }
 
     override fun onScanningDone(recognitionSuccessType: RecognitionSuccessType) {
