@@ -126,6 +126,13 @@ enum class SupportedCountry(override val code: String, override val documentDesc
                 drivingLicence = NewZealandDlRecognition()
             }),
 
+    NIGERIA(
+            "ng",
+            recognitions {
+                drivingLicence = UsdlRecognition()
+            }
+    ),
+
     POLAND("pl",
             recognitions {
                 id = PolandIdRecognition()
