@@ -93,7 +93,7 @@ public class ScanActivity extends BaseDocumentScanActivity {
     @Override
     protected ScanTimeoutHandler createScanTimeoutHandler() {
         // just increase timeout to 5 minutes
-        return new DefaultScanTimeoutHandler(this, TimeUnit.MINUTES.toMillis(5), createScanTimeoutListener());
+        return new DefaultScanTimeoutHandler(TimeUnit.MINUTES.toMillis(5));
     }
 
     @NonNull
