@@ -5,7 +5,7 @@ import com.microblink.documentscanflow.recognition.BaseRecognition
 import com.microblink.documentscanflow.recognition.implementations.*
 import com.microblink.entities.recognizers.blinkid.eudl.EudlCountry
 
-enum class SupportedCountry(override val code: String, override val documentDescriptions: Map<DocumentType, BaseRecognition>)
+enum class SupportedCountry(override val code: String, override val recognitionsByDocumentType: Map<DocumentType, BaseRecognition>)
     : Country {
 
     AUSTRALIA("au",
@@ -223,7 +223,7 @@ enum class SupportedCountry(override val code: String, override val documentDesc
 private val UNSUPPORTED = null
 
 private fun recognitions(init: RecognitionsBuilder.() -> Unit): Map<DocumentType, BaseRecognition> {
-    val documentDescriptionBuilder = RecognitionsBuilder()
-    documentDescriptionBuilder.init()
-    return documentDescriptionBuilder.build()
+    val recognitionsBuilder = RecognitionsBuilder()
+    recognitionsBuilder.init()
+    return recognitionsBuilder.build()
 }

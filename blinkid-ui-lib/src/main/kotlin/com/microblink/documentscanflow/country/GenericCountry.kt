@@ -6,6 +6,6 @@ import com.microblink.documentscanflow.recognition.BaseRecognition
 
 class GenericCountry(override val code: String) : Country {
 
-    override val documentDescriptions: Map<DocumentType, BaseRecognition> = RecognitionsBuilder().build()
+    override val recognitionsByDocumentType: Map<DocumentType, BaseRecognition> = RecognitionsBuilder().build()
 
 }

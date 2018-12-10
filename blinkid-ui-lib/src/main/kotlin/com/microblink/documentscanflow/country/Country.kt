@@ -7,7 +7,7 @@ import java.util.*
 interface Country {
 
     val code: String
-    val documentDescriptions: Map<DocumentType, BaseRecognition>
+    val recognitionsByDocumentType: Map<DocumentType, BaseRecognition>
 
     /**
      * Returns the name of this country, localized to the current locale (current app language).
@@ -20,12 +20,12 @@ interface Country {
     }
 
     fun getRecognition(documentType: DocumentType): BaseRecognition {
-        return documentDescriptions[documentType]
+        return recognitionsByDocumentType[documentType]
                 ?: throw IllegalArgumentException("This county does not support $documentType")
     }
 
     fun getSupportedDocumentTypes(): List<DocumentType> {
-        return documentDescriptions.keys.toList()
+        return recognitionsByDocumentType.keys.toList()
     }
 
 }
