@@ -4,11 +4,11 @@ import com.microblink.documentscanflow.R
 import com.microblink.documentscanflow.isEmpty
 import com.microblink.documentscanflow.recognition.BaseRecognition
 import com.microblink.entities.recognizers.Recognizer
-import com.microblink.entities.recognizers.blinkid.malaysia.IkadRecognizer
+import com.microblink.entities.recognizers.blinkid.malaysia.MalaysiaIkadFrontRecognizer
 
 class MalaysiaIkadRecognition : BaseRecognition() {
 
-    val recognizer by lazy { IkadRecognizer() }
+    val recognizer by lazy { MalaysiaIkadFrontRecognizer() }
 
     override fun getSingleSideRecognizers(): List<Recognizer<*, *>> {
         return listOf(recognizer)
@@ -24,11 +24,11 @@ class MalaysiaIkadRecognition : BaseRecognition() {
         add(R.string.keyAddress, result.address)
         add(R.string.keyDateOfBirth, result.dateOfBirth)
         add(R.string.keyEmployer, result.employer)
-        addDateOfExpiry(result.expiryDate)
+        addDateOfExpiry(result.dateOfExpiry.date)
         add(R.string.keyNationality, result.nationality)
         add(R.string.keyPassportNumber, result.passportNumber)
         add(R.string.keySector, result.sector)
-        add(R.string.keySex, result.sex)
+        add(R.string.keySex, result.gender)
         
         return result.name
     }
