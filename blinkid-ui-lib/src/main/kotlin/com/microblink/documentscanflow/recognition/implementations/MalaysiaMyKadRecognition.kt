@@ -5,14 +5,14 @@ import com.microblink.documentscanflow.isNotEmpty
 import com.microblink.documentscanflow.recognition.BaseTwoSideRecognition
 import com.microblink.documentscanflow.recognition.ResultValidator
 import com.microblink.entities.recognizers.Recognizer
-import com.microblink.entities.recognizers.blinkid.malaysia.MyKadBackRecognizer
-import com.microblink.entities.recognizers.blinkid.malaysia.MyKadFrontRecognizer
+import com.microblink.entities.recognizers.blinkid.malaysia.MalaysiaMyKadBackRecognizer
+import com.microblink.entities.recognizers.blinkid.malaysia.MalaysiaMyKadFrontRecognizer
 
 class MalaysiaMyKadRecognition
     : BaseTwoSideRecognition() {
 
-    val frontRecognizer by lazy { MyKadFrontRecognizer() }
-    val backRecognizer by lazy { MyKadBackRecognizer() }
+    val frontRecognizer by lazy { MalaysiaMyKadFrontRecognizer() }
+    val backRecognizer by lazy { MalaysiaMyKadBackRecognizer() }
 
     val frontResult by lazy { frontRecognizer.result }
     val backResult by lazy { backRecognizer.result }
@@ -23,8 +23,8 @@ class MalaysiaMyKadRecognition
 
     override fun createValidator(): ResultValidator {
         return ResultValidator()
-                .match(frontResult.nricNumber, backResult.nric)
-                .match(frontResult.ownerBirthDate, backResult.dateOfBirth.date)
+                .match(frontResult.nric, backResult.nric)
+                .match(frontResult.birthDate.date, backResult.dateOfBirth.date)
     }
 
     override fun extractFields() {
@@ -38,7 +38,7 @@ class MalaysiaMyKadRecognition
 
     override fun getResultTitle(): String? {
         if (frontResult.isNotEmpty()) {
-            return frontResult.ownerFullName
+            return frontResult.fullName
         } else if (backResult.isNotEmpty()) {
             return backResult.nric
         }
@@ -46,12 +46,12 @@ class MalaysiaMyKadRecognition
     }
 
     private fun extractFrontSide() {
-        add(R.string.keyFullName, frontResult.ownerFullName)
-        add(R.string.keyNricNumber, frontResult.nricNumber)
-        add(R.string.keyDateOfBirth, frontResult.ownerBirthDate)
-        add(R.string.keyAddress, frontResult.ownerAddress)
-        add(R.string.keySex, frontResult.ownerSex)
-        add(R.string.keyReligion, frontResult.ownerReligion)
+        add(R.string.keyFullName, frontResult.fullName)
+        add(R.string.keyNricNumber, frontResult.nric)
+        add(R.string.keyDateOfBirth, frontResult.birthDate)
+        add(R.string.keyAddress, frontResult.fullAddress)
+        add(R.string.keySex, frontResult.sex)
+        add(R.string.keyReligion, frontResult.religion)
     }
 
     private fun extractBackSide() {
