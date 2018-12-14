@@ -6,13 +6,13 @@ import com.microblink.documentscanflow.recognition.BaseTwoSideRecognition
 import com.microblink.documentscanflow.recognition.ResultValidator
 import com.microblink.documentscanflow.recognition.util.FormattingUtils
 import com.microblink.entities.recognizers.Recognizer
-import com.microblink.entities.recognizers.blinkid.cyprus.CyprusIdBackRecognizer
-import com.microblink.entities.recognizers.blinkid.cyprus.CyprusIdFrontRecognizer
+import com.microblink.entities.recognizers.blinkid.cyprus.CyprusOldIdBackRecognizer
+import com.microblink.entities.recognizers.blinkid.cyprus.CyprusOldIdFrontRecognizer
 
-class CyprusIdRecognition : BaseTwoSideRecognition() {
+class CyprusOldIdRecognition : BaseTwoSideRecognition() {
 
-    private val frontRecognizer by lazy { CyprusIdFrontRecognizer() }
-    private val backRecognizer by lazy { CyprusIdBackRecognizer() }
+    private val frontRecognizer by lazy { CyprusOldIdFrontRecognizer() }
+    private val backRecognizer by lazy { CyprusOldIdBackRecognizer() }
 
     private val frontResult by lazy { frontRecognizer.result }
     private val backResult by lazy { backRecognizer.result }
@@ -38,14 +38,14 @@ class CyprusIdRecognition : BaseTwoSideRecognition() {
 
     override fun getSingleSideRecognizers() = listOf<Recognizer<*, *>>(frontRecognizer, backRecognizer)
 
-    private fun extractFront(result: CyprusIdFrontRecognizer.Result) {
+    private fun extractFront(result: CyprusOldIdFrontRecognizer.Result) {
         add(R.string.keyIdentityNumber, result.idNumber)
         add(R.string.keyDocumentNumber, result.documentNumber)
         add(R.string.keyFirstName, result.name)
         add(R.string.keyLastName, result.surname)
     }
 
-    private fun extractBack(result: CyprusIdBackRecognizer.Result) {
+    private fun extractBack(result: CyprusOldIdBackRecognizer.Result) {
         add(R.string.keyDateOfBirth, result.dateOfBirth)
         add(R.string.keySex, result.sex)
         add(R.string.keyDateOfExpiry, result.expiresOn)

@@ -45,7 +45,8 @@ enum class SupportedCountry(override val code: String, override val documentDesc
 
     CYPRUS("cy",
             DocumentDescriptionBuilder()
-                    .id(CyprusIdRecognition())
+                    //.id() TODO add id
+                    .oldId(CyprusOldIdRecognition())
                     .build()),
 
     CZECHIA("cz",
