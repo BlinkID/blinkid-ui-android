@@ -23,15 +23,15 @@ class SwitzerlandPassportRecognition: BaseRecognition() {
             return null
         }
 
-        val firstName = mStringCombiner.combineMRZString(result.secondaryId, result.givenName)
-        val lastName = mStringCombiner.combineMRZString(result.primaryId, result.surname)
+        val firstName = mStringCombiner.combineMRZString(result.mrzResult.secondaryId, result.givenName)
+        val lastName = mStringCombiner.combineMRZString(result.mrzResult.primaryId, result.surname)
 
         add(R.string.keyFirstName, firstName)
         add(R.string.keyLastName, lastName)
         add(R.string.keyPassportNumber, result.passportNumber)
-        add(R.string.keyNationality, result.nationality)
+        add(R.string.keyNationality, result.mrzResult.nationality)
         add(R.string.keyDateOfBirth, result.dateOfBirth)
-        add(R.string.keyPlaceOfOrigin, result.placeOfBirth)
+        add(R.string.keyPlaceOfOrigin, result.placeOfOrigin)
         add(R.string.keyIssueDate, result.dateOfIssue)
         add(R.string.keyDateOfExpiry, result.dateOfExpiry)
         add(R.string.keySex, result.sex)
