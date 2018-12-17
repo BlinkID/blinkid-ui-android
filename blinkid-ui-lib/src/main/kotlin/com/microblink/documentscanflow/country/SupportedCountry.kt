@@ -20,6 +20,12 @@ enum class SupportedCountry(override val code: String, override val recognitions
                 passport = AustriaPassportRecognition()
             }),
 
+    BRUNEI("bn",
+            recognitions {
+                id = BruneiIdRecognition()
+                residencePermit = GenericRecognition.residencePermit
+            }),
+
     CANADA("ca",
             recognitions {
                 id = UsdlRecognition()
