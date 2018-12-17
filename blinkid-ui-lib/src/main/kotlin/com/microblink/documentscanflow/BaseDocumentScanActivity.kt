@@ -253,7 +253,7 @@ abstract class BaseDocumentScanActivity : AppCompatActivity(), ScanResultListene
                 continue
             }
 
-            val documentName = Document.getDocumentNameStringId(country, docType)
+            val documentName = country.getDocumentNameStringId(docType)
             val tab = documentTypeTabs.newTab().setText(documentName).setTag(docType)
             documentTypeTabs.addTab(tab)
             if (docType == document.documentType) {

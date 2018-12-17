@@ -1,11 +1,14 @@
 package com.microblink.documentscanflow.country
 
+import com.microblink.documentscanflow.R
 import com.microblink.documentscanflow.document.*
 import com.microblink.documentscanflow.recognition.BaseRecognition
 import com.microblink.documentscanflow.recognition.implementations.*
 import com.microblink.entities.recognizers.blinkid.eudl.EudlCountry
 
-enum class SupportedCountry(override val code: String, override val recognitionsByDocumentType: Map<DocumentType, BaseRecognition>)
+enum class SupportedCountry(override val code: String,
+                            override val recognitionsByDocumentType: Map<DocumentType, BaseRecognition>,
+                            override val documentNameOverrides: Map<DocumentType, Int> = LinkedHashMap())
     : Country {
 
     AUSTRALIA("au",
@@ -118,7 +121,13 @@ enum class SupportedCountry(override val code: String, override val recognitions
                 militaryId = MalaysiaTenteraRecognition()
                 temporaryResidentId = MalaysiaKasRecognition()
                 permanentResidentId = MalaysiaPrRecognition()
-            }),
+            },
+            documentNameOverrides =  mapOf(
+                    DocumentType.IMMIGRATOR_ID to R.string.mb_custom_ikad,
+                    DocumentType.MILITARY_ID to R.string.mb_custom_mytentera,
+                    DocumentType.TEMPORARY_RESIDENT_ID to R.string.mb_custom_mykas,
+                    DocumentType.PERMANENT_RESIDENT_ID to R.string.mb_custom_mypr
+            )),
 
     MEXICO("mx",
             recognitions {
