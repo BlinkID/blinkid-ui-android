@@ -2,12 +2,14 @@ package com.microblink.documentscanflow.ui.scantimeouthandler
 
 interface ScanTimeoutHandler {
 
-    fun onScanStart()
+    fun registerListener(listener: Listener?)
 
-    fun onScanDone()
+    fun startTimer()
 
-    fun onScanPaused()
+    fun stopTimer()
 
-    fun onScanResumed()
+    interface Listener {
+        fun onTimeout()
+    }
 
 }

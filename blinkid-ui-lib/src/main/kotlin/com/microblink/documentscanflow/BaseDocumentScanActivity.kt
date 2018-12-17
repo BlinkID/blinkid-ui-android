@@ -2,6 +2,7 @@ package com.microblink.documentscanflow
 
 import android.annotation.TargetApi
 import android.app.Activity
+import android.arch.lifecycle.Lifecycle
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
@@ -95,7 +96,6 @@ abstract class BaseDocumentScanActivity : AppCompatActivity(), ScanResultListene
 
     private val ocrView by lazy { OcrResultDotsView(this, recognizerView.hostScreenOrientation, recognizerView.initialOrientation) }
 
-    private var activityState = ActivityState.DESTROYED
     private var scanFlowState: ScanFlowState = ScanFlowState.NOT_STARTED
     private lateinit var currentDocument: Document
     private var recognitionError = RecognitionError.NONE
@@ -108,21 +108,8 @@ abstract class BaseDocumentScanActivity : AppCompatActivity(), ScanResultListene
     protected open fun getFrameGrabberMode(): FrameGrabberMode = FrameGrabberMode.NOTHING
     protected open fun createFrameListener(): FrameListener = FrameListener.EMPTY
     protected open fun createDocumentChooser() : DocumentChooser = DefaultDocumentChooser(this)
-    protected open fun createScanTimeoutHandler() : ScanTimeoutHandler = DefaultScanTimeoutHandler(this, SCAN_TIMEOUT_MILLIS, createScanTimeoutListener())
-    protected open fun createScanTimeoutListener() = object: DefaultScanTimeoutHandler.Listener {
-        override fun onTimeout() {
-            pauseScanning()
-        }
-
-        override fun onRetry() {
-            resumeScanningImmediately()
-        }
-
-        override fun onChangeCountry() {
-            resumeScanningImmediately()
-            documentChooser.onChooseCountryClick(currentDocument)
-        }
-    }
+    protected open fun createScanTimeoutHandler() : ScanTimeoutHandler = DefaultScanTimeoutHandler(SCAN_TIMEOUT_MILLIS)
+    protected open fun createScanTimeoutListener() = createDefaultScanTimeoutListener()
 
     protected open fun createSplashOverlaySettings(): SplashOverlaySettings = InvisibleSplashOverlaySettings()
     protected open fun createScanSuccessSoundPlayer(): ScanSuccessPlayer = SoundPoolScanSuccessPlayer(this, R.raw.beep)
@@ -147,7 +134,7 @@ abstract class BaseDocumentScanActivity : AppCompatActivity(), ScanResultListene
 
     @AnyThread
     protected fun pauseScanning() {
-        scanTimeoutHandler.onScanPaused()
+        scanTimeoutHandler.stopTimer()
         runOnUiThread {
             recognizerView.pauseScanning()
             scanLineAnimator.onScanPause()
@@ -221,11 +208,11 @@ abstract class BaseDocumentScanActivity : AppCompatActivity(), ScanResultListene
 
         volumeControlStream = AudioManager.STREAM_MUSIC
 
-        activityState = ActivityState.CREATED
-
         currentDocument = getInitialDocument()
         updateDocumentTypeSelectionTabs(currentDocument)
         selectedCountryTv.text = currentDocument.country.getLocalisedName()
+
+        scanTimeoutHandler.registerListener(createScanTimeoutListener())
 
         startScan()
         recognizerView.create()
@@ -260,17 +247,18 @@ abstract class BaseDocumentScanActivity : AppCompatActivity(), ScanResultListene
         documentTypeTabs.clearOnTabSelectedListeners()
         documentTypeTabs.removeAllTabs()
 
-        for ((docType, docDesc) in document.country.documentDescriptions) {
-            if (!documentChooser.isDocumentTypeSupportedForCountry(docType, document.country)) {
+        val country = document.country
+        for (docType in country.getSupportedDocumentTypes()) {
+            if (!documentChooser.isDocumentTypeSupportedForCountry(docType, country)) {
                 continue
             }
 
-            val documentName = docDesc.documentNameResourceID
+            val documentName = Document.getDocumentNameStringId(country, docType)
             val tab = documentTypeTabs.newTab().setText(documentName).setTag(docType)
             documentTypeTabs.addTab(tab)
             if (docType == document.documentType) {
                 // delay to give it enough time to scroll
-                Handler().postDelayed({ tab.select() }, 200)
+                handler.postDelayed({ tab.select() }, 200)
             }
         }
 
@@ -309,7 +297,7 @@ abstract class BaseDocumentScanActivity : AppCompatActivity(), ScanResultListene
 
     @AnyThread
     private fun resumeScanningImmediately() {
-        scanTimeoutHandler.onScanResumed()
+        scanTimeoutHandler.startTimer()
 
         // resetting combined will revert it to first side scan and we don't want that
         val shouldResetState = !recognizerManager.isCombinedRecognition(scanFlowState)
@@ -332,13 +320,11 @@ abstract class BaseDocumentScanActivity : AppCompatActivity(), ScanResultListene
 
     override fun onStart() {
         super.onStart()
-        activityState = ActivityState.STARTED
         recognizerView.start()
     }
 
     override fun onResume() {
         super.onResume()
-        activityState = ActivityState.RESUMED
         recognizerView.resume()
         // always restart scanning when resuming activity, must be called after recognizer_view.resume()
         restartScanning()
@@ -353,21 +339,19 @@ abstract class BaseDocumentScanActivity : AppCompatActivity(), ScanResultListene
 
     override fun onPause() {
         super.onPause()
-        activityState = ActivityState.STARTED
         recognizerView.pause()
-        scanTimeoutHandler.onScanDone()
+        scanTimeoutHandler.stopTimer()
     }
 
     override fun onStop() {
         super.onStop()
-        activityState = ActivityState.CREATED
         recognizerView.stop()
     }
 
     override fun onDestroy() {
         unregisterReceiver(localeBroadcastReceiver)
+        scanTimeoutHandler.registerListener(null)
         super.onDestroy()
-        activityState = ActivityState.DESTROYED
         recognizerView.destroy()
         scanSuccessPlayer.cleanup()
         instructionsHandler.clear(true)
@@ -402,17 +386,17 @@ abstract class BaseDocumentScanActivity : AppCompatActivity(), ScanResultListene
 
     // special case for combined recognizer
     private fun onCombinedRecognizerFirstSideDone() {
+        val recognitionResult = currentDocument.getRecognition().extractResult(this, false)
+        scanTimeoutHandler.stopTimer()
+        scanTimeoutHandler.startTimer()
+        scanFlowListener.onFirstSideScanned(recognitionResult, null)
+
         scanFlowState = ScanFlowState.BACK_SIDE_SCAN
         runOnUiThread {
             val delay = instructionsHandler.updateSideInstructions(currentDocument, scanFlowState)
             scanLineAnimator.onScanPause()
             handler.postDelayed({ scanLineAnimator.onScanResume() }, delay)
         }
-
-        val recognitionResult = currentDocument.getRecognition().extractResult(this, false)
-        scanTimeoutHandler.onScanDone()
-        scanTimeoutHandler.onScanStart()
-        scanFlowListener.onFirstSideScanned(recognitionResult, null)
     }
 
     override fun onScanningDone(recognitionSuccessType: RecognitionSuccessType) {
@@ -439,7 +423,7 @@ abstract class BaseDocumentScanActivity : AppCompatActivity(), ScanResultListene
     }
 
     private fun onAllSidesScanned() {
-        scanTimeoutHandler.onScanDone()
+        scanTimeoutHandler.stopTimer()
 
         val recognition = currentDocument.getRecognition()
         try {
@@ -464,7 +448,7 @@ abstract class BaseDocumentScanActivity : AppCompatActivity(), ScanResultListene
     }
 
     private fun onFirstSideScanned() {
-        scanTimeoutHandler.onScanDone()
+        scanTimeoutHandler.stopTimer()
         val successFrame = recognizerManager.getSuccessFrame(scanFlowState)
         val recognitionResult = currentDocument.getRecognition().extractResult(this, false)
         scanFlowListener.onFirstSideScanned(recognitionResult, successFrame)
@@ -546,7 +530,7 @@ abstract class BaseDocumentScanActivity : AppCompatActivity(), ScanResultListene
     @UiThread
     private fun startScanningNextSide(): Long {
         var cardFlippingDelay = 0L
-        scanTimeoutHandler.onScanStart()
+        scanTimeoutHandler.startTimer()
         if (!shouldScanBothDocumentSides()) {
             instructionsHandler.setAnySideInstructions(currentDocument)
         } else {
@@ -563,6 +547,34 @@ abstract class BaseDocumentScanActivity : AppCompatActivity(), ScanResultListene
             recognizerView.reconfigureRecognizers(recognizerBundle)
         } else if (recognizerView.cameraViewState == BaseCameraView.CameraViewState.DESTROYED) {
             recognizerView.recognizerBundle = recognizerBundle
+        }
+    }
+
+    private fun createDefaultScanTimeoutListener(): ScanTimeoutHandler.Listener {
+        return object : ScanTimeoutHandler.Listener {
+            override fun onTimeout() {
+                pauseScanning()
+
+                val dialogBuilder = AlertDialog.Builder(this@BaseDocumentScanActivity).apply {
+                    setCancelable(true)
+                    setMessage(R.string.mb_timeout_message)
+                    setTitle(R.string.mb_timeout_title)
+                    setPositiveButton(R.string.mb_timeout_retry) { _, _ -> onRetry() }
+                    setNeutralButton(R.string.mb_timeout_change_country) { _, _ ->
+                        resumeScanningImmediately()
+                        documentChooser.onChooseCountryClick(currentDocument)
+                    }
+                    setOnCancelListener { onRetry() }
+                }
+
+                if (!isFinishing) {
+                    dialogBuilder.show()
+                }
+            }
+
+            fun onRetry() {
+                resumeScanningImmediately()
+            }
         }
     }
 
@@ -588,7 +600,6 @@ abstract class BaseDocumentScanActivity : AppCompatActivity(), ScanResultListene
     private fun createCameraEventsListener(): CameraEventsListener? {
         return object: CameraEventsListener {
 
-            @CallSuper
             override fun onCameraPreviewStarted() {
                 if (recognizerView.isCameraTorchSupported) {
                     torchButtonHandler.onTorchSupported()
@@ -598,7 +609,7 @@ abstract class BaseDocumentScanActivity : AppCompatActivity(), ScanResultListene
                     splash_overlay.fadeOut(splashOverlaySettings.getDurationMillis())
                 }
 
-                if (activityState == ActivityState.RESUMED) {
+                if (lifecycle.currentState == Lifecycle.State.RESUMED) {
                     recognizerView.setMeteringAreas(arrayOf(RectF(0.33f, 0.33f, 0.66f, 0.66f)), true)
                 }
 
@@ -608,7 +619,6 @@ abstract class BaseDocumentScanActivity : AppCompatActivity(), ScanResultListene
 
             override fun onCameraPreviewStopped() {}
 
-            @CallSuper
             override fun onCameraPermissionDenied() {
                 cameraPermissionManager.askForCameraPermission()
             }

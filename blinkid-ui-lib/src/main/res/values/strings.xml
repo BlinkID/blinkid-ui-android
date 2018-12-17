@@ -11,6 +11,8 @@
     <string name="mb_passport">Passport</string>
     <string name="mb_residence_permit">Residence permit</string>
     <string name="mb_visa">Visa</string>
+    <string name="mb_immigrator_id">Immigrator ID</string>
+    <string name="mb_military_id">Military ID</string>
     <string name="mb_custom_ikad">iKad</string>
     <string name="mb_custom_mytentera">MyTentera</string>
 
