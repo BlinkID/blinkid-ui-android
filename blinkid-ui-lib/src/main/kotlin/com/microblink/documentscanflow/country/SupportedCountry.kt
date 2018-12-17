@@ -1,225 +1,247 @@
 package com.microblink.documentscanflow.country
 
 import com.microblink.documentscanflow.R
-import com.microblink.documentscanflow.document.DocumentDescription
-import com.microblink.documentscanflow.document.DocumentDescriptionBuilder
-import com.microblink.documentscanflow.document.DocumentType
-import com.microblink.documentscanflow.document.GenericDocumentDescriptions
+import com.microblink.documentscanflow.document.*
+import com.microblink.documentscanflow.recognition.BaseRecognition
 import com.microblink.documentscanflow.recognition.implementations.*
 import com.microblink.entities.recognizers.blinkid.eudl.EudlCountry
 
-enum class SupportedCountry(override val code: String, override val documentDescriptions: Map<DocumentType, DocumentDescription>)
+enum class SupportedCountry(override val code: String,
+                            override val recognitionsByDocumentType: Map<DocumentType, BaseRecognition>,
+                            override val documentNameOverrides: Map<DocumentType, Int> = LinkedHashMap())
     : Country {
 
     AUSTRALIA("au",
-            DocumentDescriptionBuilder()
-                    .drivingLicence(GenericDocumentDescriptions.drivingLicenceId1FormatUnsupported)
-                    .remove(DocumentType.ID)
-                    .build()),
+            recognitions {
+                id = UNSUPPORTED
+            }),
 
     AUSTRIA("at",
-            DocumentDescriptionBuilder()
-                    .id(AustriaIdRecognition())
-                    .drivingLicence(AustriaDlRecognition())
-                    .passport(AustriaPassportRecognition())
-                    .build()),
+            recognitions {
+                id = AustriaIdRecognition()
+                drivingLicence = AustriaDlRecognition()
+                passport = AustriaPassportRecognition()
+            }),
+
+    BRUNEI("bn",
+            recognitions {
+                id = BruneiIdRecognition()
+                residencePermit = GenericRecognition.residencePermit
+            }),
 
     CANADA("ca",
-            DocumentDescriptionBuilder()
-                    .id(UsdlRecognition())
-                    .drivingLicence(UsdlRecognition())
-                    .build()),
+            recognitions {
+                id = UsdlRecognition()
+                drivingLicence = UsdlRecognition()
+            }),
 
     COLOMBIA("co",
-            DocumentDescriptionBuilder()
-                    .id(ColombiaIdRecognition())
-                    .drivingLicence(ColombiaDlRecognition())
-                    .build()),
+            recognitions {
+                id = ColombiaIdRecognition()
+                drivingLicence = ColombiaDlRecognition()
+            }),
 
     CROATIA("hr",
-            DocumentDescriptionBuilder()
-                    .id(CroatiaIdRecognition())
-                    .drivingLicence(GenericDocumentDescriptions.drivingLicenceId1FormatSupported)
-                    .residencePermit(GenericDocumentDescriptions.residencePermit)
-                    .build()),
+            recognitions {
+                id = CroatiaIdRecognition()
+                drivingLicence = GenericRecognition.faceId1(true)
+                residencePermit = GenericRecognition.residencePermit
+            }),
 
     CYPRUS("cy",
-            DocumentDescriptionBuilder()
-                    //.id() TODO add id
-                    .oldId(CyprusOldIdRecognition())
-                    .build()),
+            recognitions {
+                id = CyprusIdRecognition()
+                oldId = CyprusOldIdRecognition()
+            }),
 
     CZECHIA("cz",
-            DocumentDescriptionBuilder()
-                    .id(CzechIdRecognition())
-                    .drivingLicence(GenericDocumentDescriptions.drivingLicenceId1FormatSupported)
-                    .oldId(GenericRecognition.mrtdId2Vertical())
-                    .build()),
+            recognitions {
+                id = CzechIdRecognition()
+                drivingLicence = GenericRecognition.faceId1(true)
+                oldId = GenericRecognition.mrtdId2Vertical(true)
+            }),
 
     EGYPT("eg",
-            DocumentDescriptionBuilder()
-                    .id(EgyptIdRecognition())
-                    .build()),
+            recognitions {
+                id = EgyptIdRecognition()
+            }),
 
     FRANCE("fr",
-            DocumentDescriptionBuilder()
-                    .id(GenericRecognition.mrtdId1(), fullySupported = false)
-                    .drivingLicence(GenericDocumentDescriptions.drivingLicenceId1FormatUnsupported)
-                    .residencePermit(GenericDocumentDescriptions.residencePermit)
-                    .build()),
+            recognitions {
+                id = GenericRecognition.mrtdId1(false)
+                residencePermit = GenericRecognition.residencePermit
+            }),
 
     GERMANY("de",
-            DocumentDescriptionBuilder()
-                    .id(GermanyIdRecognition())
-                    .drivingLicence(GermanyDlRecognition())
-                    .oldId(GermanyOldIdRecognition())
-                    .residencePermit(GenericDocumentDescriptions.residencePermit)
-                    .build()),
+            recognitions {
+                id = GermanyIdRecognition()
+                drivingLicence = GermanyDlRecognition()
+                oldId = GermanyOldIdRecognition()
+                residencePermit = GenericRecognition.residencePermit
+            }),
 
     HONG_KONG("hk",
-            DocumentDescriptionBuilder()
-                    .id(HongKongIdRecognition())
-                    .drivingLicence(GenericDocumentDescriptions.drivingLicenceId1FormatUnsupported)
-                    .build()),
+            recognitions {
+                id = HongKongIdRecognition()
+            }),
 
     INDONESIA("id",
-            DocumentDescriptionBuilder()
-                    .id(IndonesiaIdRecognition())
-                    .drivingLicence(GenericDocumentDescriptions.drivingLicenceId1FormatSupported)
-                    .build()),
+            recognitions {
+                id = IndonesiaIdRecognition()
+                drivingLicence = GenericRecognition.faceId1(true)
+            }),
 
     IRELAND("ie",
-            DocumentDescriptionBuilder()
-                    .drivingLicence(IrelandDlRecognition())
-                    .build()),
+            recognitions {
+                drivingLicence = IrelandDlRecognition()
+            }),
 
     ITALY("it",
-            DocumentDescriptionBuilder()
-                    .id(GenericRecognition.mrtdId1(), fullySupported = false)
-                    .drivingLicence(ItalyDlRecognition())
-                    .build()),
+            recognitions {
+                id = GenericRecognition.mrtdId1(false)
+                drivingLicence = ItalyDlRecognition()
+            }),
 
     JORDAN("jo",
-            DocumentDescriptionBuilder()
-                    .newId(JordanIdRecognition())
-                    .build()),
+            recognitions {
+                newId = JordanIdRecognition()
+            }),
 
     KUWAIT("kw",
-            DocumentDescriptionBuilder()
-                    .id(KuwaitIdRecognition())
-                    .build()),
+            recognitions {
+                id = KuwaitIdRecognition()
+            }),
 
     MALAYSIA("my",
-            DocumentDescriptionBuilder()
-                    .id(MalaysiaMyKadRecognition())
-                    .drivingLicence(MalaysiaDlRecognition())
-                    .passport(GenericRecognition.mrtd())
-                    .add(DocumentType.IMMIGRATOR_ID, DocumentDescription(true, R.string.mb_custom_ikad, MalaysiaIkadRecognition()))
-                    .add(DocumentType.MILITARY_ID, DocumentDescription(true, R.string.mb_custom_mytentera, MalaysiaTenteraRecognition()))
-                    .build()),
+            recognitions {
+                id = MalaysiaMyKadRecognition()
+                drivingLicence = MalaysiaDlRecognition()
+                passport = GenericRecognition.mrtd(true)
+                immigratorId = MalaysiaIkadRecognition()
+                militaryId = MalaysiaTenteraRecognition()
+                temporaryResidentId = MalaysiaKasRecognition()
+                permanentResidentId = MalaysiaPrRecognition()
+            },
+            documentNameOverrides =  mapOf(
+                    DocumentType.IMMIGRATOR_ID to R.string.mb_custom_ikad,
+                    DocumentType.MILITARY_ID to R.string.mb_custom_mytentera,
+                    DocumentType.TEMPORARY_RESIDENT_ID to R.string.mb_custom_mykas,
+                    DocumentType.PERMANENT_RESIDENT_ID to R.string.mb_custom_mypr
+            )),
 
     MEXICO("mx",
-            DocumentDescriptionBuilder()
-                    .id(MexicoIdRecognition())
-                    .build()
-    ),
+            recognitions {
+                id = MexicoIdRecognition()
+            }),
 
     MOROCCO("ma",
-            DocumentDescriptionBuilder()
-                    .id(MoroccoIdRecognition())
-                    .build()),
+            recognitions {
+                id = MoroccoIdRecognition()
+            }),
 
     NEW_ZEALAND("nz",
-            DocumentDescriptionBuilder()
-                    .drivingLicence(NewZealandDlRecognition())
-                    .build()),
+            recognitions {
+                drivingLicence = NewZealandDlRecognition()
+            }),
 
-    POLAND("pl",
-            DocumentDescriptionBuilder()
-                    .id(PolandIdRecognition())
-                    .drivingLicence(GenericDocumentDescriptions.drivingLicenceId1FormatSupported)
-                    .residencePermit(GenericDocumentDescriptions.residencePermit)
-                    .build()),
-
-    QATAR("qa",
-            DocumentDescriptionBuilder()
-                    .id(GenericRecognition.faceId1(), fullySupported = false)
-                    .drivingLicence(GenericDocumentDescriptions.drivingLicenceId1FormatUnsupported)
-                    .build()),
-
-    ROMANIA("ro",
-            DocumentDescriptionBuilder()
-                    .id(RomaniaIdRecognition())
-                    .drivingLicence(GenericDocumentDescriptions.drivingLicenceId1FormatUnsupported)
-                    .build()),
-
-    SERBIA("rs",
-            DocumentDescriptionBuilder()
-                    .id(SerbiaIdRecognition())
-                    .build()),
-
-    SWEDEN("se",
-            DocumentDescriptionBuilder()
-                    .drivingLicence(SwedenDlRecognition())
-                    .build()
+    NIGERIA(
+            "ng",
+            recognitions {
+                drivingLicence = UsdlRecognition()
+            }
     ),
 
+    POLAND("pl",
+            recognitions {
+                id = PolandIdRecognition()
+                drivingLicence = GenericRecognition.faceId1(true)
+                residencePermit = GenericRecognition.residencePermit
+            }),
+
+    QATAR("qa",
+            recognitions {
+                id = GenericRecognition.faceId1(false)
+            }),
+
+    ROMANIA("ro",
+            recognitions {
+                id = RomaniaIdRecognition()
+            }),
+
+    SERBIA("rs",
+            recognitions {
+                id = SerbiaIdRecognition()
+            }),
+
+    SWEDEN("se",
+            recognitions {
+                drivingLicence = SwedenDlRecognition()
+            }),
+
     SINGAPORE("sg",
-            DocumentDescriptionBuilder()
-                    .id(SingaporeIdRecognition())
-                    .drivingLicence(SingaporeDlRecognition())
-                    .build()),
+            recognitions {
+                id = SingaporeIdRecognition()
+                drivingLicence = SingaporeDlRecognition()
+            }),
 
     SLOVAKIA("sk",
-            DocumentDescriptionBuilder()
-                    .id(SlovakiaIdRecognition())
-                    .drivingLicence(GenericDocumentDescriptions.drivingLicenceId1FormatSupported)
-                    .build()),
+            recognitions {
+                id = SlovakiaIdRecognition()
+                drivingLicence = GenericRecognition.faceId1(true)
+            }),
 
     SLOVENIA("si",
-            DocumentDescriptionBuilder()
-                    .id(SloveniaIdRecognition())
-                    .drivingLicence(GenericDocumentDescriptions.drivingLicenceId1FormatSupported)
-                    .residencePermit(GenericDocumentDescriptions.residencePermit)
-                    .build()),
+            recognitions {
+                id = SloveniaIdRecognition()
+                drivingLicence = GenericRecognition.faceId1(true)
+                residencePermit = GenericRecognition.residencePermit
+            }),
 
     SOUTH_AFRICA("za",
-            DocumentDescriptionBuilder()
-                    .id(GenericRecognition.facePdf417())
-                    .drivingLicence(GenericRecognition.facePdf417(), fullySupported = false)
-                    .passport(GenericRecognition.mrtd())
-                    .visa(DocumentDescription(false, R.string.mb_visa, GenericRecognition.id1()))
-                    .build()),
+            recognitions {
+                id = GenericRecognition.facePdf417(true)
+                drivingLicence = GenericRecognition.facePdf417(false)
+                passport =GenericRecognition.mrtd(true)
+                visa = GenericRecognition.id1(false)
+            }),
 
     SPAIN("es",
-            DocumentDescriptionBuilder()
-                    .drivingLicence(SpainDlRecognition())
-                    .build()),
+            recognitions {
+                drivingLicence = SpainDlRecognition()
+            }),
 
     SWITZERLAND("ch",
-            DocumentDescriptionBuilder()
-                    .id(SwitzerlandIdRecognition())
-                    .drivingLicence(SwitzerlandDlRecognition())
-                    .passport(SwitzerlandPassportRecognition())
-                    .residencePermit(GenericDocumentDescriptions.residencePermit)
-                    .build()),
+            recognitions {
+                id = SwitzerlandIdRecognition()
+                drivingLicence = SwitzerlandDlRecognition()
+                passport = SwitzerlandPassportRecognition()
+                residencePermit = GenericRecognition.residencePermit
+            }),
 
     UNITED_ARAB_EMIRATES("ae",
-            DocumentDescriptionBuilder()
-                    .id(UnitedArabEmiratesIdRecognition())
-                    .drivingLicence(UnitedArabEmiratesDlRecognition())
-                    .build()),
+            recognitions {
+                id = UnitedArabEmiratesIdRecognition()
+                drivingLicence = UnitedArabEmiratesDlRecognition()
+            }),
 
     UNITED_KINGDOM("gb",
-            DocumentDescriptionBuilder()
-                    .drivingLicence(EudlRecognition(EudlCountry.EUDL_COUNTRY_UK))
-                    .residencePermit(GenericDocumentDescriptions.residencePermit)
-                    .remove(DocumentType.ID)
-                    .build()),
+            recognitions {
+                drivingLicence = EudlRecognition(EudlCountry.EUDL_COUNTRY_UK)
+                residencePermit = GenericRecognition.residencePermit
+                id = UNSUPPORTED
+            }),
 
     UNITED_STATES("us",
-            DocumentDescriptionBuilder()
-                    .id(UsdlRecognition())
-                    .drivingLicence(UsdlRecognition())
-                    .build())
+            recognitions {
+                id = UsdlRecognition()
+                drivingLicence = UsdlRecognition()
+            })
+}
+
+private val UNSUPPORTED = null
+
+private fun recognitions(init: RecognitionsBuilder.() -> Unit): Map<DocumentType, BaseRecognition> {
+    val recognitionsBuilder = RecognitionsBuilder()
+    recognitionsBuilder.init()
+    return recognitionsBuilder.build()
 }

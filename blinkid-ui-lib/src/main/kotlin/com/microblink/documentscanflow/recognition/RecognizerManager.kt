@@ -56,13 +56,13 @@ internal class RecognizerManager(private val frameGrabberMode: FrameGrabberMode,
 
     private fun buildCombinedRecognizerBundle(): RecognizerBundle {
         val recognizersForBundle = mutableListOf<Recognizer<*, *>>()
+        if (frameGrabberMode == FrameGrabberMode.ALL_FRAMES) {
+            recognizersForBundle.add(frameGrabberRecognizer)
+        }
         if (frameGrabberMode != FrameGrabberMode.NOTHING) {
             recognizersForBundle.add(combinedSuccessFrameRecognizer!!)
         } else {
             recognizersForBundle.add(combinedRecognizer!!)
-        }
-        if (frameGrabberMode == FrameGrabberMode.ALL_FRAMES) {
-            recognizersForBundle.add(frameGrabberRecognizer)
         }
 
         return RecognizerBundle(*recognizersForBundle.toTypedArray())
@@ -76,14 +76,15 @@ internal class RecognizerManager(private val frameGrabberMode: FrameGrabberMode,
         }
 
         val recognizersForBundle = mutableListOf<Recognizer<*, *>>()
+
+        if (frameGrabberMode == FrameGrabberMode.ALL_FRAMES) {
+            recognizersForBundle.add(frameGrabberRecognizer)
+        }
+
         if (scanFlowState == ScanFlowState.ANY_SIDE_SCAN) {
             recognizersForBundle.addAll(allRecognizers)
         } else {
             recognizersForBundle.add(allRecognizers[getIndexForSide(scanFlowState)])
-        }
-
-        if (frameGrabberMode == FrameGrabberMode.ALL_FRAMES) {
-            recognizersForBundle.add(frameGrabberRecognizer)
         }
 
         return RecognizerBundle(*recognizersForBundle.toTypedArray())

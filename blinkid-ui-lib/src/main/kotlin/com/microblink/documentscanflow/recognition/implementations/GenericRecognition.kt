@@ -11,7 +11,7 @@ import com.microblink.entities.recognizers.blinkbarcode.pdf417.Pdf417Recognizer
 import com.microblink.entities.recognizers.blinkid.documentface.DocumentFaceRecognizer
 import com.microblink.entities.recognizers.blinkid.mrtd.MrtdRecognizer
 
-class GenericRecognition(private val recognizerProvider: RecognizerProvider) : BaseRecognition() {
+class GenericRecognition(isFullySupported: Boolean, private val recognizerProvider: RecognizerProvider) : BaseRecognition(isFullySupported) {
 
     override fun getSingleSideRecognizers(): List<Recognizer<*, *>> {
         return recognizerProvider.recognizers
@@ -40,49 +40,60 @@ class GenericRecognition(private val recognizerProvider: RecognizerProvider) : B
     }
 
     companion object {
-        fun mrtd(): GenericRecognition {
-            return GenericRecognition(object: RecognizerProvider() {
+
+        val residencePermit = GenericRecognition.faceMrtd(true)
+
+        val id = GenericRecognition.faceMrtd(false)
+
+        val drivingLicence = GenericRecognition.faceId1(false)
+
+        val passport = GenericRecognition.mrtd(true)
+
+        val visa = GenericRecognition.mrtd(true)
+
+        fun mrtd(isFullySupported: Boolean): GenericRecognition {
+            return GenericRecognition(isFullySupported, object: RecognizerProvider() {
                 override fun createRecognizers() = listOf(MrtdRecognizer())
             })
         }
 
-        fun id1(): GenericRecognition {
-            return GenericRecognition(object: RecognizerProvider() {
+        fun id1(isFullySupported: Boolean): GenericRecognition {
+            return GenericRecognition(isFullySupported, object: RecognizerProvider() {
                 override fun createRecognizers() =
                         listOf(buildDetectorRecognizerFromPreset(DocumentSpecificationPreset.DOCUMENT_SPECIFICATION_PRESET_ID1_CARD))
             })
         }
 
-        fun mrtdId1(): GenericRecognition {
-            return GenericRecognition(object: RecognizerProvider() {
+        fun mrtdId1(isFullySupported: Boolean): GenericRecognition {
+            return GenericRecognition(isFullySupported, object: RecognizerProvider() {
                 override fun createRecognizers() = listOf(MrtdRecognizer(),
                         buildDetectorRecognizerFromPreset(DocumentSpecificationPreset.DOCUMENT_SPECIFICATION_PRESET_ID1_CARD))
             })
         }
 
-        fun mrtdId2Vertical(): GenericRecognition {
-            return GenericRecognition(object: RecognizerProvider() {
+        fun mrtdId2Vertical(isFullySupported: Boolean): GenericRecognition {
+            return GenericRecognition(isFullySupported, object: RecognizerProvider() {
                 override fun createRecognizers() = listOf(MrtdRecognizer(),
                         buildDetectorRecognizerFromPreset(DocumentSpecificationPreset.DOCUMENT_SPECIFICATION_PRESET_ID2_VERTICAL_CARD))
             })
         }
 
-        fun faceMrtd(): GenericRecognition {
-            return GenericRecognition(object: RecognizerProvider() {
+        fun faceMrtd(isFullySupported: Boolean): GenericRecognition {
+            return GenericRecognition(isFullySupported, object: RecognizerProvider() {
                 override fun createRecognizers(): List<Recognizer<*, *>> {
                     return listOf(DocumentFaceRecognizer(), MrtdRecognizer())
                 }
             })
         }
 
-        fun facePdf417(): GenericRecognition {
-            return GenericRecognition(object: RecognizerProvider() {
+        fun facePdf417(isFullySupported: Boolean): GenericRecognition {
+            return GenericRecognition(isFullySupported, object: RecognizerProvider() {
                 override fun createRecognizers() = listOf(DocumentFaceRecognizer(), Pdf417Recognizer())
             })
         }
 
-        fun faceId1(): GenericRecognition {
-            return GenericRecognition(object: RecognizerProvider() {
+        fun faceId1(isFullySupported: Boolean): GenericRecognition {
+            return GenericRecognition(isFullySupported, object: RecognizerProvider() {
                 override fun createRecognizers() = listOf(DocumentFaceRecognizer(),
                         buildDetectorRecognizerFromPreset(DocumentSpecificationPreset.DOCUMENT_SPECIFICATION_PRESET_ID1_CARD))
             })
