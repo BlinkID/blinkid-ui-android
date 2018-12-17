@@ -62,6 +62,18 @@ internal class RecognitionsBuilder {
             addRecognition(DocumentType.MILITARY_ID, value)
         }
 
+    var temporaryResidentId: BaseRecognition? = null
+        set(value) {
+            field = value
+            addRecognition(DocumentType.TEMPORARY_RESIDENT_ID, value)
+        }
+
+    var permanentResidentId: BaseRecognition? = null
+        set(value) {
+            field = value
+            addRecognition(DocumentType.PERMANENT_RESIDENT_ID, value)
+        }
+
     init {
         id = GenericRecognition.id
         drivingLicence = GenericRecognition.drivingLicence

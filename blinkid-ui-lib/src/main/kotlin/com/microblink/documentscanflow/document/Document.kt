@@ -50,6 +50,20 @@ class Document(val country: Country, val documentType: DocumentType) {
                     }
                 }
                 DocumentType.NEW_ID -> R.string.mb_new_id_card
+                DocumentType.TEMPORARY_RESIDENT_ID -> {
+                    if (country == SupportedCountry.MALAYSIA) {
+                        R.string.mb_custom_mykas
+                    } else {
+                        R.string.mb_temporary_resident_id
+                    }
+                }
+                DocumentType.PERMANENT_RESIDENT_ID -> {
+                    if (country == SupportedCountry.MALAYSIA) {
+                        R.string.mb_custom_mypr
+                    } else {
+                        R.string.mb_permanent_resident_id
+                    }
+                }
             }
         }
     }

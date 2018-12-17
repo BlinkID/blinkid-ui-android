@@ -116,6 +116,8 @@ enum class SupportedCountry(override val code: String, override val recognitions
                 passport = GenericRecognition.mrtd(true)
                 immigratorId = MalaysiaIkadRecognition()
                 militaryId = MalaysiaTenteraRecognition()
+                temporaryResidentId = MalaysiaKasRecognition()
+                permanentResidentId = MalaysiaPrRecognition()
             }),
 
     MEXICO("mx",
