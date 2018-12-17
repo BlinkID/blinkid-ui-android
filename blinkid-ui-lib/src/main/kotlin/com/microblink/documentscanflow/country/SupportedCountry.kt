@@ -41,6 +41,7 @@ enum class SupportedCountry(override val code: String, override val recognitions
 
     CYPRUS("cy",
             recognitions {
+                id = CyprusIdRecognition()
                 oldId = CyprusOldIdRecognition()
             }),
 
