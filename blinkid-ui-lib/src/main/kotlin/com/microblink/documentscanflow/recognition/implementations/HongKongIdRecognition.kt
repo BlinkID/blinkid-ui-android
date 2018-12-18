@@ -33,7 +33,8 @@ class HongKongIdRecognition : BaseRecognition() {
         add(R.string.keySex, result.sex)
         add(R.string.keyDateOfBirth, result.dateOfBirth)
         add(R.string.keyIssueDate, result.dateOfIssue)
-
+        add(R.string.keyResidentialStatus, result.residentialStatus)
+        
         return fullName
     }
 
