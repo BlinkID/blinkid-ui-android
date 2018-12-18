@@ -19,7 +19,7 @@ class CyprusIdRecognition : BaseTwoSideRecognition() {
     private val frontResult by lazy { frontRecognizer.result }
     private val backResult by lazy { backRecognizer.result }
 
-    override fun createValidator() = ResultValidator().match("", "")
+    override fun createValidator() = ResultValidator()
 
     override fun extractFields() {
         if (frontResult.isNotEmpty()) {
