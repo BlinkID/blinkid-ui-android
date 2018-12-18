@@ -147,7 +147,7 @@ enum class SupportedCountry(override val code: String,
     NIGERIA(
             "ng",
             recognitions {
-                drivingLicence = UsdlRecognition()
+                drivingLicence = NigeriaDlRecognition()
             }
     ),
 
