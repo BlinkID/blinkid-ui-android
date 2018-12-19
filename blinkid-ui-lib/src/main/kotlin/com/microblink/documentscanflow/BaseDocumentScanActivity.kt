@@ -345,6 +345,7 @@ abstract class BaseDocumentScanActivity : AppCompatActivity(), ScanResultListene
 
     override fun onStop() {
         super.onStop()
+        handler.removeCallbacksAndMessages(null)
         recognizerView.stop()
     }
 
