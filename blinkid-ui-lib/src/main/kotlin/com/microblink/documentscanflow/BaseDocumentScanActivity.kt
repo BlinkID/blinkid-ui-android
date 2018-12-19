@@ -215,7 +215,7 @@ abstract class BaseDocumentScanActivity : AppCompatActivity(), ScanResultListene
         scanTimeoutHandler.registerListener(createScanTimeoutListener())
 
         startScan()
-        recognizerView.create()
+        recognizerView.setLifecycle(lifecycle)
 
         scanSuccessPlayer.prepare()
 
@@ -318,14 +318,8 @@ abstract class BaseDocumentScanActivity : AppCompatActivity(), ScanResultListene
         registerReceiver(localeBroadcastReceiver, IntentFilter(Intent.ACTION_LOCALE_CHANGED))
     }
 
-    override fun onStart() {
-        super.onStart()
-        recognizerView.start()
-    }
-
     override fun onResume() {
         super.onResume()
-        recognizerView.resume()
         // always restart scanning when resuming activity, must be called after recognizer_view.resume()
         restartScanning()
         torchButtonHandler.isTorchEnabled = false
@@ -339,21 +333,18 @@ abstract class BaseDocumentScanActivity : AppCompatActivity(), ScanResultListene
 
     override fun onPause() {
         super.onPause()
-        recognizerView.pause()
         scanTimeoutHandler.stopTimer()
     }
 
     override fun onStop() {
         super.onStop()
         handler.removeCallbacksAndMessages(null)
-        recognizerView.stop()
     }
 
     override fun onDestroy() {
         unregisterReceiver(localeBroadcastReceiver)
         scanTimeoutHandler.registerListener(null)
         super.onDestroy()
-        recognizerView.destroy()
         scanSuccessPlayer.cleanup()
         instructionsHandler.clear(true)
     }
