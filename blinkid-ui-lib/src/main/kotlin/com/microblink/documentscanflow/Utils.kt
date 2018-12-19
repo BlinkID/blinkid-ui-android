@@ -78,7 +78,14 @@ internal fun Recognizer.Result<*>.isEmpty() = this.resultState == Recognizer.Res
 
 internal fun Recognizer.Result<*>.isNotEmpty() = this.resultState != Recognizer.Result.State.Empty
 
-internal fun buildDetectorRecognizerFromPreset(documentSpecPreset: DocumentSpecificationPreset): DetectorRecognizer {
+
+internal fun buildId1CardDetectorRecognizer() =
+        buildDetectorRecognizerFromPreset(DocumentSpecificationPreset.DOCUMENT_SPECIFICATION_PRESET_ID1_CARD)
+
+internal fun buildId2VerticalCardDetectorRecognizer() =
+        buildDetectorRecognizerFromPreset(DocumentSpecificationPreset.DOCUMENT_SPECIFICATION_PRESET_ID2_VERTICAL_CARD)
+
+private fun buildDetectorRecognizerFromPreset(documentSpecPreset: DocumentSpecificationPreset): DetectorRecognizer {
     val documentSpec = DocumentSpecification.createFromPreset(documentSpecPreset)
     val documentDetector = DocumentDetector(documentSpec)
     documentDetector.numStableDetectionsThreshold = 5

@@ -1,11 +1,8 @@
 package com.microblink.documentscanflow.recognition.implementations
 
-import com.microblink.documentscanflow.R
-import com.microblink.documentscanflow.buildDetectorRecognizerFromPreset
-import com.microblink.documentscanflow.isNotEmpty
+import com.microblink.documentscanflow.*
 import com.microblink.documentscanflow.recognition.BaseRecognition
 import com.microblink.documentscanflow.recognition.RecognizerProvider
-import com.microblink.entities.detectors.quad.document.DocumentSpecificationPreset
 import com.microblink.entities.recognizers.Recognizer
 import com.microblink.entities.recognizers.blinkbarcode.pdf417.Pdf417Recognizer
 import com.microblink.entities.recognizers.blinkid.documentface.DocumentFaceRecognizer
@@ -60,21 +57,20 @@ class GenericRecognition(isFullySupported: Boolean, private val recognizerProvid
         fun id1(isFullySupported: Boolean): GenericRecognition {
             return GenericRecognition(isFullySupported, object: RecognizerProvider() {
                 override fun createRecognizers() =
-                        listOf(buildDetectorRecognizerFromPreset(DocumentSpecificationPreset.DOCUMENT_SPECIFICATION_PRESET_ID1_CARD))
+                        listOf(buildId1CardDetectorRecognizer())
             })
         }
 
         fun mrtdId1(isFullySupported: Boolean): GenericRecognition {
             return GenericRecognition(isFullySupported, object: RecognizerProvider() {
                 override fun createRecognizers() = listOf(MrtdRecognizer(),
-                        buildDetectorRecognizerFromPreset(DocumentSpecificationPreset.DOCUMENT_SPECIFICATION_PRESET_ID1_CARD))
+                        buildId1CardDetectorRecognizer())
             })
         }
 
         fun mrtdId2Vertical(isFullySupported: Boolean): GenericRecognition {
             return GenericRecognition(isFullySupported, object: RecognizerProvider() {
-                override fun createRecognizers() = listOf(MrtdRecognizer(),
-                        buildDetectorRecognizerFromPreset(DocumentSpecificationPreset.DOCUMENT_SPECIFICATION_PRESET_ID2_VERTICAL_CARD))
+                override fun createRecognizers() = listOf(MrtdRecognizer(), buildId2VerticalCardDetectorRecognizer())
             })
         }
 
@@ -95,7 +91,7 @@ class GenericRecognition(isFullySupported: Boolean, private val recognizerProvid
         fun faceId1(isFullySupported: Boolean): GenericRecognition {
             return GenericRecognition(isFullySupported, object: RecognizerProvider() {
                 override fun createRecognizers() = listOf(DocumentFaceRecognizer(),
-                        buildDetectorRecognizerFromPreset(DocumentSpecificationPreset.DOCUMENT_SPECIFICATION_PRESET_ID1_CARD))
+                        buildId1CardDetectorRecognizer())
             })
         }
     }
