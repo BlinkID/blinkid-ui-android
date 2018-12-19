@@ -31,7 +31,6 @@ class FilterListAdapter(private val elementList: List<Country>) : BaseAdapter() 
         return mShownElements.size
     }
 
-    // Filter Class
     fun filter(countryFilter: CountryFilter, matchStr: String) {
         mShownElements = countryFilter.filter(elementList)
         mShownElements = mShownElements.filter { isMatchingFilter(it.getLocalisedName(), matchStr) }
@@ -39,11 +38,14 @@ class FilterListAdapter(private val elementList: List<Country>) : BaseAdapter() 
     }
 
     private fun isMatchingFilter(countryName: String, filter: String): Boolean {
-        for (word in countryName.split(" "))
-            if (word.startsWith(filter, true)) {
-                return true
+        val filterWords = filter.split(" ")
+        val countryNameWords = countryName.split(" ")
+
+        return filterWords.all { filterWord ->
+            countryNameWords.any {
+                it.startsWith(filterWord, true)
             }
-        return false
+        }
     }
 
 }
