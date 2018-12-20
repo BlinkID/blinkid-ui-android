@@ -6,26 +6,17 @@ import com.microblink.documentscanflow.recognition.BaseTwoSideRecognition
 import com.microblink.documentscanflow.recognition.ResultValidator
 import com.microblink.entities.recognizers.Recognizer
 import com.microblink.entities.recognizers.blinkid.malaysia.MalaysiaMyKadBackRecognizer
-import com.microblink.entities.recognizers.blinkid.malaysia.MalaysiaMyKadFrontRecognizer
+import com.microblink.entities.recognizers.blinkid.malaysia.MalaysiaMyKasFrontRecognizer
 
-class MalaysiaMyKadRecognition
-    : BaseTwoSideRecognition() {
+class MalaysiaKasRecognition: BaseTwoSideRecognition() {
 
-    val frontRecognizer by lazy { MalaysiaMyKadFrontRecognizer() }
+    val frontRecognizer by lazy { MalaysiaMyKasFrontRecognizer() }
     val backRecognizer by lazy { MalaysiaMyKadBackRecognizer() }
 
     val frontResult by lazy { frontRecognizer.result }
     val backResult by lazy { backRecognizer.result }
 
-    override fun getSingleSideRecognizers(): List<Recognizer<*, *>> {
-        return listOf(frontRecognizer, backRecognizer)
-    }
-
-    override fun createValidator(): ResultValidator {
-        return ResultValidator()
-                .match(frontResult.nric, backResult.nric)
-                .match(frontResult.birthDate.date, backResult.dateOfBirth.date)
-    }
+    override fun createValidator() = ResultValidator()
 
     override fun extractFields() {
         if (frontResult.isNotEmpty()) {
@@ -34,15 +25,6 @@ class MalaysiaMyKadRecognition
         if (backResult.isNotEmpty()) {
             extractBackSide()
         }
-    }
-
-    override fun getResultTitle(): String? {
-        if (frontResult.isNotEmpty()) {
-            return frontResult.fullName
-        } else if (backResult.isNotEmpty()) {
-            return backResult.nric
-        }
-        return null
     }
 
     private fun extractFrontSide() {
@@ -60,5 +42,16 @@ class MalaysiaMyKadRecognition
         add(R.string.keyDateOfBirth, backResult.dateOfBirth)
         add(R.string.keySex, backResult.sex)
     }
+
+    override fun getResultTitle(): String? {
+        if (frontResult.isNotEmpty()) {
+            return frontResult.fullName
+        } else if (backResult.isNotEmpty()) {
+            return backResult.nric
+        }
+        return null
+    }
+
+    override fun getSingleSideRecognizers(): List<Recognizer<*, *>> = listOf(frontRecognizer, backRecognizer)
 
 }

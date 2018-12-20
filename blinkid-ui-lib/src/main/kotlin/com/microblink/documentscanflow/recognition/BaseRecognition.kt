@@ -23,7 +23,7 @@ import com.microblink.recognizers.blinkid.mrtd.MRTDResult
 import com.microblink.results.date.Date
 import com.microblink.results.date.DateResult
 
-abstract class BaseRecognition {
+abstract class BaseRecognition(val isFullySupported: Boolean = true) {
 
     protected val resultEntries: MutableSet<ResultEntry<*>> = LinkedHashSet()
     protected var shouldValidate = false

@@ -1,7 +1,10 @@
 package com.microblink.documentscanflow.document
 
 import android.content.Context
+import android.support.annotation.StringRes
+import com.microblink.documentscanflow.R
 import com.microblink.documentscanflow.country.Country
+import com.microblink.documentscanflow.country.SupportedCountry
 
 class Document(val country: Country, val documentType: DocumentType) {
 
@@ -11,15 +14,14 @@ class Document(val country: Country, val documentType: DocumentType) {
         }
     }
 
-    fun isFullySupported() = getDescription().isFullySupported
+    fun isFullySupported() = getRecognition().isFullySupported
 
-    fun getRecognition() = getDescription().recognition
+    fun getRecognition() = country.getRecognition(documentType)
 
     fun getTitle(context : Context): String {
-        val documentDescription = getDescription()
-        return country.getLocalisedName() + ", " + context.getString(documentDescription.documentNameResourceID)
+        return country.getLocalisedName() + ", " + context.getString(getDocumentNameStringId())
     }
 
-    private fun getDescription(): DocumentDescription = country.getDocumentDescription(documentType)
+    private fun getDocumentNameStringId() = country.getDocumentNameStringId(documentType)
 
 }

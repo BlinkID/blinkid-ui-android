@@ -74,8 +74,10 @@ internal class InstructionsHandler(private val context: Context,
         val didTextChange = updateInstructionsIfChanged(context.getString(R.string.mb_instructions_glare))
         if (didTextChange) {
             delayedTextUpdateRunnable = Runnable { updateInstructionsIfChanged(currentText) }
-            instructionsTextSwitcher.postDelayed(delayedTextUpdateRunnable, GLARE_INSTRUCTIONS_DURATION)
+        } else {
+            instructionsTextSwitcher.handler.removeCallbacks(delayedTextUpdateRunnable)
         }
+        instructionsTextSwitcher.postDelayed(delayedTextUpdateRunnable, GLARE_INSTRUCTIONS_DURATION)
     }
 
     @UiThread

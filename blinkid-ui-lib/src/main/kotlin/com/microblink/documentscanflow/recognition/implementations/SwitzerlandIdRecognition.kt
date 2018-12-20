@@ -23,7 +23,7 @@ class SwitzerlandIdRecognition: BaseTwoSideRecognition() {
     }
 
     override fun createValidator(): ResultValidator {
-        return ResultValidator().match(frontResult.dateOfBirth.date, backResult.dateOfBirth)
+        return ResultValidator().match(frontResult.dateOfBirth.date, backResult.mrzResult.dateOfBirth.date)
     }
 
     override fun extractFields() {
@@ -42,7 +42,7 @@ class SwitzerlandIdRecognition: BaseTwoSideRecognition() {
     }
     
     private fun extractBackSide() {
-        extractMrtdResult(backResult)
+        extractMrzResult(backResult.mrzResult)
         add(R.string.keyPlaceOfOrigin, backResult.placeOfOrigin)
         add(R.string.keyAuthority, backResult.authority)
         add(R.string.keyIssueDate, backResult.dateOfIssue)
@@ -55,16 +55,16 @@ class SwitzerlandIdRecognition: BaseTwoSideRecognition() {
         when {
             isCombinedScan(frontResult, backResult) -> {
                 val stringCombiner = StringCombiner(StringCombiner.Country.CROATIA)
-                firstName = stringCombiner.combineMRZString(backResult.secondaryId, frontResult.givenName)
-                lastName = stringCombiner.combineMRZString(backResult.primaryId, frontResult.surname)
+                firstName = stringCombiner.combineMRZString(backResult.mrzResult.secondaryId, frontResult.givenName)
+                lastName = stringCombiner.combineMRZString(backResult.mrzResult.primaryId, frontResult.surname)
             }
             frontResult.isNotEmpty() -> {
                 firstName = frontResult.givenName
                 lastName = frontResult.surname
             }
             backResult.isNotEmpty() -> {
-                firstName = backResult.secondaryId
-                lastName = backResult.primaryId
+                firstName = backResult.mrzResult.secondaryId
+                lastName = backResult.mrzResult.primaryId
             }
         }
         return FormattingUtils.formatResultTitle(firstName, lastName)

@@ -37,6 +37,7 @@
     <string name="keySignature">Signature</string>
     <string name="keyHeight">Height</string>
     <string name="keyPrincipalResidenceAtIssuance">Principal residence at issuance</string>
+    <string name="keyResidentialStatus">Residential status</string>
     <string name="keyEyeColor">Eye color</string>
     <string name="keyPersonalNumber">Personal number</string>
     <string name="keyBloodGroup">Blood group</string>
