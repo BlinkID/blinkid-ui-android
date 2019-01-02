@@ -17,7 +17,7 @@ class DateResultEntry(key: String, value: Date) : ResultEntry<Date>(key, value) 
         dest?.writeInt(value.day)
         dest?.writeInt(value.month)
         dest?.writeInt(value.year)
-        writeValidityToParcel(dest, flags)
+        writeValidityToParcel(dest)
     }
 
     companion object {

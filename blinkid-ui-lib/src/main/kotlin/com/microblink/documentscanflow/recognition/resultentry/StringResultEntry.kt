@@ -14,7 +14,7 @@ class StringResultEntry(key: String, value: String) : ResultEntry<String>(key, v
     override fun writeToParcel(dest: Parcel?, flags: Int) {
         dest?.writeString(key)
         dest?.writeString(value)
-        writeValidityToParcel(dest, flags)
+        writeValidityToParcel(dest)
     }
 
     companion object {
