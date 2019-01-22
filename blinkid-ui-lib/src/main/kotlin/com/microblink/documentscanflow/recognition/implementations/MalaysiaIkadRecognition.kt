@@ -22,6 +22,7 @@ class MalaysiaIkadRecognition : BaseRecognition() {
 
         add(R.string.keyFullName, result.name)
         add(R.string.keyAddress, result.address)
+        add(R.string.facultyAddress, result.facultyAddress)
         add(R.string.keyDateOfBirth, result.dateOfBirth)
         add(R.string.keyEmployer, result.employer)
         addDateOfExpiry(result.dateOfExpiry.date)
