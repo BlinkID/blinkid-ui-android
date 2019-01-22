@@ -5,11 +5,11 @@ import com.microblink.documentscanflow.isEmpty
 import com.microblink.documentscanflow.recognition.BaseRecognition
 import com.microblink.entities.detectors.quad.document.DocumentSpecificationPreset
 import com.microblink.entities.recognizers.Recognizer
-import com.microblink.entities.recognizers.blinkid.germany.GermanyOldIdRecognizer
+import com.microblink.entities.recognizers.blinkid.germany.GermanyIdOldRecognizer
 
 class GermanyOldIdRecognition : BaseRecognition() {
 
-    val recognizer by lazy { GermanyOldIdRecognizer() }
+    val recognizer by lazy { GermanyIdOldRecognizer() }
     val backRecognizer by lazy {
         buildDetectorRecognizerFromPreset(DocumentSpecificationPreset.DOCUMENT_SPECIFICATION_PRESET_ID2_VERTICAL_CARD)
     }
@@ -24,8 +24,8 @@ class GermanyOldIdRecognition : BaseRecognition() {
             return null
         }
 
-        extractMrtdResult(result)
-        return buildMrtdTitle(result)
+        extractMrzResult(result.mrzResult)
+        return buildMrtdTitle(result.mrzResult)
     }
 
 }
