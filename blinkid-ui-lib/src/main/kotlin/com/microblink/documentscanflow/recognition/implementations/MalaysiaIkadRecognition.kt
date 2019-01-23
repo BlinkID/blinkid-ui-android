@@ -27,7 +27,6 @@ class MalaysiaIkadRecognition : BaseRecognition() {
         add(R.string.keyEmployer, result.employer)
         addDateOfExpiry(result.dateOfExpiry.date)
         add(R.string.keyNationality, result.nationality)
-        add(R.string.keyPassportNumber, result.passportNumber)
         add(R.string.keySector, result.sector)
         add(R.string.keySex, result.gender)
         

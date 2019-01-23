@@ -72,11 +72,9 @@ class GermanyIdRecognition : BaseTwoSideRecognition() {
 
     private fun extractBackSide() {
         extractMrzResult(backResult.mrzResult)
-        add(R.string.keyEyeColor, backResult.colourOfEyes)
         add(R.string.keyAuthority, backResult.authority)
         add(R.string.keyIssueDate, backResult.dateOfIssue)
         add(R.string.keyAddress, backResult.fullAddress)
-        add(R.string.keyHeight, backResult.height)
     }
 
     override fun getResultTitle(): String? {

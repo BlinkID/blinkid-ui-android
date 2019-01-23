@@ -46,7 +46,6 @@ class SwitzerlandIdRecognition: BaseTwoSideRecognition() {
         add(R.string.keyPlaceOfOrigin, backResult.placeOfOrigin)
         add(R.string.keyAuthority, backResult.authority)
         add(R.string.keyIssueDate, backResult.dateOfIssue)
-        add(R.string.keyHeight, backResult.height)
     }
     
     override fun getResultTitle(): String? {

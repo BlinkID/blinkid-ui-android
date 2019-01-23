@@ -33,11 +33,9 @@ class NewZealandDlRecognition : BaseRecognition() {
         add(R.string.keyLastName, lastName)
         add(R.string.keyDateOfBirth, result.dateOfBirth)
         add(R.string.keyDocumentNumber, result.licenseNumber)
-        add(R.string.keyDocumentVersion, result.cardVersion)
         add(R.string.keyIssueDate, result.dateOfIssue)
         addDateOfExpiry(result.dateOfExpiry.date)
         add(R.string.keyAddress, result.address)
-        add(R.string.keyDonorIndicator, result.isDonorIndicator)
         
         return FormattingUtils.formatResultTitle(firstName, lastName)
     }

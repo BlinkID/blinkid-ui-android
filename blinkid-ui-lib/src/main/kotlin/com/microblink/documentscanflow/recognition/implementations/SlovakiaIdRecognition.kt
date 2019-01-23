@@ -82,9 +82,7 @@ class SlovakiaIdRecognition: BaseTwoSideRecognition() {
         }
 
         add(R.string.keyAddress, backResult.address)
-        add(R.string.keySurnameAtBirth, backResult.surnameAtBirth)
         add(R.string.keyPlaceOfBirth, backResult.placeOfBirth)
-        add(R.string.keySpecialRemarks, backResult.specialRemarks)
         extractMrzResult(backResult.mrzResult)
     }
     

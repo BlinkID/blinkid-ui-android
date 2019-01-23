@@ -23,7 +23,6 @@ class MexicoIdRecognition : BaseRecognition() {
 
         add(R.string.keyFullName, result.fullName)
         add(R.string.keyAddress, result.address)
-        add(R.string.keyElectorKey, result.electorKey)
         add(R.string.keyCurp, result.curp)
         add(R.string.keyDateOfBirth, result.dateOfBirth)
         add(R.string.keySex, result.sex)

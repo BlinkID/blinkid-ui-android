@@ -59,7 +59,6 @@ class ColombiaIdRecognition
         add(R.string.keyDocumentNumber, result.documentNumber)
         add(R.string.keySex, result.sex)
         add(R.string.keyDateOfBirth, result.birthDate)
-        add(R.string.keyBloodGroup, result.bloodGroup)
     }
 
 }

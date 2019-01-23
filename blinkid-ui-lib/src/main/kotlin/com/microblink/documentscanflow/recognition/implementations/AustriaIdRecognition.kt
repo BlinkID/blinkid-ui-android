@@ -74,12 +74,9 @@ class AustriaIdRecognition
     }
 
     private fun extractBackSideNonMRZ() {
-        add(R.string.keyHeight, backResult.height)
         add(R.string.keyPlaceOfBirth, backResult.placeOfBirth)
         add(R.string.keyIssuingAuthority, backResult.issuingAuthority)
         add(R.string.keyIssueDate, backResult.dateOfIssuance)
-        add(R.string.keyPrincipalResidenceAtIssuance, backResult.principalResidence)
-        add(R.string.keyEyeColor, backResult.eyeColour)
     }
 
     override fun getResultTitle(): String? {

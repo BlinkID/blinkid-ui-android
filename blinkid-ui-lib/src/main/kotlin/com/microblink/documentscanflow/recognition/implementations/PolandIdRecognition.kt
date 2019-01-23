@@ -62,8 +62,6 @@ class PolandIdRecognition: BaseTwoSideRecognition() {
     private fun extractFrontSide() {
         add(R.string.keyLastName, frontResult.surname)
         add(R.string.keyFirstName, frontResult.givenNames)
-        add(R.string.keyFamilyName, frontResult.familyName)
-        add(R.string.keyParentNames, frontResult.parentsGivenNames)
         add(R.string.keySex, frontResult.sex)
         add(R.string.keyDateOfBirth, frontResult.dateOfBirth)
     }

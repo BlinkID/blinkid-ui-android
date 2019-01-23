@@ -35,7 +35,6 @@ class SwitzerlandPassportRecognition: BaseRecognition() {
         add(R.string.keyIssueDate, result.dateOfIssue)
         add(R.string.keyDateOfExpiry, result.dateOfExpiry)
         add(R.string.keySex, result.sex)
-        add(R.string.keyHeight, result.height)
         add(R.string.keyAuthority, result.authority)
 
         return FormattingUtils.formatResultTitle(firstName, lastName)
