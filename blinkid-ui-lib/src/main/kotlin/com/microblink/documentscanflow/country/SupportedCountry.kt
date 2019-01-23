@@ -167,12 +167,6 @@ enum class SupportedCountry(override val code: String,
             recognitions {
                 id = RomaniaIdRecognition()
             }),
-
-    SERBIA("rs",
-            recognitions {
-                id = SerbiaIdRecognition()
-            }),
-
     SWEDEN("se",
             recognitions {
                 drivingLicence = SwedenDlRecognition()
