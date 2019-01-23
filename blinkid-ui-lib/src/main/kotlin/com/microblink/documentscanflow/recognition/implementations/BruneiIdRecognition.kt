@@ -5,13 +5,14 @@ import com.microblink.documentscanflow.isNotEmpty
 import com.microblink.documentscanflow.recognition.BaseTwoSideRecognition
 import com.microblink.documentscanflow.recognition.ResultValidator
 import com.microblink.entities.recognizers.Recognizer
+import com.microblink.entities.recognizers.blinkid.brunei.BruneiIdBackRecognizer
 import com.microblink.entities.recognizers.blinkid.brunei.BruneiIdFrontRecognizer
 import com.microblink.entities.recognizers.blinkid.mrtd.MrtdRecognizer
 
 class BruneiIdRecognition: BaseTwoSideRecognition() {
 
     private val frontRecognizer by lazy { BruneiIdFrontRecognizer() }
-    private val backRecognizer by lazy { MrtdRecognizer() }
+    private val backRecognizer by lazy { BruneiIdBackRecognizer() }
 
     private val frontResult by lazy { frontRecognizer.result }
     private val backResult by lazy { backRecognizer.result }
@@ -23,7 +24,7 @@ class BruneiIdRecognition: BaseTwoSideRecognition() {
             extractFront(frontResult)
         }
         if (backResult.isNotEmpty()) {
-            extractMrzResult(backResult.mrzResult)
+            extractBack(backResult)
         }
     }
 
@@ -33,6 +34,13 @@ class BruneiIdRecognition: BaseTwoSideRecognition() {
         add(R.string.keyDateOfBirth, result.dateOfBirth)
         add(R.string.keyPlaceOfBirth, result.placeOfBirth)
         add(R.string.keySex, result.sex)
+    }
+
+    private fun extractBack(result: BruneiIdBackRecognizer.Result) {
+        extractMrzResult(result.mrzResult)
+        add(R.string.keyIssueDate, result.dateOfIssue)
+        add(R.string.keyAddress, result.address)
+        add(R.string.keyRace, result.race)
     }
 
     override fun getResultTitle(): String? {
