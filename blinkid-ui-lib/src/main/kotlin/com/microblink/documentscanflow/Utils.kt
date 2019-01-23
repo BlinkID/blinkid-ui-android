@@ -19,6 +19,7 @@ import com.microblink.entities.recognizers.templating.TemplatingClass
 import com.microblink.entities.recognizers.templating.dewarpPolicies.DPIBasedDewarpPolicy
 import com.microblink.geometry.Rectangle
 import com.microblink.results.date.Date
+import java.util.*
 
 internal fun View.fadeOut(duration : Long) {
     val alpha = AlphaAnimation(1.0f, 0.0f)
@@ -78,7 +79,14 @@ internal fun Recognizer.Result<*>.isEmpty() = this.resultState == Recognizer.Res
 
 internal fun Recognizer.Result<*>.isNotEmpty() = this.resultState != Recognizer.Result.State.Empty
 
-internal fun buildDetectorRecognizerFromPreset(documentSpecPreset: DocumentSpecificationPreset): DetectorRecognizer {
+
+internal fun buildId1CardDetectorRecognizer() =
+        buildDetectorRecognizerFromPreset(DocumentSpecificationPreset.DOCUMENT_SPECIFICATION_PRESET_ID1_CARD)
+
+internal fun buildId2VerticalCardDetectorRecognizer() =
+        buildDetectorRecognizerFromPreset(DocumentSpecificationPreset.DOCUMENT_SPECIFICATION_PRESET_ID2_VERTICAL_CARD)
+
+private fun buildDetectorRecognizerFromPreset(documentSpecPreset: DocumentSpecificationPreset): DetectorRecognizer {
     val documentSpec = DocumentSpecification.createFromPreset(documentSpecPreset)
     val documentDetector = DocumentDetector(documentSpec)
     documentDetector.numStableDetectionsThreshold = 5
@@ -107,3 +115,5 @@ internal fun Resources.getFloatValue(id : Int) : Float {
 fun View.pxToDp(px: Float): Float {
     return px / resources.displayMetrics.density
 }
+
+internal fun Calendar.currentDate() = Date(get(Calendar.DAY_OF_MONTH), get(Calendar.MONTH) + 1, get(Calendar.YEAR))

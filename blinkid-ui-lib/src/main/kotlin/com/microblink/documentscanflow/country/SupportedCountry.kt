@@ -123,6 +123,7 @@ enum class SupportedCountry(override val code: String,
                 permanentResidentId = MalaysiaPrRecognition()
             },
             documentNameOverrides =  mapOf(
+                    DocumentType.ID to R.string.mb_custom_mykad,
                     DocumentType.IMMIGRATOR_ID to R.string.mb_custom_ikad,
                     DocumentType.MILITARY_ID to R.string.mb_custom_mytentera,
                     DocumentType.TEMPORARY_RESIDENT_ID to R.string.mb_custom_mykas,
@@ -147,7 +148,7 @@ enum class SupportedCountry(override val code: String,
     NIGERIA(
             "ng",
             recognitions {
-                drivingLicence = UsdlRecognition()
+                drivingLicence = NigeriaDlRecognition()
             }
     ),
 

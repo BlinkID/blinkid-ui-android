@@ -10,10 +10,13 @@ import com.microblink.entities.recognizers.blinkbarcode.usdl.UsdlKeys
 import com.microblink.entities.recognizers.blinkbarcode.usdl.UsdlRecognizer
 import com.microblink.entities.recognizers.blinkid.documentface.DocumentFaceRecognizer
 
-class UsdlRecognition : BaseRecognition() {
+open class UsdlRecognition : BaseRecognition() {
 
     private val recognizer by lazy { UsdlRecognizer() }
     private val faceRecognizer by lazy { DocumentFaceRecognizer() }
+
+    protected open val keysToExcludeFromResults
+        get() = setOf<UsdlKeys>()
 
     override fun getSingleSideRecognizers(): List<Recognizer<*, *>> {
         return listOf(faceRecognizer, recognizer)
@@ -37,7 +40,7 @@ class UsdlRecognition : BaseRecognition() {
 
         for (key in UsdlKeys.values()) {
             val value = result.getField(key)
-            if (!TextUtils.isEmpty(value)) {
+            if (!TextUtils.isEmpty(value) && !keysToExcludeFromResults.contains(key)) {
                 resultEntries.add(StringResultEntry(key.name, value))
             }
         }
