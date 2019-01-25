@@ -56,9 +56,7 @@ class MalaysiaMyKadRecognition
 
     private fun extractBackSide() {
         add(R.string.keyNricNumber, backResult.nric)
-        add(R.string.keyExtendedNricNumber, backResult.extendedNric)
         add(R.string.keyDateOfBirth, backResult.dateOfBirth)
-        add(R.string.keySex, backResult.sex)
     }
 
 }

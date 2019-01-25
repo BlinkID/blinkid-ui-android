@@ -8,10 +8,15 @@ import com.microblink.entities.recognizers.blinkid.germany.GermanyIdOldRecognize
 
 class GermanyOldIdRecognition : BaseRecognition() {
 
+<<<<<<< HEAD
     val recognizer by lazy { GermanyIdOldRecognizer() }
     val backRecognizer by lazy {
-        buildId2VerticalCardDetectorRecognizer()
+        buildDetectorRecognizerFromPreset(DocumentSpecificationPreset.DOCUMENT_SPECIFICATION_PRESET_ID2_VERTICAL_CARD)
     }
+=======
+    val recognizer by lazy { GermanyOldIdRecognizer() }
+    val backRecognizer by lazy { buildId2VerticalCardDetectorRecognizer() }
+>>>>>>> 8710869f98c0cdc407396efdfbbe824c057a4cba
 
     override fun getSingleSideRecognizers(): List<Recognizer<*, *>> {
         return listOf(recognizer, backRecognizer)

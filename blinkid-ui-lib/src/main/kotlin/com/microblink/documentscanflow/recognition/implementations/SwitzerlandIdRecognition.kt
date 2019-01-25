@@ -46,7 +46,6 @@ class SwitzerlandIdRecognition: BaseTwoSideRecognition() {
         add(R.string.keyPlaceOfOrigin, backResult.placeOfOrigin)
         add(R.string.keyAuthority, backResult.authority)
         add(R.string.keyIssueDate, backResult.dateOfIssue)
-        add(R.string.keyHeight, backResult.height)
     }
     
     override fun getResultTitle(): String? {
@@ -54,7 +53,7 @@ class SwitzerlandIdRecognition: BaseTwoSideRecognition() {
         var lastName: String? = ""
         when {
             isCombinedScan(frontResult, backResult) -> {
-                val stringCombiner = StringCombiner(StringCombiner.Country.CROATIA)
+                val stringCombiner = StringCombiner(StringCombiner.Country.SWITZERLAND)
                 firstName = stringCombiner.combineMRZString(backResult.mrzResult.secondaryId, frontResult.givenName)
                 lastName = stringCombiner.combineMRZString(backResult.mrzResult.primaryId, frontResult.surname)
             }

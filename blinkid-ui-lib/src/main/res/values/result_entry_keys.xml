@@ -80,4 +80,5 @@
     <string name="keyElectorKey">Elector key</string>
     <string name="keyCurp">CURP</string>
     <string name="keyDateOfIssueBCategory">Date of issuance for B category</string>
+    <string name="facultyAddress">Faculty address</string>
 </resources>

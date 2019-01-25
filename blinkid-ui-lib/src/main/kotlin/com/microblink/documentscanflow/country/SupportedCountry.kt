@@ -26,7 +26,7 @@ enum class SupportedCountry(override val code: String,
     BRUNEI("bn",
             recognitions {
                 id = BruneiIdRecognition()
-                residencePermit = GenericRecognition.residencePermit
+                residencePermit = BruneiResidencePermitRecognition()
             }),
 
     CANADA("ca",
@@ -123,6 +123,7 @@ enum class SupportedCountry(override val code: String,
                 permanentResidentId = MalaysiaPrRecognition()
             },
             documentNameOverrides =  mapOf(
+                    DocumentType.ID to R.string.mb_custom_mykad,
                     DocumentType.IMMIGRATOR_ID to R.string.mb_custom_ikad,
                     DocumentType.MILITARY_ID to R.string.mb_custom_mytentera,
                     DocumentType.TEMPORARY_RESIDENT_ID to R.string.mb_custom_mykas,
@@ -167,12 +168,6 @@ enum class SupportedCountry(override val code: String,
             recognitions {
                 id = RomaniaIdRecognition()
             }),
-
-    SERBIA("rs",
-            recognitions {
-                id = SerbiaIdRecognition()
-            }),
-
     SWEDEN("se",
             recognitions {
                 drivingLicence = SwedenDlRecognition()

@@ -30,7 +30,6 @@ class SwedenDlRecognition : BaseRecognition() {
         add(R.string.keyIssuingAuthority, result.issuingAgency)
         add(R.string.keyIssueDate, result.dateOfIssue)
         addDateOfExpiry(result.dateOfExpiry)
-        add(R.string.keyReferenceNumber, result.referenceNumber)
 
         return FormattingUtils.formatResultTitle(result.name, result.surname)
     }

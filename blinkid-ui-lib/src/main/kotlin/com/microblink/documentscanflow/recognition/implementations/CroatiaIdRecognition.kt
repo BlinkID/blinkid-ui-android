@@ -50,15 +50,15 @@ class CroatiaIdRecognition
     private fun extractCombinedResult(combinedResult: CroatiaCombinedRecognizer.Result) {
         add(R.string.keyLastName, combinedResult.lastName)
         add(R.string.keyFirstName, combinedResult.firstName)
-        add(R.string.keyPersonalNumber, combinedResult.personalIdentificationNumber)
-        add(R.string.keyDocumentNumber, combinedResult.identityCardNumber)
+        add(R.string.keyPersonalNumber, combinedResult.oib)
+        add(R.string.keyDocumentNumber, combinedResult.documentNumber)
         add(R.string.keySex, combinedResult.sex)
         add(R.string.keyDateOfBirth, combinedResult.dateOfBirth)
-        add(R.string.keyAddress, combinedResult.address)
+        add(R.string.keyAddress, combinedResult.residence)
         add(R.string.keyCitizenship, combinedResult.citizenship)
-        add(R.string.keyIssuingAuthority, combinedResult.issuingAuthority)
+        add(R.string.keyIssuingAuthority, combinedResult.issuedBy)
         add(R.string.keyIssueDate, combinedResult.dateOfIssue)
-        addDateOfExpiry(combinedResult.dateOfExpiry)
+        addDateOfExpiry(combinedResult.dateOfExpiry.date)
     }
 
     private fun extractFrontSide(frontResult: CroatiaIdFrontRecognizer.Result) {

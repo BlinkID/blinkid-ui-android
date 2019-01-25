@@ -58,8 +58,6 @@ class MoroccoIdRecognition : BaseTwoSideRecognition() {
         backResult.apply {
             add(R.string.keyDocumentNumber, documentNumber)
             addDateOfExpiry(dateOfExpiry.date)
-            add(R.string.keyFatherName, fathersName)
-            add(R.string.keyMotherName, mothersName)
             add(R.string.keyAddress, address)
             add(R.string.keyCivilStatusNumber, civilStatusNumber)
             add(R.string.keySex, sex)

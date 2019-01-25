@@ -5,13 +5,12 @@ import com.microblink.documentscanflow.isEmpty
 import com.microblink.documentscanflow.recognition.BaseRecognition
 import com.microblink.documentscanflow.recognition.util.FormattingUtils
 import com.microblink.entities.recognizers.Recognizer
-import com.microblink.entities.recognizers.blinkid.eudl.EudlCountry
-import com.microblink.entities.recognizers.blinkid.eudl.EudlRecognizer
 import com.microblink.entities.recognizers.blinkid.germany.GermanyDlBackRecognizer
+import com.microblink.entities.recognizers.blinkid.germany.GermanyDlFrontRecognizer
 
 class GermanyDlRecognition : BaseRecognition() {
 
-    private val frontRecognizer by lazy { EudlRecognizer(EudlCountry.EUDL_COUNTRY_GERMANY) }
+    private val frontRecognizer by lazy { GermanyDlFrontRecognizer() }
     private val backRecognizer by lazy { GermanyDlBackRecognizer() }
 
     private var title: String? = null
@@ -35,12 +34,13 @@ class GermanyDlRecognition : BaseRecognition() {
 
         add(R.string.keyFirstName, firstName)
         add(R.string.keyLastName, lastName)
-        add(R.string.keyAddress, frontResult.address)
-        add(R.string.keyBirthData, frontResult.birthData)
-        add(R.string.keyIssueDate, frontResult.issueDate.date)
-        addDateOfExpiry(frontResult.expiryDate.date)
-        add(R.string.keyDriverNumber, frontResult.driverNumber)
+        add(R.string.keyLicenceNumber, frontResult.licenceNumber)
+        add(R.string.keyLicenceCategories, frontResult.licenceCategories)
+        add(R.string.keyPlaceOfBirth, frontResult.placeOfBirth)
+        add(R.string.keyDateOfBirth, frontResult.dateOfBirth)
+        add(R.string.keyIssueDate, frontResult.dateOfIssue)
         add(R.string.keyIssuingAuthority, frontResult.issuingAuthority)
+        addDateOfExpiry(frontResult.dateOfExpiry.date)
 
         title = FormattingUtils.formatResultTitle(firstName, lastName)
     }

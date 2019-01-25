@@ -7,12 +7,14 @@ import com.microblink.documentscanflow.recognition.ResultValidator
 import com.microblink.entities.recognizers.Recognizer
 import com.microblink.entities.recognizers.blinkid.brunei.BruneiIdBackRecognizer
 import com.microblink.entities.recognizers.blinkid.brunei.BruneiIdFrontRecognizer
+import com.microblink.entities.recognizers.blinkid.brunei.BruneiResidencePermitBackRecognizer
+import com.microblink.entities.recognizers.blinkid.brunei.BruneiResidencePermitFrontRecognizer
 import com.microblink.entities.recognizers.blinkid.mrtd.MrtdRecognizer
 
-class BruneiIdRecognition: BaseTwoSideRecognition() {
+class BruneiResidencePermitRecognition: BaseTwoSideRecognition() {
 
-    private val frontRecognizer by lazy { BruneiIdFrontRecognizer() }
-    private val backRecognizer by lazy { BruneiIdBackRecognizer() }
+    private val frontRecognizer by lazy { BruneiResidencePermitFrontRecognizer() }
+    private val backRecognizer by lazy { BruneiResidencePermitBackRecognizer() }
 
     private val frontResult by lazy { frontRecognizer.result }
     private val backResult by lazy { backRecognizer.result }
@@ -28,7 +30,7 @@ class BruneiIdRecognition: BaseTwoSideRecognition() {
         }
     }
 
-    private fun extractFront(result: BruneiIdFrontRecognizer.Result) {
+    private fun extractFront(result: BruneiResidencePermitFrontRecognizer.Result) {
         add(R.string.keyFullName, result.fullName)
         add(R.string.keyDocumentNumber, result.documentNumber)
         add(R.string.keyDateOfBirth, result.dateOfBirth)
@@ -36,7 +38,7 @@ class BruneiIdRecognition: BaseTwoSideRecognition() {
         add(R.string.keySex, result.sex)
     }
 
-    private fun extractBack(result: BruneiIdBackRecognizer.Result) {
+    private fun extractBack(result: BruneiResidencePermitBackRecognizer.Result) {
         extractMrzResult(result.mrzResult)
         add(R.string.keyIssueDate, result.dateOfIssue)
         add(R.string.keyAddress, result.address)

@@ -53,11 +53,11 @@ class CzechIdRecognition : BaseTwoSideRecognition() {
         }
 
         if (backResult.isNotEmpty()) {
-            return buildMrtdTitle(backResult)
+            return buildMrtdTitle(backResult.mrzResult)
         }
 
         if (frontResult.isNotEmpty()) {
-            return FormattingUtils.formatResultTitle(frontResult.firstName, frontResult.lastName)
+            return FormattingUtils.formatResultTitle(frontResult.givenNames, frontResult.surname)
         }
 
         return null
@@ -80,18 +80,18 @@ class CzechIdRecognition : BaseTwoSideRecognition() {
     }
 
     private fun extractFrontSide() {
-        add(R.string.keyLastName, frontResult.lastName)
-        add(R.string.keyFirstName, frontResult.firstName)
-        add(R.string.keyDocumentNumber, frontResult.identityCardNumber)
+        add(R.string.keyLastName, frontResult.surname)
+        add(R.string.keyFirstName, frontResult.givenNames)
+        add(R.string.keyDocumentNumber, frontResult.documentNumber)
         add(R.string.keySex, frontResult.sex)
         add(R.string.keyPlaceOfBirth, frontResult.placeOfBirth)
         add(R.string.keyDateOfBirth, frontResult.dateOfBirth)
         add(R.string.keyIssueDate, frontResult.dateOfIssue)
-        addDateOfExpiry(frontResult.dateOfExpiry)
+        addDateOfExpiry(frontResult.dateOfExpiry.date)
     }
     
     private fun extractBackSide() {
-        extractMrtdResult(backResult)
+        extractMrzResult(backResult.mrzResult)
         add(R.string.keyAddress, backResult.permanentStay)
         add(R.string.keyPersonalNumber, backResult.personalNumber)
         add(R.string.keyIssuingAuthority, backResult.authority)

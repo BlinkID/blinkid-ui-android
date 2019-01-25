@@ -71,23 +71,17 @@ class GermanyIdRecognition : BaseTwoSideRecognition() {
     }
 
     private fun extractBackSide() {
-        add(R.string.keySecondaryId, backResult.secondaryId)
-        add(R.string.keyPrimaryId, backResult.primaryId)
-        add(R.string.keyDocumentNumber, backResult.documentNumber)
-        addDateOfExpiry(backResult.dateOfExpiry)
-        add(R.string.keyDateOfBirth, backResult.dateOfBirth)
-        add(R.string.keyEyeColor, backResult.eyeColour)
+        extractMrzResult(backResult.mrzResult)
         add(R.string.keyAuthority, backResult.authority)
         add(R.string.keyIssueDate, backResult.dateOfIssue)
-        add(R.string.keyAddress, backResult.address)
-        add(R.string.keyHeight, backResult.height)
+        add(R.string.keyAddress, backResult.fullAddress)
     }
 
     override fun getResultTitle(): String? {
         return when {
             combinedResult.isNotEmpty() -> FormattingUtils.formatResultTitle(combinedResult.firstName, combinedResult.lastName)
             frontResult.isNotEmpty() -> FormattingUtils.formatResultTitle(frontResult.givenNames, frontResult.surname)
-            backResult.isNotEmpty() -> FormattingUtils.formatResultTitle(backResult.secondaryId, backResult.primaryId)
+            backResult.isNotEmpty() -> buildMrtdTitle(backResult.mrzResult)
             else -> null
         }
     }

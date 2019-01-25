@@ -72,7 +72,7 @@ class SlovakiaIdRecognition: BaseTwoSideRecognition() {
         add(R.string.keyPersonalNumber, frontResult.personalNumber)
         add(R.string.keyDocumentNumber, frontResult.documentNumber)
         add(R.string.keyIssuedBy, frontResult.issuedBy)
-        addDateOfExpiry(frontResult.dateOfExpiry)
+        addDateOfExpiry(frontResult.dateOfExpiry.date)
         add(R.string.keyIssueDate, frontResult.dateOfIssue)
     }
 
@@ -82,10 +82,8 @@ class SlovakiaIdRecognition: BaseTwoSideRecognition() {
         }
 
         add(R.string.keyAddress, backResult.address)
-        add(R.string.keySurnameAtBirth, backResult.surnameAtBirth)
         add(R.string.keyPlaceOfBirth, backResult.placeOfBirth)
-        add(R.string.keySpecialRemarks, backResult.specialRemarks)
-        extractMrtdResult(backResult)
+        extractMrzResult(backResult.mrzResult)
     }
     
     override fun getResultTitle(): String? {
@@ -96,7 +94,7 @@ class SlovakiaIdRecognition: BaseTwoSideRecognition() {
             return FormattingUtils.formatResultTitle(frontResult.firstName, frontResult.lastName)
         }
         if (backResult.isNotEmpty()) {
-            return buildMrtdTitle(backResult)
+            return buildMrtdTitle(backResult.mrzResult)
         }
         return null
     }

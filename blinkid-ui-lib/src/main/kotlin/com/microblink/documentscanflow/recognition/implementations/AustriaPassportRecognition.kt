@@ -37,7 +37,6 @@ class AustriaPassportRecognition : BaseRecognition() {
         add(R.string.keyIssueDate, passResult.dateOfIssue)
         add(R.string.keyIssuer, passResult.issuingAuthority)
         add(R.string.keyDateOfExpiry, passResult.dateOfExpiry)
-        add(R.string.keyHeight, passResult.height)
 
         return FormattingUtils.formatResultTitle(firstName, lastName)
     }

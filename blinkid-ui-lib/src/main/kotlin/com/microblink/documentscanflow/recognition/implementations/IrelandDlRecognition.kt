@@ -29,7 +29,6 @@ class IrelandDlRecognition : BaseRecognition() {
             add(R.string.keyIssueDate, dateOfIssue)
             add(R.string.keyIssuedBy, issuedBy)
             addDateOfExpiry(dateOfExpiry.date)
-            add(R.string.keyDriverNumber, driverNumber)
             add(R.string.keyLicenceNumber, licenceNumber)
             add(R.string.keyAddress, address)
             add(R.string.keyLicenceCategories, licenceCategories)

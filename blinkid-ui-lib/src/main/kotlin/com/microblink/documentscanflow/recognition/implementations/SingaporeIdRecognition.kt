@@ -80,7 +80,6 @@ class SingaporeIdRecognition: BaseTwoSideRecognition() {
         }
 
         add(R.string.keyDocumentNumber, backResult.cardNumber)
-        add(R.string.keyBloodGroup, backResult.bloodGroup)
         add(R.string.keyIssueDate, backResult.dateOfIssue)
         add(R.string.keyAddress, backResult.address)
     }
