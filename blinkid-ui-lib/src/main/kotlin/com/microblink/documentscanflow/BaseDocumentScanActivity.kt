@@ -121,12 +121,16 @@ abstract class BaseDocumentScanActivity : AppCompatActivity(), ScanResultListene
     protected fun getCurrentDocument() = currentDocument
 
     @UiThread
-    protected fun updateDocument(document: Document) {
-        val isSameCountry = currentDocument.country == document.country
-        currentDocument = document
-        scanFlowListener.onSelectedDocumentChanged(currentDocument)
+    protected fun updateDocument(newDocument: Document) {
+        val oldDocument = currentDocument
+        val isSameCountry = oldDocument.country == newDocument.country
+        currentDocument = newDocument
+
+        if (oldDocument != newDocument) {
+            scanFlowListener.onSelectedDocumentChanged(oldDocument, newDocument)
+        }
         if (!isSameCountry) {
-            updateDocumentTypeSelectionTabs(document)
+            updateDocumentTypeSelectionTabs(currentDocument)
             selectedCountryTv.text = currentDocument.country.getLocalisedName()
         }
         startScan()
