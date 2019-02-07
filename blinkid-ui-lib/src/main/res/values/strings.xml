@@ -40,7 +40,7 @@
     <string name="mb_title_not_supported">Not supported</string>
 
     <!-- Other -->
-    <string name="mb_supported_countries_label">Choose from more than 100 countries</string>
+    <string name="mb_supported_countries_label">Choose between 150+ documents</string>
     <string name="mb_action_search">Search</string>
     <string name="mb_title_activity_country_choose">Select country</string>
 
