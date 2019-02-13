@@ -27,7 +27,6 @@ abstract class BaseRecognition(val isFullySupported: Boolean = true) {
 
     protected val resultEntries: MutableSet<ResultEntry<*>> = LinkedHashSet()
     protected var shouldValidate = false
-    protected lateinit var context: Context
 
     private lateinit var entryBuilder: ResultEntry.Builder
     private var faceImage: Image? = null
@@ -68,7 +67,6 @@ abstract class BaseRecognition(val isFullySupported: Boolean = true) {
     }
 
     fun extractResult(context: Context, shouldValidate: Boolean): RecognitionResult {
-        this.context = context
         resultEntries.clear()
         entryBuilder = ResultEntry.Builder(context)
         this.shouldValidate = shouldValidate

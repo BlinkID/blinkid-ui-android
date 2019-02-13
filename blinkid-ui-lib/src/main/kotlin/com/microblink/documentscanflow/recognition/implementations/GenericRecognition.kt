@@ -38,15 +38,15 @@ class GenericRecognition(isFullySupported: Boolean, private val recognizerProvid
 
     companion object {
 
-        val residencePermit = GenericRecognition.faceMrtd(true)
+        val residencePermit = faceMrtd(true)
 
-        val id = GenericRecognition.faceMrtd(false)
+        val id = faceMrtd(false)
 
-        val drivingLicence = GenericRecognition.faceId1(false)
+        val drivingLicence = faceId1(false)
 
-        val passport = GenericRecognition.mrtd(true)
+        val passport = mrtd(true)
 
-        val visa = GenericRecognition.mrtd(true)
+        val visa = mrtd(true)
 
         fun mrtd(isFullySupported: Boolean): GenericRecognition {
             return GenericRecognition(isFullySupported, object: RecognizerProvider() {
