@@ -138,6 +138,10 @@ abstract class BaseDocumentScanActivity : AppCompatActivity(), ScanResultListene
 
     @AnyThread
     protected fun pauseScanning() {
+        if (isScanningPaused()) {
+            return
+        }
+
         scanTimeoutHandler.stopTimer()
         runOnUiThread {
             recognizerView.pauseScanning()
@@ -301,6 +305,10 @@ abstract class BaseDocumentScanActivity : AppCompatActivity(), ScanResultListene
 
     @AnyThread
     private fun resumeScanningImmediately() {
+        if (!isScanningPaused()) {
+            return
+        }
+
         scanTimeoutHandler.startTimer()
 
         // resetting combined will revert it to first side scan and we don't want that
