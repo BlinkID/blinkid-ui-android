@@ -1,6 +1,6 @@
 package com.microblink.documentscanflow.ui.scanlineanimator
 
-import com.microblink.fragment.overlay.blinkcard.ScanLineAnimator
+import com.microblink.ui.blinkid.scanlineanimator.ScanLineAnimator
 
 class EmptyScanLineAnimator: ScanLineAnimator {
 

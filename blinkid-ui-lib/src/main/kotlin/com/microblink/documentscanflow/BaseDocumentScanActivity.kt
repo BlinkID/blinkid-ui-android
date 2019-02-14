@@ -31,16 +31,16 @@ import android.view.animation.AccelerateDecelerateInterpolator
 import com.microblink.documentscanflow.country.CountryFactory
 import com.microblink.documentscanflow.document.Document
 import com.microblink.documentscanflow.document.DocumentType
-import com.microblink.documentscanflow.ui.documentchooser.defaultimplementation.ChooseCountryActivity
 import com.microblink.documentscanflow.recognition.RecognitionError
 import com.microblink.documentscanflow.recognition.RecognizerManager
 import com.microblink.documentscanflow.recognition.ResultMergeException
 import com.microblink.documentscanflow.recognition.framelistener.FrameGrabberMode
 import com.microblink.documentscanflow.recognition.framelistener.FrameListener
-import com.microblink.documentscanflow.ui.InstructionsHandler
+import com.microblink.documentscanflow.ui.DocumentInstructionsHandler
 import com.microblink.documentscanflow.ui.TorchButtonHandler
 import com.microblink.documentscanflow.ui.documentchooser.DefaultDocumentChooser
 import com.microblink.documentscanflow.ui.documentchooser.DocumentChooser
+import com.microblink.documentscanflow.ui.documentchooser.defaultimplementation.ChooseCountryActivity
 import com.microblink.documentscanflow.ui.scansoundplayer.ScanSuccessPlayer
 import com.microblink.documentscanflow.ui.scansoundplayer.SoundPoolScanSuccessPlayer
 import com.microblink.documentscanflow.ui.scantimeouthandler.DefaultScanTimeoutHandler
@@ -52,8 +52,10 @@ import com.microblink.entities.recognizers.blinkid.documentface.DocumentFaceReco
 import com.microblink.entities.recognizers.detector.DetectorRecognizer
 import com.microblink.entities.recognizers.framegrabber.FrameCallback
 import com.microblink.entities.recognizers.successframe.SuccessFrameGrabberRecognizer
-import com.microblink.fragment.overlay.blinkcard.DefaultScanLineAnimator
-import com.microblink.fragment.overlay.blinkcard.ScanLineAnimator
+import com.microblink.ui.blinkid.scanlineanimator.DefaultScanLineAnimator
+import com.microblink.ui.blinkid.InstructionsHandler
+import com.microblink.ui.blinkid.ScanFlowState
+import com.microblink.ui.blinkid.scanlineanimator.ScanLineAnimator
 import com.microblink.hardware.orientation.Orientation
 import com.microblink.image.Image
 import com.microblink.metadata.MetadataCallbacks
@@ -67,9 +69,8 @@ import com.microblink.view.CameraEventsListener
 import com.microblink.view.ocrResult.OcrResultDotsView
 import com.microblink.view.recognition.ScanResultListener
 import kotlinx.android.synthetic.main.mb_activity_scan_document.*
-import kotlinx.android.synthetic.main.mb_include_splash_overlay.*
 import kotlinx.android.synthetic.main.mb_include_scan_bottom_container.*
-import kotlinx.android.synthetic.main.mb_view_scan_frame.view.*
+import kotlinx.android.synthetic.main.mb_include_splash_overlay.*
 import java.util.*
 import kotlin.math.max
 
@@ -88,7 +89,7 @@ abstract class BaseDocumentScanActivity : AppCompatActivity(), ScanResultListene
     private val torchButtonHandler = TorchButtonHandler()
     private val recognizerManager by lazy { RecognizerManager(getFrameGrabberMode(), createFrameCallback()) }
     private val cameraErrorHandler by lazy { CameraErrorHandler(this) {finish()} }
-    private val instructionsHandler by lazy { InstructionsHandler(this, currentDocument, scanFrameLayout.scanInstructionsTv, scanFrameLayout.flipCardView) }
+    private val instructionsHandler by lazy { DocumentInstructionsHandler(this, currentDocument, scanFrameLayout.scanInstructionsTv, scanFrameLayout.flipCardView) }
     private val scanLineAnimator by lazy { createScanLineAnimator() }
 
     private val handler = Handler()
