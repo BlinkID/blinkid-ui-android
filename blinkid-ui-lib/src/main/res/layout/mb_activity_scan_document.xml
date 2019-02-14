@@ -27,7 +27,7 @@
             android:layout_alignParentTop="true"
             android:background="@color/mbBgCameraOverlay" />
 
-        <com.microblink.documentscanflow.ui.view.ScanFrameLayout
+        <com.microblink.fragment.overlay.blinkcard.ScanFrameLayout
             android:id="@+id/scanFrameLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
