@@ -1,12 +1,12 @@
 package com.microblink.documentscanflow.recognition
 
+import com.microblink.documentscanflow.ScanFlowState
 import com.microblink.documentscanflow.recognition.framelistener.FrameGrabberMode
 import com.microblink.entities.recognizers.Recognizer
 import com.microblink.entities.recognizers.RecognizerBundle
 import com.microblink.entities.recognizers.framegrabber.FrameCallback
 import com.microblink.entities.recognizers.framegrabber.FrameGrabberRecognizer
 import com.microblink.entities.recognizers.successframe.SuccessFrameGrabberRecognizer
-import com.microblink.ui.blinkid.ScanFlowState
 import com.microblink.image.Image
 
 internal class RecognizerManager(private val frameGrabberMode: FrameGrabberMode,

@@ -36,7 +36,7 @@ import com.microblink.documentscanflow.recognition.RecognizerManager
 import com.microblink.documentscanflow.recognition.ResultMergeException
 import com.microblink.documentscanflow.recognition.framelistener.FrameGrabberMode
 import com.microblink.documentscanflow.recognition.framelistener.FrameListener
-import com.microblink.documentscanflow.ui.DocumentInstructionsHandler
+import com.microblink.documentscanflow.ui.InstructionsHandler
 import com.microblink.documentscanflow.ui.TorchButtonHandler
 import com.microblink.documentscanflow.ui.documentchooser.DefaultDocumentChooser
 import com.microblink.documentscanflow.ui.documentchooser.DocumentChooser
@@ -53,8 +53,6 @@ import com.microblink.entities.recognizers.detector.DetectorRecognizer
 import com.microblink.entities.recognizers.framegrabber.FrameCallback
 import com.microblink.entities.recognizers.successframe.SuccessFrameGrabberRecognizer
 import com.microblink.ui.blinkid.scanlineanimator.DefaultScanLineAnimator
-import com.microblink.ui.blinkid.InstructionsHandler
-import com.microblink.ui.blinkid.ScanFlowState
 import com.microblink.ui.blinkid.scanlineanimator.ScanLineAnimator
 import com.microblink.hardware.orientation.Orientation
 import com.microblink.image.Image
@@ -89,7 +87,7 @@ abstract class BaseDocumentScanActivity : AppCompatActivity(), ScanResultListene
     private val torchButtonHandler = TorchButtonHandler()
     private val recognizerManager by lazy { RecognizerManager(getFrameGrabberMode(), createFrameCallback()) }
     private val cameraErrorHandler by lazy { CameraErrorHandler(this) {finish()} }
-    private val instructionsHandler by lazy { DocumentInstructionsHandler(this, currentDocument, scanFrameLayout.scanInstructionsTv, scanFrameLayout.flipCardView) }
+    private val instructionsHandler by lazy { InstructionsHandler(this, currentDocument, scanFrameLayout.scanInstructionsTv, scanFrameLayout.flipCardView) }
     private val scanLineAnimator by lazy { createScanLineAnimator() }
 
     private val handler = Handler()
