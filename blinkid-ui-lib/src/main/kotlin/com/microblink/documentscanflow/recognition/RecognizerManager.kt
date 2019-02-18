@@ -1,7 +1,7 @@
 package com.microblink.documentscanflow.recognition
 
-import com.microblink.documentscanflow.recognition.framelistener.FrameGrabberMode
 import com.microblink.documentscanflow.ScanFlowState
+import com.microblink.documentscanflow.recognition.framelistener.FrameGrabberMode
 import com.microblink.entities.recognizers.Recognizer
 import com.microblink.entities.recognizers.RecognizerBundle
 import com.microblink.entities.recognizers.framegrabber.FrameCallback
