@@ -52,8 +52,8 @@ import com.microblink.entities.recognizers.blinkid.documentface.DocumentFaceReco
 import com.microblink.entities.recognizers.detector.DetectorRecognizer
 import com.microblink.entities.recognizers.framegrabber.FrameCallback
 import com.microblink.entities.recognizers.successframe.SuccessFrameGrabberRecognizer
-import com.microblink.ui.blinkid.scanlineanimator.DefaultScanLineAnimator
-import com.microblink.ui.blinkid.scanlineanimator.ScanLineAnimator
+import com.microblink.view.animation.DefaultScanLineAnimator
+import com.microblink.view.animation.ScanLineAnimator
 import com.microblink.hardware.orientation.Orientation
 import com.microblink.image.Image
 import com.microblink.metadata.MetadataCallbacks
