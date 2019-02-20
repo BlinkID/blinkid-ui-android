@@ -27,6 +27,7 @@ enum class SupportedCountry(override val code: String,
             recognitions {
                 id = BruneiIdRecognition()
                 residencePermit = BruneiResidencePermitRecognition()
+                temporaryResidencePermit = BruneiTemporaryResidencePermitRecognition()
             }),
 
     CANADA("ca",

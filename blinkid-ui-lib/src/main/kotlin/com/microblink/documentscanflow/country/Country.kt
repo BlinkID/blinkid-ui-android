@@ -41,6 +41,7 @@ interface Country {
             DocumentType.PASSPORT -> R.string.mb_passport
             DocumentType.TRAVEL_DOCUMENT_VISA -> R.string.mb_visa
             DocumentType.RESIDENCE_PERMIT -> R.string.mb_residence_permit
+            DocumentType.TEMPORARY_RESIDENCE_PERMIT -> R.string.mb_temporary_residence_permit
             DocumentType.IMMIGRATOR_ID -> R.string.mb_immigrator_id
             DocumentType.MILITARY_ID -> R.string.mb_military_id
             DocumentType.NEW_ID -> R.string.mb_new_id_card
