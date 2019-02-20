@@ -18,7 +18,7 @@ internal class CameraErrorHandler(private val context: Context, private val onUn
                 handleInitError(getString(R.string.mb_error_initializing))
             }
             is UnsatisfiedLinkError -> handleInitError(getString(R.string.mb_error_initializing))
-            is AutoFocusRequiredButNotSupportedException -> handleNotSupportedError(getNotSupportedReasonDescription(NotSupportedReason.NO_AUTOFOCUS_CAMERA))
+            is AutoFocusRequiredButNotSupportedException -> handleNotSupportedError(getString(R.string.mb_feature_unsupported_autofocus))
             is FeatureNotSupportedException -> handleNotSupportedError(getNotSupportedReasonDescription(exc.reason))
             is SecurityException -> handleInitError(getString(R.string.mb_camera_not_allowed))
             else -> handleInitError(getString(R.string.mb_camera_error))
@@ -45,7 +45,6 @@ internal class CameraErrorHandler(private val context: Context, private val onUn
         NotSupportedReason.CUSTOM_UI_FORBIDDEN -> getString(com.microblink.library.R.string.mb_custom_ui_forbidden)
         NotSupportedReason.INVALID_OR_MISSING_LICENSE -> getString(com.microblink.library.R.string.mb_invalid_license)
         NotSupportedReason.UNSUPPORTED_ANDROID_VERSION -> getString(com.microblink.library.R.string.mb_feature_unsupported_android_version)
-        NotSupportedReason.NO_AUTOFOCUS_CAMERA -> getString(com.microblink.library.R.string.mb_feature_unsupported_autofocus)
         else -> getString(com.microblink.library.R.string.mb_feature_unsupported_device)
     }
 

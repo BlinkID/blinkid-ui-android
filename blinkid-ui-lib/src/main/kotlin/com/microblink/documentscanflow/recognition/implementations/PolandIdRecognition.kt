@@ -67,7 +67,7 @@ class PolandIdRecognition: BaseTwoSideRecognition() {
     }
 
     private fun extractBackSide() {
-        extractMrtdResult(backResult)
+        extractMrzResult(backResult.mrzResult)
     }
 
     override fun getResultTitle(): String? {
@@ -83,8 +83,8 @@ class PolandIdRecognition: BaseTwoSideRecognition() {
                 lastName = frontResult.surname
             }
             backResult.isNotEmpty() -> {
-                firstName = backResult.secondaryId
-                lastName = backResult.primaryId
+                firstName = backResult.mrzResult.secondaryId
+                lastName = backResult.mrzResult.primaryId
             }
         }
         return FormattingUtils.formatResultTitle(firstName, lastName)
