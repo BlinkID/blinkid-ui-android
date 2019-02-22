@@ -40,7 +40,7 @@ class BruneiTemporaryResidencePermitRecognition: BaseTwoSideRecognition() {
         extractMrzResult(result.mrzResult)
         add(R.string.keyIssueDate, result.dateOfIssue)
         add(R.string.keyPassportNumber, result.passportNumber)
-        add(R.string.keyAddress, result.address)
+        add(R.string.keyEmployerAddress, result.address)
     }
 
     override fun getResultTitle(): String? {
