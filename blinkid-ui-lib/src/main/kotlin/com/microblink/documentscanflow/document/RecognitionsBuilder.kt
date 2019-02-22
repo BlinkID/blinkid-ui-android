@@ -38,6 +38,12 @@ internal class RecognitionsBuilder {
             addRecognition(DocumentType.RESIDENCE_PERMIT, value)
         }
 
+    var temporaryResidencePermit: BaseRecognition? = null
+        set(value) {
+            field = value
+            addRecognition(DocumentType.TEMPORARY_RESIDENCE_PERMIT, value)
+        }
+
     var newId: BaseRecognition? = null
         set(value) {
             field = value

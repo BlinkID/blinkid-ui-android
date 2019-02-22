@@ -31,18 +31,16 @@ import android.view.animation.AccelerateDecelerateInterpolator
 import com.microblink.documentscanflow.country.CountryFactory
 import com.microblink.documentscanflow.document.Document
 import com.microblink.documentscanflow.document.DocumentType
-import com.microblink.documentscanflow.ui.documentchooser.defaultimplementation.ChooseCountryActivity
 import com.microblink.documentscanflow.recognition.RecognitionError
 import com.microblink.documentscanflow.recognition.RecognizerManager
 import com.microblink.documentscanflow.recognition.ResultMergeException
 import com.microblink.documentscanflow.recognition.framelistener.FrameGrabberMode
 import com.microblink.documentscanflow.recognition.framelistener.FrameListener
 import com.microblink.documentscanflow.ui.InstructionsHandler
-import com.microblink.documentscanflow.ui.scanlineanimator.DefaultScanLineAnimator
 import com.microblink.documentscanflow.ui.TorchButtonHandler
 import com.microblink.documentscanflow.ui.documentchooser.DefaultDocumentChooser
 import com.microblink.documentscanflow.ui.documentchooser.DocumentChooser
-import com.microblink.documentscanflow.ui.scanlineanimator.ScanLineAnimator
+import com.microblink.documentscanflow.ui.documentchooser.defaultimplementation.ChooseCountryActivity
 import com.microblink.documentscanflow.ui.scansoundplayer.ScanSuccessPlayer
 import com.microblink.documentscanflow.ui.scansoundplayer.SoundPoolScanSuccessPlayer
 import com.microblink.documentscanflow.ui.scantimeouthandler.DefaultScanTimeoutHandler
@@ -54,6 +52,8 @@ import com.microblink.entities.recognizers.blinkid.documentface.DocumentFaceReco
 import com.microblink.entities.recognizers.detector.DetectorRecognizer
 import com.microblink.entities.recognizers.framegrabber.FrameCallback
 import com.microblink.entities.recognizers.successframe.SuccessFrameGrabberRecognizer
+import com.microblink.view.animation.DefaultScanLineAnimator
+import com.microblink.view.animation.ScanLineAnimator
 import com.microblink.hardware.orientation.Orientation
 import com.microblink.image.Image
 import com.microblink.metadata.MetadataCallbacks
@@ -67,9 +67,8 @@ import com.microblink.view.CameraEventsListener
 import com.microblink.view.ocrResult.OcrResultDotsView
 import com.microblink.view.recognition.ScanResultListener
 import kotlinx.android.synthetic.main.mb_activity_scan_document.*
-import kotlinx.android.synthetic.main.mb_include_splash_overlay.*
 import kotlinx.android.synthetic.main.mb_include_scan_bottom_container.*
-import kotlinx.android.synthetic.main.mb_view_scan_frame.view.*
+import kotlinx.android.synthetic.main.mb_include_splash_overlay.*
 import java.util.*
 import kotlin.math.max
 
@@ -121,12 +120,16 @@ abstract class BaseDocumentScanActivity : AppCompatActivity(), ScanResultListene
     protected fun getCurrentDocument() = currentDocument
 
     @UiThread
-    protected fun updateDocument(document: Document) {
-        val isSameCountry = currentDocument.country == document.country
-        currentDocument = document
-        scanFlowListener.onSelectedDocumentChanged(currentDocument)
+    protected fun updateDocument(newDocument: Document) {
+        val oldDocument = currentDocument
+        val isSameCountry = oldDocument.country == newDocument.country
+        currentDocument = newDocument
+
+        if (oldDocument != newDocument) {
+            scanFlowListener.onSelectedDocumentChanged(oldDocument, newDocument)
+        }
         if (!isSameCountry) {
-            updateDocumentTypeSelectionTabs(document)
+            updateDocumentTypeSelectionTabs(currentDocument)
             selectedCountryTv.text = currentDocument.country.getLocalisedName()
         }
         startScan()
@@ -134,6 +137,10 @@ abstract class BaseDocumentScanActivity : AppCompatActivity(), ScanResultListene
 
     @AnyThread
     protected fun pauseScanning() {
+        if (isScanningPaused()) {
+            return
+        }
+
         scanTimeoutHandler.stopTimer()
         runOnUiThread {
             recognizerView.pauseScanning()
@@ -297,6 +304,10 @@ abstract class BaseDocumentScanActivity : AppCompatActivity(), ScanResultListene
 
     @AnyThread
     private fun resumeScanningImmediately() {
+        if (!isScanningPaused()) {
+            return
+        }
+
         scanTimeoutHandler.startTimer()
 
         // resetting combined will revert it to first side scan and we don't want that
