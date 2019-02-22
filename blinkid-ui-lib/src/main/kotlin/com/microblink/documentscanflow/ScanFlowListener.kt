@@ -12,6 +12,6 @@ interface ScanFlowListener {
 
     fun onEntireDocumentScanned(recognitionResult: RecognitionResult, successFrame: Image?)
 
-    fun onSelectedDocumentChanged(newDocument: Document)
+    fun onSelectedDocumentChanged(oldDocument: Document, newDocument: Document)
 
 }

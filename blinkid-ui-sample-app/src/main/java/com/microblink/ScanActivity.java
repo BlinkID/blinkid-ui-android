@@ -13,8 +13,6 @@ import com.microblink.documentscanflow.country.SupportedCountry;
 import com.microblink.documentscanflow.document.Document;
 import com.microblink.documentscanflow.document.DocumentType;
 import com.microblink.documentscanflow.recognition.RecognitionResult;
-import com.microblink.documentscanflow.recognition.framelistener.FrameGrabberMode;
-import com.microblink.documentscanflow.recognition.framelistener.FrameListener;
 import com.microblink.documentscanflow.recognition.util.ImageStorage;
 import com.microblink.documentscanflow.ui.documentchooser.DefaultDocumentChooser;
 import com.microblink.documentscanflow.ui.documentchooser.DocumentChooser;
@@ -53,12 +51,9 @@ public class ScanActivity extends BaseDocumentScanActivity {
     @Override
     public ScanFlowListener createScanFlowListener() {
         return new ScanFlowListener() {
-            @Override
-            public void onScanStarted() {
-            }
 
             @Override
-            public void onSelectedDocumentChanged(@NonNull Document newDocument) {
+            public void onScanStarted() {
             }
 
             @Override
@@ -73,6 +68,10 @@ public class ScanActivity extends BaseDocumentScanActivity {
 
             @Override
             public void onFirstSideScanned(@Nullable RecognitionResult recognitionResult, Image successFrame) {
+            }
+
+            @Override
+            public void onSelectedDocumentChanged(Document oldDocument, Document newDocument) {
             }
         };
     }

@@ -30,6 +30,7 @@
     <string name="keyPlaceOfIssue">Place of issue</string>
     <string name="keyAuthority">Authority</string>
     <string name="keyAddress">Address</string>
+    <string name="keyEmployerAddress">Employer address</string>
     <string name="keyPlaceOfBirth">Place of birth</string>
     <string name="keyBirthData">Birth data</string>
     <string name="keyPlaceOfOrigin">Place of origin</string>

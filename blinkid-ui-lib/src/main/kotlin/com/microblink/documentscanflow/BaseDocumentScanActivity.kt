@@ -120,12 +120,16 @@ abstract class BaseDocumentScanActivity : AppCompatActivity(), ScanResultListene
     protected fun getCurrentDocument() = currentDocument
 
     @UiThread
-    protected fun updateDocument(document: Document) {
-        val isSameCountry = currentDocument.country == document.country
-        currentDocument = document
-        scanFlowListener.onSelectedDocumentChanged(currentDocument)
+    protected fun updateDocument(newDocument: Document) {
+        val oldDocument = currentDocument
+        val isSameCountry = oldDocument.country == newDocument.country
+        currentDocument = newDocument
+
+        if (oldDocument != newDocument) {
+            scanFlowListener.onSelectedDocumentChanged(oldDocument, newDocument)
+        }
         if (!isSameCountry) {
-            updateDocumentTypeSelectionTabs(document)
+            updateDocumentTypeSelectionTabs(currentDocument)
             selectedCountryTv.text = currentDocument.country.getLocalisedName()
         }
         startScan()
@@ -133,6 +137,10 @@ abstract class BaseDocumentScanActivity : AppCompatActivity(), ScanResultListene
 
     @AnyThread
     protected fun pauseScanning() {
+        if (isScanningPaused()) {
+            return
+        }
+
         scanTimeoutHandler.stopTimer()
         runOnUiThread {
             recognizerView.pauseScanning()
@@ -296,6 +304,10 @@ abstract class BaseDocumentScanActivity : AppCompatActivity(), ScanResultListene
 
     @AnyThread
     private fun resumeScanningImmediately() {
+        if (!isScanningPaused()) {
+            return
+        }
+
         scanTimeoutHandler.startTimer()
 
         // resetting combined will revert it to first side scan and we don't want that

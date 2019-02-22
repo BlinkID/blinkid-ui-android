@@ -1,10 +1,8 @@
 package com.microblink.documentscanflow.document
 
 import android.content.Context
-import android.support.annotation.StringRes
-import com.microblink.documentscanflow.R
+import android.support.v4.util.ObjectsCompat
 import com.microblink.documentscanflow.country.Country
-import com.microblink.documentscanflow.country.SupportedCountry
 
 class Document(val country: Country, val documentType: DocumentType) {
 
@@ -23,5 +21,11 @@ class Document(val country: Country, val documentType: DocumentType) {
     }
 
     private fun getDocumentNameStringId() = country.getDocumentNameStringId(documentType)
+
+    override fun equals(other: Any?): Boolean {
+        return other is Document && other.country == this.country && other.documentType == this.documentType
+    }
+
+    override fun hashCode() = ObjectsCompat.hash(documentType, country)
 
 }
