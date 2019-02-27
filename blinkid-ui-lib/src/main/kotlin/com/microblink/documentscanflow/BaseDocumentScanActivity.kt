@@ -389,7 +389,7 @@ abstract class BaseDocumentScanActivity : AppCompatActivity(), ScanResultListene
 
     // special case for combined recognizer
     private fun onCombinedRecognizerFirstSideDone() {
-        val recognitionResult = currentDocument.getRecognition().extractResult(this, false)
+        val recognitionResult = currentDocument.getRecognition().extractResult(false)
         scanTimeoutHandler.stopTimer()
         scanTimeoutHandler.startTimer()
         scanFlowListener.onFirstSideScanned(recognitionResult, null)
@@ -430,7 +430,7 @@ abstract class BaseDocumentScanActivity : AppCompatActivity(), ScanResultListene
 
         val recognition = currentDocument.getRecognition()
         try {
-            val extractorResult = recognition.extractResult(this, shouldScanBothDocumentSides())
+            val extractorResult = recognition.extractResult(shouldScanBothDocumentSides())
             scanFlowListener.onEntireDocumentScanned(extractorResult, recognizerManager.getSuccessFrame(scanFlowState))
             resumeScanningImmediately()
         } catch (e: ResultMergeException) {
@@ -453,7 +453,7 @@ abstract class BaseDocumentScanActivity : AppCompatActivity(), ScanResultListene
     private fun onFirstSideScanned() {
         scanTimeoutHandler.stopTimer()
         val successFrame = recognizerManager.getSuccessFrame(scanFlowState)
-        val recognitionResult = currentDocument.getRecognition().extractResult(this, false)
+        val recognitionResult = currentDocument.getRecognition().extractResult(false)
         scanFlowListener.onFirstSideScanned(recognitionResult, successFrame)
         scanFlowState = ScanFlowState.BACK_SIDE_SCAN
 

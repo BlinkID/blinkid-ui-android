@@ -1,6 +1,6 @@
 package com.microblink.documentscanflow.recognition.implementations
 
-import com.microblink.documentscanflow.R
+import com.microblink.documentscanflow.recognition.resultentry.ResultKey.*
 import com.microblink.documentscanflow.isNotEmpty
 import com.microblink.documentscanflow.recognition.BaseTwoSideRecognition
 import com.microblink.documentscanflow.recognition.ResultValidator
@@ -49,15 +49,15 @@ class KuwaitIdRecognition : BaseTwoSideRecognition() {
 
     private fun extractBackSide() {
         extractMrzResult(backResult.mrzResult)
-        add(R.string.keySerialNumber, backResult.serialNo)
+        add(SERIAL_NUMBER, backResult.serialNo)
     }
 
     private fun extractFrontSide() {
-        add(R.string.keyCivilIdNumber, frontResult.civilIdNumber)
-        add(R.string.keyFullName, frontResult.name)
-        add(R.string.keyNationality, frontResult.nationality)
-        add(R.string.keySex, frontResult.sex)
-        add(R.string.keyDateOfBirth, frontResult.birthDate)
+        add(CIVIL_ID_NUMBER, frontResult.civilIdNumber)
+        add(FULL_NAME, frontResult.name)
+        add(NATIONALITY, frontResult.nationality)
+        add(SEX, frontResult.sex)
+        add(DATE_OF_BIRTH, frontResult.birthDate)
         addDateOfExpiry(frontResult.expiryDate.date)
     }
 

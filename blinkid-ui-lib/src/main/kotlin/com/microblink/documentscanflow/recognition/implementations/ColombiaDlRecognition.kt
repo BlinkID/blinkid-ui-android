@@ -1,11 +1,11 @@
 package com.microblink.documentscanflow.recognition.implementations
 
-import com.microblink.documentscanflow.R
 import com.microblink.documentscanflow.buildId1CardDetectorRecognizer
 import com.microblink.documentscanflow.isEmpty
 import com.microblink.documentscanflow.recognition.BaseRecognition
 import com.microblink.entities.recognizers.Recognizer
 import com.microblink.entities.recognizers.blinkid.colombia.ColombiaDlFrontRecognizer
+import com.microblink.documentscanflow.recognition.resultentry.ResultKey.*
 
 class ColombiaDlRecognition : BaseRecognition() {
 
@@ -21,12 +21,12 @@ class ColombiaDlRecognition : BaseRecognition() {
         }
 
         result.apply {
-            add(R.string.keyLicenceNumber, licenceNumber)
-            add(R.string.keyFullName, name)
-            add(R.string.keyDateOfBirth, dateOfBirth)
-            add(R.string.keyIssueDate, dateOfIssue)
-            add(R.string.keyDriverRestrictions, driverRestrictions)
-            add(R.string.keyIssuingAgency, issuingAgency)
+            add(LICENCE_NUMBER, licenceNumber)
+            add(FULL_NAME, name)
+            add(DATE_OF_BIRTH, dateOfBirth)
+            add(DATE_OF_ISSUE, dateOfIssue)
+            add(DRIVER_RESTRICTIONS, driverRestrictions)
+            add(ISSUING_AGENCY, issuingAgency)
         }
 
         return result.name

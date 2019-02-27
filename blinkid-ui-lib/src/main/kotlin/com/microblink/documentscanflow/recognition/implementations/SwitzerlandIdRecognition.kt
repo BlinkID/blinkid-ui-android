@@ -1,6 +1,6 @@
 package com.microblink.documentscanflow.recognition.implementations
 
-import com.microblink.documentscanflow.R
+import com.microblink.documentscanflow.recognition.resultentry.ResultKey.*
 import com.microblink.documentscanflow.isNotEmpty
 import com.microblink.documentscanflow.recognition.BaseTwoSideRecognition
 import com.microblink.documentscanflow.recognition.util.FormattingUtils
@@ -36,16 +36,16 @@ class SwitzerlandIdRecognition: BaseTwoSideRecognition() {
     }
     
     private fun extractFrontSide() {
-        add(R.string.keyLastName, frontResult.surname)
-        add(R.string.keyFirstName, frontResult.givenName)
-        add(R.string.keyDateOfBirth, frontResult.dateOfBirth)
+        add(LAST_NAME, frontResult.surname)
+        add(FIRST_NAME, frontResult.givenName)
+        add(DATE_OF_BIRTH, frontResult.dateOfBirth)
     }
     
     private fun extractBackSide() {
         extractMrzResult(backResult.mrzResult)
-        add(R.string.keyPlaceOfOrigin, backResult.placeOfOrigin)
-        add(R.string.keyAuthority, backResult.authority)
-        add(R.string.keyIssueDate, backResult.dateOfIssue)
+        add(PLACE_OF_ORIGIN, backResult.placeOfOrigin)
+        add(AUTHORITY, backResult.authority)
+        add(DATE_OF_ISSUE, backResult.dateOfIssue)
     }
     
     override fun getResultTitle(): String? {

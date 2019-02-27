@@ -1,6 +1,6 @@
 package com.microblink.documentscanflow.recognition.implementations
 
-import com.microblink.documentscanflow.R
+import com.microblink.documentscanflow.recognition.resultentry.ResultKey.*
 import com.microblink.documentscanflow.buildId1CardDetectorRecognizer
 import com.microblink.documentscanflow.isEmpty
 import com.microblink.documentscanflow.recognition.BaseRecognition
@@ -22,16 +22,16 @@ class ItalyDlRecognition : BaseRecognition() {
         }
 
         result.apply {
-            add(R.string.keyLastName, surname)
-            add(R.string.keyFirstName, givenName)
-            add(R.string.keyDateOfBirth, dateOfBirth)
-            add(R.string.keyPlaceOfBirth, placeOfBirth)
-            add(R.string.keyIssueDate, dateOfIssue)
-            add(R.string.keyIssuingAuthority, issuingAuthority)
+            add(LAST_NAME, surname)
+            add(FIRST_NAME, givenName)
+            add(DATE_OF_BIRTH, dateOfBirth)
+            add(PLACE_OF_BIRTH, placeOfBirth)
+            add(DATE_OF_ISSUE, dateOfIssue)
+            add(ISSUING_AUTHORITY, issuingAuthority)
             addDateOfExpiry(dateOfExpiry.date)
-            add(R.string.keyLicenceNumber, licenceNumber)
-            add(R.string.keyLicenceCategories, licenceCategories)
-            add(R.string.keyAddress, address)
+            add(LICENCE_NUMBER, licenceNumber)
+            add(LICENCE_CATEGORIES, licenceCategories)
+            add(ADDRESS, address)
         }
 
         return FormattingUtils.formatResultTitle(result.givenName, result.surname)

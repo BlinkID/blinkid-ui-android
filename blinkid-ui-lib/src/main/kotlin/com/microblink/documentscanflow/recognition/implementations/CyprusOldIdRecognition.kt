@@ -1,6 +1,5 @@
 package com.microblink.documentscanflow.recognition.implementations
 
-import com.microblink.documentscanflow.R
 import com.microblink.documentscanflow.isNotEmpty
 import com.microblink.documentscanflow.recognition.BaseTwoSideRecognition
 import com.microblink.documentscanflow.recognition.ResultValidator
@@ -8,6 +7,7 @@ import com.microblink.documentscanflow.recognition.util.FormattingUtils
 import com.microblink.entities.recognizers.Recognizer
 import com.microblink.entities.recognizers.blinkid.cyprus.CyprusOldIdBackRecognizer
 import com.microblink.entities.recognizers.blinkid.cyprus.CyprusOldIdFrontRecognizer
+import com.microblink.documentscanflow.recognition.resultentry.ResultKey.*
 
 class CyprusOldIdRecognition : BaseTwoSideRecognition() {
 
@@ -39,15 +39,15 @@ class CyprusOldIdRecognition : BaseTwoSideRecognition() {
     override fun getSingleSideRecognizers() = listOf<Recognizer<*, *>>(frontRecognizer, backRecognizer)
 
     private fun extractFront(result: CyprusOldIdFrontRecognizer.Result) {
-        add(R.string.keyIdentityNumber, result.idNumber)
-        add(R.string.keyDocumentNumber, result.documentNumber)
-        add(R.string.keyFirstName, result.name)
-        add(R.string.keyLastName, result.surname)
+        add(IDENTITY_NUMBER, result.idNumber)
+        add(DOCUMENT_NUMBER, result.documentNumber)
+        add(FIRST_NAME, result.name)
+        add(LAST_NAME, result.surname)
     }
 
     private fun extractBack(result: CyprusOldIdBackRecognizer.Result) {
-        add(R.string.keyDateOfBirth, result.dateOfBirth)
-        add(R.string.keySex, result.sex)
-        add(R.string.keyDateOfExpiry, result.expiresOn)
+        add(DATE_OF_BIRTH, result.dateOfBirth)
+        add(SEX, result.sex)
+        addDateOfExpiry(result.expiresOn.date)
     }
 }

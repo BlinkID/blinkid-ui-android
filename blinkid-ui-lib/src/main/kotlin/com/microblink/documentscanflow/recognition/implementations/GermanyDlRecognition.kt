@@ -1,6 +1,6 @@
 package com.microblink.documentscanflow.recognition.implementations
 
-import com.microblink.documentscanflow.R
+import com.microblink.documentscanflow.recognition.resultentry.ResultKey.*
 import com.microblink.documentscanflow.isEmpty
 import com.microblink.documentscanflow.recognition.BaseRecognition
 import com.microblink.documentscanflow.recognition.util.FormattingUtils
@@ -32,14 +32,14 @@ class GermanyDlRecognition : BaseRecognition() {
         val firstName = frontResult.firstName
         val lastName = frontResult.lastName
 
-        add(R.string.keyFirstName, firstName)
-        add(R.string.keyLastName, lastName)
-        add(R.string.keyLicenceNumber, frontResult.licenceNumber)
-        add(R.string.keyLicenceCategories, frontResult.licenceCategories)
-        add(R.string.keyPlaceOfBirth, frontResult.placeOfBirth)
-        add(R.string.keyDateOfBirth, frontResult.dateOfBirth)
-        add(R.string.keyIssueDate, frontResult.dateOfIssue)
-        add(R.string.keyIssuingAuthority, frontResult.issuingAuthority)
+        add(FIRST_NAME, firstName)
+        add(LAST_NAME, lastName)
+        add(LICENCE_NUMBER, frontResult.licenceNumber)
+        add(LICENCE_CATEGORIES, frontResult.licenceCategories)
+        add(PLACE_OF_BIRTH, frontResult.placeOfBirth)
+        add(DATE_OF_BIRTH, frontResult.dateOfBirth)
+        add(DATE_OF_ISSUE, frontResult.dateOfIssue)
+        add(ISSUING_AUTHORITY, frontResult.issuingAuthority)
         addDateOfExpiry(frontResult.dateOfExpiry.date)
 
         title = FormattingUtils.formatResultTitle(firstName, lastName)
@@ -48,7 +48,7 @@ class GermanyDlRecognition : BaseRecognition() {
     private fun extractBackSide() {
         val backResult = backRecognizer.result
         if (!backResult.isEmpty()) {
-            add(R.string.keyDateOfIssueBCategory, backResult.dateOfIssueB10)
+            add(DATE_OF_ISSUE_FOR_B_CATEGORY, backResult.dateOfIssueB10)
         }
     }
 

@@ -1,15 +1,13 @@
 package com.microblink.documentscanflow.recognition.implementations
 
-import com.microblink.documentscanflow.R
 import com.microblink.documentscanflow.isNotEmpty
 import com.microblink.documentscanflow.recognition.BaseTwoSideRecognition
 import com.microblink.documentscanflow.recognition.ResultValidator
 import com.microblink.entities.recognizers.Recognizer
-import com.microblink.entities.recognizers.blinkid.brunei.BruneiIdBackRecognizer
-import com.microblink.entities.recognizers.blinkid.brunei.BruneiIdFrontRecognizer
 import com.microblink.entities.recognizers.blinkid.brunei.BruneiResidencePermitBackRecognizer
 import com.microblink.entities.recognizers.blinkid.brunei.BruneiResidencePermitFrontRecognizer
-import com.microblink.entities.recognizers.blinkid.mrtd.MrtdRecognizer
+import com.microblink.documentscanflow.recognition.resultentry.ResultKey.*
+
 
 class BruneiResidencePermitRecognition: BaseTwoSideRecognition() {
 
@@ -31,18 +29,18 @@ class BruneiResidencePermitRecognition: BaseTwoSideRecognition() {
     }
 
     private fun extractFront(result: BruneiResidencePermitFrontRecognizer.Result) {
-        add(R.string.keyFullName, result.fullName)
-        add(R.string.keyDocumentNumber, result.documentNumber)
-        add(R.string.keyDateOfBirth, result.dateOfBirth)
-        add(R.string.keyPlaceOfBirth, result.placeOfBirth)
-        add(R.string.keySex, result.sex)
+        add(FULL_NAME, result.fullName)
+        add(DOCUMENT_NUMBER, result.documentNumber)
+        add(DATE_OF_BIRTH, result.dateOfBirth)
+        add(PLACE_OF_BIRTH, result.placeOfBirth)
+        add(SEX, result.sex)
     }
 
     private fun extractBack(result: BruneiResidencePermitBackRecognizer.Result) {
         extractMrzResult(result.mrzResult)
-        add(R.string.keyIssueDate, result.dateOfIssue)
-        add(R.string.keyAddress, result.address)
-        add(R.string.keyRace, result.race)
+        add(DATE_OF_ISSUE, result.dateOfIssue)
+        add(ADDRESS, result.address)
+        add(RACE, result.race)
     }
 
     override fun getResultTitle(): String? {

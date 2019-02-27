@@ -1,13 +1,13 @@
 package com.microblink.documentscanflow.recognition.implementations
 
-import com.microblink.documentscanflow.R
 import com.microblink.documentscanflow.isNotEmpty
 import com.microblink.documentscanflow.recognition.BaseTwoSideRecognition
 import com.microblink.documentscanflow.recognition.ResultValidator
+import com.microblink.documentscanflow.recognition.resultentry.ResultKey
+import com.microblink.documentscanflow.recognition.resultentry.ResultKey.*
 import com.microblink.entities.recognizers.Recognizer
 import com.microblink.entities.recognizers.blinkid.brunei.BruneiIdBackRecognizer
 import com.microblink.entities.recognizers.blinkid.brunei.BruneiIdFrontRecognizer
-import com.microblink.entities.recognizers.blinkid.mrtd.MrtdRecognizer
 
 class BruneiIdRecognition: BaseTwoSideRecognition() {
 
@@ -29,18 +29,18 @@ class BruneiIdRecognition: BaseTwoSideRecognition() {
     }
 
     private fun extractFront(result: BruneiIdFrontRecognizer.Result) {
-        add(R.string.keyFullName, result.fullName)
-        add(R.string.keyDocumentNumber, result.documentNumber)
-        add(R.string.keyDateOfBirth, result.dateOfBirth)
-        add(R.string.keyPlaceOfBirth, result.placeOfBirth)
-        add(R.string.keySex, result.sex)
+        add(FULL_NAME, result.fullName)
+        add(DOCUMENT_NUMBER, result.documentNumber)
+        add(ResultKey.DATE_OF_BIRTH, result.dateOfBirth)
+        add(ResultKey.PLACE_OF_BIRTH, result.placeOfBirth)
+        add(ResultKey.SEX, result.sex)
     }
 
     private fun extractBack(result: BruneiIdBackRecognizer.Result) {
         extractMrzResult(result.mrzResult)
-        add(R.string.keyIssueDate, result.dateOfIssue)
-        add(R.string.keyAddress, result.address)
-        add(R.string.keyRace, result.race)
+        add(DATE_OF_ISSUE, result.dateOfIssue)
+        add(ADDRESS, result.address)
+        add(RACE, result.race)
     }
 
     override fun getResultTitle(): String? {

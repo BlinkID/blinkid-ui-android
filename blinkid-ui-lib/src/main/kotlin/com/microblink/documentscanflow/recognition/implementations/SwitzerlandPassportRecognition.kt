@@ -1,6 +1,6 @@
 package com.microblink.documentscanflow.recognition.implementations
 
-import com.microblink.documentscanflow.R
+import com.microblink.documentscanflow.recognition.resultentry.ResultKey.*
 import com.microblink.documentscanflow.isEmpty
 import com.microblink.documentscanflow.recognition.BaseRecognition
 import com.microblink.documentscanflow.recognition.util.FormattingUtils
@@ -26,16 +26,16 @@ class SwitzerlandPassportRecognition: BaseRecognition() {
         val firstName = mStringCombiner.combineMRZString(result.mrzResult.secondaryId, result.givenName)
         val lastName = mStringCombiner.combineMRZString(result.mrzResult.primaryId, result.surname)
 
-        add(R.string.keyFirstName, firstName)
-        add(R.string.keyLastName, lastName)
-        add(R.string.keyPassportNumber, result.passportNumber)
-        add(R.string.keyNationality, result.mrzResult.nationality)
-        add(R.string.keyDateOfBirth, result.dateOfBirth)
-        add(R.string.keyPlaceOfOrigin, result.placeOfOrigin)
-        add(R.string.keyIssueDate, result.dateOfIssue)
-        add(R.string.keyDateOfExpiry, result.dateOfExpiry)
-        add(R.string.keySex, result.sex)
-        add(R.string.keyAuthority, result.authority)
+        add(FIRST_NAME, firstName)
+        add(LAST_NAME, lastName)
+        add(PASSPORT_NUMBER, result.passportNumber)
+        add(NATIONALITY, result.mrzResult.nationality)
+        add(DATE_OF_BIRTH, result.dateOfBirth)
+        add(PLACE_OF_ORIGIN, result.placeOfOrigin)
+        add(DATE_OF_ISSUE, result.dateOfIssue)
+        addDateOfExpiry(result.dateOfExpiry.date)
+        add(SEX, result.sex)
+        add(AUTHORITY, result.authority)
 
         return FormattingUtils.formatResultTitle(firstName, lastName)
     }

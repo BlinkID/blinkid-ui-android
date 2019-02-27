@@ -1,11 +1,11 @@
 package com.microblink.documentscanflow.recognition.implementations
 
-import com.microblink.documentscanflow.R
 import com.microblink.documentscanflow.buildId1CardDetectorRecognizer
 import com.microblink.documentscanflow.isEmpty
 import com.microblink.documentscanflow.recognition.BaseRecognition
 import com.microblink.entities.recognizers.Recognizer
 import com.microblink.entities.recognizers.blinkid.unitedArabEmirates.UnitedArabEmiratesDlFrontRecognizer
+import com.microblink.documentscanflow.recognition.resultentry.ResultKey.*
 
 class UnitedArabEmiratesDlRecognition : BaseRecognition() {
 
@@ -21,14 +21,14 @@ class UnitedArabEmiratesDlRecognition : BaseRecognition() {
             return null
         }
 
-        add(R.string.keyLicenceNumber, result.licenseNumber)
-        add(R.string.keyLicencingAuthority, result.licensingAuthority)
-        add(R.string.keyFullName, result.name)
-        add(R.string.keyNationality, result.nationality)
-        add(R.string.keyDateOfBirth, result.dateOfBirth)
-        add(R.string.keyIssueDate, result.issueDate)
+        add(LICENCE_NUMBER, result.licenseNumber)
+        add(AUTHORITY, result.licensingAuthority)
+        add(FULL_NAME, result.name)
+        add(NATIONALITY, result.nationality)
+        add(DATE_OF_BIRTH, result.dateOfBirth)
+        add(DATE_OF_ISSUE, result.issueDate)
         addDateOfExpiry(result.expiryDate.date)
-        add(R.string.keyPlaceOfIssue, result.placeOfIssue)
+        add(PLACE_OF_ISSUE, result.placeOfIssue)
 
         return result.name
     }

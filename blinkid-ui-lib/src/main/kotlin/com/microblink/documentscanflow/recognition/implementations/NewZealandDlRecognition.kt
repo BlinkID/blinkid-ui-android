@@ -1,6 +1,6 @@
 package com.microblink.documentscanflow.recognition.implementations
 
-import com.microblink.documentscanflow.R
+import com.microblink.documentscanflow.recognition.resultentry.ResultKey.*
 import com.microblink.documentscanflow.buildId1CardDetectorRecognizer
 import com.microblink.documentscanflow.isEmpty
 import com.microblink.documentscanflow.recognition.BaseRecognition
@@ -26,13 +26,13 @@ class NewZealandDlRecognition : BaseRecognition() {
         val firstName = result.firstNames
         val lastName = result.surname
 
-        add(R.string.keyFirstName, firstName)
-        add(R.string.keyLastName, lastName)
-        add(R.string.keyDateOfBirth, result.dateOfBirth)
-        add(R.string.keyDocumentNumber, result.licenseNumber)
-        add(R.string.keyIssueDate, result.dateOfIssue)
+        add(FIRST_NAME, firstName)
+        add(LAST_NAME, lastName)
+        add(DATE_OF_BIRTH, result.dateOfBirth)
+        add(DOCUMENT_NUMBER, result.licenseNumber)
+        add(DATE_OF_ISSUE, result.dateOfIssue)
         addDateOfExpiry(result.dateOfExpiry.date)
-        add(R.string.keyAddress, result.address)
+        add(ADDRESS, result.address)
         
         return FormattingUtils.formatResultTitle(firstName, lastName)
     }
