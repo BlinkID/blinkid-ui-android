@@ -1,8 +1,5 @@
 <resources>
 
-    <!-- This entry must be present for all languages, ISO 639 language code -->
-    <string name="mb_locale_language_code">en</string>
-
     <!-- Document names -->
     <string name="mb_id_card">ID card</string>
     <string name="mb_new_id_card">New ID card</string>

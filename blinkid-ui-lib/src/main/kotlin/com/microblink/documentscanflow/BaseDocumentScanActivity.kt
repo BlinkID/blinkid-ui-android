@@ -41,6 +41,8 @@ import com.microblink.documentscanflow.ui.TorchButtonHandler
 import com.microblink.documentscanflow.ui.documentchooser.DefaultDocumentChooser
 import com.microblink.documentscanflow.ui.documentchooser.DocumentChooser
 import com.microblink.documentscanflow.ui.documentchooser.defaultimplementation.ChooseCountryActivity
+import com.microblink.documentscanflow.ui.localization.DefaultLocalizationManager
+import com.microblink.documentscanflow.ui.localization.LocalizationManager
 import com.microblink.documentscanflow.ui.scansoundplayer.ScanSuccessPlayer
 import com.microblink.documentscanflow.ui.scansoundplayer.SoundPoolScanSuccessPlayer
 import com.microblink.documentscanflow.ui.scantimeouthandler.DefaultScanTimeoutHandler
@@ -89,6 +91,7 @@ abstract class BaseDocumentScanActivity : AppCompatActivity(), ScanResultListene
     private val cameraErrorHandler by lazy { CameraErrorHandler(this) {finish()} }
     private val instructionsHandler by lazy { InstructionsHandler(this, currentDocument, scanFrameLayout.scanInstructionsTv, scanFrameLayout.flipCardView) }
     private val scanLineAnimator by lazy { createScanLineAnimator() }
+    private val localizationManager by lazy { createLocalizationManager() }
 
     private val handler = Handler()
     private val localeBroadcastReceiver by lazy {createLocaleBroadcastReceiver()}
@@ -109,6 +112,7 @@ abstract class BaseDocumentScanActivity : AppCompatActivity(), ScanResultListene
     protected open fun createDocumentChooser() : DocumentChooser = DefaultDocumentChooser(this)
     protected open fun createScanTimeoutHandler() : ScanTimeoutHandler = DefaultScanTimeoutHandler(SCAN_TIMEOUT_MILLIS)
     protected open fun createScanTimeoutListener() = createDefaultScanTimeoutListener()
+    protected open fun createLocalizationManager(): LocalizationManager = DefaultLocalizationManager()
 
     protected open fun createSplashOverlaySettings(): SplashOverlaySettings = InvisibleSplashOverlaySettings()
     protected open fun createScanSuccessSoundPlayer(): ScanSuccessPlayer = SoundPoolScanSuccessPlayer(this, R.raw.beep)
@@ -324,9 +328,18 @@ abstract class BaseDocumentScanActivity : AppCompatActivity(), ScanResultListene
 
     private fun setupCountryFactory() {
         // prepare countries array only for supported locales (translations)
-        CountryFactory.setLocale(Locale(getString(R.string.mb_locale_language_code)))
+        CountryFactory.setLocale(Locale(getLanguage()))
         // when locale settings are changed, sort countries again
         registerReceiver(localeBroadcastReceiver, IntentFilter(Intent.ACTION_LOCALE_CHANGED))
+    }
+
+    private fun getLanguage(): String {
+        val deviceLanguage = Locale.getDefault().language
+        return if (localizationManager.isLanguageSupported(deviceLanguage)) {
+            deviceLanguage
+        } else {
+            localizationManager.getDefaultLanguage()
+        }
     }
 
     override fun onResume() {
@@ -584,7 +597,7 @@ abstract class BaseDocumentScanActivity : AppCompatActivity(), ScanResultListene
     private fun createLocaleBroadcastReceiver(): BroadcastReceiver {
         return object : BroadcastReceiver() {
             override fun onReceive(context: Context?, intent: Intent?) {
-                CountryFactory.setLocale(Locale(getString(R.string.mb_locale_language_code)))
+                CountryFactory.setLocale(Locale(getLanguage()))
             }
         }
     }
