@@ -1,6 +1,6 @@
 package com.microblink.documentscanflow.recognition.implementations
 
-import com.microblink.documentscanflow.R
+import com.microblink.documentscanflow.recognition.resultentry.ResultKey.*
 import com.microblink.documentscanflow.isEmpty
 import com.microblink.documentscanflow.isNotEmpty
 import com.microblink.documentscanflow.recognition.BaseTwoSideRecognition
@@ -50,15 +50,15 @@ class SingaporeIdRecognition: BaseTwoSideRecognition() {
     }
 
     private fun extractCombinedResult() {
-        add(R.string.keyDocumentNumber, combinedResult.identityCardNumber)
-        add(R.string.keyFullName, combinedResult.name)
-        add(R.string.keyRace, combinedResult.race)
-        add(R.string.keyDateOfBirth, combinedResult.dateOfBirth)
-        add(R.string.keySex, combinedResult.sex)
-        add(R.string.keyCountryOfBirth, combinedResult.countryOfBirth)
-        add(R.string.keyBloodGroup, combinedResult.bloodGroup)
-        add(R.string.keyIssueDate, combinedResult.dateOfIssue)
-        add(R.string.keyAddress, combinedResult.address)
+        add(DOCUMENT_NUMBER, combinedResult.identityCardNumber)
+        add(FULL_NAME, combinedResult.name)
+        add(RACE, combinedResult.race)
+        add(DATE_OF_BIRTH, combinedResult.dateOfBirth)
+        add(SEX, combinedResult.sex)
+        add(COUNTRY_OF_BIRTH, combinedResult.countryOfBirth)
+        add(BLOOD_GROUP, combinedResult.bloodGroup)
+        add(DATE_OF_ISSUE, combinedResult.dateOfIssue)
+        add(ADDRESS, combinedResult.address)
     }
 
     private fun extractFrontSide() {
@@ -66,12 +66,12 @@ class SingaporeIdRecognition: BaseTwoSideRecognition() {
             return
         }
 
-        add(R.string.keyDocumentNumber, frontResult.identityCardNumber)
-        add(R.string.keyFullName, frontResult.name)
-        add(R.string.keyRace, frontResult.race)
-        add(R.string.keyDateOfBirth, frontResult.dateOfBirth)
-        add(R.string.keySex, frontResult.sex)
-        add(R.string.keyCountryOfBirth, frontResult.countryOfBirth)
+        add(DOCUMENT_NUMBER, frontResult.identityCardNumber)
+        add(FULL_NAME, frontResult.name)
+        add(RACE, frontResult.race)
+        add(DATE_OF_BIRTH, frontResult.dateOfBirth)
+        add(SEX, frontResult.sex)
+        add(COUNTRY_OF_BIRTH, frontResult.countryOfBirth)
     }
 
     private fun extractBackSide() {
@@ -79,9 +79,9 @@ class SingaporeIdRecognition: BaseTwoSideRecognition() {
             return
         }
 
-        add(R.string.keyDocumentNumber, backResult.cardNumber)
-        add(R.string.keyIssueDate, backResult.dateOfIssue)
-        add(R.string.keyAddress, backResult.address)
+        add(DOCUMENT_NUMBER, backResult.cardNumber)
+        add(DATE_OF_ISSUE, backResult.dateOfIssue)
+        add(ADDRESS, backResult.address)
     }
     
 }

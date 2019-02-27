@@ -3,16 +3,16 @@ package com.microblink.documentscanflow.recognition.resultentry
 import android.os.Parcel
 import android.os.Parcelable
 
-class StringResultEntry(key: String, value: String) : ResultEntry<String>(key, value) {
+class StringResultEntry(key: ResultKey, value: String) : ResultEntry<String>(key, value) {
 
-    constructor(source: Parcel) : this(source.readString(), source.readString()) {
+    constructor(source: Parcel) : this(source.readSerializable() as ResultKey, source.readString()) {
         readValidityFromParcel(source)
     }
 
     override fun describeContents() = 0
 
     override fun writeToParcel(dest: Parcel?, flags: Int) {
-        dest?.writeString(key)
+        dest?.writeSerializable(key)
         dest?.writeString(value)
         writeValidityToParcel(dest)
     }

@@ -1,6 +1,6 @@
 package com.microblink.documentscanflow.recognition.implementations
 
-import com.microblink.documentscanflow.R
+import com.microblink.documentscanflow.recognition.resultentry.ResultKey.*
 import com.microblink.documentscanflow.buildId1CardDetectorRecognizer
 import com.microblink.documentscanflow.isEmpty
 import com.microblink.documentscanflow.recognition.BaseRecognition
@@ -21,16 +21,16 @@ class SwitzerlandDlRecognition : BaseRecognition() {
             return null
         }
 
-        add(R.string.keyFirstName, result.firstName)
-        add(R.string.keyLastName, result.lastName)
-        add(R.string.keyDateOfBirth, result.dateOfBirth)
-        add(R.string.keyPlaceOfBirth, result.placeOfBirth)
-        add(R.string.keyDocumentNumber, result.licenseNumber)
-        add(R.string.keyIssuingAuthority, result.issuingAuthority)
-        add(R.string.keyIssueDate, result.dateOfIssue)
+        add(FIRST_NAME, result.firstName)
+        add(LAST_NAME, result.lastName)
+        add(DATE_OF_BIRTH, result.dateOfBirth)
+        add(PLACE_OF_BIRTH, result.placeOfBirth)
+        add(DOCUMENT_NUMBER, result.licenseNumber)
+        add(ISSUING_AUTHORITY, result.issuingAuthority)
+        add(DATE_OF_ISSUE, result.dateOfIssue)
         addDateOfExpiry(result.dateOfExpiry.date)
-        add(R.string.keyDateOfExpiryPermanent, result.isExpiryDatePermanent)
-        add(R.string.keyLicenceCategories, result.vehicleCategories)
+        add(DATE_OF_EXPIRY_PERMANENT, result.isExpiryDatePermanent)
+        add(LICENCE_CATEGORIES, result.vehicleCategories)
 
         return FormattingUtils.formatResultTitle(result.firstName, result.lastName)
     }

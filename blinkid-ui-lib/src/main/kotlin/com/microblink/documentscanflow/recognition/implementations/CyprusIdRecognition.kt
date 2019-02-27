@@ -1,15 +1,12 @@
 package com.microblink.documentscanflow.recognition.implementations
 
-import com.microblink.documentscanflow.R
 import com.microblink.documentscanflow.isNotEmpty
 import com.microblink.documentscanflow.recognition.BaseTwoSideRecognition
 import com.microblink.documentscanflow.recognition.ResultValidator
-import com.microblink.documentscanflow.recognition.util.FormattingUtils
 import com.microblink.entities.recognizers.Recognizer
 import com.microblink.entities.recognizers.blinkid.cyprus.CyprusIdBackRecognizer
 import com.microblink.entities.recognizers.blinkid.cyprus.CyprusIdFrontRecognizer
-import com.microblink.entities.recognizers.blinkid.cyprus.CyprusOldIdBackRecognizer
-import com.microblink.entities.recognizers.blinkid.cyprus.CyprusOldIdFrontRecognizer
+import com.microblink.documentscanflow.recognition.resultentry.ResultKey.*
 
 class CyprusIdRecognition : BaseTwoSideRecognition() {
 
@@ -41,7 +38,7 @@ class CyprusIdRecognition : BaseTwoSideRecognition() {
     override fun getSingleSideRecognizers() = listOf<Recognizer<*, *>>(frontRecognizer, backRecognizer)
 
     private fun extractFront(result: CyprusIdFrontRecognizer.Result) {
-        add(R.string.keyIdentityNumber, result.idNumber)
+        add(IDENTITY_NUMBER, result.idNumber)
     }
 
     private fun extractBack(result: CyprusIdBackRecognizer.Result) {

@@ -4,6 +4,7 @@ import android.text.TextUtils
 import com.microblink.documentscanflow.isEmpty
 import com.microblink.documentscanflow.recognition.resultentry.StringResultEntry
 import com.microblink.documentscanflow.recognition.BaseRecognition
+import com.microblink.documentscanflow.recognition.resultentry.ResultKey
 import com.microblink.documentscanflow.recognition.util.FormattingUtils
 import com.microblink.entities.recognizers.Recognizer
 import com.microblink.entities.recognizers.blinkbarcode.usdl.UsdlKeys
@@ -41,7 +42,7 @@ open class UsdlRecognition : BaseRecognition() {
         for (key in UsdlKeys.values()) {
             val value = result.getField(key)
             if (!TextUtils.isEmpty(value) && !keysToExcludeFromResults.contains(key)) {
-                resultEntries.add(StringResultEntry(key.name, value))
+                resultEntries.add(StringResultEntry(ResultKey.fromUsdlKey(key), value))
             }
         }
 

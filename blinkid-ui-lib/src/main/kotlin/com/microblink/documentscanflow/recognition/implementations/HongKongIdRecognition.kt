@@ -1,6 +1,6 @@
 package com.microblink.documentscanflow.recognition.implementations
 
-import com.microblink.documentscanflow.R
+import com.microblink.documentscanflow.recognition.resultentry.ResultKey.*
 import com.microblink.documentscanflow.buildId1CardDetectorRecognizer
 import com.microblink.documentscanflow.isEmpty
 import com.microblink.documentscanflow.recognition.BaseRecognition
@@ -24,12 +24,12 @@ class HongKongIdRecognition : BaseRecognition() {
 
         val fullName = result.fullName
 
-        add(R.string.keyFullName, fullName)
-        add(R.string.keyDocumentNumber, result.documentNumber)
-        add(R.string.keySex, result.sex)
-        add(R.string.keyDateOfBirth, result.dateOfBirth)
-        add(R.string.keyIssueDate, result.dateOfIssue)
-        add(R.string.keyResidentialStatus, result.residentialStatus)
+        add(FULL_NAME, fullName)
+        add(DOCUMENT_NUMBER, result.documentNumber)
+        add(SEX, result.sex)
+        add(DATE_OF_BIRTH, result.dateOfBirth)
+        add(DATE_OF_ISSUE, result.dateOfIssue)
+        add(RESIDENTIAL_STATUS, result.residentialStatus)
         
         return fullName
     }

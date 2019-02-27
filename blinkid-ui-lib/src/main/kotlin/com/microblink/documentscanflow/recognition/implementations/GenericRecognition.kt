@@ -3,6 +3,7 @@ package com.microblink.documentscanflow.recognition.implementations
 import com.microblink.documentscanflow.*
 import com.microblink.documentscanflow.recognition.BaseRecognition
 import com.microblink.documentscanflow.recognition.RecognizerProvider
+import com.microblink.documentscanflow.recognition.resultentry.ResultKey
 import com.microblink.entities.recognizers.Recognizer
 import com.microblink.entities.recognizers.blinkbarcode.pdf417.Pdf417Recognizer
 import com.microblink.entities.recognizers.blinkid.documentface.DocumentFaceRecognizer
@@ -30,7 +31,7 @@ class GenericRecognition(isFullySupported: Boolean, private val recognizerProvid
                 result = buildMrtdTitle(recognizer.result.mrzResult)
             }
             if (recognizer is Pdf417Recognizer && recognizer.result.isNotEmpty()) {
-                add(R.string.keyBarcodeString, recognizer.result.stringData)
+                add(ResultKey.BARCODE_DATA, recognizer.result.stringData)
             }
         }
         return result

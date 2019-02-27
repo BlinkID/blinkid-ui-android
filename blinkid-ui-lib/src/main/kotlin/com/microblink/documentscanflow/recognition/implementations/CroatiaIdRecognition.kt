@@ -1,6 +1,6 @@
 package com.microblink.documentscanflow.recognition.implementations
 
-import com.microblink.documentscanflow.R
+import com.microblink.documentscanflow.recognition.resultentry.ResultKey.*
 import com.microblink.documentscanflow.isNotEmpty
 import com.microblink.documentscanflow.recognition.BaseTwoSideRecognition
 import com.microblink.documentscanflow.recognition.ResultValidator
@@ -48,33 +48,33 @@ class CroatiaIdRecognition
     }
 
     private fun extractCombinedResult(combinedResult: CroatiaCombinedRecognizer.Result) {
-        add(R.string.keyLastName, combinedResult.lastName)
-        add(R.string.keyFirstName, combinedResult.firstName)
-        add(R.string.keyPersonalNumber, combinedResult.oib)
-        add(R.string.keyDocumentNumber, combinedResult.documentNumber)
-        add(R.string.keySex, combinedResult.sex)
-        add(R.string.keyDateOfBirth, combinedResult.dateOfBirth)
-        add(R.string.keyAddress, combinedResult.residence)
-        add(R.string.keyCitizenship, combinedResult.citizenship)
-        add(R.string.keyIssuingAuthority, combinedResult.issuedBy)
-        add(R.string.keyIssueDate, combinedResult.dateOfIssue)
+        add(LAST_NAME, combinedResult.lastName)
+        add(FIRST_NAME, combinedResult.firstName)
+        add(PERSONAL_NUMBER, combinedResult.oib)
+        add(DOCUMENT_NUMBER, combinedResult.documentNumber)
+        add(SEX, combinedResult.sex)
+        add(DATE_OF_BIRTH, combinedResult.dateOfBirth)
+        add(ADDRESS, combinedResult.residence)
+        add(CITIZENSHIP, combinedResult.citizenship)
+        add(ISSUING_AUTHORITY, combinedResult.issuedBy)
+        add(DATE_OF_ISSUE, combinedResult.dateOfIssue)
         addDateOfExpiry(combinedResult.dateOfExpiry.date)
     }
 
     private fun extractFrontSide(frontResult: CroatiaIdFrontRecognizer.Result) {
-        add(R.string.keyLastName, frontResult.lastName)
-        add(R.string.keyFirstName, frontResult.firstName)
-        add(R.string.keyDocumentNumber, frontResult.documentNumber)
-        add(R.string.keySex, frontResult.sex)
-        add(R.string.keyCitizenship, frontResult.citizenship)
-        add(R.string.keyDateOfBirth, frontResult.dateOfBirth)
+        add(LAST_NAME, frontResult.lastName)
+        add(FIRST_NAME, frontResult.firstName)
+        add(DOCUMENT_NUMBER, frontResult.documentNumber)
+        add(SEX, frontResult.sex)
+        add(CITIZENSHIP, frontResult.citizenship)
+        add(DATE_OF_BIRTH, frontResult.dateOfBirth)
         addDateOfExpiry(frontResult.dateOfExpiry.date)
     }
 
     private fun extractBackSide(backResult: CroatiaIdBackRecognizer.Result) {
-        add(R.string.keyAddress, backResult.residence)
-        add(R.string.keyIssuingAuthority, backResult.issuedBy)
-        add(R.string.keyIssueDate, backResult.dateOfIssue)
+        add(ADDRESS, backResult.residence)
+        add(ISSUING_AUTHORITY, backResult.issuedBy)
+        add(DATE_OF_ISSUE, backResult.dateOfIssue)
         extractMrzResult(backResult.mrzResult)
     }
 
