@@ -54,9 +54,9 @@
     <string name="keyCity">City</string>
     <string name="keyDistrict">District</string>
     <string name="keyProvince">Province</string>
-    <string name="keyRt">RT</string>
-    <string name="keyRw">RW</string>
-    <string name="keyKelDesa">Kel/Desa</string>
+    <string name="keyRt" translatable="false">RT</string>
+    <string name="keyRw" translatable="false">RW</string>
+    <string name="keyKelDesa" translatable="false">Kel/Desa</string>
     <string name="keyMaritalStatus">Marital status</string>
     <string name="keyOccupation">Occupation</string>
     <string name="keyDateOfExpiryPermanent">Date of expiry permanent</string>
@@ -80,7 +80,7 @@
     <string name="keySector">Sector</string>
     <string name="keyBarcodeString">Barcode data</string>
     <string name="keyElectorKey">Elector key</string>
-    <string name="keyCurp">CURP</string>
+    <string name="keyCurp" translatable="false">CURP</string>
     <string name="keyDateOfIssueBCategory">Date of issuance for B category</string>
     <string name="keyFacultyAddress">Faculty address</string>
     <string name="keyDocumentType">Document type</string>

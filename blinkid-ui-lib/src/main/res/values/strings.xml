@@ -16,11 +16,11 @@
     <string name="mb_military_id">Military ID</string>
     <string name="mb_permanent_resident_id">Permanent residentId</string>
     <string name="mb_temporary_resident_id">Temporary residentId</string>
-    <string name="mb_custom_mykad">MyKad</string>
-    <string name="mb_custom_ikad">iKad</string>
-    <string name="mb_custom_mykas">MyKAS</string>
-    <string name="mb_custom_mypr">MyPR</string>
-    <string name="mb_custom_mytentera">MyTentera</string>
+    <string name="mb_custom_mykad" translatable="false">MyKad</string>
+    <string name="mb_custom_ikad" translatable="false">iKad</string>
+    <string name="mb_custom_mykas" translatable="false">MyKAS</string>
+    <string name="mb_custom_mypr" translatable="false">MyPR</string>
+    <string name="mb_custom_mytentera" translatable="false">MyTentera</string>
 
     <!-- Scan instructions -->
     <string name="mb_instructions_scan_front">Scan the front side of the selected document or choose another.</string>
