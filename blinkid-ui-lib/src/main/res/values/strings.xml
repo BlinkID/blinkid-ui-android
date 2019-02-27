@@ -11,8 +11,8 @@
     <string name="mb_visa">Visa</string>
     <string name="mb_immigrator_id">Immigrator ID</string>
     <string name="mb_military_id">Military ID</string>
-    <string name="mb_permanent_resident_id">Permanent residentId</string>
-    <string name="mb_temporary_resident_id">Temporary residentId</string>
+    <string name="mb_permanent_resident_id">Permanent resident ID</string>
+    <string name="mb_temporary_resident_id">Temporary resident ID</string>
     <string name="mb_custom_mykad" translatable="false">MyKad</string>
     <string name="mb_custom_ikad" translatable="false">iKad</string>
     <string name="mb_custom_mykas" translatable="false">MyKAS</string>
