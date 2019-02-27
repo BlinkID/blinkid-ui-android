@@ -1,8 +1,5 @@
 <resources>
 
-    <!-- This entry must be present for all languages, ISO 639 language code -->
-    <string name="mb_locale_language_code">en</string>
-
     <!-- Document names -->
     <string name="mb_id_card">ID card</string>
     <string name="mb_new_id_card">New ID card</string>
@@ -14,13 +11,13 @@
     <string name="mb_visa">Visa</string>
     <string name="mb_immigrator_id">Immigrator ID</string>
     <string name="mb_military_id">Military ID</string>
-    <string name="mb_permanent_resident_id">Permanent residentId</string>
-    <string name="mb_temporary_resident_id">Temporary residentId</string>
-    <string name="mb_custom_mykad">MyKad</string>
-    <string name="mb_custom_ikad">iKad</string>
-    <string name="mb_custom_mykas">MyKAS</string>
-    <string name="mb_custom_mypr">MyPR</string>
-    <string name="mb_custom_mytentera">MyTentera</string>
+    <string name="mb_permanent_resident_id">Permanent resident ID</string>
+    <string name="mb_temporary_resident_id">Temporary resident ID</string>
+    <string name="mb_custom_mykad" translatable="false">MyKad</string>
+    <string name="mb_custom_ikad" translatable="false">iKad</string>
+    <string name="mb_custom_mykas" translatable="false">MyKAS</string>
+    <string name="mb_custom_mypr" translatable="false">MyPR</string>
+    <string name="mb_custom_mytentera" translatable="false">MyTentera</string>
 
     <!-- Scan instructions -->
     <string name="mb_instructions_scan_front">Scan the front side of the selected document or choose another.</string>

@@ -1,15 +1,13 @@
 package com.microblink.documentscanflow.recognition.resultentry
 
-import android.content.Context
 import android.os.Parcel
 import android.os.Parcelable
-import android.support.annotation.StringRes
 import com.microblink.documentscanflow.compareTo
 import com.microblink.documentscanflow.currentDate
 import com.microblink.results.date.Date
 import java.util.*
 
-abstract class ResultEntry<T>(val key: String, val value: T) : Parcelable {
+abstract class ResultEntry<T>(val key: ResultKey, val value: T) : Parcelable {
 
     var isValid = true
         protected set
@@ -28,29 +26,29 @@ abstract class ResultEntry<T>(val key: String, val value: T) : Parcelable {
         isValid = source.readInt() == 1
     }
 
-    internal class Builder(private val context: Context) {
+    internal class Builder {
 
-        fun build(@StringRes keyResId: Int, value: String?) =
-                StringResultEntry(context.getString(keyResId), value ?: "")
+        fun build(key: ResultKey, value: String?) =
+                StringResultEntry(key, value ?: "")
 
-        fun build(@StringRes key: Int, value: Date?) =
+        fun build(key: ResultKey, value: Date?) =
                 build(key, value, DateCheckType.NO_CHECK)
 
-        fun build(@StringRes key: Int, amount: Int, unitName: String) =
-                StringResultEntry(context.getString(key), amount.toString() + " " + unitName)
+        fun build(key: ResultKey, amount: Int, unitName: String) =
+                StringResultEntry(key, amount.toString() + " " + unitName)
 
-        fun build(@StringRes key: Int, value: Int) =
-                StringResultEntry(context.getString(key), value.toString())
+        fun build(key: ResultKey, value: Int) =
+                StringResultEntry(key, value.toString())
 
-        fun build(@StringRes key: Int, value: Boolean) =
-                StringResultEntry(context.getString(key), value.toString())
+        fun build(key: ResultKey, value: Boolean) =
+                StringResultEntry(key, value.toString())
 
-        fun build(@StringRes key: Int, value: Date?, checkType: Builder.DateCheckType): ResultEntry<*> {
+        fun build(key: ResultKey, value: Date?, checkType: Builder.DateCheckType): ResultEntry<*> {
             if (value == null) {
-                return StringResultEntry(context.getString(key), "")
+                return StringResultEntry(key, "")
             }
 
-            val entry = DateResultEntry(context.getString(key), value)
+            val entry = DateResultEntry(key, value)
             val currentDate = GregorianCalendar.getInstance().currentDate()
 
             entry.isValid = checkType.check(currentDate, value)

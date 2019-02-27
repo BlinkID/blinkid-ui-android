@@ -1,6 +1,6 @@
 package com.microblink.documentscanflow.recognition.implementations
 
-import com.microblink.documentscanflow.R
+import com.microblink.documentscanflow.recognition.resultentry.ResultKey.*
 import com.microblink.documentscanflow.buildId1CardDetectorRecognizer
 import com.microblink.documentscanflow.isEmpty
 import com.microblink.documentscanflow.recognition.BaseRecognition
@@ -26,14 +26,14 @@ class EudlRecognition(eudlCountry: EudlCountry) : BaseRecognition() {
         val firstName = result.firstName
         val lastName = result.lastName
 
-        add(R.string.keyFirstName, firstName)
-        add(R.string.keyLastName, lastName)
-        add(R.string.keyAddress, result.address)
-        add(R.string.keyBirthData, result.birthData)
-        add(R.string.keyIssueDate, result.issueDate.date)
+        add(FIRST_NAME, firstName)
+        add(LAST_NAME, lastName)
+        add(ADDRESS, result.address)
+        add(BIRTH_DATA, result.birthData)
+        add(DATE_OF_ISSUE, result.issueDate.date)
         addDateOfExpiry(result.expiryDate.date)
-        add(R.string.keyDriverNumber, result.driverNumber)
-        add(R.string.keyIssuingAuthority, result.issuingAuthority)
+        add(DRIVER_NUMBER, result.driverNumber)
+        add(ISSUING_AUTHORITY, result.issuingAuthority)
         
         return FormattingUtils.formatResultTitle(firstName, lastName)
     }

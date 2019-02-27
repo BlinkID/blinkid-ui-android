@@ -1,6 +1,6 @@
 package com.microblink.documentscanflow.recognition.implementations
 
-import com.microblink.documentscanflow.R
+import com.microblink.documentscanflow.recognition.resultentry.ResultKey.*
 import com.microblink.documentscanflow.buildId1CardDetectorRecognizer
 import com.microblink.documentscanflow.isEmpty
 import com.microblink.documentscanflow.recognition.BaseRecognition
@@ -22,16 +22,16 @@ class IrelandDlRecognition : BaseRecognition() {
         }
 
         result.apply {
-            add(R.string.keyLastName, surname)
-            add(R.string.keyFirstName, firstName)
-            add(R.string.keyDateOfBirth, dateOfBirth)
-            add(R.string.keyPlaceOfBirth, placeOfBirth)
-            add(R.string.keyIssueDate, dateOfIssue)
-            add(R.string.keyIssuedBy, issuedBy)
+            add(LAST_NAME, surname)
+            add(FIRST_NAME, firstName)
+            add(DATE_OF_BIRTH, dateOfBirth)
+            add(PLACE_OF_BIRTH, placeOfBirth)
+            add(DATE_OF_ISSUE, dateOfIssue)
+            add(ISSUER, issuedBy)
             addDateOfExpiry(dateOfExpiry.date)
-            add(R.string.keyLicenceNumber, licenceNumber)
-            add(R.string.keyAddress, address)
-            add(R.string.keyLicenceCategories, licenceCategories)
+            add(LICENCE_NUMBER, licenceNumber)
+            add(ADDRESS, address)
+            add(LICENCE_CATEGORIES, licenceCategories)
         }
 
         return FormattingUtils.formatResultTitle(result.firstName, result.surname)

@@ -1,6 +1,6 @@
 package com.microblink.documentscanflow.recognition.implementations
 
-import com.microblink.documentscanflow.R
+import com.microblink.documentscanflow.recognition.resultentry.ResultKey.*
 import com.microblink.documentscanflow.buildId1CardDetectorRecognizer
 import com.microblink.documentscanflow.isEmpty
 import com.microblink.documentscanflow.recognition.BaseRecognition
@@ -18,11 +18,11 @@ class MexicoIdRecognition : BaseRecognition() {
             return null
         }
 
-        add(R.string.keyFullName, result.fullName)
-        add(R.string.keyAddress, result.address)
-        add(R.string.keyCurp, result.curp)
-        add(R.string.keyDateOfBirth, result.dateOfBirth)
-        add(R.string.keySex, result.sex)
+        add(FULL_NAME, result.fullName)
+        add(ADDRESS, result.address)
+        add(CURP, result.curp)
+        add(DATE_OF_BIRTH, result.dateOfBirth)
+        add(SEX, result.sex)
 
         return result.fullName
     }

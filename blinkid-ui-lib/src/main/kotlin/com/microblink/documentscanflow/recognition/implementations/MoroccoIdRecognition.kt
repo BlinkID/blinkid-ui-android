@@ -1,6 +1,6 @@
 package com.microblink.documentscanflow.recognition.implementations
 
-import com.microblink.documentscanflow.R
+import com.microblink.documentscanflow.recognition.resultentry.ResultKey.*
 import com.microblink.documentscanflow.isNotEmpty
 import com.microblink.documentscanflow.recognition.BaseTwoSideRecognition
 import com.microblink.documentscanflow.recognition.ResultValidator
@@ -44,23 +44,23 @@ class MoroccoIdRecognition : BaseTwoSideRecognition() {
 
     private fun extractFrontSide() {
         frontResult.apply {
-            add(R.string.keyFirstName, name)
-            add(R.string.keyLastName, surname)
-            add(R.string.keyDocumentNumber, documentNumber)
-            add(R.string.keySex, sex)
-            add(R.string.keyDateOfBirth, dateOfBirth)
-            add(R.string.keyPlaceOfBirth, placeOfBirth)
+            add(FIRST_NAME, name)
+            add(LAST_NAME, surname)
+            add(DOCUMENT_NUMBER, documentNumber)
+            add(SEX, sex)
+            add(DATE_OF_BIRTH, dateOfBirth)
+            add(PLACE_OF_BIRTH, placeOfBirth)
             addDateOfExpiry(dateOfExpiry.date)
         }
     }
 
     private fun extractBackSide() {
         backResult.apply {
-            add(R.string.keyDocumentNumber, documentNumber)
+            add(DOCUMENT_NUMBER, documentNumber)
             addDateOfExpiry(dateOfExpiry.date)
-            add(R.string.keyAddress, address)
-            add(R.string.keyCivilStatusNumber, civilStatusNumber)
-            add(R.string.keySex, sex)
+            add(ADDRESS, address)
+            add(CIVIL_STATUS_NUMBER, civilStatusNumber)
+            add(SEX, sex)
         }
     }
 }

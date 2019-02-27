@@ -1,6 +1,6 @@
 package com.microblink.documentscanflow.recognition.implementations
 
-import com.microblink.documentscanflow.R
+import com.microblink.documentscanflow.recognition.resultentry.ResultKey.*
 import com.microblink.documentscanflow.buildId1CardDetectorRecognizer
 import com.microblink.documentscanflow.isEmpty
 import com.microblink.documentscanflow.recognition.BaseRecognition
@@ -23,8 +23,8 @@ class EgyptIdRecognition : BaseRecognition() {
         }
 
         val documentNumber = result.documentNumber
-        add(R.string.keyDocumentNumber, documentNumber)
-        add(R.string.keyNationalNumber, result.nationalNumber)
+        add(DOCUMENT_NUMBER, documentNumber)
+        add(NATIONAL_NUMBER, result.nationalNumber)
 
         return null
     }

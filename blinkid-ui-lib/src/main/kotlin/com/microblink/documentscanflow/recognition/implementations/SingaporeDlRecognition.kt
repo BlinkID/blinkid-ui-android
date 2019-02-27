@@ -1,6 +1,6 @@
 package com.microblink.documentscanflow.recognition.implementations
 
-import com.microblink.documentscanflow.R
+import com.microblink.documentscanflow.recognition.resultentry.ResultKey.*
 import com.microblink.documentscanflow.buildId1CardDetectorRecognizer
 import com.microblink.documentscanflow.isEmpty
 import com.microblink.documentscanflow.recognition.BaseRecognition
@@ -20,10 +20,10 @@ class SingaporeDlRecognition : BaseRecognition() {
             return null
         }
 
-        add(R.string.keyDocumentNumber, result.licenceNumber)
-        add(R.string.keyFullName, result.name)
-        add(R.string.keyDateOfBirth, result.birthDate)
-        add(R.string.keyIssueDate, result.issueDate)
+        add(DOCUMENT_NUMBER, result.licenceNumber)
+        add(FULL_NAME, result.name)
+        add(DATE_OF_BIRTH, result.birthDate)
+        add(DATE_OF_ISSUE, result.issueDate)
         addDateOfExpiry(result.validTill.date)
 
         return result.name

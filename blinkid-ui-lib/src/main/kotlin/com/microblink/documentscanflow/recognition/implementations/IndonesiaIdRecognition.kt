@@ -1,6 +1,6 @@
 package com.microblink.documentscanflow.recognition.implementations
 
-import com.microblink.documentscanflow.R
+import com.microblink.documentscanflow.recognition.resultentry.ResultKey.*
 import com.microblink.documentscanflow.isEmpty
 import com.microblink.documentscanflow.recognition.BaseRecognition
 import com.microblink.entities.recognizers.Recognizer
@@ -20,20 +20,20 @@ class IndonesiaIdRecognition : BaseRecognition() {
             return null
         }
 
-        add(R.string.keyProvince, result.province)
-        add(R.string.keyCity, result.city)
-        add(R.string.keyDocumentNumber, result.documentNumber)
-        add(R.string.keyFullName, result.name)
-        add(R.string.keyPlaceOfBirth, result.placeOfBirth)
-        add(R.string.keyDateOfBirth, result.dateOfBirth)
-        add(R.string.keySex, result.sex)
-        add(R.string.keyAddress, result.address)
-        add(R.string.keyReligion, result.religion)
-        add(R.string.keyMaritalStatus, result.maritalStatus)
-        add(R.string.keyOccupation, result.occupation)
-        add(R.string.keyCitizenship, result.citizenship)
-        add(R.string.keyDateOfExpiry, result.dateOfExpiry)
-        add(R.string.keyDateOfExpiryPermanent, result.isDateOfExpiryPermanent)
+        add(PROVINCE, result.province)
+        add(CITY, result.city)
+        add(DOCUMENT_NUMBER, result.documentNumber)
+        add(FULL_NAME, result.name)
+        add(PLACE_OF_BIRTH, result.placeOfBirth)
+        add(DATE_OF_BIRTH, result.dateOfBirth)
+        add(SEX, result.sex)
+        add(ADDRESS, result.address)
+        add(RELIGION, result.religion)
+        add(MARITAL_STATUS, result.maritalStatus)
+        add(OCCUPATION, result.occupation)
+        add(CITIZENSHIP, result.citizenship)
+        addDateOfExpiry(result.dateOfExpiry.date)
+        add(DATE_OF_EXPIRY_PERMANENT, result.isDateOfExpiryPermanent)
         
         return result.name
     }
