@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+  <string name="mb_id_card"></string>
+  <string name="mb_new_id_card"></string>
+  <string name="mb_old_id_card"></string>
+  <string name="mb_driver_license"></string>
+  <string name="mb_passport"></string>
+  <string name="mb_residence_permit"></string>
+  <string name="mb_temporary_residence_permit"></string>
+  <string name="mb_visa"></string>
+  <string name="mb_immigrator_id"></string>
+  <string name="mb_military_id"></string>
+  <string name="mb_permanent_resident_id"></string>
+  <string name="mb_temporary_resident_id"></string>
+  <string name="mb_instructions_scan_front"></string>
+  <string name="mb_instructions_scan_back"></string>
+  <string name="mb_instructions_scan_any_side"></string>
+  <string name="mb_instructions_glare"></string>
+  <string name="mb_instructions_sides_not_matching"></string>
+  <string name="mb_timeout_title"></string>
+  <string name="mb_timeout_message"></string>
+  <string name="mb_timeout_retry"></string>
+  <string name="mb_timeout_change_country"></string>
+  <string name="mb_camera_error"></string>
+  <string name="mb_title_error_starting"></string>
+  <string name="mb_title_not_supported"></string>
+  <string name="mb_supported_countries_label"></string>
+  <string name="mb_action_search"></string>
+  <string name="mb_title_activity_country_choose"></string>
+</resources>
