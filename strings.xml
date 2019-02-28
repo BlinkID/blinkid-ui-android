@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+  <string name="mb_id_card">ID card</string>
+  <string name="mb_new_id_card">New ID card</string>
+  <string name="mb_old_id_card">Old ID card</string>
+  <string name="mb_driver_license">Driver\'s license</string>
+  <string name="mb_passport">Passport</string>
+  <string name="mb_residence_permit">Residence permit</string>
+  <string name="mb_temporary_residence_permit">Temporary residence permit</string>
+  <string name="mb_visa">Visa</string>
+  <string name="mb_immigrator_id">Immigrator ID</string>
+  <string name="mb_military_id">Military ID</string>
+  <string name="mb_permanent_resident_id">Permanent resident ID</string>
+  <string name="mb_temporary_resident_id">Temporary resident ID</string>
+  <string name="mb_custom_mykad" translatable="false">MyKad</string>
+  <string name="mb_custom_ikad" translatable="false">iKad</string>
+  <string name="mb_custom_mykas" translatable="false">MyKAS</string>
+  <string name="mb_custom_mypr" translatable="false">MyPR</string>
+  <string name="mb_custom_mytentera" translatable="false">MyTentera</string>
+  <string name="mb_instructions_scan_front">Scan the front side of the selected document or choose another.</string>
+  <string name="mb_instructions_scan_back">Scan the back side.</string>
+  <string name="mb_instructions_scan_any_side">Scan the selected document or choose another.</string>
+  <string name="mb_instructions_glare">Glare detected. Slightly move the card.</string>
+  <string name="mb_instructions_sides_not_matching">Front and back side do not match. Please try again.</string>
+  <string name="mb_timeout_title">Having trouble scanning?</string>
+  <string name="mb_timeout_message">Make sure you have good lighting and that you’ve selected the correct document.</string>
+  <string name="mb_timeout_retry">Continue</string>
+  <string name="mb_timeout_change_country">Change country</string>
+  <string name="mb_camera_error">Camera is busy, another program might be using it. Close other programs and/or restart your device.</string>
+  <string name="mb_title_error_starting">Error starting</string>
+  <string name="mb_title_not_supported">Not supported</string>
+  <string name="mb_supported_countries_label">Choose between 150+ documents</string>
+  <string name="mb_action_search">Search</string>
+  <string name="mb_title_activity_country_choose">Select country</string>
+</resources>
