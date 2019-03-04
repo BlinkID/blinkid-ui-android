@@ -36,7 +36,7 @@
   <string name="keyPrincipalResidenceAtIssuance">Principal residence</string>
   <string name="keyResidentialStatus">Residential status</string>
   <string name="keyEyeColor">Eye color</string>
-  <string name="keyPersonalNumber">Personal number</string>
+  <string name="keyPersonalNumber">Personal identification number</string>
   <string name="keyBloodGroup">Blood group</string>
   <string name="keyFullName">Full name</string>
   <string name="keyRace">Race</string>
