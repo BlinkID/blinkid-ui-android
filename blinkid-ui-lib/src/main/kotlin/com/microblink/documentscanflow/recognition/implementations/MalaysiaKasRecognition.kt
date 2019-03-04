@@ -38,7 +38,6 @@ class MalaysiaKasRecognition: BaseTwoSideRecognition() {
 
     private fun extractBackSide() {
         add(NRIC_NUMBER, backResult.nric)
-        add(EXTENDED_NRIC_NUMBER, backResult.extendedNric)
         add(DATE_OF_BIRTH, backResult.dateOfBirth)
     }
 

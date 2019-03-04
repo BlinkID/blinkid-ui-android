@@ -58,7 +58,6 @@ enum class ResultKey(val stringResId: Int) {
     SECTOR(R.string.keySector),
     EMPLOYER(R.string.keyEmployer),
     NRIC_NUMBER(R.string.keyNricNumber),
-    EXTENDED_NRIC_NUMBER(R.string.keyExtendedNricNumber),
     ARMY_NUMBER(R.string.keyArmyNumber),
     CURP(R.string.keyCurp),
     CIVIL_STATUS_NUMBER(R.string.keyCivilStatusNumber),
