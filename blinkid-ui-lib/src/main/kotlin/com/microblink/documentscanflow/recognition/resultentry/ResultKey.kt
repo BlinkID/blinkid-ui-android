@@ -12,7 +12,6 @@ enum class ResultKey(val stringResId: Int) {
     NATIONALITY(R.string.keyNationality),
     DOCUMENT_CODE(R.string.keyDocumentCode),
     DOCUMENT_NUMBER(R.string.keyDocumentNumber),
-    DOCUMENT_VERSION(R.string.keyDocumentVersion),
     ISSUER(R.string.keyIssuer),
     OPTIONAL_FIELD_1(R.string.keyOpt1),
     OPTIONAL_FIELD_2(R.string.keyOpt2),
