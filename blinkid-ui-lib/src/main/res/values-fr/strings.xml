@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+  <string name="mb_id_card">Carte d\'identité</string>
+  <string name="mb_new_id_card">Nouvelle carte d\'identité</string>
+  <string name="mb_old_id_card">Ancienne carte d\'identité</string>
+  <string name="mb_driver_license">Permis de conduire</string>
+  <string name="mb_passport">Passeport</string>
+  <string name="mb_residence_permit">Permis de séjour</string>
+  <string name="mb_temporary_residence_permit">Permis de séjour temporaire</string>
+  <string name="mb_visa">Visa</string>
+  <string name="mb_immigrator_id">Identifiant d\'immigrant</string>
+  <string name="mb_military_id">Carte d\'identité militaire</string>
+  <string name="mb_permanent_resident_id">Carte de résident permanent</string>
+  <string name="mb_temporary_resident_id">Carte de résident temporaire</string>
+  <string name="mb_instructions_scan_front">Numérisez le recto du document sélectionné ou choisissez-en un autre.</string>
+  <string name="mb_instructions_scan_back">Scannez le verso.</string>
+  <string name="mb_instructions_scan_any_side">Numérisez le document sélectionné ou choisissez-en un autre.</string>
+  <string name="mb_instructions_glare">Éblouissement détecté. Déplacez légèrement la carte.</string>
+  <string name="mb_instructions_sides_not_matching">Le recto et le verso ne correspondent pas. Veuillez réessayer.</string>
+  <string name="mb_timeout_title">Vous avez du mal à scanner ?</string>
+  <string name="mb_timeout_message">Assurez-vous d\'avoir un bon éclairage et d\'avoir sélectionné le bon document.</string>
+  <string name="mb_timeout_retry">Continuer</string>
+  <string name="mb_timeout_change_country">Changer de pays</string>
+  <string name="mb_camera_error">La caméra est occupée, un autre programme l’utilise peut-être. Fermez les autres programmes et / ou redémarrez votre appareil.</string>
+  <string name="mb_title_error_starting">Erreur de démarrage</string>
+  <string name="mb_title_not_supported">Non supporté</string>
+  <string name="mb_supported_countries_label">Choisissez parmi plus de 150 documents</string>
+  <string name="mb_action_search">Chercher</string>
+  <string name="mb_title_activity_country_choose">Choisissez le pays</string>
+</resources>
