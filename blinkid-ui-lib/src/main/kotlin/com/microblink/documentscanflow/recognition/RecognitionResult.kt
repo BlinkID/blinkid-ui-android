@@ -8,4 +8,8 @@ data class RecognitionResult(val resultTitle: String,
                              val frontSideDocumentImage: Image? = null,
                              val backSideDocumentImage: Image? = null,
                              val faceImage: Image? = null,
-                             val signatureImage: Image? = null)
+                             val signatureImage: Image? = null) {
+
+    fun getResultEntriesAsMap() = resultEntries.associateBy { it.key }
+
+}

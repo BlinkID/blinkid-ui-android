@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+  <string name="mb_id_card">Personalausweis</string>
+  <string name="mb_new_id_card">Neuer Personalausweis</string>
+  <string name="mb_old_id_card">Alter Personalausweis</string>
+  <string name="mb_driver_license">Führerschein</string>
+  <string name="mb_passport">Reisepass</string>
+  <string name="mb_residence_permit">Aufenthaltsgenehmigung</string>
+  <string name="mb_temporary_residence_permit">Befristete Aufenthaltsgenehmigung</string>
+  <string name="mb_visa">Visa</string>
+  <string name="mb_immigrator_id">Immigrationsausweis</string>
+  <string name="mb_military_id">Militärischer Ausweis</string>
+  <string name="mb_permanent_resident_id">Permanenter Einwohnerausweis</string>
+  <string name="mb_temporary_resident_id">Temporärer Einwohnerausweis</string>
+  <string name="mb_instructions_scan_front">Scannen Sie die Vorderseite des ausgewählten Dokuments oder wählen Sie ein anderes aus.</string>
+  <string name="mb_instructions_scan_back">Scannen Sie die Rückseite.</string>
+  <string name="mb_instructions_scan_any_side">Scannen Sie das ausgewählte Dokument oder wählen Sie ein anderes aus.</string>
+  <string name="mb_instructions_glare">Blendung erkannt. Bewegen Sie die Karte leicht.</string>
+  <string name="mb_instructions_sides_not_matching">Vorder- und Rückseite passen nicht zusammen. Bitte versuchen Sie es erneut.</string>
+  <string name="mb_timeout_title">Haben Sie ein Problem mit dem Scanvorgang?</string>
+  <string name="mb_timeout_message">Stellen Sie sicher, dass Sie über eine gute Beleuchtung verfügen und das richtige Dokument ausgewählt haben.</string>
+  <string name="mb_timeout_retry">Weiter</string>
+  <string name="mb_timeout_change_country">Land wechseln</string>
+  <string name="mb_camera_error">Die Kamera ist beschäftigt, möglicherweise wird sie von einem anderen Programm verwendet. Schließen Sie andere Programme und / oder starten Sie Ihr Gerät neu.</string>
+  <string name="mb_title_error_starting">Fehler beim Starten</string>
+  <string name="mb_title_not_supported">Nicht unterstützt</string>
+  <string name="mb_supported_countries_label">Wählen Sie zwischen mehr als 150 Dokumenten</string>
+  <string name="mb_action_search">Suche</string>
+  <string name="mb_title_activity_country_choose">Land auswählen</string>
+</resources>
