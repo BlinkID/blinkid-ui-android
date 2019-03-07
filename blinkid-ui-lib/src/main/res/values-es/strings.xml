@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+  <string name="mb_id_card">Documento de identidad</string>
+  <string name="mb_new_id_card">Nuevo documento de identidad</string>
+  <string name="mb_old_id_card">Antiguo documento de identidad</string>
+  <string name="mb_driver_license">Permiso de conducir</string>
+  <string name="mb_passport">Pasaporte</string>
+  <string name="mb_residence_permit">Permiso de residencia</string>
+  <string name="mb_temporary_residence_permit">Permiso de residencia temporal</string>
+  <string name="mb_visa">Visado</string>
+  <string name="mb_immigrator_id">Documento de inmigración</string>
+  <string name="mb_military_id">Identificación militar</string>
+  <string name="mb_permanent_resident_id">Identificación de residente permanente</string>
+  <string name="mb_temporary_resident_id">Identificación de residente temporal</string>
+  <string name="mb_instructions_scan_front">Escanee la parte frontal del documento seleccionado o escoja otro.</string>
+  <string name="mb_instructions_scan_back">Escanee la parte posterior.</string>
+  <string name="mb_instructions_scan_any_side">Escanee el documento seleccionado o escoja otro.</string>
+  <string name="mb_instructions_glare">Se ha detectado un reflejo. Mueva ligeramente la tarjeta.</string>
+  <string name="mb_instructions_sides_not_matching">La parte frontal y la posterior no coinciden. Inténtelo de nuevo.</string>
+  <string name="mb_timeout_title">¿Tiene problemas para escanear?</string>
+  <string name="mb_timeout_message">Asegúrese de tener una buena iluminación y de haber seleccionado el documento correcto.</string>
+  <string name="mb_timeout_retry">Continuar</string>
+  <string name="mb_timeout_change_country">Cambiar país</string>
+  <string name="mb_camera_error">La cámara no está disponible, puede que la esté usando otro programa. Cierre los demás programas o reinicie su dispositivo.</string>
+  <string name="mb_title_error_starting">Error al iniciar</string>
+  <string name="mb_title_not_supported">No es compatible</string>
+  <string name="mb_supported_countries_label">Elija entre más de 150 documentos</string>
+  <string name="mb_action_search">Buscar</string>
+  <string name="mb_title_activity_country_choose">Seleccionar país</string>
+</resources>
