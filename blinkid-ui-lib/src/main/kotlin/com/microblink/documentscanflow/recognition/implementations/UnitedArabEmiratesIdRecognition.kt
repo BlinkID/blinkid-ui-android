@@ -30,7 +30,7 @@ class UnitedArabEmiratesIdRecognition: BaseTwoSideRecognition() {
     override fun extractFields() {
         if (frontResult.isNotEmpty()) {
             add(FULL_NAME, frontResult.name)
-            add(DOCUMENT_NUMBER, frontResult.idNumber)
+            add(IDENTITY_NUMBER, frontResult.idNumber)
             add(NATIONALITY, frontResult.nationality)
         }
         if (backResult.isNotEmpty()) {
