@@ -46,17 +46,17 @@ class GermanyIdRecognition : BaseTwoSideRecognition() {
     }
 
     private fun extractCombinedResult() {
-        add(LAST_NAME, combinedResult.lastName)
-        add(FIRST_NAME, combinedResult.firstName)
-        add(DOCUMENT_NUMBER, combinedResult.identityCardNumber)
-        addDateOfExpiry(combinedResult.dateOfExpiry)
+        add(LAST_NAME, combinedResult.surname)
+        add(FIRST_NAME, combinedResult.givenNames)
+        add(DOCUMENT_NUMBER, combinedResult.documentNumber)
+        addDateOfExpiry(combinedResult.dateOfExpiry.date)
         add(DATE_OF_BIRTH, combinedResult.dateOfBirth)
         add(NATIONALITY, combinedResult.nationality)
         add(PLACE_OF_BIRTH, combinedResult.placeOfBirth)
-        add(EYE_COLOR, combinedResult.eyeColor)
+        add(EYE_COLOR, combinedResult.colourOfEyes)
         add(HEIGHT, combinedResult.height)
         add(ADDRESS, combinedResult.address)
-        add(AUTHORITY, combinedResult.issuingAuthority)
+        add(AUTHORITY, combinedResult.authority)
         add(DATE_OF_ISSUE, combinedResult.dateOfIssue)
     }
 
@@ -79,7 +79,7 @@ class GermanyIdRecognition : BaseTwoSideRecognition() {
 
     override fun getResultTitle(): String? {
         return when {
-            combinedResult.isNotEmpty() -> FormattingUtils.formatResultTitle(combinedResult.firstName, combinedResult.lastName)
+            combinedResult.isNotEmpty() -> FormattingUtils.formatResultTitle(combinedResult.givenNames, combinedResult.surname)
             frontResult.isNotEmpty() -> FormattingUtils.formatResultTitle(frontResult.givenNames, frontResult.surname)
             backResult.isNotEmpty() -> buildMrtdTitle(backResult.mrzResult)
             else -> null

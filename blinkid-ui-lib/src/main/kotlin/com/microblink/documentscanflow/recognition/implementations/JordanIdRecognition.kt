@@ -1,11 +1,11 @@
 package com.microblink.documentscanflow.recognition.implementations
 
-import com.microblink.documentscanflow.recognition.resultentry.ResultKey.*
 import com.microblink.documentscanflow.isEmpty
 import com.microblink.documentscanflow.isNotEmpty
 import com.microblink.documentscanflow.recognition.BaseTwoSideRecognition
-import com.microblink.documentscanflow.recognition.util.FormattingUtils
 import com.microblink.documentscanflow.recognition.ResultValidator
+import com.microblink.documentscanflow.recognition.resultentry.ResultKey.*
+import com.microblink.documentscanflow.recognition.util.FormattingUtils
 import com.microblink.documentscanflow.sanitizeMRZString
 import com.microblink.entities.recognizers.Recognizer
 import com.microblink.entities.recognizers.blinkid.jordan.JordanCombinedRecognizer
@@ -50,8 +50,8 @@ class JordanIdRecognition : BaseTwoSideRecognition() {
         add(DATE_OF_BIRTH, combinedResult.dateOfBirth)
         add(NATIONALITY, combinedResult.nationality)
         add(DOCUMENT_NUMBER, combinedResult.documentNumber)
-        add(ISSUER, combinedResult.issuer)
-        addDateOfExpiry(combinedResult.dateOfExpiry)
+        add(ISSUER, combinedResult.issuedBy)
+        addDateOfExpiry(combinedResult.dateOfExpiry.date)
     }
 
     private fun extractFrontSide() {
@@ -68,11 +68,11 @@ class JordanIdRecognition : BaseTwoSideRecognition() {
         if (backResult.isEmpty()) {
             return
         }
-        add(NATIONALITY, backResult.nationality)
-        add(DOCUMENT_NUMBER, backResult.documentNumber?.sanitizeMRZString())
-        add(ISSUER, backResult.issuer)
-        addDateOfExpiry(backResult.dateOfExpiry)
-        extractMrtdResult(backResult)
+        add(NATIONALITY, backResult.mrzResult.nationality)
+        add(DOCUMENT_NUMBER, backResult.mrzResult.documentNumber.sanitizeMRZString())
+        add(ISSUER, backResult.mrzResult.issuer)
+        addDateOfExpiry(backResult.mrzResult.dateOfExpiry.date)
+        extractMrzResult(backResult.mrzResult)
     }
     
     override fun getResultTitle(): String? {
@@ -83,7 +83,7 @@ class JordanIdRecognition : BaseTwoSideRecognition() {
             return frontResult.name
         }
         if (backResult.isNotEmpty()) {
-            return FormattingUtils.formatResultTitle(backResult.primaryId, backResult.secondaryId)
+            return FormattingUtils.formatResultTitle(backResult.mrzResult.primaryId, backResult.mrzResult.secondaryId)
         }
         return null
     }

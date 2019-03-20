@@ -55,8 +55,8 @@ class PolandIdRecognition: BaseTwoSideRecognition() {
         add(SEX, combinedResult.sex)
         add(DATE_OF_BIRTH, combinedResult.dateOfBirth)
         add(NATIONALITY, combinedResult.nationality)
-        add(ISSUER, combinedResult.issuer)
-        addDateOfExpiry(combinedResult.dateOfExpiry)
+        add(ISSUER, combinedResult.issuedBy)
+        addDateOfExpiry(combinedResult.dateOfExpiry.date)
     }
 
     private fun extractFrontSide() {

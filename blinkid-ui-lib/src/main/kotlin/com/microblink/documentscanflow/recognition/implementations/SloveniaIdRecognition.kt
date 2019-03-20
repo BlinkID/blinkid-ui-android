@@ -46,32 +46,32 @@ class SloveniaIdRecognition: BaseTwoSideRecognition() {
     }
 
     private fun extractCombinedResult() {
-        add(LAST_NAME, combinedResult.lastName)
-        add(FIRST_NAME, combinedResult.firstName)
-        add(IDENTITY_NUMBER, combinedResult.identityCardNumber)
+        add(LAST_NAME, combinedResult.surname)
+        add(FIRST_NAME, combinedResult.givenNames)
+        add(IDENTITY_NUMBER, combinedResult.documentNumber)
         add(SEX, combinedResult.sex)
         add(SEX, combinedResult.sex)
         add(DATE_OF_BIRTH, combinedResult.dateOfBirth)
         add(ADDRESS, combinedResult.address)
-        add(CITIZENSHIP, combinedResult.citizenship)
-        addDateOfExpiry(combinedResult.dateOfExpiry)
+        add(NATIONALITY, combinedResult.nationality)
+        addDateOfExpiry(combinedResult.dateOfExpiry.date)
         add(DATE_OF_ISSUE, combinedResult.dateOfIssue)
-        add(ISSUING_AUTHORITY, combinedResult.issuingAuthority)
+        add(ISSUING_AUTHORITY, combinedResult.administrativeUnit)
     }
 
     private fun extractFrontSide() {
-        add(LAST_NAME, frontResult.lastName)
-        add(FIRST_NAME, frontResult.firstName)
+        add(LAST_NAME, frontResult.surname)
+        add(FIRST_NAME, frontResult.givenNames)
         add(SEX, frontResult.sex)
         add(NATIONALITY, frontResult.nationality)
         add(DATE_OF_BIRTH, frontResult.dateOfBirth)
-        addDateOfExpiry(frontResult.dateOfExpiry)
+        addDateOfExpiry(frontResult.dateOfExpiry.date)
     }
 
     private fun extractBackSide() {
-        extractMrtdResult(backResult)
+        extractMrzResult(backResult.mrzResult)
         add(ADDRESS, backResult.address)
-        add(AUTHORITY, backResult.authority)
+        add(AUTHORITY, backResult.administrativeUnit)
         add(DATE_OF_ISSUE, backResult.dateOfIssue)
     }
     
@@ -80,16 +80,16 @@ class SloveniaIdRecognition: BaseTwoSideRecognition() {
         var lastName: String? = ""
         when {
             combinedResult.isNotEmpty() -> {
-                firstName = combinedResult.firstName
-                lastName = combinedResult.lastName
+                firstName = combinedResult.givenNames
+                lastName = combinedResult.surname
             }
             frontResult.isNotEmpty() -> {
-                firstName = frontResult.firstName
-                lastName = frontResult.lastName
+                firstName = frontResult.givenNames
+                lastName = frontResult.surname
             }
             backResult.isNotEmpty() -> {
-                firstName = backResult.secondaryId
-                lastName = backResult.primaryId
+                firstName = backResult.mrzResult.secondaryId
+                lastName = backResult.mrzResult.primaryId
             }
         }
         return FormattingUtils.formatResultTitle(firstName, lastName)

@@ -3,25 +3,23 @@ package com.microblink.documentscanflow.recognition
 import com.microblink.documentscanflow.isNotEmpty
 import com.microblink.documentscanflow.recognition.resultentry.ResultEntry
 import com.microblink.documentscanflow.recognition.resultentry.ResultKey
-import com.microblink.documentscanflow.sanitizeMRZString
+import com.microblink.documentscanflow.recognition.resultentry.ResultKey.*
 import com.microblink.entities.processors.imageReturn.ImageReturnProcessor
 import com.microblink.entities.recognizers.Recognizer
 import com.microblink.entities.recognizers.blinkid.imageoptions.FaceImageOptions
 import com.microblink.entities.recognizers.blinkid.imageoptions.FullDocumentImageOptions
 import com.microblink.entities.recognizers.blinkid.imageoptions.SignatureImageOptions
 import com.microblink.entities.recognizers.blinkid.imageresult.CombinedFullDocumentImageResult
-import com.microblink.entities.recognizers.blinkid.mrtd.MrtdDocumentType
-import com.microblink.image.Image
 import com.microblink.entities.recognizers.blinkid.imageresult.FaceImageResult
 import com.microblink.entities.recognizers.blinkid.imageresult.FullDocumentImageResult
 import com.microblink.entities.recognizers.blinkid.imageresult.SignatureImageResult
+import com.microblink.entities.recognizers.blinkid.mrtd.MrtdDocumentType
 import com.microblink.entities.recognizers.blinkid.mrtd.MrzResult
 import com.microblink.entities.recognizers.detector.DetectorRecognizer
 import com.microblink.entities.settings.GlareDetectorOptions
-import com.microblink.recognizers.blinkid.mrtd.MRTDResult
+import com.microblink.image.Image
 import com.microblink.results.date.Date
 import com.microblink.results.date.DateResult
-import com.microblink.documentscanflow.recognition.resultentry.ResultKey.*
 
 abstract class BaseRecognition(val isFullySupported: Boolean = true) {
 
@@ -187,23 +185,6 @@ abstract class BaseRecognition(val isFullySupported: Boolean = true) {
         return frontResult.isNotEmpty() && backResult.isNotEmpty()
     }
 
-    protected fun extractMrtdResult(result: MRTDResult) {
-        add(PRIMARY_ID, result.primaryId)
-        add(SECONDARY_ID, result.secondaryId)
-        add(DATE_OF_BIRTH, result.dateOfBirth)
-        add(SEX, result.sex)
-        add(NATIONALITY, result.nationality)
-        add(DOCUMENT_CODE, result.documentCode)
-        add(ISSUER, result.issuer)
-        addDateOfExpiry(result.dateOfExpiry)
-        add(DOCUMENT_NUMBER, result.documentNumber?.sanitizeMRZString())
-        add(OPTIONAL_FIELD_1, result.opt1?.sanitizeMRZString())
-        val opt2 = result.opt2?.sanitizeMRZString()
-        if (!opt2.isNullOrEmpty()) {
-            add(OPTIONAL_FIELD_2, opt2)
-        }
-    }
-
     protected fun extractMrzResult(mrzResult: MrzResult) {
         add(PRIMARY_ID, mrzResult.primaryId)
         add(SECONDARY_ID, mrzResult.secondaryId)
@@ -226,7 +207,6 @@ abstract class BaseRecognition(val isFullySupported: Boolean = true) {
         }
     }
 
-    protected fun buildMrtdTitle(result: MRTDResult): String = result.primaryId + " " + result.secondaryId
     protected fun buildMrtdTitle(result: MrzResult): String = result.primaryId + " " + result.secondaryId
 
 }

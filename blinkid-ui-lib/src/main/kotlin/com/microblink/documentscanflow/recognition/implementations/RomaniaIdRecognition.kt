@@ -12,12 +12,12 @@ class RomaniaIdRecognition: BaseRecognition() {
     override fun setupRecognizers() {
         recognizer.setExtractAddress(false)
         recognizer.setExtractFirstName(false)
-        recognizer.setExtractLastName(false)
+        recognizer.setExtractSurname(false)
         recognizer.setExtractIssuedBy(false)
         recognizer.setExtractPlaceOfBirth(false)
-        recognizer.setExtractValidFrom(false)
-        recognizer.setExtractValidUntil(false)
-        recognizer.setExtractNonMRZSex(false)
+        recognizer.setExtractDateOfIssue(false)
+        recognizer.setExtractDateOfExpiry(false)
+        recognizer.setExtractSex(false)
     }
 
     override fun getSingleSideRecognizers(): List<Recognizer<*, *>> {
@@ -30,8 +30,8 @@ class RomaniaIdRecognition: BaseRecognition() {
             return null
         }
 
-        extractMrtdResult(result)
-        return buildMrtdTitle(result)
+        extractMrzResult(result.mrzResult)
+        return buildMrtdTitle(result.mrzResult)
     }
 
 }
