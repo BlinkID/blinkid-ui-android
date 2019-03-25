@@ -141,4 +141,5 @@
   <string name="keyDocumentNonExpiring">Document sans délai de validité</string>
   <string name="keySecurityVersion">Version de sécurité</string>
   <string name="keyPersonalNumber">Numéro d\'identification personnel</string>
+  <string name="keyRank">Rang</string>
 </resources>

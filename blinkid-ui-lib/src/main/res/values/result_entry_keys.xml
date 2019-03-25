@@ -142,4 +142,5 @@
   <string name="keyDocumentNonExpiring">Document non-expiring</string>
   <string name="keySecurityVersion">Security version</string>
   <string name="keyPersonalNumber">Personal identification number</string>
+  <string name="keyRank">Rank</string>
 </resources>
