@@ -1,5 +1,5 @@
 # BlinkID UI for Android
-BlinkId UI is a library that lets you scan any BlinkID supported document without even knowing what a `Recognizer` is.
+BlinkID UI is a library that lets you scan any BlinkID supported document without even knowing what a `Recognizer` is.
 
 It includes customisable scan activity and country selection activity.
 
@@ -40,6 +40,11 @@ If you're using Proguard, you'll need to add the following line to your Proguard
 ## <a name="faq"></a> FAQ
 ### How do I customise colors, icons and other resources?
 You have to name your resource the same as the resource you want to override in the library. For example, if you want to change torch icon, name you icon `mb_ic_torch_on`.
+
+### How do I disable translations?
+To disable translations for country names, override `createLocalizationManager()` and return your custom `LocaleManager` that limits languages to which to translate to. 
+
+If you want to disable translations for other strings, change your gradle configuration as explained [here](https://developer.android.com/studio/build/shrink-code#unused-alt-resources).
 
 ### How do I disable scan sound or use a custom one?
 In your scan activity, override `createScanSuccessSoundPlayer()` and return your own implementation. If you want to disable sound just return `new EmptyScanSuccessPlayer()`. 
