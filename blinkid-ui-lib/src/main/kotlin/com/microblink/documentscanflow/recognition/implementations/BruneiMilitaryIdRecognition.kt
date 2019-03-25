@@ -6,13 +6,13 @@ import com.microblink.documentscanflow.recognition.ResultValidator
 import com.microblink.documentscanflow.recognition.resultentry.ResultKey
 import com.microblink.documentscanflow.recognition.resultentry.ResultKey.*
 import com.microblink.entities.recognizers.Recognizer
-import com.microblink.entities.recognizers.blinkid.brunei.BruneiIdBackRecognizer
-import com.microblink.entities.recognizers.blinkid.brunei.BruneiIdFrontRecognizer
+import com.microblink.entities.recognizers.blinkid.brunei.BruneiMilitaryIdBackRecognizer
+import com.microblink.entities.recognizers.blinkid.brunei.BruneiMilitaryIdFrontRecognizer
 
-class BruneiIdRecognition: BaseTwoSideRecognition() {
+class BruneiMilitaryIdRecognition: BaseTwoSideRecognition() {
 
-    private val frontRecognizer by lazy { BruneiIdFrontRecognizer() }
-    private val backRecognizer by lazy { BruneiIdBackRecognizer() }
+    private val frontRecognizer by lazy { BruneiMilitaryIdFrontRecognizer() }
+    private val backRecognizer by lazy { BruneiMilitaryIdBackRecognizer() }
 
     private val frontResult by lazy { frontRecognizer.result }
     private val backResult by lazy { backRecognizer.result }
@@ -28,25 +28,19 @@ class BruneiIdRecognition: BaseTwoSideRecognition() {
         }
     }
 
-    private fun extractFront(result: BruneiIdFrontRecognizer.Result) {
+    private fun extractFront(result: BruneiMilitaryIdFrontRecognizer.Result) {
         add(FULL_NAME, result.fullName)
-        add(DOCUMENT_NUMBER, result.documentNumber)
         add(ResultKey.DATE_OF_BIRTH, result.dateOfBirth)
-        add(ResultKey.PLACE_OF_BIRTH, result.placeOfBirth)
-        add(ResultKey.SEX, result.sex)
+        add(ResultKey.RANK, result.rank)
     }
 
-    private fun extractBack(result: BruneiIdBackRecognizer.Result) {
-        extractMrzResult(result.mrzResult)
+    private fun extractBack(result: BruneiMilitaryIdBackRecognizer.Result) {
+        add(ARMY_NUMBER, result.armyNumber)
         add(DATE_OF_ISSUE, result.dateOfIssue)
-        add(ADDRESS, result.address)
-        add(RACE, result.race)
+        addDateOfExpiry(result.dateOfExpiry.date)
     }
 
     override fun getResultTitle(): String? {
-        if (backResult.isNotEmpty()) {
-            return buildMrtdTitle(backResult.mrzResult)
-        }
         if (frontResult.isNotEmpty()) {
             return frontResult.fullName
         }

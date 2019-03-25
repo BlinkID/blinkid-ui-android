@@ -1,6 +1,6 @@
 package com.microblink.documentscanflow.recognition.implementations
 
-import com.microblink.documentscanflow.R
+import com.microblink.documentscanflow.recognition.resultentry.ResultKey.*
 import com.microblink.documentscanflow.buildId1CardDetectorRecognizer
 import com.microblink.documentscanflow.isEmpty
 import com.microblink.documentscanflow.recognition.BaseRecognition
@@ -22,13 +22,13 @@ class MalaysiaDlRecognition : BaseRecognition() {
             return null
         }
 
-        add(R.string.keyFullName, result.name)
-        add(R.string.keyIdentityNumber, result.identityNumber)
-        add(R.string.keyNationality, result.nationality)
-        add(R.string.keyClass, result.dlClass)
-        add(R.string.keyIssueDate, result.validFrom)
+        add(FULL_NAME, result.name)
+        add(IDENTITY_NUMBER, result.identityNumber)
+        add(NATIONALITY, result.nationality)
+        add(CLASS, result.dlClass)
+        add(DATE_OF_ISSUE, result.validFrom)
         addDateOfExpiry(result.validUntil.date)
-        add(R.string.keyAddress, result.fullAddress)
+        add(ADDRESS, result.fullAddress)
         
         return result.name
     }

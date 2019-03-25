@@ -1,6 +1,6 @@
 package com.microblink.documentscanflow.recognition.implementations
 
-import com.microblink.documentscanflow.R
+import com.microblink.documentscanflow.recognition.resultentry.ResultKey.*
 import com.microblink.documentscanflow.buildId1CardDetectorRecognizer
 import com.microblink.documentscanflow.isNotEmpty
 import com.microblink.documentscanflow.recognition.BaseRecognition
@@ -18,12 +18,12 @@ class MalaysiaPrRecognition: BaseRecognition(true) {
 
     override fun extractData(): String? {
         if (result.isNotEmpty()) {
-            add(R.string.keyFullName, result.fullName)
-            add(R.string.keyDateOfBirth, result.birthDate)
-            add(R.string.keySex, result.sex)
-            add(R.string.keyReligion, result.religion)
-            add(R.string.keyNricNumber, result.nric)
-            add(R.string.keyAddress, result.fullAddress)
+            add(FULL_NAME, result.fullName)
+            add(DATE_OF_BIRTH, result.birthDate)
+            add(SEX, result.sex)
+            add(RELIGION, result.religion)
+            add(NRIC_NUMBER, result.nric)
+            add(ADDRESS, result.fullAddress)
         }
 
         return result.fullName

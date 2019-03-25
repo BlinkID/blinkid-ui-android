@@ -1,6 +1,6 @@
 package com.microblink.documentscanflow.recognition.implementations
 
-import com.microblink.documentscanflow.R
+import com.microblink.documentscanflow.recognition.resultentry.ResultKey.*
 import com.microblink.documentscanflow.isEmpty
 import com.microblink.documentscanflow.isNotEmpty
 import com.microblink.documentscanflow.recognition.BaseTwoSideRecognition
@@ -43,20 +43,20 @@ class SlovakiaIdRecognition: BaseTwoSideRecognition() {
     }
 
     private fun extractCombinedResult() {
-        add(R.string.keyLastName, combinedResult.lastName)
-        add(R.string.keyFirstName, combinedResult.firstName)
-        add(R.string.keyNationality, combinedResult.nationality)
-        add(R.string.keySex, combinedResult.sex)
-        add(R.string.keyDocumentNumber, combinedResult.documentNumber)
-        add(R.string.keySpecialRemarks, combinedResult.specialRemarks)
-        add(R.string.keyPersonalNumber, combinedResult.personalIdentificationNumber)
-        add(R.string.keyDateOfBirth, combinedResult.dateOfBirth)
-        add(R.string.keyPlaceOfBirth, combinedResult.placeOfBirth)
-        add(R.string.keySurnameAtBirth, combinedResult.surnameAtBirth)
-        add(R.string.keyAddress, combinedResult.address)
-        add(R.string.keyIssuingAuthority, combinedResult.issuingAuthority)
-        add(R.string.keyIssueDate, combinedResult.dateOfIssue)
-        addDateOfExpiry(combinedResult.dateOfExpiry)
+        add(LAST_NAME, combinedResult.lastName)
+        add(FIRST_NAME, combinedResult.firstName)
+        add(NATIONALITY, combinedResult.nationality)
+        add(SEX, combinedResult.sex)
+        add(DOCUMENT_NUMBER, combinedResult.documentNumber)
+        add(SPECIAL_REMARKS, combinedResult.specialRemarks)
+        add(PERSONAL_NUMBER, combinedResult.personalNumber)
+        add(DATE_OF_BIRTH, combinedResult.dateOfBirth)
+        add(PLACE_OF_BIRTH, combinedResult.placeOfBirth)
+        add(SURNAME_AT_BIRTH, combinedResult.surnameAtBirth)
+        add(ADDRESS, combinedResult.address)
+        add(ISSUING_AUTHORITY, combinedResult.issuedBy)
+        add(DATE_OF_ISSUE, combinedResult.dateOfIssue)
+        addDateOfExpiry(combinedResult.dateOfExpiry.date)
     }
 
     private fun extractFrontSide() {
@@ -64,16 +64,16 @@ class SlovakiaIdRecognition: BaseTwoSideRecognition() {
             return
         }
 
-        add(R.string.keyLastName, frontResult.lastName)
-        add(R.string.keyFirstName, frontResult.firstName)
-        add(R.string.keyNationality, frontResult.nationality)
-        add(R.string.keySex, frontResult.sex)
-        add(R.string.keyDateOfBirth, frontResult.dateOfBirth)
-        add(R.string.keyPersonalNumber, frontResult.personalNumber)
-        add(R.string.keyDocumentNumber, frontResult.documentNumber)
-        add(R.string.keyIssuedBy, frontResult.issuedBy)
+        add(LAST_NAME, frontResult.lastName)
+        add(FIRST_NAME, frontResult.firstName)
+        add(NATIONALITY, frontResult.nationality)
+        add(SEX, frontResult.sex)
+        add(DATE_OF_BIRTH, frontResult.dateOfBirth)
+        add(PERSONAL_NUMBER, frontResult.personalNumber)
+        add(DOCUMENT_NUMBER, frontResult.documentNumber)
+        add(ISSUER, frontResult.issuedBy)
         addDateOfExpiry(frontResult.dateOfExpiry.date)
-        add(R.string.keyIssueDate, frontResult.dateOfIssue)
+        add(DATE_OF_ISSUE, frontResult.dateOfIssue)
     }
 
     private fun extractBackSide() {
@@ -81,8 +81,8 @@ class SlovakiaIdRecognition: BaseTwoSideRecognition() {
             return
         }
 
-        add(R.string.keyAddress, backResult.address)
-        add(R.string.keyPlaceOfBirth, backResult.placeOfBirth)
+        add(ADDRESS, backResult.address)
+        add(PLACE_OF_BIRTH, backResult.placeOfBirth)
         extractMrzResult(backResult.mrzResult)
     }
     

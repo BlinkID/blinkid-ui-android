@@ -28,6 +28,7 @@ enum class SupportedCountry(override val code: String,
                 id = BruneiIdRecognition()
                 residencePermit = BruneiResidencePermitRecognition()
                 temporaryResidencePermit = BruneiTemporaryResidencePermitRecognition()
+                militaryId = BruneiMilitaryIdRecognition()
             }),
 
     CANADA("ca",
@@ -99,7 +100,7 @@ enum class SupportedCountry(override val code: String,
 
     ITALY("it",
             recognitions {
-                id = GenericRecognition.mrtdId1(false)
+                oldId = GenericRecognition.mrtdId1(false)
                 drivingLicence = ItalyDlRecognition()
             }),
 

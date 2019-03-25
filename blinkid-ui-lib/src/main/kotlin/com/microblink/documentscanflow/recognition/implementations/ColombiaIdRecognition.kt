@@ -1,6 +1,6 @@
 package com.microblink.documentscanflow.recognition.implementations
 
-import com.microblink.documentscanflow.R
+import com.microblink.documentscanflow.recognition.resultentry.ResultKey.*
 import com.microblink.documentscanflow.isNotEmpty
 import com.microblink.documentscanflow.recognition.BaseTwoSideRecognition
 import com.microblink.documentscanflow.recognition.util.FormattingUtils
@@ -48,17 +48,17 @@ class ColombiaIdRecognition
     }
 
     private fun extractFront(result: ColombiaIdFrontRecognizer.Result) {
-        add(R.string.keyFirstName, result.firstName)
-        add(R.string.keyLastName, result.lastName)
-        add(R.string.keyDocumentNumber, result.documentNumber)
+        add(FIRST_NAME, result.firstName)
+        add(LAST_NAME, result.lastName)
+        add(DOCUMENT_NUMBER, result.documentNumber)
     }
 
     private fun extractBack(result: ColombiaIdBackRecognizer.Result) {
-        add(R.string.keyFirstName, result.firstName)
-        add(R.string.keyLastName, result.lastName)
-        add(R.string.keyDocumentNumber, result.documentNumber)
-        add(R.string.keySex, result.sex)
-        add(R.string.keyDateOfBirth, result.birthDate)
+        add(FIRST_NAME, result.firstName)
+        add(LAST_NAME, result.lastName)
+        add(DOCUMENT_NUMBER, result.documentNumber)
+        add(SEX, result.sex)
+        add(DATE_OF_BIRTH, result.birthDate)
     }
 
 }

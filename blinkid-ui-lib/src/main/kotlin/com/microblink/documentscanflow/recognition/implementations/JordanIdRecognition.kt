@@ -1,11 +1,11 @@
 package com.microblink.documentscanflow.recognition.implementations
 
-import com.microblink.documentscanflow.R
 import com.microblink.documentscanflow.isEmpty
 import com.microblink.documentscanflow.isNotEmpty
 import com.microblink.documentscanflow.recognition.BaseTwoSideRecognition
-import com.microblink.documentscanflow.recognition.util.FormattingUtils
 import com.microblink.documentscanflow.recognition.ResultValidator
+import com.microblink.documentscanflow.recognition.resultentry.ResultKey.*
+import com.microblink.documentscanflow.recognition.util.FormattingUtils
 import com.microblink.documentscanflow.sanitizeMRZString
 import com.microblink.entities.recognizers.Recognizer
 import com.microblink.entities.recognizers.blinkid.jordan.JordanCombinedRecognizer
@@ -44,35 +44,35 @@ class JordanIdRecognition : BaseTwoSideRecognition() {
     }
 
     private fun extractCombinedResult() {
-        add(R.string.keyFullName, combinedResult.name)
-        add(R.string.keyNationalNumber, combinedResult.nationalNumber)
-        add(R.string.keySex, combinedResult.sex)
-        add(R.string.keyDateOfBirth, combinedResult.dateOfBirth)
-        add(R.string.keyNationality, combinedResult.nationality)
-        add(R.string.keyDocumentNumber, combinedResult.documentNumber)
-        add(R.string.keyIssuer, combinedResult.issuer)
-        addDateOfExpiry(combinedResult.dateOfExpiry)
+        add(FULL_NAME, combinedResult.name)
+        add(NATIONAL_NUMBER, combinedResult.nationalNumber)
+        add(SEX, combinedResult.sex)
+        add(DATE_OF_BIRTH, combinedResult.dateOfBirth)
+        add(NATIONALITY, combinedResult.nationality)
+        add(DOCUMENT_NUMBER, combinedResult.documentNumber)
+        add(ISSUER, combinedResult.issuedBy)
+        addDateOfExpiry(combinedResult.dateOfExpiry.date)
     }
 
     private fun extractFrontSide() {
         if (frontResult.isEmpty()) {
             return
         }
-        add(R.string.keyFullName, frontResult.name)
-        add(R.string.keyNationalNumber, frontResult.nationalNumber)
-        add(R.string.keySex, frontResult.sex)
-        add(R.string.keyDateOfBirth, frontResult.dateOfBirth)
+        add(FULL_NAME, frontResult.name)
+        add(NATIONAL_NUMBER, frontResult.nationalNumber)
+        add(SEX, frontResult.sex)
+        add(DATE_OF_BIRTH, frontResult.dateOfBirth)
     }
     
     private fun extractBackSide() {
         if (backResult.isEmpty()) {
             return
         }
-        add(R.string.keyNationality, backResult.nationality)
-        add(R.string.keyDocumentNumber, backResult.documentNumber?.sanitizeMRZString())
-        add(R.string.keyIssuer, backResult.issuer)
-        addDateOfExpiry(backResult.dateOfExpiry)
-        extractMrtdResult(backResult)
+        add(NATIONALITY, backResult.mrzResult.nationality)
+        add(DOCUMENT_NUMBER, backResult.mrzResult.documentNumber.sanitizeMRZString())
+        add(ISSUER, backResult.mrzResult.issuer)
+        addDateOfExpiry(backResult.mrzResult.dateOfExpiry.date)
+        extractMrzResult(backResult.mrzResult)
     }
     
     override fun getResultTitle(): String? {
@@ -83,7 +83,7 @@ class JordanIdRecognition : BaseTwoSideRecognition() {
             return frontResult.name
         }
         if (backResult.isNotEmpty()) {
-            return FormattingUtils.formatResultTitle(backResult.primaryId, backResult.secondaryId)
+            return FormattingUtils.formatResultTitle(backResult.mrzResult.primaryId, backResult.mrzResult.secondaryId)
         }
         return null
     }

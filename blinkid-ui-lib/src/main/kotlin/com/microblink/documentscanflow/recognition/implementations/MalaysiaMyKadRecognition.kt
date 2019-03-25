@@ -1,6 +1,6 @@
 package com.microblink.documentscanflow.recognition.implementations
 
-import com.microblink.documentscanflow.R
+import com.microblink.documentscanflow.recognition.resultentry.ResultKey.*
 import com.microblink.documentscanflow.isNotEmpty
 import com.microblink.documentscanflow.recognition.BaseTwoSideRecognition
 import com.microblink.documentscanflow.recognition.ResultValidator
@@ -46,17 +46,17 @@ class MalaysiaMyKadRecognition
     }
 
     private fun extractFrontSide() {
-        add(R.string.keyFullName, frontResult.fullName)
-        add(R.string.keyNricNumber, frontResult.nric)
-        add(R.string.keyDateOfBirth, frontResult.birthDate)
-        add(R.string.keyAddress, frontResult.fullAddress)
-        add(R.string.keySex, frontResult.sex)
-        add(R.string.keyReligion, frontResult.religion)
+        add(FULL_NAME, frontResult.fullName)
+        add(NRIC_NUMBER, frontResult.nric)
+        add(DATE_OF_BIRTH, frontResult.birthDate)
+        add(ADDRESS, frontResult.fullAddress)
+        add(SEX, frontResult.sex)
+        add(RELIGION, frontResult.religion)
     }
 
     private fun extractBackSide() {
-        add(R.string.keyNricNumber, backResult.nric)
-        add(R.string.keyDateOfBirth, backResult.dateOfBirth)
+        add(NRIC_NUMBER, backResult.nric)
+        add(DATE_OF_BIRTH, backResult.dateOfBirth)
     }
 
 }

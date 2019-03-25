@@ -1,25 +1,23 @@
 package com.microblink.documentscanflow.recognition
 
-import android.content.Context
-import com.microblink.documentscanflow.R
 import com.microblink.documentscanflow.isNotEmpty
 import com.microblink.documentscanflow.recognition.resultentry.ResultEntry
-import com.microblink.documentscanflow.sanitizeMRZString
+import com.microblink.documentscanflow.recognition.resultentry.ResultKey
+import com.microblink.documentscanflow.recognition.resultentry.ResultKey.*
 import com.microblink.entities.processors.imageReturn.ImageReturnProcessor
 import com.microblink.entities.recognizers.Recognizer
 import com.microblink.entities.recognizers.blinkid.imageoptions.FaceImageOptions
 import com.microblink.entities.recognizers.blinkid.imageoptions.FullDocumentImageOptions
 import com.microblink.entities.recognizers.blinkid.imageoptions.SignatureImageOptions
 import com.microblink.entities.recognizers.blinkid.imageresult.CombinedFullDocumentImageResult
-import com.microblink.entities.recognizers.blinkid.mrtd.MrtdDocumentType
-import com.microblink.image.Image
 import com.microblink.entities.recognizers.blinkid.imageresult.FaceImageResult
 import com.microblink.entities.recognizers.blinkid.imageresult.FullDocumentImageResult
 import com.microblink.entities.recognizers.blinkid.imageresult.SignatureImageResult
+import com.microblink.entities.recognizers.blinkid.mrtd.MrtdDocumentType
 import com.microblink.entities.recognizers.blinkid.mrtd.MrzResult
 import com.microblink.entities.recognizers.detector.DetectorRecognizer
 import com.microblink.entities.settings.GlareDetectorOptions
-import com.microblink.recognizers.blinkid.mrtd.MRTDResult
+import com.microblink.image.Image
 import com.microblink.results.date.Date
 import com.microblink.results.date.DateResult
 
@@ -66,9 +64,9 @@ abstract class BaseRecognition(val isFullySupported: Boolean = true) {
         // nothing, override if needed
     }
 
-    fun extractResult(context: Context, shouldValidate: Boolean): RecognitionResult {
+    fun extractResult(shouldValidate: Boolean): RecognitionResult {
         resultEntries.clear()
-        entryBuilder = ResultEntry.Builder(context)
+        entryBuilder = ResultEntry.Builder()
         this.shouldValidate = shouldValidate
 
         val title = extractData()
@@ -149,27 +147,27 @@ abstract class BaseRecognition(val isFullySupported: Boolean = true) {
 
     protected abstract fun extractData(): String?
 
-    protected fun add(key: Int, value: String?) {
+    protected fun add(key: ResultKey, value: String?) {
         if (!value.isNullOrEmpty()) {
             resultEntries.add(entryBuilder.build(key, value))
         }
     }
 
-    protected fun add(key: Int, value: Boolean) {
+    protected fun add(key: ResultKey, value: Boolean) {
         resultEntries.add(entryBuilder.build(key, value))
     }
 
-    protected fun add(key: Int, value: Int, unit: String) {
+    protected fun add(key: ResultKey, value: Int, unit: String) {
         resultEntries.add(entryBuilder.build(key, value, unit))
     }
 
-    protected fun add(key: Int, value: Date?) {
+    protected fun add(key: ResultKey, value: Date?) {
         if (value != null) {
             resultEntries.add(entryBuilder.build(key, value))
         }
     }
 
-    protected fun add(key: Int, value: DateResult?) {
+    protected fun add(key: ResultKey, value: DateResult?) {
         if (value != null) {
             resultEntries.add(entryBuilder.build(key, value.date))
         }
@@ -177,7 +175,7 @@ abstract class BaseRecognition(val isFullySupported: Boolean = true) {
 
     protected fun addDateOfExpiry(date: Date?) {
         if (date != null) {
-            resultEntries.add(entryBuilder.build(R.string.keyDateOfExpiry,
+            resultEntries.add(entryBuilder.build(ResultKey.DATE_OF_EXPIRY,
                     date,
                     ResultEntry.Builder.DateCheckType.IN_FUTURE))
         }
@@ -187,46 +185,28 @@ abstract class BaseRecognition(val isFullySupported: Boolean = true) {
         return frontResult.isNotEmpty() && backResult.isNotEmpty()
     }
 
-    protected fun extractMrtdResult(result: MRTDResult) {
-        add(R.string.keyPrimaryId, result.primaryId)
-        add(R.string.keySecondaryId, result.secondaryId)
-        add(R.string.keyDateOfBirth, result.dateOfBirth)
-        add(R.string.keySex, result.sex)
-        add(R.string.keyNationality, result.nationality)
-        add(R.string.keyDocumentCode, result.documentCode)
-        add(R.string.keyIssuer, result.issuer)
-        addDateOfExpiry(result.dateOfExpiry)
-        add(R.string.keyDocumentNumber, result.documentNumber?.sanitizeMRZString())
-        add(R.string.keyOpt1, result.opt1?.sanitizeMRZString())
-        val opt2 = result.opt2?.sanitizeMRZString()
-        if (!opt2.isNullOrEmpty()) {
-            add(R.string.keyOpt2, opt2)
-        }
-    }
-
     protected fun extractMrzResult(mrzResult: MrzResult) {
-        add(R.string.keyPrimaryId, mrzResult.primaryId)
-        add(R.string.keySecondaryId, mrzResult.secondaryId)
-        add(R.string.keyDateOfBirth, mrzResult.dateOfBirth.date)
-        add(R.string.keySex, mrzResult.gender)
-        add(R.string.keyNationality, mrzResult.nationality)
-        add(R.string.keyDocumentCode, mrzResult.documentCode)
-        add(R.string.keyIssuer, mrzResult.issuer)
+        add(PRIMARY_ID, mrzResult.primaryId)
+        add(SECONDARY_ID, mrzResult.secondaryId)
+        add(DATE_OF_BIRTH, mrzResult.dateOfBirth.date)
+        add(SEX, mrzResult.gender)
+        add(NATIONALITY, mrzResult.nationality)
+        add(DOCUMENT_CODE, mrzResult.documentCode)
+        add(ISSUER, mrzResult.issuer)
         addDateOfExpiry(mrzResult.dateOfExpiry.date)
-        add(R.string.keyOpt2, mrzResult.opt2)
-        add(R.string.keyMRZText, mrzResult.mrzText)
+        add(OPTIONAL_FIELD_2, mrzResult.opt2)
+        add(MRZ_TEXT, mrzResult.mrzText)
 
         if (mrzResult.documentType == MrtdDocumentType.MRTD_TYPE_GREEN_CARD) {
-            add(R.string.keyAlienNumber, mrzResult.alienNumber)
-            add(R.string.keyApplicationReceiptNumber, mrzResult.applicationReceiptNumber)
-            add(R.string.keyImmigrantCaseNumber, mrzResult.immigrantCaseNumber)
+            add(ALIEN_NUMBER, mrzResult.alienNumber)
+            add(APPLICATION_RECEIPT_NUMBER, mrzResult.applicationReceiptNumber)
+            add(IMMIGRANT_CASE_NUMBER, mrzResult.immigrantCaseNumber)
         } else {
-            add(R.string.keyDocumentNumber, mrzResult.documentNumber)
-            add(R.string.keyOpt1, mrzResult.opt1)
+            add(DOCUMENT_NUMBER, mrzResult.documentNumber)
+            add(OPTIONAL_FIELD_1, mrzResult.opt1)
         }
     }
 
-    protected fun buildMrtdTitle(result: MRTDResult): String = result.primaryId + " " + result.secondaryId
     protected fun buildMrtdTitle(result: MrzResult): String = result.primaryId + " " + result.secondaryId
 
 }

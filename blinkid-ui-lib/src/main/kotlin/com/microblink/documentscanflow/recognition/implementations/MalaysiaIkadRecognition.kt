@@ -1,6 +1,6 @@
 package com.microblink.documentscanflow.recognition.implementations
 
-import com.microblink.documentscanflow.R
+import com.microblink.documentscanflow.recognition.resultentry.ResultKey.*
 import com.microblink.documentscanflow.isEmpty
 import com.microblink.documentscanflow.recognition.BaseRecognition
 import com.microblink.entities.recognizers.Recognizer
@@ -20,15 +20,15 @@ class MalaysiaIkadRecognition : BaseRecognition() {
             return null
         }
 
-        add(R.string.keyFullName, result.name)
-        add(R.string.keyAddress, result.address)
-        add(R.string.facultyAddress, result.facultyAddress)
-        add(R.string.keyDateOfBirth, result.dateOfBirth)
-        add(R.string.keyEmployer, result.employer)
+        add(FULL_NAME, result.name)
+        add(ADDRESS, result.address)
+        add(FACULTY_ADDRESS, result.facultyAddress)
+        add(DATE_OF_BIRTH, result.dateOfBirth)
+        add(EMPLOYER, result.employer)
         addDateOfExpiry(result.dateOfExpiry.date)
-        add(R.string.keyNationality, result.nationality)
-        add(R.string.keySector, result.sector)
-        add(R.string.keySex, result.gender)
+        add(NATIONALITY, result.nationality)
+        add(SECTOR, result.sector)
+        add(SEX, result.gender)
         
         return result.name
     }

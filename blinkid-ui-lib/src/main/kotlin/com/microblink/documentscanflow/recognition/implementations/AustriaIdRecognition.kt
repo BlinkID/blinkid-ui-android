@@ -1,9 +1,9 @@
 package com.microblink.documentscanflow.recognition.implementations
 
-import com.microblink.documentscanflow.R
 import com.microblink.documentscanflow.isNotEmpty
 import com.microblink.documentscanflow.recognition.BaseTwoSideRecognition
 import com.microblink.documentscanflow.recognition.ResultValidator
+import com.microblink.documentscanflow.recognition.resultentry.ResultKey.*
 import com.microblink.documentscanflow.recognition.util.FormattingUtils
 import com.microblink.entities.recognizers.Recognizer
 import com.microblink.entities.recognizers.blinkid.austria.AustriaCombinedRecognizer
@@ -50,33 +50,33 @@ class AustriaIdRecognition
     }
 
     private fun extractCombinedResult() {
-        add(R.string.keyLastName, combinedResult.surname)
-        add(R.string.keyFirstName, combinedResult.givenName)
-        add(R.string.keyDocumentNumber, combinedResult.documentNumber)
-        add(R.string.keySex, combinedResult.sex)
-        add(R.string.keyDateOfBirth, combinedResult.dateOfBirth)
-        add(R.string.keyHeight, combinedResult.height)
-        add(R.string.keyEyeColor, combinedResult.eyeColour)
-        add(R.string.keyPlaceOfBirth, combinedResult.placeOfBirth)
-        add(R.string.keyNationality, combinedResult.nationality)
-        add(R.string.keyIssuingAuthority, combinedResult.issuingAuthority)
-        add(R.string.keyIssueDate, combinedResult.dateOfIssuance)
-        add(R.string.keyPrincipalResidenceAtIssuance, combinedResult.principalResidence)
+        add(LAST_NAME, combinedResult.surname)
+        add(FIRST_NAME, combinedResult.givenName)
+        add(DOCUMENT_NUMBER, combinedResult.documentNumber)
+        add(SEX, combinedResult.sex)
+        add(DATE_OF_BIRTH, combinedResult.dateOfBirth)
+        add(HEIGHT, combinedResult.height)
+        add(EYE_COLOR, combinedResult.eyeColour)
+        add(PLACE_OF_BIRTH, combinedResult.placeOfBirth)
+        add(NATIONALITY, combinedResult.nationality)
+        add(ISSUING_AUTHORITY, combinedResult.issuingAuthority)
+        add(DATE_OF_ISSUE, combinedResult.dateOfIssuance)
+        add(PRINCIPAL_RESIDENCE_AT_ISSUANCE, combinedResult.principalResidence)
         addDateOfExpiry(combinedResult.dateOfExpiry.date)
     }
 
     private fun extractFrontSide() {
-        add(R.string.keyLastName, frontResult.surname)
-        add(R.string.keyFirstName, frontResult.givenName)
-        add(R.string.keyDocumentNumber, frontResult.documentNumber)
-        add(R.string.keySex, frontResult.sex)
-        add(R.string.keyDateOfBirth, frontResult.dateOfBirth)
+        add(LAST_NAME, frontResult.surname)
+        add(FIRST_NAME, frontResult.givenName)
+        add(DOCUMENT_NUMBER, frontResult.documentNumber)
+        add(SEX, frontResult.sex)
+        add(DATE_OF_BIRTH, frontResult.dateOfBirth)
     }
 
     private fun extractBackSideNonMRZ() {
-        add(R.string.keyPlaceOfBirth, backResult.placeOfBirth)
-        add(R.string.keyIssuingAuthority, backResult.issuingAuthority)
-        add(R.string.keyIssueDate, backResult.dateOfIssuance)
+        add(PLACE_OF_BIRTH, backResult.placeOfBirth)
+        add(ISSUING_AUTHORITY, backResult.issuingAuthority)
+        add(DATE_OF_ISSUE, backResult.dateOfIssuance)
     }
 
     override fun getResultTitle(): String? {

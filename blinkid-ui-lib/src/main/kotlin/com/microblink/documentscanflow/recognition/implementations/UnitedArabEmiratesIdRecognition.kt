@@ -1,6 +1,6 @@
 package com.microblink.documentscanflow.recognition.implementations
 
-import com.microblink.documentscanflow.R
+import com.microblink.documentscanflow.recognition.resultentry.ResultKey.*
 import com.microblink.documentscanflow.isNotEmpty
 import com.microblink.documentscanflow.recognition.BaseTwoSideRecognition
 import com.microblink.documentscanflow.recognition.ResultValidator
@@ -29,9 +29,9 @@ class UnitedArabEmiratesIdRecognition: BaseTwoSideRecognition() {
 
     override fun extractFields() {
         if (frontResult.isNotEmpty()) {
-            add(R.string.keyFullName, frontResult.name)
-            add(R.string.keyDocumentNumber, frontResult.idNumber)
-            add(R.string.keyNationality, frontResult.nationality)
+            add(FULL_NAME, frontResult.name)
+            add(IDENTITY_NUMBER, frontResult.idNumber)
+            add(NATIONALITY, frontResult.nationality)
         }
         if (backResult.isNotEmpty()) {
             extractMrzResult(backResult.mrzResult)

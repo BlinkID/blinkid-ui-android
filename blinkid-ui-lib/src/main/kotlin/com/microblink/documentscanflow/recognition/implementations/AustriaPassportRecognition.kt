@@ -1,8 +1,8 @@
 package com.microblink.documentscanflow.recognition.implementations
 
-import com.microblink.documentscanflow.R
 import com.microblink.documentscanflow.isEmpty
 import com.microblink.documentscanflow.recognition.BaseRecognition
+import com.microblink.documentscanflow.recognition.resultentry.ResultKey.*
 import com.microblink.documentscanflow.recognition.util.FormattingUtils
 import com.microblink.documentscanflow.recognition.util.StringCombiner
 import com.microblink.entities.recognizers.Recognizer
@@ -26,17 +26,17 @@ class AustriaPassportRecognition : BaseRecognition() {
         val firstName = stringCombiner.combineMRZString(passResult.mrzResult.secondaryId, passResult.givenName)
         val lastName = stringCombiner.combineMRZString(passResult.mrzResult.primaryId, passResult.surname)
 
-        add(R.string.keyFirstName, firstName)
-        add(R.string.keyLastName, lastName)
-        add(R.string.keyNationality, passResult.nationality)
-        add(R.string.keyPlaceOfBirth, passResult.placeOfBirth)
-        add(R.string.keySex, passResult.sex)
-        add(R.string.keyAuthority, passResult.issuingAuthority)
-        add(R.string.keyDocumentNumber, passResult.passportNumber.removeSuffix("<"))
-        add(R.string.keyDateOfBirth, passResult.dateOfBirth)
-        add(R.string.keyIssueDate, passResult.dateOfIssue)
-        add(R.string.keyIssuer, passResult.issuingAuthority)
-        add(R.string.keyDateOfExpiry, passResult.dateOfExpiry)
+        add(FIRST_NAME, firstName)
+        add(LAST_NAME, lastName)
+        add(NATIONALITY, passResult.nationality)
+        add(PLACE_OF_BIRTH, passResult.placeOfBirth)
+        add(SEX, passResult.sex)
+        add(AUTHORITY, passResult.issuingAuthority)
+        add(DOCUMENT_NUMBER, passResult.passportNumber.removeSuffix("<"))
+        add(DATE_OF_BIRTH, passResult.dateOfBirth)
+        add(DATE_OF_ISSUE, passResult.dateOfIssue)
+        add(ISSUER, passResult.issuingAuthority)
+        addDateOfExpiry(passResult.dateOfExpiry.date)
 
         return FormattingUtils.formatResultTitle(firstName, lastName)
     }

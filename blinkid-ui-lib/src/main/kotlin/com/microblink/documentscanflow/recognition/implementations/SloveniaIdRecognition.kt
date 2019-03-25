@@ -1,6 +1,6 @@
 package com.microblink.documentscanflow.recognition.implementations
 
-import com.microblink.documentscanflow.R
+import com.microblink.documentscanflow.recognition.resultentry.ResultKey.*
 import com.microblink.documentscanflow.isNotEmpty
 import com.microblink.documentscanflow.recognition.BaseTwoSideRecognition
 import com.microblink.documentscanflow.recognition.ResultValidator
@@ -46,33 +46,33 @@ class SloveniaIdRecognition: BaseTwoSideRecognition() {
     }
 
     private fun extractCombinedResult() {
-        add(R.string.keyLastName, combinedResult.lastName)
-        add(R.string.keyFirstName, combinedResult.firstName)
-        add(R.string.keyIdentityNumber, combinedResult.identityCardNumber)
-        add(R.string.keySex, combinedResult.sex)
-        add(R.string.keySex, combinedResult.sex)
-        add(R.string.keyDateOfBirth, combinedResult.dateOfBirth)
-        add(R.string.keyAddress, combinedResult.address)
-        add(R.string.keyCitizenship, combinedResult.citizenship)
-        addDateOfExpiry(combinedResult.dateOfExpiry)
-        add(R.string.keyIssueDate, combinedResult.dateOfIssue)
-        add(R.string.keyIssuingAuthority, combinedResult.issuingAuthority)
+        add(LAST_NAME, combinedResult.surname)
+        add(FIRST_NAME, combinedResult.givenNames)
+        add(IDENTITY_NUMBER, combinedResult.documentNumber)
+        add(SEX, combinedResult.sex)
+        add(SEX, combinedResult.sex)
+        add(DATE_OF_BIRTH, combinedResult.dateOfBirth)
+        add(ADDRESS, combinedResult.address)
+        add(NATIONALITY, combinedResult.nationality)
+        addDateOfExpiry(combinedResult.dateOfExpiry.date)
+        add(DATE_OF_ISSUE, combinedResult.dateOfIssue)
+        add(ISSUING_AUTHORITY, combinedResult.administrativeUnit)
     }
 
     private fun extractFrontSide() {
-        add(R.string.keyLastName, frontResult.lastName)
-        add(R.string.keyFirstName, frontResult.firstName)
-        add(R.string.keySex, frontResult.sex)
-        add(R.string.keyNationality, frontResult.nationality)
-        add(R.string.keyDateOfBirth, frontResult.dateOfBirth)
-        addDateOfExpiry(frontResult.dateOfExpiry)
+        add(LAST_NAME, frontResult.surname)
+        add(FIRST_NAME, frontResult.givenNames)
+        add(SEX, frontResult.sex)
+        add(NATIONALITY, frontResult.nationality)
+        add(DATE_OF_BIRTH, frontResult.dateOfBirth)
+        addDateOfExpiry(frontResult.dateOfExpiry.date)
     }
 
     private fun extractBackSide() {
-        extractMrtdResult(backResult)
-        add(R.string.keyAddress, backResult.address)
-        add(R.string.keyAuthority, backResult.authority)
-        add(R.string.keyIssueDate, backResult.dateOfIssue)
+        extractMrzResult(backResult.mrzResult)
+        add(ADDRESS, backResult.address)
+        add(AUTHORITY, backResult.administrativeUnit)
+        add(DATE_OF_ISSUE, backResult.dateOfIssue)
     }
     
     override fun getResultTitle(): String? {
@@ -80,16 +80,16 @@ class SloveniaIdRecognition: BaseTwoSideRecognition() {
         var lastName: String? = ""
         when {
             combinedResult.isNotEmpty() -> {
-                firstName = combinedResult.firstName
-                lastName = combinedResult.lastName
+                firstName = combinedResult.givenNames
+                lastName = combinedResult.surname
             }
             frontResult.isNotEmpty() -> {
-                firstName = frontResult.firstName
-                lastName = frontResult.lastName
+                firstName = frontResult.givenNames
+                lastName = frontResult.surname
             }
             backResult.isNotEmpty() -> {
-                firstName = backResult.secondaryId
-                lastName = backResult.primaryId
+                firstName = backResult.mrzResult.secondaryId
+                lastName = backResult.mrzResult.primaryId
             }
         }
         return FormattingUtils.formatResultTitle(firstName, lastName)

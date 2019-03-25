@@ -1,6 +1,6 @@
 package com.microblink.documentscanflow.recognition.implementations
 
-import com.microblink.documentscanflow.R
+import com.microblink.documentscanflow.recognition.resultentry.ResultKey.*
 import com.microblink.documentscanflow.isNotEmpty
 import com.microblink.documentscanflow.recognition.BaseTwoSideRecognition
 import com.microblink.documentscanflow.recognition.ResultValidator
@@ -46,24 +46,24 @@ class PolandIdRecognition: BaseTwoSideRecognition() {
     }
 
     private fun extractCombinedResult() {
-        add(R.string.keyLastName, combinedResult.surname)
-        add(R.string.keyFirstName, combinedResult.givenNames)
-        add(R.string.keyFamilyName, combinedResult.familyName)
-        add(R.string.keyParentNames, combinedResult.parentsGivenNames)
-        add(R.string.keyPersonalNumber, combinedResult.personalNumber)
-        add(R.string.keyDocumentNumber, combinedResult.documentNumber)
-        add(R.string.keySex, combinedResult.sex)
-        add(R.string.keyDateOfBirth, combinedResult.dateOfBirth)
-        add(R.string.keyNationality, combinedResult.nationality)
-        add(R.string.keyIssuer, combinedResult.issuer)
-        addDateOfExpiry(combinedResult.dateOfExpiry)
+        add(LAST_NAME, combinedResult.surname)
+        add(FIRST_NAME, combinedResult.givenNames)
+        add(FAMILY_NAME, combinedResult.familyName)
+        add(PARENT_NAMES, combinedResult.parentsGivenNames)
+        add(PERSONAL_NUMBER, combinedResult.personalNumber)
+        add(DOCUMENT_NUMBER, combinedResult.documentNumber)
+        add(SEX, combinedResult.sex)
+        add(DATE_OF_BIRTH, combinedResult.dateOfBirth)
+        add(NATIONALITY, combinedResult.nationality)
+        add(ISSUER, combinedResult.issuedBy)
+        addDateOfExpiry(combinedResult.dateOfExpiry.date)
     }
 
     private fun extractFrontSide() {
-        add(R.string.keyLastName, frontResult.surname)
-        add(R.string.keyFirstName, frontResult.givenNames)
-        add(R.string.keySex, frontResult.sex)
-        add(R.string.keyDateOfBirth, frontResult.dateOfBirth)
+        add(LAST_NAME, frontResult.surname)
+        add(FIRST_NAME, frontResult.givenNames)
+        add(SEX, frontResult.sex)
+        add(DATE_OF_BIRTH, frontResult.dateOfBirth)
     }
 
     private fun extractBackSide() {
