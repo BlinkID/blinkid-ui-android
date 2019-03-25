@@ -49,14 +49,14 @@ class SlovakiaIdRecognition: BaseTwoSideRecognition() {
         add(SEX, combinedResult.sex)
         add(DOCUMENT_NUMBER, combinedResult.documentNumber)
         add(SPECIAL_REMARKS, combinedResult.specialRemarks)
-        add(PERSONAL_NUMBER, combinedResult.personalIdentificationNumber)
+        add(PERSONAL_NUMBER, combinedResult.personalNumber)
         add(DATE_OF_BIRTH, combinedResult.dateOfBirth)
         add(PLACE_OF_BIRTH, combinedResult.placeOfBirth)
         add(SURNAME_AT_BIRTH, combinedResult.surnameAtBirth)
         add(ADDRESS, combinedResult.address)
-        add(ISSUING_AUTHORITY, combinedResult.issuingAuthority)
+        add(ISSUING_AUTHORITY, combinedResult.issuedBy)
         add(DATE_OF_ISSUE, combinedResult.dateOfIssue)
-        addDateOfExpiry(combinedResult.dateOfExpiry)
+        addDateOfExpiry(combinedResult.dateOfExpiry.date)
     }
 
     private fun extractFrontSide() {

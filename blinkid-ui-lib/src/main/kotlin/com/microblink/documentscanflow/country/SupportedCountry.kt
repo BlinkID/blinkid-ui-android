@@ -99,7 +99,7 @@ enum class SupportedCountry(override val code: String,
 
     ITALY("it",
             recognitions {
-                id = GenericRecognition.mrtdId1(false)
+                oldId = GenericRecognition.mrtdId1(false)
                 drivingLicence = ItalyDlRecognition()
             }),
 

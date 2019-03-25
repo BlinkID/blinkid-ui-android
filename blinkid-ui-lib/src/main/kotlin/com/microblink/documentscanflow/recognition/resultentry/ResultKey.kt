@@ -207,7 +207,7 @@ enum class ResultKey(val stringResId: Int) {
                 ResidenceFullAddress -> RESIDENCE_FULL_ADDRESS
                 Under18 -> UNDER_18
                 Under19 -> UNDER_19
-                Under21 -> UNDER_19
+                Under21 -> UNDER_21
                 WeightRange -> WEIGHT_RANGE
                 WeightPounds -> WEIGHT_POUNDS
                 WeightKilograms -> WEIGHT_KILOGRAMS

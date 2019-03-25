@@ -1,12 +1,12 @@
 package com.microblink.documentscanflow.recognition.implementations
 
-import com.microblink.documentscanflow.recognition.resultentry.ResultKey.*
 import com.microblink.documentscanflow.buildId1CardDetectorRecognizer
 import com.microblink.documentscanflow.isEmpty
 import com.microblink.documentscanflow.recognition.BaseRecognition
+import com.microblink.documentscanflow.recognition.resultentry.ResultKey.*
 import com.microblink.documentscanflow.recognition.util.FormattingUtils
 import com.microblink.entities.recognizers.Recognizer
-import com.microblink.entities.recognizers.blinkid.sweden.dl.SwedenDlFrontRecognizer
+import com.microblink.entities.recognizers.blinkid.sweden.SwedenDlFrontRecognizer
 
 class SwedenDlRecognition : BaseRecognition() {
 
@@ -29,7 +29,7 @@ class SwedenDlRecognition : BaseRecognition() {
         add(DATE_OF_BIRTH, result.dateOfBirth)
         add(ISSUING_AUTHORITY, result.issuingAgency)
         add(DATE_OF_ISSUE, result.dateOfIssue)
-        addDateOfExpiry(result.dateOfExpiry)
+        addDateOfExpiry(result.dateOfExpiry.date)
 
         return FormattingUtils.formatResultTitle(result.name, result.surname)
     }

@@ -49,7 +49,7 @@ class CzechIdRecognition : BaseTwoSideRecognition() {
 
     override fun getResultTitle(): String? {
         if (combinedResult.isNotEmpty()) {
-            return FormattingUtils.formatResultTitle(combinedResult.firstName, combinedResult.lastName)
+            return FormattingUtils.formatResultTitle(combinedResult.givenNames, combinedResult.surname)
         }
 
         if (backResult.isNotEmpty()) {
@@ -64,19 +64,18 @@ class CzechIdRecognition : BaseTwoSideRecognition() {
     }
 
     private fun extractCombinedResult() {
-        add(LAST_NAME, combinedResult.lastName)
-        add(FIRST_NAME, combinedResult.firstName)
-        add(DOCUMENT_NUMBER, combinedResult.identityCardNumber)
+        add(LAST_NAME, combinedResult.surname)
+        add(FIRST_NAME, combinedResult.givenNames)
+        add(DOCUMENT_NUMBER, combinedResult.documentNumber)
         add(SEX, combinedResult.sex)
         add(DATE_OF_BIRTH, combinedResult.dateOfBirth)
         add(PLACE_OF_BIRTH, combinedResult.placeOfBirth)
-        add(ADDRESS, combinedResult.address)
-        add(PERSONAL_NUMBER, combinedResult.personalIdentificationNumber)
-        add(ISSUING_AUTHORITY, combinedResult.issuingAuthority)
+        add(ADDRESS, combinedResult.permanentStay)
+        add(PERSONAL_NUMBER, combinedResult.personalNumber)
+        add(AUTHORITY, combinedResult.authority)
         add(NATIONALITY, combinedResult.nationality)
-        addDateOfExpiry(combinedResult.dateOfExpiry)
+        addDateOfExpiry(combinedResult.dateOfExpiry.date)
         add(DATE_OF_ISSUE, combinedResult.dateOfIssue)
-        add(ISSUING_AUTHORITY, combinedResult.issuingAuthority)
     }
 
     private fun extractFrontSide() {
