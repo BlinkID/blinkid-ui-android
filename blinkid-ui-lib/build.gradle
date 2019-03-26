@@ -65,7 +65,7 @@ String getBlinkIdDependency() {
     if (project.hasProperty(altDependencyProperty)) {
         return project.property(altDependencyProperty)
     } else {
-        return "com.microblink:blinkid:4.7.0@aar"
+        return "com.microblink:blinkid:4.8.0@aar"
     }
 }
 

@@ -141,4 +141,5 @@
   <string name="keyDocumentNonExpiring">Documento sin vencimiento</string>
   <string name="keySecurityVersion">Versión de seguridad</string>
   <string name="keyPersonalNumber">Número de identificación personal</string>
+  <string name="keyRank">Rango</string>
 </resources>

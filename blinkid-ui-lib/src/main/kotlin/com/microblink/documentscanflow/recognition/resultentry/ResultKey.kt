@@ -19,6 +19,7 @@ enum class ResultKey(val stringResId: Int) {
     ALIEN_NUMBER(R.string.keyAlienNumber),
     APPLICATION_RECEIPT_NUMBER(R.string.keyApplicationReceiptNumber),
     IMMIGRANT_CASE_NUMBER(R.string.keyImmigrantCaseNumber),
+    RANK(R.string.keyRank),
 
     FULL_NAME(R.string.keyFullName),
     FIRST_NAME(R.string.keyFirstName),
