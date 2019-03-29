@@ -8,7 +8,7 @@
         android:label="@string/app_name">
         <activity
             android:name=".ScanActivity"
-            android:theme="@style/MbBlinkIdUiTheme.FullScreen">
+            android:theme="@style/MbBlinkIdUiTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />

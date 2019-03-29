@@ -5,6 +5,7 @@
     <color name="mbAccent">#48B2E8</color>
 
     <!-- Scan screen -->
+    <color name="mbStatusBarColor">#1a000000</color>
     <color name="mbBgCameraOverlay">#4d000000</color>
     <color name="mbIconHook">#FFFFFF</color>
     <color name="mbBgScanWindow">#000000</color>

@@ -6,8 +6,6 @@
         <item name="colorAccent">@color/mbAccent</item>
     </style>
 
-    <style name="MbBlinkIdUiTheme.FullScreen"/>
-
     <style name="MbPopupTheme" parent="ThemeOverlay.AppCompat.Dark">
     </style>
 

@@ -27,6 +27,7 @@ import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.view.WindowManager
 import android.view.animation.AccelerateDecelerateInterpolator
 import com.microblink.documentscanflow.country.CountryFactory
 import com.microblink.documentscanflow.document.Document
@@ -191,15 +192,13 @@ abstract class BaseDocumentScanActivity : AppCompatActivity(), ScanResultListene
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        setTheme(R.style.MbBlinkIdUiTheme_FullScreen)
+        setTheme(R.style.MbBlinkIdUiTheme)
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
         super.onCreate(savedInstanceState)
 
         setupCountryFactory()
 
-        if (Build.VERSION.SDK_INT >= 21) {
-            window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_STABLE or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-        }
+        setupWindowParams()
 
         setContentView(getLayoutId())
         setSupportActionBar(toolbarActivityScan)
@@ -247,6 +246,15 @@ abstract class BaseDocumentScanActivity : AppCompatActivity(), ScanResultListene
             }
 
         })
+    }
+
+    private fun setupWindowParams() {
+        if (Build.VERSION.SDK_INT >= 21) {
+            window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_STABLE or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+            window.statusBarColor = ContextCompat.getColor(this, R.color.mbStatusBarColor)
+        } else if (Build.VERSION.SDK_INT >= 19) {
+            window.setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS, WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
+        }
     }
 
     private fun updateDocumentTypeSelectionTabs(document: Document) {

@@ -1,5 +1,0 @@
-<resources>
-    <style name="MbBlinkIdUiTheme.FullScreen">
-        <item name="android:windowTranslucentStatus">true</item>
-    </style>
-</resources>
