@@ -6,6 +6,7 @@ import com.microblink.entities.recognizers.Recognizer
 import com.microblink.entities.recognizers.blinkbarcode.usdl.UsdlRecognizer
 import com.microblink.entities.recognizers.blinkid.documentface.DocumentFaceRecognizer
 import com.microblink.documentscanflow.recognition.resultentry.ResultKey.*
+import com.microblink.entities.recognizers.blinkbarcode.usdl.UsdlKeys
 
 open class UsdlRecognition : BaseRecognition() {
 
@@ -28,7 +29,7 @@ open class UsdlRecognition : BaseRecognition() {
         add(DATE_OF_BIRTH, result.dateOfBirth)
         add(DATE_OF_ISSUE, result.dateOfIssue)
         addDateOfExpiry(result.dateOfExpiry.date)
-        add(DOCUMENT_NUMBER, result.documentNumber)
+        add(DOCUMENT_NUMBER, result.getField(UsdlKeys.CustomerIdNumber))
         add(ADDRESS, result.address)
         add(SEX, result.sex)
         add(VEHICLE_CLASS, result.vehicleClass)
