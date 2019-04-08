@@ -34,6 +34,8 @@ import com.microblink.documentscanflow.document.DocumentType
 import com.microblink.documentscanflow.recognition.RecognitionError
 import com.microblink.documentscanflow.recognition.RecognizerManager
 import com.microblink.documentscanflow.recognition.ResultMergeException
+import com.microblink.documentscanflow.recognition.config.DefaultRecognitionConfig
+import com.microblink.documentscanflow.recognition.config.RecognitionConfig
 import com.microblink.documentscanflow.recognition.framelistener.FrameGrabberMode
 import com.microblink.documentscanflow.recognition.framelistener.FrameListener
 import com.microblink.documentscanflow.ui.InstructionsHandler
@@ -87,7 +89,7 @@ abstract class BaseDocumentScanActivity : AppCompatActivity(), ScanResultListene
     private val documentChooser by lazy { createDocumentChooser() }
     private val scanTimeoutHandler by lazy { createScanTimeoutHandler() }
     private val torchButtonHandler = TorchButtonHandler()
-    private val recognizerManager by lazy { RecognizerManager(getFrameGrabberMode(), createFrameCallback()) }
+    private val recognizerManager by lazy { RecognizerManager(createRecognitionConfig(), getFrameGrabberMode(), createFrameCallback()) }
     private val cameraErrorHandler by lazy { CameraErrorHandler(this) {finish()} }
     private val instructionsHandler by lazy { InstructionsHandler(this, currentDocument, scanFrameLayout.scanInstructionsTv, scanFrameLayout.flipCardView) }
     private val scanLineAnimator by lazy { createScanLineAnimator() }
@@ -107,6 +109,7 @@ abstract class BaseDocumentScanActivity : AppCompatActivity(), ScanResultListene
     protected abstract fun getInitialDocument(): Document
 
     protected open fun onCameraError(exc: Throwable?) {}
+    protected open fun createRecognitionConfig(): RecognitionConfig = DefaultRecognitionConfig()
     protected open fun getFrameGrabberMode(): FrameGrabberMode = FrameGrabberMode.NOTHING
     protected open fun createFrameListener(): FrameListener = FrameListener.EMPTY
     protected open fun createDocumentChooser() : DocumentChooser = DefaultDocumentChooser(this)
@@ -416,12 +419,12 @@ abstract class BaseDocumentScanActivity : AppCompatActivity(), ScanResultListene
     }
 
     override fun onScanningDone(recognitionSuccessType: RecognitionSuccessType) {
-        if (recognitionSuccessType != RecognitionSuccessType.SUCCESSFUL) {
+        recognizerManager.handleRecognitionResult(recognitionSuccessType, {
+            pauseScanning()
+            runOnUiThread { onScanSuccess() }
+        }, {
             runOnUiThread { restartScanning() }
-            return
-        }
-        pauseScanning()
-        runOnUiThread { onScanSuccess() }
+        })
     }
 
     private fun onScanSuccess() {
