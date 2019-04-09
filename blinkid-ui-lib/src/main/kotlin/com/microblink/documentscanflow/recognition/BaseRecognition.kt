@@ -74,7 +74,7 @@ abstract class BaseRecognition(val isFullySupported: Boolean = true) {
         extractImages()
 
         val result = RecognitionResult(title ?: "",
-                resultEntries.toList(),
+                resultEntries.toList().sortedBy { it.key.ordinal },
                 firstSideDocumentImage,
                 secondSideDocumentImage,
                 faceImage,
