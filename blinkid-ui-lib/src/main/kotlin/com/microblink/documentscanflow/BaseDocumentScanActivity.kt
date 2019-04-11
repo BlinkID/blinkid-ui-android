@@ -21,7 +21,6 @@ import android.support.annotation.AnyThread
 import android.support.annotation.CallSuper
 import android.support.annotation.UiThread
 import android.support.design.widget.TabLayout
-import android.support.v4.content.ContextCompat
 import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.view.Menu
@@ -72,6 +71,7 @@ import com.microblink.view.recognition.ScanResultListener
 import kotlinx.android.synthetic.main.mb_activity_scan_document.*
 import kotlinx.android.synthetic.main.mb_include_scan_bottom_container.*
 import kotlinx.android.synthetic.main.mb_include_splash_overlay.*
+import java.lang.Exception
 import java.util.*
 import kotlin.math.max
 
@@ -192,6 +192,8 @@ abstract class BaseDocumentScanActivity : AppCompatActivity(), ScanResultListene
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        ensureCorrectThemeIsSet()
+
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
         super.onCreate(savedInstanceState)
 
@@ -245,6 +247,14 @@ abstract class BaseDocumentScanActivity : AppCompatActivity(), ScanResultListene
             }
 
         })
+    }
+
+    private fun ensureCorrectThemeIsSet() {
+        val testColor = getThemeColor(R.attr.mbScanBgColorCameraOverlay)
+        if (testColor == 0) {
+            Log.e(this, "Invalid theme set, defaulting to MbScanTheme")
+            setTheme(R.style.MbScanTheme)
+        }
     }
 
     private fun setupWindowParams() {
