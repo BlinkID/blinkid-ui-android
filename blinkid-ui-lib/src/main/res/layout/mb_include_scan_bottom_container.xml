@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_alignParentBottom="true"
-    android:background="@color/mbBgCameraOverlay"
+    android:background="?attr/mbScanBgColorCameraOverlay"
     tools:showIn="@layout/mb_activity_scan_document">
 
     <LinearLayout
@@ -19,25 +19,26 @@
             android:id="@+id/documentTypeTabs"
             android:layout_width="match_parent"
             android:layout_height="48dp"
-            android:background="@color/mbBgDocTypeSelection"
+            android:background="?attr/mbScanBgColorDocTypeSelection"
             android:clipToPadding="false"
             android:paddingLeft="@dimen/mb_padding_small"
             android:paddingRight="@dimen/mb_padding_small"
             android:paddingBottom="@dimen/mb_padding_small"
             android:visibility="gone"
             app:tabGravity="center"
-            app:tabIndicatorColor="@color/mbTabIndicator"
+            app:tabIndicatorColor="?attr/mbScanBgColorTabIndicator"
             app:tabMinWidth="0dp"
             app:tabMode="scrollable"
-            app:tabSelectedTextColor="@color/mbTextSelectedTab"
+            app:tabSelectedTextColor="?attr/mbScanTextColorSelectedTab"
             app:tabTextAppearance="@style/MbTextDocumentTypeTab"
-            app:tabTextColor="@color/mbTextNormalTab" />
+            app:tabTextColor="?attr/mbScanTextColorNormalTab" />
 
-        <RelativeLayout
+        <LinearLayout
             android:id="@+id/countryContainer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/mb_bg_choose_country"
+            android:background="?attr/mbScanBgDrawableChooseCountry"
+            android:orientation="vertical"
             android:paddingTop="@dimen/mb_padding_standard"
             android:paddingBottom="@dimen/mb_padding_small">
 
@@ -53,7 +54,6 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/countryLabel"
                 android:orientation="horizontal"
                 android:paddingTop="@dimen/mb_padding_small"
                 android:paddingBottom="@dimen/mb_padding_small">
@@ -89,6 +89,6 @@
                     android:rotationY="@integer/locale_mirror_flip"
                     android:src="@drawable/mb_ic_arrow_right" />
             </LinearLayout>
-        </RelativeLayout>
+        </LinearLayout>
     </LinearLayout>
 </FrameLayout>

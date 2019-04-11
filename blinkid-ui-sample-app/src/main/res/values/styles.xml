@@ -1,18 +1,33 @@
 <resources>
 
-    <!-- Overriding library theme-->
-    <style name="MbScanTheme" parent="Theme.AppCompat.NoActionBar">
+    <!-- If you're using your own custom theme for scan activity, make sure you extend MbScanTheme -->
+    <style name="CustomScanTheme" parent="MbScanTheme">
         <item name="colorPrimary">@color/primary</item>
-        <item name="colorPrimaryDark">@color/primaryDark</item>
+        <item name="colorPrimaryDark">@color/bgDark</item>
         <item name="colorAccent">@color/accentDark</item>
         <item name="android:windowBackground">@color/bgDark</item>
+
+        <item name="mbScanBgColorDocTypeSelection">@color/bgDark</item>
+        <item name="mbScanBgColorTabIndicator">?colorAccent</item>
+        <item name="mbScanTextColorSelectedTab">?colorAccent</item>
+        <item name="mbScanBgDrawableChooseCountry">@drawable/custom_bg_choose_country</item>
+        <item name="mbScanTextColorCountry">@color/textPrimaryLight</item>
+        <item name="mbScanTextColorCountryLabel">@color/textPrimaryLight</item>
+        <item name="mbScanIconColorSelectCountry">@color/textPrimaryLight</item>
     </style>
 
-    <style name="MbChooseCountryTheme" parent="Theme.AppCompat.NoActionBar">
+    <!--
+        If you're using your own custom theme for country chooser,
+        make sure you extend either MbChooseCountryDarkTheme or MbChooseCountryLightTheme
+    -->
+    <style name="CustomChooseCountryTheme" parent="MbChooseCountryDarkTheme">
         <item name="colorPrimary">@color/primary</item>
         <item name="colorPrimaryDark">@color/primaryDark</item>
         <item name="colorAccent">@color/accentDark</item>
         <item name="android:windowBackground">@color/bgDark</item>
+
+        <item name="mbCcTextColorCountry">@color/textPrimaryLight</item>
+        <item name="mbCcTextColorIndexLetterNormal">@color/textSecondaryLight</item>
     </style>
 
     <!-- Overriding library theme-->

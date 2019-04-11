@@ -192,7 +192,6 @@ abstract class BaseDocumentScanActivity : AppCompatActivity(), ScanResultListene
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        setTheme(R.style.MbScanTheme)
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
         super.onCreate(savedInstanceState)
 
@@ -229,7 +228,7 @@ abstract class BaseDocumentScanActivity : AppCompatActivity(), ScanResultListene
 
         scanSuccessPlayer.prepare()
 
-        arrowRight.drawable.mutate().setColorFilter(ContextCompat.getColor(this, R.color.mbIconSelectCountry), PorterDuff.Mode.MULTIPLY)
+        arrowRight.drawable.mutate().setColorFilter(getThemeColor(R.attr.mbScanIconColorSelectCountry), PorterDuff.Mode.MULTIPLY)
 
         bottomContainer.addOnLayoutChangeListener(object: View.OnLayoutChangeListener {
             override fun onLayoutChange(v: View?, left: Int, top: Int, right: Int, bottom: Int, oldLeft: Int, oldTop: Int, oldRight: Int, oldBottom: Int) {
@@ -251,7 +250,7 @@ abstract class BaseDocumentScanActivity : AppCompatActivity(), ScanResultListene
     private fun setupWindowParams() {
         if (Build.VERSION.SDK_INT >= 21) {
             window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_STABLE or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-            window.statusBarColor = ContextCompat.getColor(this, R.color.mbStatusBarColor)
+            window.statusBarColor = getThemeColor(R.attr.mbScanBgColorStatusBar)
         } else if (Build.VERSION.SDK_INT >= 19) {
             window.setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS, WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
         }

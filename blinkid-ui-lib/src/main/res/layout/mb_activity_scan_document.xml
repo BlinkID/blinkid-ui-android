@@ -25,7 +25,7 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/mb_height_top_bars"
             android:layout_alignParentTop="true"
-            android:background="@color/mbBgCameraOverlay" />
+            android:background="?attr/mbScanBgColorCameraOverlay" />
 
         <com.microblink.view.blinkid.BlinkidCameraOverlay
             android:id="@+id/scanFrameLayout"

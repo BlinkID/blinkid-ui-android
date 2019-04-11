@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <attr name="mbCcTextColorCountry" format="color"/>
+    <attr name="mbCcTextColorIndexLetterNormal" format="color"/>
+    <attr name="mbCcTextColorIndexLetterSelected" format="color"/>
+    <attr name="mbCcTextColorSectionLetter" format="color"/>
+    <attr name="mbCcIconColorCheckMark" format="color"/>
+
+</resources>
