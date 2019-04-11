@@ -19,7 +19,7 @@ This library depends on _BlinkID SDK_ so you'll need to add _BlinkID_ maven repo
 Now you can add _BlinkID UI_ as a new module to your project
 
 * in Android Studio menu, click File - New - New Module - Import Gradle Project
-* select blinkid-ui-lib folder and click FInish
+* select blinkid-ui-lib folder and click Finish
 * in your `settings.gradle` add `include 'blinkid-ui-lib'`
 * in your app's `build.gradle` add new module dependency `implementation project(':blinkid-ui-lib')`
 
@@ -39,7 +39,13 @@ If you're using Proguard, you'll need to add the following line to your Proguard
 
 ## <a name="faq"></a> FAQ
 ### How do I customise colors, icons and other resources?
-You have to name your resource the same as the resource you want to override in the library. For example, if you want to change torch icon, name you icon `mb_ic_torch_on`.
+To use your custom theme in scan activity, extend `MbScanTheme` and override attribues you want to change.
+
+To use custom theme in country selection activity, extend either `MbChooseCountryLightTheme` or `MbChooseCountryDarkTheme` and override `createDocumentChooser()` in your scan activity to return your theme.
+
+For other resources, name your resource the same as the resource you want to override in the library. For example, if you want to change torch icon, name you icon `mb_ic_torch_on`.
+
+Check the sample app for examples of customisation.
 
 ### How do I disable translations?
 To disable translations for country names, override `createLocalizationManager()` and return your custom `LocaleManager` that limits languages to which to translate to. 

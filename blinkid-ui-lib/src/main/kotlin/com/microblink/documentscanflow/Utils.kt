@@ -1,6 +1,8 @@
 package com.microblink.documentscanflow
 
-import android.content.res.Resources
+import android.content.Context
+import android.support.annotation.AttrRes
+import android.support.annotation.ColorInt
 import android.support.annotation.LayoutRes
 import android.util.TypedValue
 import android.view.LayoutInflater
@@ -106,14 +108,14 @@ private fun buildDetectorRecognizerFromPreset(documentSpecPreset: DocumentSpecif
     return detectorRecognizer
 }
 
-internal fun Resources.getFloatValue(id : Int) : Float {
-    val outValue = TypedValue()
-    getValue(id, outValue, true)
-    return outValue.float
-}
-
-fun View.pxToDp(px: Float): Float {
-    return px / resources.displayMetrics.density
-}
-
 internal fun Calendar.currentDate() = Date(get(Calendar.DAY_OF_MONTH), get(Calendar.MONTH) + 1, get(Calendar.YEAR))
+
+
+@ColorInt
+internal fun Context.getThemeColor(@AttrRes id: Int): Int {
+    val typedValue = TypedValue()
+    val a = obtainStyledAttributes(typedValue.data, intArrayOf(id))
+    val color = a.getColor(0, 0)
+    a.recycle()
+    return color
+}

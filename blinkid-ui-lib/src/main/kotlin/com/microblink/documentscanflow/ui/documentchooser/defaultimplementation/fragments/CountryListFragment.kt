@@ -6,7 +6,6 @@ import android.content.Context
 import android.content.res.Resources
 import android.graphics.Typeface
 import android.os.Bundle
-import android.support.v4.content.ContextCompat
 import android.util.TypedValue
 import android.view.*
 import android.view.inputmethod.InputMethodManager
@@ -16,6 +15,7 @@ import android.widget.ListView
 import android.widget.TextView
 import com.microblink.documentscanflow.R
 import com.microblink.documentscanflow.country.CountryFactory
+import com.microblink.documentscanflow.getThemeColor
 import com.microblink.documentscanflow.setVisible
 import com.microblink.documentscanflow.ui.documentchooser.countryfilter.AllowAllCountryFilter
 import com.microblink.documentscanflow.ui.documentchooser.countryfilter.CountryFilter
@@ -274,12 +274,12 @@ class CountryListFragment : ListFragment() {
     }
 
     private fun setTextViewStyleToNormal(tv: TextView) {
-        tv.setTextColor(ContextCompat.getColor(activity, R.color.mbTextIndexLetterNormal))
+        tv.setTextColor(activity.getThemeColor(R.attr.mbCcTextColorIndexLetterNormal))
         tv.setTypeface(null, Typeface.NORMAL)
     }
 
     private fun setTextViewStyleToAccent(tv: TextView) {
-        tv.setTextColor(ContextCompat.getColor(activity, R.color.mbTextIndexLetterSelected))
+        tv.setTextColor(activity.getThemeColor(R.attr.mbCcTextColorIndexLetterSelected))
         tv.setTypeface(null, Typeface.BOLD)
     }
 

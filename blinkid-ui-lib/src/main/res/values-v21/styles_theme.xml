@@ -1,5 +1,0 @@
-<resources>
-    <style name="MbBlinkIdUiTheme.FullScreen">
-        <item name="android:statusBarColor">#1a000000</item>
-    </style>
-</resources>

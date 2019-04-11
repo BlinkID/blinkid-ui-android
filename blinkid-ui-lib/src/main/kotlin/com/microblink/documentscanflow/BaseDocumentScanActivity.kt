@@ -21,12 +21,12 @@ import android.support.annotation.AnyThread
 import android.support.annotation.CallSuper
 import android.support.annotation.UiThread
 import android.support.design.widget.TabLayout
-import android.support.v4.content.ContextCompat
 import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.view.WindowManager
 import android.view.animation.AccelerateDecelerateInterpolator
 import com.microblink.documentscanflow.country.CountryFactory
 import com.microblink.documentscanflow.document.Document
@@ -71,6 +71,7 @@ import com.microblink.view.recognition.ScanResultListener
 import kotlinx.android.synthetic.main.mb_activity_scan_document.*
 import kotlinx.android.synthetic.main.mb_include_scan_bottom_container.*
 import kotlinx.android.synthetic.main.mb_include_splash_overlay.*
+import java.lang.Exception
 import java.util.*
 import kotlin.math.max
 
@@ -191,15 +192,14 @@ abstract class BaseDocumentScanActivity : AppCompatActivity(), ScanResultListene
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        setTheme(R.style.MbBlinkIdUiTheme_FullScreen)
+        ensureCorrectThemeIsSet()
+
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
         super.onCreate(savedInstanceState)
 
         setupCountryFactory()
 
-        if (Build.VERSION.SDK_INT >= 21) {
-            window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_STABLE or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-        }
+        setupWindowParams()
 
         setContentView(getLayoutId())
         setSupportActionBar(toolbarActivityScan)
@@ -230,7 +230,7 @@ abstract class BaseDocumentScanActivity : AppCompatActivity(), ScanResultListene
 
         scanSuccessPlayer.prepare()
 
-        arrowRight.drawable.mutate().setColorFilter(ContextCompat.getColor(this, R.color.mbIconSelectCountry), PorterDuff.Mode.MULTIPLY)
+        arrowRight.drawable.mutate().setColorFilter(getThemeColor(R.attr.mbScanIconColorSelectCountry), PorterDuff.Mode.MULTIPLY)
 
         bottomContainer.addOnLayoutChangeListener(object: View.OnLayoutChangeListener {
             override fun onLayoutChange(v: View?, left: Int, top: Int, right: Int, bottom: Int, oldLeft: Int, oldTop: Int, oldRight: Int, oldBottom: Int) {
@@ -247,6 +247,23 @@ abstract class BaseDocumentScanActivity : AppCompatActivity(), ScanResultListene
             }
 
         })
+    }
+
+    private fun ensureCorrectThemeIsSet() {
+        val testColor = getThemeColor(R.attr.mbScanBgColorCameraOverlay)
+        if (testColor == 0) {
+            Log.e(this, "Invalid theme set, defaulting to MbScanTheme")
+            setTheme(R.style.MbScanTheme)
+        }
+    }
+
+    private fun setupWindowParams() {
+        if (Build.VERSION.SDK_INT >= 21) {
+            window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_STABLE or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+            window.statusBarColor = getThemeColor(R.attr.mbScanBgColorStatusBar)
+        } else if (Build.VERSION.SDK_INT >= 19) {
+            window.setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS, WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
+        }
     }
 
     private fun updateDocumentTypeSelectionTabs(document: Document) {

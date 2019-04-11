@@ -1,12 +1,49 @@
 <resources>
 
-    <style name="MbBlinkIdUiTheme" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="MbScanTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/mbPrimary</item>
+        <item name="colorPrimaryDark">@color/mbBlack</item>
+        <item name="colorAccent">@color/mbAccent</item>
+        <item name="android:windowBackground">@color/mbBlack</item>
+
+        <item name="mbScanBgColorStatusBar">#1a000000</item>
+        <item name="mbScanBgColorCameraOverlay">#4d000000</item>
+        <item name="mbScanBgColorDocTypeSelection">#96000000</item>
+        <item name="mbScanBgColorTabIndicator">?colorPrimary</item>
+        <item name="mbScanBgDrawableChooseCountry">@drawable/mb_bg_choose_country</item>
+        <item name="mbScanIconColorSelectCountry">@color/mbBlack</item>
+        <item name="mbScanTextColorNormalTab">@color/mbWhite</item>
+        <item name="mbScanTextColorSelectedTab">?colorPrimary</item>
+        <item name="mbScanTextColorCountry">@color/mbBlack</item>
+        <item name="mbScanTextColorCountryLabel">@color/mbBlack</item>
+        <item name="mbScanTextColorInstructions">@color/mbWhite</item>
+    </style>
+
+    <style name="MbChooseCountryLightTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimary">@color/mbPrimary</item>
         <item name="colorPrimaryDark">@color/mbPrimaryDark</item>
         <item name="colorAccent">@color/mbAccent</item>
+        <item name="android:windowBackground">@color/mbWhite</item>
+
+        <item name="mbCcTextColorCountry">#4d4d4d</item>
+        <item name="mbCcTextColorIndexLetterNormal">#555555</item>
+        <item name="mbCcTextColorIndexLetterSelected">?colorAccent</item>
+        <item name="mbCcTextColorSectionLetter">?colorAccent</item>
+        <item name="mbCcIconColorCheckMark">?colorAccent</item>
     </style>
 
-    <style name="MbBlinkIdUiTheme.FullScreen"/>
+    <style name="MbChooseCountryDarkTheme" parent="Theme.AppCompat.NoActionBar">
+        <item name="colorPrimary">@color/mbPrimary</item>
+        <item name="colorPrimaryDark">@color/mbPrimaryDark</item>
+        <item name="colorAccent">@color/mbAccent</item>
+        <item name="android:windowBackground">@color/mbBlack</item>
+
+        <item name="mbCcTextColorCountry">@color/mbWhite</item>
+        <item name="mbCcTextColorIndexLetterNormal">#BFFFFFFF</item>
+        <item name="mbCcTextColorIndexLetterSelected">?colorAccent</item>
+        <item name="mbCcTextColorSectionLetter">?colorAccent</item>
+        <item name="mbCcIconColorCheckMark">?colorAccent</item>
+    </style>
 
     <style name="MbPopupTheme" parent="ThemeOverlay.AppCompat.Dark">
     </style>
