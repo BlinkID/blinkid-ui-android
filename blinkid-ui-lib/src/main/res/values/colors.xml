@@ -4,26 +4,27 @@
     <color name="mbPrimaryDark">#3A8EBA</color>
     <color name="mbAccent">#48B2E8</color>
 
+    <color name="mbWhite">#FFFFFF</color>
+    <color name="mbBlack">#000000</color>
+
     <!-- Scan screen -->
     <color name="mbStatusBarColor">#1a000000</color>
     <color name="mbBgCameraOverlay">#4d000000</color>
     <color name="mbBgDocTypeSelection">#96000000</color>
 
-    <color name="mbTextNormalTab">#FFFFFF</color>
+    <color name="mbTextNormalTab">@color/mbWhite</color>
     <color name="mbTextSelectedTab">@color/mbPrimary</color>
-    <color name="mbTextSelectedCountry">#000000</color>
-    <color name="mbTextSelectCountryLabel">#000000</color>
-    <color name="mbTextScanInstructions">#FFFFFF</color>
+    <color name="mbTextSelectedCountry">@color/mbBlack</color>
+    <color name="mbTextSelectCountryLabel">@color/mbBlack</color>
+    <color name="mbTextScanInstructions">@color/mbWhite</color>
 
-    <color name="mbIconSelectCountry">#000000</color>
+    <color name="mbIconSelectCountry">@color/mbBlack</color>
     <color name="mbTabIndicator">@color/mbPrimary</color>
 
     <color name="mbBgChooseCountryNormal">#D948B2E8</color>
     <color name="mbBgChooseCountryPressed">#48B2E8</color>
 
     <!-- Country selection screen -->
-    <color name="mbBgChooseCountryActivity">@color/mb_transparent</color>
-
     <color name="mbTextCountryName">#4d4d4d</color>
     <color name="mbTextIndexLetterSelected">@color/mbAccent</color>
     <color name="mbTextIndexLetterNormal">#555555</color>

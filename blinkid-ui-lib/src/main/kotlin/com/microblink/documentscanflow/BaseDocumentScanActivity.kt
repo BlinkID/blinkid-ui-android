@@ -192,7 +192,7 @@ abstract class BaseDocumentScanActivity : AppCompatActivity(), ScanResultListene
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        setTheme(R.style.MbBlinkIdUiTheme)
+        setTheme(R.style.MbScanTheme)
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
         super.onCreate(savedInstanceState)
 

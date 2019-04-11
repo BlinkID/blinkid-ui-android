@@ -1,6 +1,12 @@
 <resources>
 
-    <style name="MbBlinkIdUiTheme" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="MbScanTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/mbPrimary</item>
+        <item name="colorPrimaryDark">@color/mbPrimaryDark</item>
+        <item name="colorAccent">@color/mbAccent</item>
+    </style>
+
+    <style name="MbChooseCountryTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimary">@color/mbPrimary</item>
         <item name="colorPrimaryDark">@color/mbPrimaryDark</item>
         <item name="colorAccent">@color/mbAccent</item>

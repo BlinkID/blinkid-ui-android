@@ -25,7 +25,7 @@ class ChooseCountryActivity : AppCompatActivity(), SearchView.OnQueryTextListene
     private lateinit var countryFilter: CountryFilter
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        setTheme(R.style.MbBlinkIdUiTheme)
+        setTheme(R.style.MbChooseCountryTheme)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.mb_activity_choose_country)
         setSupportActionBar(toolbar)

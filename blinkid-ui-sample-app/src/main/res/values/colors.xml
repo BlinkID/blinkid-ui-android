@@ -22,7 +22,6 @@
     <color name="mbTextSelectCountryLabel">@color/textPrimaryLight</color>
     <color name="mbIconSelectCountry">@color/accentLight</color>
 
-    <color name="mbBgChooseCountryActivity">@color/bgLight</color>
     <color name="mbTextCountryName">@color/textPrimaryLight</color>
     <color name="mbTextIndexLetterSelected">@color/accentDark</color>
     <color name="mbTextIndexLetterNormal">@color/textSecondaryLight</color>
