@@ -80,6 +80,12 @@ internal class RecognitionsBuilder {
             addRecognition(DocumentType.PERMANENT_RESIDENT_ID, value)
         }
 
+    var victoriaDl: BaseRecognition? = null
+        set(value) {
+            field = value
+            addRecognition(DocumentType.VICTORIA_DL, value)
+        }
+
     init {
         id = GenericRecognition.id
         drivingLicence = GenericRecognition.drivingLicence

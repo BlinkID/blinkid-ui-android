@@ -173,6 +173,8 @@ abstract class BaseRecognition(val isFullySupported: Boolean = true) {
         }
     }
 
+    protected fun addDateOfExpiry(dateResult: DateResult) = addDateOfExpiry(dateResult.date)
+
     protected fun addDateOfExpiry(date: Date?) {
         if (date != null) {
             resultEntries.add(entryBuilder.build(ResultKey.DATE_OF_EXPIRY,

@@ -79,6 +79,7 @@ enum class ResultKey(val stringResId: Int) {
     VEHICLE_CLASS(R.string.keyVehicleClass),
     ENDORSEMENTS(R.string.keyEndorsements),
     DRIVER_RESTRICTIONS(R.string.keyDriverRestrictions),
+    LICENCE_TYPE(R.string.keyLicenceType),
     VEHICLE_CATEGORIES(R.string.keyVehicleCategories),
 
     //Employment

@@ -71,5 +71,6 @@
   <string name="keyRank">Rank</string>
   <string name="keyVehicleClass">Vehicle class</string>
   <string name="keyEndorsements">Endorsements</string>
+  <string name="keyLicenceType">Licence type</string>
 
 </resources>
