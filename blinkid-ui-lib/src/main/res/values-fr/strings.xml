@@ -12,6 +12,7 @@
   <string name="mb_military_id">Carte d\'identité militaire</string>
   <string name="mb_permanent_resident_id">Carte de résident permanent</string>
   <string name="mb_temporary_resident_id">Carte de résident temporaire</string>
+  <string name="mb_victoria_dl">Le permis de conduire de Victoria</string>
   <string name="mb_instructions_scan_front">Numérisez le recto du document sélectionné ou choisissez-en un autre.</string>
   <string name="mb_instructions_scan_back">Scannez le verso.</string>
   <string name="mb_instructions_scan_any_side">Numérisez le document sélectionné ou choisissez-en un autre.</string>

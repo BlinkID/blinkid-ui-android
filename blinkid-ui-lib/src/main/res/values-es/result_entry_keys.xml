@@ -68,5 +68,7 @@
   <string name="keyFacultyAddress">Dirección de la facultad</string>
   <string name="keyPersonalNumber">Número de identificación personal</string>
   <string name="keyRank">Rango</string>
+  <string name="keyVehicleClass">Tipo de vehículo</string>
+  <string name="keyEndorsements">Endosos</string>
   <string name="keyLicenceType">Tipo de licencia</string>
 </resources>

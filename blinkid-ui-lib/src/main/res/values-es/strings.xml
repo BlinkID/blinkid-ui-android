@@ -12,6 +12,7 @@
   <string name="mb_military_id">Identificación militar</string>
   <string name="mb_permanent_resident_id">Identificación de residente permanente</string>
   <string name="mb_temporary_resident_id">Identificación de residente temporal</string>
+  <string name="mb_victoria_dl">Licencia de conducir de Victoria</string>
   <string name="mb_instructions_scan_front">Escanee la parte frontal del documento seleccionado o escoja otro.</string>
   <string name="mb_instructions_scan_back">Escanee la parte posterior.</string>
   <string name="mb_instructions_scan_any_side">Escanee el documento seleccionado o escoja otro.</string>

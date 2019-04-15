@@ -68,5 +68,7 @@
   <string name="keyFacultyAddress">Wahlweise Adresse</string>
   <string name="keyPersonalNumber">Persönliche Identifikationsnummer</string>
   <string name="keyRank">Rang</string>
+  <string name="keyVehicleClass">Fahrzeugklasse</string>
+  <string name="keyEndorsements">Vermerke</string>
   <string name="keyLicenceType">Lizenzart</string>
 </resources>
