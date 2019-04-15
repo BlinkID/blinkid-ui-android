@@ -16,7 +16,7 @@ class VictoriaDlRecognition : BaseTwoSideRecognition() {
     private val frontResult by lazy { frontRecognizer.result }
     private val backResult by lazy { backRecognizer.result }
 
-    override fun createValidator() = ResultValidator().match(frontResult.licenceNumber, backResult.licenceNumber)
+    override fun createValidator() = ResultValidator().match(frontResult.licenceExpiry, backResult.licenceExpiry)
 
     override fun extractFields() {
         if (frontResult.isNotEmpty()) {
