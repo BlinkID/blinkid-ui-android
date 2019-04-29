@@ -74,7 +74,7 @@ abstract class BaseRecognition(val isFullySupported: Boolean = true) {
         extractImages()
 
         val result = RecognitionResult(title ?: "",
-                resultEntries.toList(),
+                resultEntries.toList().sortedBy { it.key.ordinal },
                 firstSideDocumentImage,
                 secondSideDocumentImage,
                 faceImage,
@@ -172,6 +172,8 @@ abstract class BaseRecognition(val isFullySupported: Boolean = true) {
             resultEntries.add(entryBuilder.build(key, value.date))
         }
     }
+
+    protected fun addDateOfExpiry(dateResult: DateResult) = addDateOfExpiry(dateResult.date)
 
     protected fun addDateOfExpiry(date: Date?) {
         if (date != null) {

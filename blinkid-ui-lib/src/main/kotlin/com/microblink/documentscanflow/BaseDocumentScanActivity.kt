@@ -21,12 +21,12 @@ import android.support.annotation.AnyThread
 import android.support.annotation.CallSuper
 import android.support.annotation.UiThread
 import android.support.design.widget.TabLayout
-import android.support.v4.content.ContextCompat
 import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.view.WindowManager
 import android.view.animation.AccelerateDecelerateInterpolator
 import com.microblink.documentscanflow.country.CountryFactory
 import com.microblink.documentscanflow.document.Document
@@ -34,6 +34,8 @@ import com.microblink.documentscanflow.document.DocumentType
 import com.microblink.documentscanflow.recognition.RecognitionError
 import com.microblink.documentscanflow.recognition.RecognizerManager
 import com.microblink.documentscanflow.recognition.ResultMergeException
+import com.microblink.documentscanflow.recognition.config.DefaultRecognitionConfig
+import com.microblink.documentscanflow.recognition.config.RecognitionConfig
 import com.microblink.documentscanflow.recognition.framelistener.FrameGrabberMode
 import com.microblink.documentscanflow.recognition.framelistener.FrameListener
 import com.microblink.documentscanflow.ui.InstructionsHandler
@@ -71,6 +73,7 @@ import com.microblink.view.recognition.ScanResultListener
 import kotlinx.android.synthetic.main.mb_activity_scan_document.*
 import kotlinx.android.synthetic.main.mb_include_scan_bottom_container.*
 import kotlinx.android.synthetic.main.mb_include_splash_overlay.*
+import java.lang.Exception
 import java.util.*
 import kotlin.math.max
 
@@ -87,7 +90,7 @@ abstract class BaseDocumentScanActivity : AppCompatActivity(), ScanResultListene
     private val documentChooser by lazy { createDocumentChooser() }
     private val scanTimeoutHandler by lazy { createScanTimeoutHandler() }
     private val torchButtonHandler = TorchButtonHandler()
-    private val recognizerManager by lazy { RecognizerManager(getFrameGrabberMode(), createFrameCallback()) }
+    private val recognizerManager by lazy { RecognizerManager(createRecognitionConfig(), getFrameGrabberMode(), createFrameCallback()) }
     private val cameraErrorHandler by lazy { CameraErrorHandler(this) {finish()} }
     private val instructionsHandler by lazy { InstructionsHandler(this, currentDocument, scanFrameLayout.scanInstructionsTv, scanFrameLayout.flipCardView) }
     private val scanLineAnimator by lazy { createScanLineAnimator() }
@@ -107,6 +110,7 @@ abstract class BaseDocumentScanActivity : AppCompatActivity(), ScanResultListene
     protected abstract fun getInitialDocument(): Document
 
     protected open fun onCameraError(exc: Throwable?) {}
+    protected open fun createRecognitionConfig(): RecognitionConfig = DefaultRecognitionConfig()
     protected open fun getFrameGrabberMode(): FrameGrabberMode = FrameGrabberMode.NOTHING
     protected open fun createFrameListener(): FrameListener = FrameListener.EMPTY
     protected open fun createDocumentChooser() : DocumentChooser = DefaultDocumentChooser(this)
@@ -191,15 +195,14 @@ abstract class BaseDocumentScanActivity : AppCompatActivity(), ScanResultListene
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        setTheme(R.style.MbBlinkIdUiTheme_FullScreen)
+        ensureCorrectThemeIsSet()
+
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
         super.onCreate(savedInstanceState)
 
         setupCountryFactory()
 
-        if (Build.VERSION.SDK_INT >= 21) {
-            window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_STABLE or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-        }
+        setupWindowParams()
 
         setContentView(getLayoutId())
         setSupportActionBar(toolbarActivityScan)
@@ -230,7 +233,7 @@ abstract class BaseDocumentScanActivity : AppCompatActivity(), ScanResultListene
 
         scanSuccessPlayer.prepare()
 
-        arrowRight.drawable.mutate().setColorFilter(ContextCompat.getColor(this, R.color.mbIconSelectCountry), PorterDuff.Mode.MULTIPLY)
+        arrowRight.drawable.mutate().setColorFilter(getThemeColor(R.attr.mbScanIconColorSelectCountry), PorterDuff.Mode.MULTIPLY)
 
         bottomContainer.addOnLayoutChangeListener(object: View.OnLayoutChangeListener {
             override fun onLayoutChange(v: View?, left: Int, top: Int, right: Int, bottom: Int, oldLeft: Int, oldTop: Int, oldRight: Int, oldBottom: Int) {
@@ -247,6 +250,23 @@ abstract class BaseDocumentScanActivity : AppCompatActivity(), ScanResultListene
             }
 
         })
+    }
+
+    private fun ensureCorrectThemeIsSet() {
+        val testColor = getThemeColor(R.attr.mbScanBgColorCameraOverlay)
+        if (testColor == 0) {
+            Log.e(this, "Invalid theme set, defaulting to MbScanTheme")
+            setTheme(R.style.MbScanTheme)
+        }
+    }
+
+    private fun setupWindowParams() {
+        if (Build.VERSION.SDK_INT >= 21) {
+            window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_STABLE or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+            window.statusBarColor = getThemeColor(R.attr.mbScanBgColorStatusBar)
+        } else if (Build.VERSION.SDK_INT >= 19) {
+            window.setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS, WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
+        }
     }
 
     private fun updateDocumentTypeSelectionTabs(document: Document) {
@@ -416,12 +436,12 @@ abstract class BaseDocumentScanActivity : AppCompatActivity(), ScanResultListene
     }
 
     override fun onScanningDone(recognitionSuccessType: RecognitionSuccessType) {
-        if (recognitionSuccessType != RecognitionSuccessType.SUCCESSFUL) {
+        recognizerManager.handleRecognitionResult(recognitionSuccessType, {
+            pauseScanning()
+            runOnUiThread { onScanSuccess() }
+        }, {
             runOnUiThread { restartScanning() }
-            return
-        }
-        pauseScanning()
-        runOnUiThread { onScanSuccess() }
+        })
     }
 
     private fun onScanSuccess() {

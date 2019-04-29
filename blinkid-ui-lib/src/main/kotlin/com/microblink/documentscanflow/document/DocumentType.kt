@@ -13,6 +13,7 @@ enum class DocumentType {
     MILITARY_ID,
     NEW_ID,
     TEMPORARY_RESIDENT_ID,
-    PERMANENT_RESIDENT_ID
+    PERMANENT_RESIDENT_ID,
+    VICTORIA_DL
 
 }

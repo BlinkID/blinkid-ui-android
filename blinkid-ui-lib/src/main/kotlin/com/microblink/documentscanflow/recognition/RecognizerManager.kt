@@ -1,6 +1,7 @@
 package com.microblink.documentscanflow.recognition
 
 import com.microblink.documentscanflow.ScanFlowState
+import com.microblink.documentscanflow.recognition.config.RecognitionConfig
 import com.microblink.documentscanflow.recognition.framelistener.FrameGrabberMode
 import com.microblink.entities.recognizers.Recognizer
 import com.microblink.entities.recognizers.RecognizerBundle
@@ -8,8 +9,10 @@ import com.microblink.entities.recognizers.framegrabber.FrameCallback
 import com.microblink.entities.recognizers.framegrabber.FrameGrabberRecognizer
 import com.microblink.entities.recognizers.successframe.SuccessFrameGrabberRecognizer
 import com.microblink.image.Image
+import com.microblink.recognition.RecognitionSuccessType
 
-internal class RecognizerManager(private val frameGrabberMode: FrameGrabberMode,
+internal class RecognizerManager(private val recognitionConfig: RecognitionConfig,
+                                 private val frameGrabberMode: FrameGrabberMode,
                                  frameCallback: FrameCallback) {
 
     private val singleSideSuccessFrameRecognizers: MutableList<SuccessFrameGrabberRecognizer> = mutableListOf()
@@ -65,7 +68,9 @@ internal class RecognizerManager(private val frameGrabberMode: FrameGrabberMode,
             recognizersForBundle.add(combinedRecognizer!!)
         }
 
-        return RecognizerBundle(*recognizersForBundle.toTypedArray())
+        return RecognizerBundle(*recognizersForBundle.toTypedArray()).apply {
+            numMsBeforeTimeout = recognitionConfig.getRecognitionTimeoutSeconds() * 1000
+        }
     }
 
     private fun buildStandardRecognizerBundle(scanFlowState: ScanFlowState): RecognizerBundle {
@@ -87,7 +92,9 @@ internal class RecognizerManager(private val frameGrabberMode: FrameGrabberMode,
             recognizersForBundle.add(allRecognizers[getIndexForSide(scanFlowState)])
         }
 
-        return RecognizerBundle(*recognizersForBundle.toTypedArray())
+        return RecognizerBundle(*recognizersForBundle.toTypedArray()).apply {
+            numMsBeforeTimeout = recognitionConfig.getRecognitionTimeoutSeconds() * 1000
+        }
     }
 
     private fun getIndexForSide(scanFlowState: ScanFlowState) =
@@ -122,5 +129,16 @@ internal class RecognizerManager(private val frameGrabberMode: FrameGrabberMode,
     }
 
     fun isCombinedRecognition(scanFlowState: ScanFlowState) = canUseCombinedRecognizer(scanFlowState)
+
+    fun handleRecognitionResult(successType: RecognitionSuccessType, onSuccess: () -> Unit, onRestartRequired: () -> Unit) {
+        when {
+            successType == RecognitionSuccessType.SUCCESSFUL ->
+                onSuccess()
+            successType == RecognitionSuccessType.PARTIAL && recognitionConfig.isPartialResultAllowed() ->
+                onSuccess()
+            else ->
+                onRestartRequired()
+        }
+    }
 
 }

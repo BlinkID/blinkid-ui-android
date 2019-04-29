@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <attr name="mbScanBgColorStatusBar" format="color"/>
+    <attr name="mbScanBgColorCameraOverlay" format="color"/>
+
+    <attr name="mbScanBgColorCardFlip" format="color"/>
+    <attr name="mbScanIconColorHook" format="color"/>
+    <attr name="mbScanIconScanLine" format="color"/>
+
+    <attr name="mbScanBgColorDocTypeSelection" format="color"/>
+    <attr name="mbScanBgColorTabIndicator" format="color"/>
+    <attr name="mbScanBgDrawableChooseCountry" format="reference|color"/>
+
+    <attr name="mbScanTextColorNormalTab" format="color"/>
+    <attr name="mbScanTextColorSelectedTab" format="color"/>
+    <attr name="mbScanTextColorCountry" format="color"/>
+    <attr name="mbScanTextColorCountryLabel" format="color"/>
+    <attr name="mbScanTextColorInstructions" format="color"/>
+
+    <attr name="mbScanIconColorSelectCountry" format="color"/>
+</resources>

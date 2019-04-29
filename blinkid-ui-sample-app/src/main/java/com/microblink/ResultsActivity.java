@@ -41,7 +41,7 @@ public class ResultsActivity extends AppCompatActivity {
         for (Parcelable entry : entries) {
             if (entry instanceof ResultEntry) {
                 ResultEntry stringEntry = (ResultEntry) entry;
-                textBuilder.append(stringEntry.getKey());
+                textBuilder.append(getString(stringEntry.getKey().getStringResId()));
                 textBuilder.append(" : ");
                 textBuilder.append(stringEntry.getValue().toString());
                 textBuilder.append("\n");
