@@ -72,8 +72,7 @@ public class ScanActivity extends BaseDocumentScanActivity {
         return new ScanFlowListener() {
 
             @Override
-            public void onScanStarted() {
-            }
+            public void onScanStarted() {}
 
             @Override
             public void onEntireDocumentScanned(@NonNull RecognitionResult recognitionResult, Image successFrame) {
@@ -86,12 +85,10 @@ public class ScanActivity extends BaseDocumentScanActivity {
             }
 
             @Override
-            public void onFirstSideScanned(@Nullable RecognitionResult recognitionResult, Image successFrame) {
-            }
+            public void onFirstSideScanned(@Nullable RecognitionResult recognitionResult, Image successFrame) {}
 
             @Override
-            public void onSelectedDocumentChanged(Document oldDocument, Document newDocument) {
-            }
+            public void onSelectedDocumentChanged(@NonNull Document oldDocument, @NonNull Document newDocument) {}
         };
     }
 
@@ -103,6 +100,12 @@ public class ScanActivity extends BaseDocumentScanActivity {
             @Override
             public String geChooseCountryLabel() {
                 return getString(R.string.change_country_label);
+            }
+
+            @Override
+            protected int getActivityTheme() {
+                // use our custom theme
+                return R.style.CustomChooseCountryTheme;
             }
         };
     }
@@ -130,7 +133,7 @@ public class ScanActivity extends BaseDocumentScanActivity {
 
             @Override
             public int getBackgroundColorResource() {
-                return R.color.bgLight;
+                return R.color.bgDark;
             }
 
             @Override

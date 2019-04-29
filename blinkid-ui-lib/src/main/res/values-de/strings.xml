@@ -12,6 +12,7 @@
   <string name="mb_military_id">Militärischer Ausweis</string>
   <string name="mb_permanent_resident_id">Permanenter Einwohnerausweis</string>
   <string name="mb_temporary_resident_id">Temporärer Einwohnerausweis</string>
+  <string name="mb_victoria_dl">Victoria Fahrerlaubnis</string>
   <string name="mb_instructions_scan_front">Scannen Sie die Vorderseite des ausgewählten Dokuments oder wählen Sie ein anderes aus.</string>
   <string name="mb_instructions_scan_back">Scannen Sie die Rückseite.</string>
   <string name="mb_instructions_scan_any_side">Scannen Sie das ausgewählte Dokument oder wählen Sie ein anderes aus.</string>

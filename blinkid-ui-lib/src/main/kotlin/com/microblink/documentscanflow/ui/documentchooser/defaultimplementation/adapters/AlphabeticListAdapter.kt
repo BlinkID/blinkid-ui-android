@@ -1,7 +1,6 @@
 package com.microblink.documentscanflow.ui.documentchooser.defaultimplementation.adapters
 
 import android.graphics.PorterDuff
-import android.support.v4.content.ContextCompat
 import android.text.TextUtils
 import android.view.View
 import android.view.ViewGroup
@@ -9,6 +8,7 @@ import android.widget.BaseAdapter
 import android.widget.SectionIndexer
 import com.microblink.documentscanflow.R
 import com.microblink.documentscanflow.country.Country
+import com.microblink.documentscanflow.getThemeColor
 import com.microblink.documentscanflow.inflate
 import kotlinx.android.synthetic.main.mb_list_item_country.view.*
 import java.util.*
@@ -112,7 +112,7 @@ class AlphabeticListAdapter(elementList: List<Country>, selectedIndex: Int) : Ba
             view.countryName.text = country.getLocalisedName()
             if (active) {
                 view.itemSelectedIcon.visibility = View.VISIBLE
-                view.itemSelectedIcon.drawable.mutate().setColorFilter(ContextCompat.getColor(view.context, R.color.mbIconSelectedCountryCheckMark), PorterDuff.Mode.MULTIPLY)
+                view.itemSelectedIcon.drawable.mutate().setColorFilter(view.context.getThemeColor(R.attr.mbCcIconColorCheckMark), PorterDuff.Mode.MULTIPLY)
             }
             if (TextUtils.isEmpty(sectionNameToShow)) {
                 view.sectionName.visibility = View.INVISIBLE

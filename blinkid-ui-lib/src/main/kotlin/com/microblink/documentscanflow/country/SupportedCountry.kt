@@ -14,6 +14,7 @@ enum class SupportedCountry(override val code: String,
     AUSTRALIA("au",
             recognitions {
                 id = UNSUPPORTED
+                victoriaDl = VictoriaDlRecognition()
             }),
 
     AUSTRIA("at",

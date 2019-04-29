@@ -8,6 +8,7 @@ import com.microblink.entities.recognizers.Recognizer
 import com.microblink.entities.recognizers.blinkbarcode.pdf417.Pdf417Recognizer
 import com.microblink.entities.recognizers.blinkid.documentface.DocumentFaceRecognizer
 import com.microblink.entities.recognizers.blinkid.mrtd.MrtdRecognizer
+import com.microblink.entities.recognizers.blinkid.passport.PassportRecognizer
 
 class GenericRecognition(isFullySupported: Boolean, private val recognizerProvider: RecognizerProvider) : BaseRecognition(isFullySupported) {
 
@@ -26,12 +27,18 @@ class GenericRecognition(isFullySupported: Boolean, private val recognizerProvid
     override fun extractData(): String? {
         var result: String? = null
         for (recognizer in recognizerProvider.recognizers) {
-            if (recognizer is MrtdRecognizer && recognizer.result.isNotEmpty()) {
-                extractMrzResult(recognizer.result.mrzResult)
-                result = buildMrtdTitle(recognizer.result.mrzResult)
-            }
-            if (recognizer is Pdf417Recognizer && recognizer.result.isNotEmpty()) {
-                add(ResultKey.BARCODE_DATA, recognizer.result.stringData)
+            if (recognizer.result.isNotEmpty()) {
+                when (recognizer) {
+                    is MrtdRecognizer -> {
+                        extractMrzResult(recognizer.result.mrzResult)
+                        result = buildMrtdTitle(recognizer.result.mrzResult)
+                    }
+                    is PassportRecognizer -> {
+                        extractMrzResult(recognizer.result.mrzResult)
+                        result = buildMrtdTitle(recognizer.result.mrzResult)
+                    }
+                    is Pdf417Recognizer -> add(ResultKey.BARCODE_DATA, recognizer.result.stringData)
+                }
             }
         }
         return result
@@ -45,9 +52,15 @@ class GenericRecognition(isFullySupported: Boolean, private val recognizerProvid
 
         val drivingLicence = faceId1(false)
 
-        val passport = mrtd(true)
+        val passport = passport()
 
         val visa = mrtd(true)
+
+        private fun passport(): GenericRecognition {
+            return GenericRecognition(true, object: RecognizerProvider() {
+                override fun createRecognizers() = listOf(PassportRecognizer())
+            })
+        }
 
         fun mrtd(isFullySupported: Boolean): GenericRecognition {
             return GenericRecognition(isFullySupported, object: RecognizerProvider() {

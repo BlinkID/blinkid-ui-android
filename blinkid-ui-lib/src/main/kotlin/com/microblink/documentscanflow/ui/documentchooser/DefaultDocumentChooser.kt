@@ -33,8 +33,11 @@ open class DefaultDocumentChooser(private val scanActivity: Activity) : Document
         intent.putExtra(ChooseCountryActivity.EXTRA_CURRENT_COUNTRY_CODE, currentDocument.country.code)
         intent.putExtra(ChooseCountryActivity.EXTRA_COUNTRY_FILTER, getCountryFilter())
         intent.putExtra(ChooseCountryActivity.EXTRA_SHOW_INDEXER_SIDEBAR, shouldShowAlphabetIndexerSidebar())
+        intent.putExtra(ChooseCountryActivity.EXTRA_THEME, getActivityTheme())
         scanActivity.startActivityForResult(intent, BaseDocumentScanActivity.REQ_CODE_CHOOSE_DOC)
     }
+
+    protected open fun getActivityTheme() = R.style.MbChooseCountryLightTheme
 
     protected open fun getCountryFilter() =
             AllowAllCountryFilter()

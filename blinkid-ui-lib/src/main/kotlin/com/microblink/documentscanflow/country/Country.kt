@@ -47,6 +47,7 @@ interface Country {
             DocumentType.NEW_ID -> R.string.mb_new_id_card
             DocumentType.TEMPORARY_RESIDENT_ID -> R.string.mb_temporary_resident_id
             DocumentType.PERMANENT_RESIDENT_ID -> R.string.mb_permanent_resident_id
+            DocumentType.VICTORIA_DL -> R.string.mb_victoria_dl
         }
     }
 

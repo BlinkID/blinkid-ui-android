@@ -14,6 +14,7 @@ import kotlinx.android.synthetic.main.mb_activity_choose_country.*
 import android.view.ViewGroup
 import com.microblink.documentscanflow.ui.documentchooser.countryfilter.AllowAllCountryFilter
 import com.microblink.documentscanflow.ui.documentchooser.countryfilter.CountryFilter
+import java.lang.IllegalArgumentException
 
 class ChooseCountryActivity : AppCompatActivity(), SearchView.OnQueryTextListener {
 
@@ -25,29 +26,32 @@ class ChooseCountryActivity : AppCompatActivity(), SearchView.OnQueryTextListene
     private lateinit var countryFilter: CountryFilter
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        setTheme(R.style.MbBlinkIdUiTheme)
+        val extras = intent.extras ?: throw IllegalArgumentException("Please provide required intent extras")
+
+        val theme = extras.getInt(EXTRA_THEME, R.style.MbChooseCountryLightTheme)
+        setTheme(theme)
+
         super.onCreate(savedInstanceState)
         setContentView(R.layout.mb_activity_choose_country)
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        val extras = intent.extras
-        if (extras != null) {
-            val listFragmentArgs = Bundle()
+        val listFragmentArgs = Bundle()
 
-            val currentCountryCode = extras.getString(EXTRA_CURRENT_COUNTRY_CODE)
-            if (currentCountryCode != null) {
-                listFragmentArgs.putString(CountryListFragment.EXTRA_CURRENT_COUNTRY_CODE, currentCountryCode)
-            }
-
-            countryFilter = extras.getParcelable(EXTRA_COUNTRY_FILTER) as CountryFilter? ?: AllowAllCountryFilter()
-            listFragmentArgs.putParcelable(CountryListFragment.EXTRA_COUNTRY_FILTER, countryFilter)
-
-            val shouldShowIndexerSidebar = extras.getBoolean(EXTRA_SHOW_INDEXER_SIDEBAR)
-            listFragmentArgs.putBoolean(CountryListFragment.EXTRA_SHOW_INDEXER_SIDEBAR, shouldShowIndexerSidebar)
-
-            countryListFragment.arguments = listFragmentArgs
+        val currentCountryCode = extras.getString(EXTRA_CURRENT_COUNTRY_CODE)
+        if (currentCountryCode != null) {
+            listFragmentArgs.putString(CountryListFragment.EXTRA_CURRENT_COUNTRY_CODE, currentCountryCode)
         }
+
+        countryFilter = extras.getParcelable(EXTRA_COUNTRY_FILTER) as CountryFilter?
+                ?: AllowAllCountryFilter()
+        listFragmentArgs.putParcelable(CountryListFragment.EXTRA_COUNTRY_FILTER, countryFilter)
+
+        val shouldShowIndexerSidebar = extras.getBoolean(EXTRA_SHOW_INDEXER_SIDEBAR)
+        listFragmentArgs.putBoolean(CountryListFragment.EXTRA_SHOW_INDEXER_SIDEBAR, shouldShowIndexerSidebar)
+
+        countryListFragment.arguments = listFragmentArgs
+
 
         val ft = fragmentManager.beginTransaction()
         ft.replace(R.id.contentFragment, countryListFragment)
@@ -98,9 +102,7 @@ class ChooseCountryActivity : AppCompatActivity(), SearchView.OnQueryTextListene
         ft.commit()
     }
 
-    override fun onQueryTextSubmit(query: String?): Boolean {
-        return false
-    }
+    override fun onQueryTextSubmit(query: String?) = false
 
     override fun onQueryTextChange(newText: String): Boolean {
         if (newText.isEmpty()) {
@@ -137,6 +139,7 @@ class ChooseCountryActivity : AppCompatActivity(), SearchView.OnQueryTextListene
         const val EXTRA_RESULT_COUNTRY_CODE = "EXTRA_COUNTRY_CODE"
         const val EXTRA_COUNTRY_FILTER = "EXTRA_COUNTRY_FILTER"
         const val EXTRA_SHOW_INDEXER_SIDEBAR = "EXTRA_SHOW_INDEXER_SIDEBAR"
+        const val EXTRA_THEME = "EXTRA_THEME"
     }
 
 }
