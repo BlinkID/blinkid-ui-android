@@ -3,6 +3,10 @@
     <attr name="mbScanBgColorStatusBar" format="color"/>
     <attr name="mbScanBgColorCameraOverlay" format="color"/>
 
+    <attr name="mbScanBgColorCardFlip" format="color"/>
+    <attr name="mbScanIconColorHook" format="color"/>
+    <attr name="mbScanIconScanLine" format="color"/>
+
     <attr name="mbScanBgColorDocTypeSelection" format="color"/>
     <attr name="mbScanBgColorTabIndicator" format="color"/>
     <attr name="mbScanBgDrawableChooseCountry" format="reference|color"/>

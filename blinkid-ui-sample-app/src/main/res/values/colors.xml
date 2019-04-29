@@ -11,8 +11,4 @@
     <color name="textPrimaryLight">#FFFFFF</color>
     <color name="textSecondaryLight">#AAFFFFFF</color>
 
-    <!-- Overriding BlinkID SDK colors -->
-    <color name="mb_background_flip_card">@color/primary</color>
-    <color name="mb_icon_scan_line">@color/accentLight</color>
-
 </resources>

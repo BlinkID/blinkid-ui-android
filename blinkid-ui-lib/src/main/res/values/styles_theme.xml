@@ -17,6 +17,10 @@
         <item name="mbScanTextColorCountry">@color/mbBlack</item>
         <item name="mbScanTextColorCountryLabel">@color/mbBlack</item>
         <item name="mbScanTextColorInstructions">@color/mbWhite</item>
+
+        <item name="mbScanBgColorCardFlip">?colorPrimary</item>
+        <item name="mbScanIconColorHook">@color/mbWhite</item>
+        <item name="mbScanIconScanLine">?colorAccent</item>
     </style>
 
     <style name="MbChooseCountryLightTheme" parent="Theme.AppCompat.Light.NoActionBar">

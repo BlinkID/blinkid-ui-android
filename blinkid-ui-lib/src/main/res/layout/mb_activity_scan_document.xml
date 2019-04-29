@@ -29,6 +29,10 @@
 
         <com.microblink.view.blinkid.BlinkidCameraOverlay
             android:id="@+id/scanFrameLayout"
+            app:mb_flipCardColor="?attr/mbScanBgColorCardFlip"
+            app:mb_overlayColor="?attr/mbScanBgColorCameraOverlay"
+            app:mb_hookColor="?attr/mbScanIconColorHook"
+            app:mb_scanLineColor="?attr/mbScanIconScanLine"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_above="@+id/bottomContainerFrame"
