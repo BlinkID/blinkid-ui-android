@@ -18,7 +18,7 @@
         <item name="mbScanTextColorCountryLabel">@color/mbBlack</item>
         <item name="mbScanTextColorInstructions">@color/mbWhite</item>
 
-        <item name="mbScanBgColorCardFlip">?colorPrimary</item>
+        <item name="mbScanBgColorCardFlip">#cc48B2E8</item>
         <item name="mbScanIconColorHook">@color/mbWhite</item>
         <item name="mbScanIconScanLine">?colorAccent</item>
     </style>
