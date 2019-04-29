@@ -13,6 +13,7 @@ import com.microblink.documentscanflow.country.SupportedCountry;
 import com.microblink.documentscanflow.document.Document;
 import com.microblink.documentscanflow.document.DocumentType;
 import com.microblink.documentscanflow.recognition.RecognitionResult;
+import com.microblink.documentscanflow.recognition.config.RecognitionConfig;
 import com.microblink.documentscanflow.recognition.util.ImageStorage;
 import com.microblink.documentscanflow.ui.documentchooser.DefaultDocumentChooser;
 import com.microblink.documentscanflow.ui.documentchooser.DocumentChooser;
@@ -42,9 +43,27 @@ public class ScanActivity extends BaseDocumentScanActivity {
         return new Document(country, documentType);
     }
 
+    @NonNull
+    @Override
+    protected RecognitionConfig createRecognitionConfig() {
+        return new RecognitionConfig() {
+            @Override
+            public int getRecognitionTimeoutSeconds() {
+                // increase timeout to 30 seconds
+                return 30;
+            }
+
+            @Override
+            public boolean isPartialResultAllowed() {
+                // allow partial results
+                return true;
+            }
+        };
+    }
+
     @Override
     public boolean shouldScanBothDocumentSides() {
-        return false;
+        return true;
     }
 
     @NonNull
