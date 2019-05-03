@@ -1,6 +1,5 @@
 # BlinkID UI for Android
-[![Release](https://jitpack.io/v/BlinkID/blinkid-ui-android.svg)]
-(https://jitpack.io/#BlinkID/blinkid-ui-android)
+[![Release](https://jitpack.io/v/BlinkID/blinkid-ui-android.svg)](https://jitpack.io/#BlinkID/blinkid-ui-android)
 
 BlinkID UI is a library that lets you scan any BlinkID supported document without even knowing what a `Recognizer` is.
 It includes customisable scan activity and country selection activity.
@@ -14,11 +13,11 @@ Add JitPack repository to your root build.gradle file
 
 ```
 allprojects {
-		repositories {
-			...
-			maven { url 'https://jitpack.io' }
-		}
+	repositories {
+		...
+		maven { url 'https://jitpack.io' }
 	}
+}
 ```
 
 Include BlinkID UI dependency in your app level build.gradle file
@@ -64,7 +63,7 @@ In your scan activity, override `createSplashOverlaySettings()` and return your 
 In your scan activity, override `createScanTimeoutHandler()` and return your own implementation. If you just want to change timeout duration you can use `DefaultScanTimeoutHandler`.
 
 ### How do I disable or change scan line animation?
-In your scan activity, override `createScanLineAnimator()` and return your own implementation. If you want to disable the animation, just return `new EmptyScanLineAnimator()`. If you just want to change line color, provide mbScanIconScanLine attribute in your scan activity theme.
+In your scan activity, override `createScanLineAnimator()` and return your own implementation. If you want to disable the animation, just return `new EmptyScanLineAnimator()`. If you just want to change line color, provide `mbScanIconScanLine` attribute in your scan activity theme.
 
 ### How do I limit selection to specific countries and document types?
 In your scan activity, override `createDocumentChooser()` and return your own subclass of `DefaultDocumentChooser`, in which you'll override `getCountryFilter()` to return your desired filter and override `isDocumentTypeSupportedForCountry()` where you'll need to return whether a document type is supported for a specific country.
