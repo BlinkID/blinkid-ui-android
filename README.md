@@ -1,27 +1,32 @@
 # BlinkID UI for Android
-BlinkID UI is a library that lets you scan any BlinkID supported document without even knowing what a `Recognizer` is.
+[![Release](https://jitpack.io/v/BlinkID/blinkid-ui-android.svg)](https://jitpack.io/#BlinkID/blinkid-ui-android)
 
+BlinkID UI is a library that lets you scan any BlinkID supported document without even knowing what a `Recognizer` is.
 It includes customisable scan activity and country selection activity.
 
-To see BlinkID UI in action, check our [demo app](https://play.google.com/store/apps/details?id=com.microblink.blinkidapp).
+To see it in action, check our [demo app](https://play.google.com/store/apps/details?id=com.microblink.blinkidapp). 
 
-New to _BlinkID_? Check [BlinkID SDK](https://github.com/BlinkID/blinkid-android) first.
+New to _BlinkID_? Take a look at [BlinkID SDK](https://github.com/BlinkID/blinkid-android) first.
 
 ## <a name="quickStart"></a> Quick Start
-_BlinkID UI_ is a Kotlin library so first make sure you have enabled Kotlin support in your project
+Add JitPack repository to your root build.gradle file
 
-* in your top level `build.gradle` add buildscript dependency `classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.2.51"`
+```
+allprojects {
+	repositories {
+		...
+		maven { url 'https://jitpack.io' }
+	}
+}
+```
 
-This library depends on _BlinkID SDK_ so you'll need to add _BlinkID_ maven repository to repositories list
-
-* `maven { url 'http://maven.microblink.com' }`
-
-Now you can add _BlinkID UI_ as a new module to your project
-
-* in Android Studio menu, click File - New - New Module - Import Gradle Project
-* select blinkid-ui-lib folder and click Finish
-* in your `settings.gradle` add `include 'blinkid-ui-lib'`
-* in your app's `build.gradle` add new module dependency `implementation project(':blinkid-ui-lib')`
+Include BlinkID UI dependency in your app level build.gradle file
+	
+```
+dependencies {
+	implementation 'com.github.BlinkID:blinkid-ui-android:v4.9.0.0'
+}
+```
 
 After doing a Gradle sync, you'll be able to start using _BlinkID UI_ in your app
 
@@ -32,10 +37,6 @@ After doing a Gradle sync, you'll be able to start using _BlinkID UI_ in your ap
 	* `createScanFlowListener()` - this listener gets notified on scan flow updates, most importantly, you'll get final scan results in `onEntireDocumentScanned` method
 
 If you want to customise scanning behavior and UI take a look at [FAQ](#faq).
-
-## <a name="proguard"></a>Proguard config
-If you're using Proguard, you'll need to add the following line to your Proguard rules
-`-keep class android.support.v7.widget.SearchView { *; }`
 
 ## <a name="faq"></a> FAQ
 ### How do I customise colors, icons and other resources?
@@ -62,7 +63,7 @@ In your scan activity, override `createSplashOverlaySettings()` and return your 
 In your scan activity, override `createScanTimeoutHandler()` and return your own implementation. If you just want to change timeout duration you can use `DefaultScanTimeoutHandler`.
 
 ### How do I disable or change scan line animation?
-In your scan activity, override `createScanLineAnimator()` and return your own implementation. If you want to disable the animation, just return `new EmptyScanLineAnimator()`. If you just want to change line color, override `@color/mbIconScanLine`.
+In your scan activity, override `createScanLineAnimator()` and return your own implementation. If you want to disable the animation, just return `new EmptyScanLineAnimator()`. If you just want to change line color, provide `mbScanIconScanLine` attribute in your scan activity theme.
 
 ### How do I limit selection to specific countries and document types?
 In your scan activity, override `createDocumentChooser()` and return your own subclass of `DefaultDocumentChooser`, in which you'll override `getCountryFilter()` to return your desired filter and override `isDocumentTypeSupportedForCountry()` where you'll need to return whether a document type is supported for a specific country.

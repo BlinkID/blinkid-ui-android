@@ -168,8 +168,8 @@ abstract class BaseRecognition(val isFullySupported: Boolean = true) {
     }
 
     protected fun add(key: ResultKey, value: DateResult?) {
-        if (value != null) {
-            resultEntries.add(entryBuilder.build(key, value.date))
+        if (value != null ) {
+            add(key, value.date)
         }
     }
 
