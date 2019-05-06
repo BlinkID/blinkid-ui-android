@@ -31,11 +31,11 @@ abstract class ResultEntry<T>(val key: ResultKey, val value: T) : Parcelable {
         fun build(key: ResultKey, value: String?) =
                 StringResultEntry(key, value ?: "")
 
-        fun build(key: ResultKey, value: Date?) =
+        fun build(key: ResultKey, value: Date) =
                 build(key, value, DateCheckType.NO_CHECK)
 
         fun build(key: ResultKey, amount: Int, unitName: String) =
-                StringResultEntry(key, amount.toString() + " " + unitName)
+                StringResultEntry(key, "$amount $unitName")
 
         fun build(key: ResultKey, value: Int) =
                 StringResultEntry(key, value.toString())
@@ -43,11 +43,7 @@ abstract class ResultEntry<T>(val key: ResultKey, val value: T) : Parcelable {
         fun build(key: ResultKey, value: Boolean) =
                 StringResultEntry(key, value.toString())
 
-        fun build(key: ResultKey, value: Date?, checkType: Builder.DateCheckType): ResultEntry<*> {
-            if (value == null) {
-                return StringResultEntry(key, "")
-            }
-
+        fun build(key: ResultKey, value: Date, checkType: Builder.DateCheckType): ResultEntry<*> {
             val entry = DateResultEntry(key, value)
             val currentDate = GregorianCalendar.getInstance().currentDate()
 
