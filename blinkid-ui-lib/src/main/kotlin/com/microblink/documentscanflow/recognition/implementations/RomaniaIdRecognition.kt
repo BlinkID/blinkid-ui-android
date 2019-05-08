@@ -20,7 +20,7 @@ class RomaniaIdRecognition: BaseRecognition() {
         recognizer.setExtractSex(false)
     }
 
-    override fun getSingleSideRecognizers(): List<Recognizer<*, *>> {
+    override fun getSingleSideRecognizers(): List<Recognizer<*>> {
         return listOf(recognizer)
     }
 

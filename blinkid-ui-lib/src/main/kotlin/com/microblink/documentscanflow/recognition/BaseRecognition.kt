@@ -88,9 +88,9 @@ abstract class BaseRecognition(val isFullySupported: Boolean = true) {
         return result
     }
 
-    open fun getCombinedRecognizer(): Recognizer<*, *>? = null
+    open fun getCombinedRecognizer(): Recognizer<*>? = null
 
-    abstract fun getSingleSideRecognizers(): List<Recognizer<*, *>>
+    abstract fun getSingleSideRecognizers(): List<Recognizer<*>>
 
     private fun extractImages() {
         for (recognizer in getAllRecognizers()) {
@@ -135,8 +135,8 @@ abstract class BaseRecognition(val isFullySupported: Boolean = true) {
         }
     }
 
-     private fun getAllRecognizers(): List<Recognizer<*, *>> {
-        val allRecognizers = mutableListOf<Recognizer<*, *>>()
+     private fun getAllRecognizers(): List<Recognizer<*>> {
+        val allRecognizers = mutableListOf<Recognizer<*>>()
         allRecognizers.addAll(getSingleSideRecognizers())
         if (getCombinedRecognizer() != null) {
             allRecognizers.add(getCombinedRecognizer()!!)
@@ -183,7 +183,7 @@ abstract class BaseRecognition(val isFullySupported: Boolean = true) {
         }
     }
 
-    protected fun isCombinedScan(frontResult: Recognizer.Result<*>, backResult: Recognizer.Result<*>): Boolean {
+    protected fun isCombinedScan(frontResult: Recognizer.Result, backResult: Recognizer.Result): Boolean {
         return frontResult.isNotEmpty() && backResult.isNotEmpty()
     }
 

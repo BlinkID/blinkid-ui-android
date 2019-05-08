@@ -16,9 +16,9 @@ internal class RecognizerManager(private val recognitionConfig: RecognitionConfi
                                  frameCallback: FrameCallback) {
 
     private val singleSideSuccessFrameRecognizers: MutableList<SuccessFrameGrabberRecognizer> = mutableListOf()
-    private val singleSideRecognizers: MutableList<Recognizer<*, *>> = mutableListOf()
+    private val singleSideRecognizers: MutableList<Recognizer<*>> = mutableListOf()
 
-    private var combinedRecognizer: Recognizer<*, *>? = null
+    private var combinedRecognizer: Recognizer<*>? = null
     private var combinedSuccessFrameRecognizer: SuccessFrameGrabberRecognizer? = null
 
     private val frameGrabberRecognizer: FrameGrabberRecognizer = FrameGrabberRecognizer(frameCallback)
@@ -32,14 +32,14 @@ internal class RecognizerManager(private val recognitionConfig: RecognitionConfi
         }
     }
 
-    private fun addSingleSideRecognizer(recognizer: Recognizer<*, *>) {
+    private fun addSingleSideRecognizer(recognizer: Recognizer<*>) {
         singleSideRecognizers.add(recognizer)
         if (frameGrabberMode != FrameGrabberMode.NOTHING) {
             singleSideSuccessFrameRecognizers.add(SuccessFrameGrabberRecognizer(recognizer))
         }
     }
 
-    private fun addCombinedRecognizer(recognizer: Recognizer<*, *>) {
+    private fun addCombinedRecognizer(recognizer: Recognizer<*>) {
         combinedRecognizer = recognizer
         if (frameGrabberMode != FrameGrabberMode.NOTHING) {
             combinedSuccessFrameRecognizer = SuccessFrameGrabberRecognizer(recognizer)
@@ -58,7 +58,7 @@ internal class RecognizerManager(private val recognitionConfig: RecognitionConfi
             scanFlowState != ScanFlowState.ANY_SIDE_SCAN && combinedRecognizer != null
 
     private fun buildCombinedRecognizerBundle(): RecognizerBundle {
-        val recognizersForBundle = mutableListOf<Recognizer<*, *>>()
+        val recognizersForBundle = mutableListOf<Recognizer<*>>()
         if (frameGrabberMode == FrameGrabberMode.ALL_FRAMES) {
             recognizersForBundle.add(frameGrabberRecognizer)
         }
@@ -80,7 +80,7 @@ internal class RecognizerManager(private val recognitionConfig: RecognitionConfi
             singleSideRecognizers
         }
 
-        val recognizersForBundle = mutableListOf<Recognizer<*, *>>()
+        val recognizersForBundle = mutableListOf<Recognizer<*>>()
 
         if (frameGrabberMode == FrameGrabberMode.ALL_FRAMES) {
             recognizersForBundle.add(frameGrabberRecognizer)

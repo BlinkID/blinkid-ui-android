@@ -13,7 +13,7 @@ class SwitzerlandPassportRecognition: BaseRecognition() {
     private val mStringCombiner by lazy { StringCombiner(StringCombiner.Country.SWITZERLAND) }
     private val recognizer by lazy { SwitzerlandPassportRecognizer() }
 
-    override fun getSingleSideRecognizers(): List<Recognizer<*, *>> {
+    override fun getSingleSideRecognizers(): List<Recognizer<*>> {
         return listOf(recognizer)
     }
 

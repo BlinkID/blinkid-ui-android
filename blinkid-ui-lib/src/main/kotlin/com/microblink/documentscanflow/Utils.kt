@@ -77,9 +77,9 @@ internal fun ViewGroup.inflate(@LayoutRes layoutRes: Int, attachToRoot: Boolean 
     return LayoutInflater.from(context).inflate(layoutRes, this, attachToRoot)
 }
 
-internal fun Recognizer.Result<*>.isEmpty() = this.resultState == Recognizer.Result.State.Empty
+internal fun Recognizer.Result.isEmpty() = this.resultState == Recognizer.Result.State.Empty
 
-internal fun Recognizer.Result<*>.isNotEmpty() = this.resultState != Recognizer.Result.State.Empty
+internal fun Recognizer.Result.isNotEmpty() = this.resultState != Recognizer.Result.State.Empty
 
 
 internal fun buildId1CardDetectorRecognizer() =

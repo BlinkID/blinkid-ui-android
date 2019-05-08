@@ -52,7 +52,7 @@ class BruneiTemporaryResidencePermitRecognition: BaseTwoSideRecognition() {
         return null
     }
 
-    override fun getSingleSideRecognizers(): List<Recognizer<*, *>> = listOf(frontRecognizer, backRecognizer)
+    override fun getSingleSideRecognizers(): List<Recognizer<*>> = listOf(frontRecognizer, backRecognizer)
 
 
 }

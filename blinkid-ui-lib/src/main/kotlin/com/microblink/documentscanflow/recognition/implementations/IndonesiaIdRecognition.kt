@@ -10,7 +10,7 @@ class IndonesiaIdRecognition : BaseRecognition() {
 
     val recognizer by lazy { IndonesiaIdFrontRecognizer() }
 
-    override fun getSingleSideRecognizers(): List<Recognizer<*, *>> {
+    override fun getSingleSideRecognizers(): List<Recognizer<*>> {
         return listOf(recognizer)
     }
 

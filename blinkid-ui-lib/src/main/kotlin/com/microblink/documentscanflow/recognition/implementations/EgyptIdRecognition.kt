@@ -12,7 +12,7 @@ class EgyptIdRecognition : BaseRecognition() {
     val recognizer by lazy { EgyptIdFrontRecognizer() }
     val backRecognizer by lazy { buildId1CardDetectorRecognizer() }
 
-    override fun getSingleSideRecognizers(): List<Recognizer<*, *>> {
+    override fun getSingleSideRecognizers(): List<Recognizer<*>> {
         return listOf(recognizer, backRecognizer)
     }
 

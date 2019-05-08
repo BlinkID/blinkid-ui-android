@@ -10,7 +10,7 @@ class MalaysiaIkadRecognition : BaseRecognition() {
 
     val recognizer by lazy { MalaysiaIkadFrontRecognizer() }
 
-    override fun getSingleSideRecognizers(): List<Recognizer<*, *>> {
+    override fun getSingleSideRecognizers(): List<Recognizer<*>> {
         return listOf(recognizer)
     }
 

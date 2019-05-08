@@ -15,7 +15,7 @@ class GermanyDlRecognition : BaseRecognition() {
 
     private var title: String? = null
 
-    override fun getSingleSideRecognizers() = listOf<Recognizer<*, *>>(frontRecognizer, backRecognizer)
+    override fun getSingleSideRecognizers() = listOf<Recognizer<*>>(frontRecognizer, backRecognizer)
 
     override fun extractData(): String? {
         extractFrontSide()

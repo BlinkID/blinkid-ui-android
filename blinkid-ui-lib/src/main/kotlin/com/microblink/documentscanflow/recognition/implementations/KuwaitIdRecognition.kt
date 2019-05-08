@@ -43,7 +43,7 @@ class KuwaitIdRecognition : BaseTwoSideRecognition() {
         return null
     }
 
-    override fun getSingleSideRecognizers(): List<Recognizer<*, *>> {
+    override fun getSingleSideRecognizers(): List<Recognizer<*>> {
         return listOf(frontRecognizer, backRecognizer)
     }
 

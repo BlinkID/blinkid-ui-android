@@ -13,7 +13,7 @@ class SwedenDlRecognition : BaseRecognition() {
     private val frontRecognizer by lazy { SwedenDlFrontRecognizer() }
     private val backRecognizer by lazy { buildId1CardDetectorRecognizer() }
 
-    override fun getSingleSideRecognizers(): List<Recognizer<*, *>> {
+    override fun getSingleSideRecognizers(): List<Recognizer<*>> {
         return listOf(frontRecognizer, backRecognizer)
     }
 

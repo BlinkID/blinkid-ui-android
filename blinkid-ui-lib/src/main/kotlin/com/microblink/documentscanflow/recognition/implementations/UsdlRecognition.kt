@@ -13,7 +13,7 @@ open class UsdlRecognition : BaseRecognition() {
     private val recognizer by lazy { UsdlRecognizer() }
     private val faceRecognizer by lazy { DocumentFaceRecognizer() }
 
-    override fun getSingleSideRecognizers(): List<Recognizer<*, *>> {
+    override fun getSingleSideRecognizers(): List<Recognizer<*>> {
         return listOf(faceRecognizer, recognizer)
     }
 

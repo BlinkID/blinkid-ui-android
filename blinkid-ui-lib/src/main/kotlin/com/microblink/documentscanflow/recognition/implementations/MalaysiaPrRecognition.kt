@@ -14,7 +14,7 @@ class MalaysiaPrRecognition: BaseRecognition(true) {
 
     val result by lazy { frontRecognizer.result }
 
-    override fun getSingleSideRecognizers(): List<Recognizer<*, *>> = listOf(frontRecognizer, backRecognizer)
+    override fun getSingleSideRecognizers(): List<Recognizer<*>> = listOf(frontRecognizer, backRecognizer)
 
     override fun extractData(): String? {
         if (result.isNotEmpty()) {

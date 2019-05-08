@@ -13,7 +13,7 @@ class GermanyOldIdRecognition : BaseRecognition() {
         buildId2VerticalCardDetectorRecognizer()
     }
 
-    override fun getSingleSideRecognizers(): List<Recognizer<*, *>> {
+    override fun getSingleSideRecognizers(): List<Recognizer<*>> {
         return listOf(recognizer, backRecognizer)
     }
 

@@ -27,6 +27,6 @@ class MexicoIdRecognition : BaseRecognition() {
         return result.fullName
     }
 
-    override fun getSingleSideRecognizers() = listOf<Recognizer<*, *>>(frontRecognizer, backRecognizer)
+    override fun getSingleSideRecognizers() = listOf<Recognizer<*>>(frontRecognizer, backRecognizer)
 
 }

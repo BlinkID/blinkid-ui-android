@@ -17,7 +17,7 @@ class MoroccoIdRecognition : BaseTwoSideRecognition() {
     private val frontResult by lazy { frontRecognizer.result }
     private val backResult by lazy { backRecognizer.result }
 
-    override fun getSingleSideRecognizers(): List<Recognizer<*, *>> {
+    override fun getSingleSideRecognizers(): List<Recognizer<*>> {
         return listOf(frontRecognizer, backRecognizer)
     }
 

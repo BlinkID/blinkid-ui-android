@@ -12,7 +12,7 @@ class MalaysiaTenteraRecognition : BaseRecognition() {
     private val recognizerFront by lazy { MalaysiaMyTenteraFrontRecognizer() }
     private val recognizerBack by lazy { buildId1CardDetectorRecognizer() }
 
-    override fun getSingleSideRecognizers(): List<Recognizer<*, *>> {
+    override fun getSingleSideRecognizers(): List<Recognizer<*>> {
         return listOf(recognizerFront, recognizerBack)
     }
 

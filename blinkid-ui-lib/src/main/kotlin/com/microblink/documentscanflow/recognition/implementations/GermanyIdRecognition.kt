@@ -21,11 +21,11 @@ class GermanyIdRecognition : BaseTwoSideRecognition() {
     val combinedRecognizer by lazy { GermanyCombinedRecognizer() }
     val combinedResult by lazy { combinedRecognizer.result }
 
-    override fun getSingleSideRecognizers(): List<Recognizer<*, *>> {
+    override fun getSingleSideRecognizers(): List<Recognizer<*>> {
         return listOf(frontRecognizer, backRecognizer)
     }
 
-    override fun getCombinedRecognizer(): Recognizer<*, *>? {
+    override fun getCombinedRecognizer(): Recognizer<*>? {
         return combinedRecognizer
     }
 

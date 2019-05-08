@@ -50,6 +50,6 @@ class VictoriaDlRecognition : BaseTwoSideRecognition() {
         return null
     }
 
-    override fun getSingleSideRecognizers() = listOf<Recognizer<*, *>>(frontRecognizer, backRecognizer)
+    override fun getSingleSideRecognizers() = listOf<Recognizer<*>>(frontRecognizer, backRecognizer)
 
 }

@@ -35,7 +35,7 @@ class CyprusIdRecognition : BaseTwoSideRecognition() {
         return null
     }
 
-    override fun getSingleSideRecognizers() = listOf<Recognizer<*, *>>(frontRecognizer, backRecognizer)
+    override fun getSingleSideRecognizers() = listOf<Recognizer<*>>(frontRecognizer, backRecognizer)
 
     private fun extractFront(result: CyprusIdFrontRecognizer.Result) {
         add(IDENTITY_NUMBER, result.idNumber)

@@ -13,7 +13,7 @@ class SpainDlRecognition : BaseRecognition() {
     private val frontRecognizer by lazy { SpainDlFrontRecognizer() }
     private val backRecognizer by lazy { buildId1CardDetectorRecognizer() }
 
-    override fun getSingleSideRecognizers() = listOf<Recognizer<*, *>>(frontRecognizer, backRecognizer)
+    override fun getSingleSideRecognizers() = listOf<Recognizer<*>>(frontRecognizer, backRecognizer)
 
     override fun extractData(): String? {
         val result = frontRecognizer.result

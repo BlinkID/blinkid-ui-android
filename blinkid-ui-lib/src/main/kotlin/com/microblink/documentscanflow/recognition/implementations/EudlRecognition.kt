@@ -14,7 +14,7 @@ class EudlRecognition(eudlCountry: EudlCountry) : BaseRecognition() {
     val recognizer by lazy { EudlRecognizer(eudlCountry) }
     private val backRecognizer by lazy { buildId1CardDetectorRecognizer() }
 
-    override fun getSingleSideRecognizers() = listOf<Recognizer<*, *>>(recognizer, backRecognizer)
+    override fun getSingleSideRecognizers() = listOf<Recognizer<*>>(recognizer, backRecognizer)
 
 
     override fun extractData(): String? {

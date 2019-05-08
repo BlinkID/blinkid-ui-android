@@ -12,7 +12,7 @@ class AustriaPassportRecognition : BaseRecognition() {
 
     val recognizer by lazy { AustriaPassportRecognizer() }
 
-    override fun getSingleSideRecognizers(): List<Recognizer<*, *>> {
+    override fun getSingleSideRecognizers(): List<Recognizer<*>> {
         return listOf(recognizer)
     }
 

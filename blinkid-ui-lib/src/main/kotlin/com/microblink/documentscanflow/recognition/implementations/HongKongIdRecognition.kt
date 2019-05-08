@@ -12,7 +12,7 @@ class HongKongIdRecognition : BaseRecognition() {
     private val recognizer by lazy { HongKongIdFrontRecognizer() }
     private val recognizerBack by lazy { buildId1CardDetectorRecognizer() }
 
-    override fun getSingleSideRecognizers(): List<Recognizer<*, *>> {
+    override fun getSingleSideRecognizers(): List<Recognizer<*>> {
         return listOf(recognizer, recognizerBack)
     }
 

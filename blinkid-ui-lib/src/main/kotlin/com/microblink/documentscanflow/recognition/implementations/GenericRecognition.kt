@@ -12,7 +12,7 @@ import com.microblink.entities.recognizers.blinkid.passport.PassportRecognizer
 
 class GenericRecognition(isFullySupported: Boolean, private val recognizerProvider: RecognizerProvider) : BaseRecognition(isFullySupported) {
 
-    override fun getSingleSideRecognizers(): List<Recognizer<*, *>> {
+    override fun getSingleSideRecognizers(): List<Recognizer<*>> {
         return recognizerProvider.recognizers
     }
 
@@ -90,7 +90,7 @@ class GenericRecognition(isFullySupported: Boolean, private val recognizerProvid
 
         fun faceMrtd(isFullySupported: Boolean): GenericRecognition {
             return GenericRecognition(isFullySupported, object: RecognizerProvider() {
-                override fun createRecognizers(): List<Recognizer<*, *>> {
+                override fun createRecognizers(): List<Recognizer<*>> {
                     return listOf(DocumentFaceRecognizer(), MrtdRecognizer())
                 }
             })
