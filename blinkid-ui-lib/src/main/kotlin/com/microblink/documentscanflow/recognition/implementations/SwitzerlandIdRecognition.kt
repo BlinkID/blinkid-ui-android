@@ -52,7 +52,7 @@ class SwitzerlandIdRecognition: BaseTwoSideRecognition() {
         var firstName: String? = ""
         var lastName: String? = ""
         when {
-            isCombinedScan(frontResult, backResult) -> {
+            isTwoSideScan(frontResult, backResult) -> {
                 val stringCombiner = StringCombiner(StringCombiner.Country.SWITZERLAND)
                 firstName = stringCombiner.combineMRZString(backResult.mrzResult.secondaryId, frontResult.givenName)
                 lastName = stringCombiner.combineMRZString(backResult.mrzResult.primaryId, frontResult.surname)
@@ -68,5 +68,8 @@ class SwitzerlandIdRecognition: BaseTwoSideRecognition() {
         }
         return FormattingUtils.formatResultTitle(firstName, lastName)
     }
+
+    private fun isTwoSideScan(frontResult: Recognizer.Result, backResult: Recognizer.Result) =
+        frontResult.isNotEmpty() && backResult.isNotEmpty()
 
 }

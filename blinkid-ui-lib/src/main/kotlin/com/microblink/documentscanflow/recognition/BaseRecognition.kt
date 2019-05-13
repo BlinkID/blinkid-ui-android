@@ -1,6 +1,5 @@
 package com.microblink.documentscanflow.recognition
 
-import com.microblink.documentscanflow.isNotEmpty
 import com.microblink.documentscanflow.recognition.resultentry.ResultEntry
 import com.microblink.documentscanflow.recognition.resultentry.ResultKey
 import com.microblink.documentscanflow.recognition.resultentry.ResultKey.*
@@ -181,10 +180,6 @@ abstract class BaseRecognition(val isFullySupported: Boolean = true) {
                     date,
                     ResultEntry.Builder.DateCheckType.IN_FUTURE))
         }
-    }
-
-    protected fun isCombinedScan(frontResult: Recognizer.Result, backResult: Recognizer.Result): Boolean {
-        return frontResult.isNotEmpty() && backResult.isNotEmpty()
     }
 
     protected fun extractMrzResult(mrzResult: MrzResult) {

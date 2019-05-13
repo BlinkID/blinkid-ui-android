@@ -4,22 +4,16 @@ import com.microblink.documentscanflow.recognition.resultentry.ResultKey.*
 import com.microblink.documentscanflow.isNotEmpty
 import com.microblink.documentscanflow.recognition.BaseTwoSideRecognition
 import com.microblink.documentscanflow.recognition.ResultValidator
+import com.microblink.documentscanflow.recognition.TwoSideRecognition
 import com.microblink.entities.recognizers.Recognizer
 import com.microblink.entities.recognizers.blinkid.malaysia.MalaysiaMyKadBackRecognizer
 import com.microblink.entities.recognizers.blinkid.malaysia.MalaysiaMyKadFrontRecognizer
 
 class MalaysiaMyKadRecognition
-    : BaseTwoSideRecognition() {
+    : TwoSideRecognition<MalaysiaMyKadFrontRecognizer.Result, MalaysiaMyKadBackRecognizer.Result>() {
 
-    val frontRecognizer by lazy { MalaysiaMyKadFrontRecognizer() }
-    val backRecognizer by lazy { MalaysiaMyKadBackRecognizer() }
-
-    val frontResult by lazy { frontRecognizer.result }
-    val backResult by lazy { backRecognizer.result }
-
-    override fun getSingleSideRecognizers(): List<Recognizer<*>> {
-        return listOf(frontRecognizer, backRecognizer)
-    }
+    override val frontRecognizer by lazy { MalaysiaMyKadFrontRecognizer() }
+    override val backRecognizer by lazy { MalaysiaMyKadBackRecognizer() }
 
     override fun createValidator(): ResultValidator {
         return ResultValidator()
@@ -27,22 +21,17 @@ class MalaysiaMyKadRecognition
                 .match(frontResult.birthDate.date, backResult.dateOfBirth.date)
     }
 
-    override fun extractFields() {
+    override fun extractData(frontResult: MalaysiaMyKadFrontRecognizer.Result, backResult: MalaysiaMyKadBackRecognizer.Result): String? {
+        var title: String? = null
         if (frontResult.isNotEmpty()) {
             extractFrontSide()
+            title = frontResult.fullName
         }
         if (backResult.isNotEmpty()) {
             extractBackSide()
+            if (title == null) title = backResult.nric
         }
-    }
-
-    override fun getResultTitle(): String? {
-        if (frontResult.isNotEmpty()) {
-            return frontResult.fullName
-        } else if (backResult.isNotEmpty()) {
-            return backResult.nric
-        }
-        return null
+        return title
     }
 
     private fun extractFrontSide() {

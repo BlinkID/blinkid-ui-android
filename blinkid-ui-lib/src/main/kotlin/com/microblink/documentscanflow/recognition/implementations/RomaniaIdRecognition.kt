@@ -1,35 +1,26 @@
 package com.microblink.documentscanflow.recognition.implementations
 
-import com.microblink.documentscanflow.isEmpty
-import com.microblink.documentscanflow.recognition.BaseRecognition
-import com.microblink.entities.recognizers.Recognizer
+import com.microblink.documentscanflow.recognition.SingleSideRecognition
 import com.microblink.entities.recognizers.blinkid.romania.RomaniaIdFrontRecognizer
 
-class RomaniaIdRecognition: BaseRecognition() {
+class RomaniaIdRecognition: SingleSideRecognition<RomaniaIdFrontRecognizer.Result>() {
 
-    val recognizer by lazy { RomaniaIdFrontRecognizer() }
+    override val recognizer by lazy { RomaniaIdFrontRecognizer() }
 
     override fun setupRecognizers() {
-        recognizer.setExtractAddress(false)
-        recognizer.setExtractFirstName(false)
-        recognizer.setExtractSurname(false)
-        recognizer.setExtractIssuedBy(false)
-        recognizer.setExtractPlaceOfBirth(false)
-        recognizer.setExtractDateOfIssue(false)
-        recognizer.setExtractDateOfExpiry(false)
-        recognizer.setExtractSex(false)
-    }
-
-    override fun getSingleSideRecognizers(): List<Recognizer<*>> {
-        return listOf(recognizer)
-    }
-
-    override fun extractData(): String? {
-        val result = recognizer.result
-        if (result.isEmpty()) {
-            return null
+        recognizer.apply {
+            setExtractAddress(false)
+            setExtractFirstName(false)
+            setExtractSurname(false)
+            setExtractIssuedBy(false)
+            setExtractPlaceOfBirth(false)
+            setExtractDateOfIssue(false)
+            setExtractDateOfExpiry(false)
+            setExtractSex(false)
         }
+    }
 
+    override fun extractData(result: RomaniaIdFrontRecognizer.Result): String? {
         extractMrzResult(result.mrzResult)
         return buildMrtdTitle(result.mrzResult)
     }
