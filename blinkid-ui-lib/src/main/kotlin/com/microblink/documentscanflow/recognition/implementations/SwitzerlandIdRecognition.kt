@@ -2,29 +2,20 @@ package com.microblink.documentscanflow.recognition.implementations
 
 import com.microblink.documentscanflow.recognition.resultentry.ResultKey.*
 import com.microblink.documentscanflow.isNotEmpty
-import com.microblink.documentscanflow.recognition.BaseTwoSideRecognition
 import com.microblink.documentscanflow.recognition.util.FormattingUtils
 import com.microblink.documentscanflow.recognition.ResultValidator
+import com.microblink.documentscanflow.recognition.TwoSideRecognition
 import com.microblink.documentscanflow.recognition.util.StringCombiner
 import com.microblink.entities.recognizers.Recognizer
 import com.microblink.entities.recognizers.blinkid.switzerland.SwitzerlandIdBackRecognizer
 import com.microblink.entities.recognizers.blinkid.switzerland.SwitzerlandIdFrontRecognizer
 
-class SwitzerlandIdRecognition: BaseTwoSideRecognition() {
+class SwitzerlandIdRecognition: TwoSideRecognition<SwitzerlandIdFrontRecognizer.Result, SwitzerlandIdBackRecognizer.Result>() {
 
-    val frontRecognizer by lazy { SwitzerlandIdFrontRecognizer() }
-    val backRecognizer by lazy { SwitzerlandIdBackRecognizer() }
+    override val frontRecognizer by lazy { SwitzerlandIdFrontRecognizer() }
+    override val backRecognizer by lazy { SwitzerlandIdBackRecognizer() }
 
-    val frontResult by lazy { frontRecognizer.result }
-    val backResult by lazy { backRecognizer.result }
-
-    override fun getSingleSideRecognizers(): List<Recognizer<*>> {
-        return listOf(frontRecognizer, backRecognizer)
-    }
-
-    override fun createValidator(): ResultValidator {
-        return ResultValidator().match(frontResult.dateOfBirth.date, backResult.mrzResult.dateOfBirth.date)
-    }
+    override fun createValidator() = ResultValidator().match(frontResult.dateOfBirth.date, backResult.mrzResult.dateOfBirth.date)
 
     override fun extractFields() {
         if (frontResult.isNotEmpty()) {

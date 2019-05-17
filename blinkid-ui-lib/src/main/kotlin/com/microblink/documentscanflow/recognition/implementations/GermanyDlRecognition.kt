@@ -12,8 +12,7 @@ class GermanyDlRecognition : TwoSideRecognition<GermanyDlFrontRecognizer.Result,
     override val frontRecognizer by lazy { GermanyDlFrontRecognizer() }
     override val backRecognizer by lazy { GermanyDlBackRecognizer() }
 
-    override fun extractData(frontResult: GermanyDlFrontRecognizer.Result, backResult: GermanyDlBackRecognizer.Result): String? {
-        var title: String? = null
+    override fun extractFields() {
         if (frontResult.isNotEmpty()) {
             val firstName = frontResult.firstName
             val lastName = frontResult.lastName
@@ -27,13 +26,15 @@ class GermanyDlRecognition : TwoSideRecognition<GermanyDlFrontRecognizer.Result,
             add(DATE_OF_ISSUE, frontResult.dateOfIssue)
             add(ISSUING_AUTHORITY, frontResult.issuingAuthority)
             addDateOfExpiry(frontResult.dateOfExpiry.date)
-
-            title = FormattingUtils.formatResultTitle(firstName, lastName)
         }
         if (backResult.isNotEmpty()) {
             add(DATE_OF_ISSUE_FOR_B_CATEGORY, backResult.dateOfIssueB10)
         }
-        return title
+    }
+
+    override fun getResultTitle(): String? {
+        return if (frontResult.isNotEmpty()) FormattingUtils.formatResultTitle(frontResult.firstName, frontResult.lastName)
+        else null
     }
 
 }

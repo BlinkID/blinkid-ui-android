@@ -1,10 +1,7 @@
 package com.microblink.documentscanflow.recognition.implementations
 
-import com.microblink.documentscanflow.recognition.resultentry.ResultKey.*
-import com.microblink.documentscanflow.isEmpty
-import com.microblink.documentscanflow.recognition.BaseRecognition
 import com.microblink.documentscanflow.recognition.SingleSideRecognition
-import com.microblink.entities.recognizers.Recognizer
+import com.microblink.documentscanflow.recognition.resultentry.ResultKey.*
 import com.microblink.entities.recognizers.blinkid.malaysia.MalaysiaIkadFrontRecognizer
 
 class MalaysiaIkadRecognition : SingleSideRecognition<MalaysiaIkadFrontRecognizer.Result>() {

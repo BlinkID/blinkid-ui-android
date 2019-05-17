@@ -1,25 +1,17 @@
 package com.microblink.documentscanflow.recognition.implementations
 
-import com.microblink.documentscanflow.recognition.resultentry.ResultKey.*
 import com.microblink.documentscanflow.isNotEmpty
-import com.microblink.documentscanflow.recognition.BaseTwoSideRecognition
 import com.microblink.documentscanflow.recognition.ResultValidator
+import com.microblink.documentscanflow.recognition.TwoSideRecognition
+import com.microblink.documentscanflow.recognition.resultentry.ResultKey.*
 import com.microblink.documentscanflow.sanitizeMRZString
-import com.microblink.entities.recognizers.Recognizer
 import com.microblink.entities.recognizers.blinkid.unitedArabEmirates.UnitedArabEmiratesIdBackRecognizer
 import com.microblink.entities.recognizers.blinkid.unitedArabEmirates.UnitedArabEmiratesIdFrontRecognizer
 
-class UnitedArabEmiratesIdRecognition: BaseTwoSideRecognition() {
+class UnitedArabEmiratesIdRecognition: TwoSideRecognition<UnitedArabEmiratesIdFrontRecognizer.Result, UnitedArabEmiratesIdBackRecognizer.Result>() {
 
-    val frontRecognizer by lazy { UnitedArabEmiratesIdFrontRecognizer() }
-    val backRecognizer by lazy { UnitedArabEmiratesIdBackRecognizer() }
-
-    val frontResult by lazy { frontRecognizer.result }
-    val backResult by lazy { backRecognizer.result }
-
-    override fun getSingleSideRecognizers(): List<Recognizer<*>> {
-        return listOf(frontRecognizer, backRecognizer)
-    }
+    override val frontRecognizer by lazy { UnitedArabEmiratesIdFrontRecognizer() }
+    override val backRecognizer by lazy { UnitedArabEmiratesIdBackRecognizer() }
 
     override fun createValidator(): ResultValidator {
         val frontIdNumber = frontResult.idNumber.replace("-", "")

@@ -254,17 +254,21 @@ abstract class TwoSideRecognition<FrontResult : Recognizer.Result, BackResult : 
 
     override fun extractData(): String? {
         if (shouldValidate) {
-            val isValid = createValidator().isResultValid
-            if (!isValid) {
+            val validator = createValidator()
+            if (!validator.isResultValid) {
                 throw ResultMergeException()
             }
         }
-        return extractData(frontResult, backResult)
+
+        extractFields()
+        return getResultTitle()
     }
 
-    abstract fun extractData(frontResult: FrontResult, backResult: BackResult): String?
+    internal open fun createValidator(): ResultValidator = ResultValidator()
 
-    internal open fun createValidator() = ResultValidator()
+    abstract fun extractFields()
+
+    abstract fun getResultTitle(): String?
 
 }
 
@@ -305,29 +309,6 @@ abstract class CombinedRecognition<FrontResult : Recognizer.Result,
     abstract fun extractFrontResult(frontResult: FrontResult): String?
 
     abstract fun extractBackResult(backResult: BackResult): String?
-
-}
-
-abstract class BaseTwoSideRecognition
-    : BaseRecognition() {
-
-    override fun extractData(): String? {
-        if (shouldValidate) {
-            val validator = createValidator()
-            if (!validator.isResultValid) {
-                throw ResultMergeException()
-            }
-        }
-
-        extractFields()
-        return getResultTitle()
-    }
-
-    internal abstract fun createValidator(): ResultValidator
-
-    abstract fun extractFields()
-
-    abstract fun getResultTitle(): String?
 
 }
 

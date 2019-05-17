@@ -1,20 +1,16 @@
 package com.microblink.documentscanflow.recognition.implementations
 
 import com.microblink.documentscanflow.isNotEmpty
-import com.microblink.documentscanflow.recognition.BaseTwoSideRecognition
 import com.microblink.documentscanflow.recognition.ResultValidator
-import com.microblink.entities.recognizers.Recognizer
+import com.microblink.documentscanflow.recognition.TwoSideRecognition
+import com.microblink.documentscanflow.recognition.resultentry.ResultKey.*
 import com.microblink.entities.recognizers.blinkid.australia.AustraliaDlBackRecognizer
 import com.microblink.entities.recognizers.blinkid.australia.AustraliaDlFrontRecognizer
-import com.microblink.documentscanflow.recognition.resultentry.ResultKey.*
 
-class VictoriaDlRecognition : BaseTwoSideRecognition() {
+class VictoriaDlRecognition : TwoSideRecognition<AustraliaDlFrontRecognizer.Result, AustraliaDlBackRecognizer.Result>() {
 
-    private val frontRecognizer by lazy { AustraliaDlFrontRecognizer() }
-    private val backRecognizer by lazy { AustraliaDlBackRecognizer() }
-
-    private val frontResult by lazy { frontRecognizer.result }
-    private val backResult by lazy { backRecognizer.result }
+    override val frontRecognizer by lazy { AustraliaDlFrontRecognizer() }
+    override val backRecognizer by lazy { AustraliaDlBackRecognizer() }
 
     override fun createValidator() = ResultValidator().match(frontResult.licenceExpiry, backResult.licenceExpiry)
 
@@ -49,7 +45,5 @@ class VictoriaDlRecognition : BaseTwoSideRecognition() {
         }
         return null
     }
-
-    override fun getSingleSideRecognizers() = listOf<Recognizer<*>>(frontRecognizer, backRecognizer)
 
 }

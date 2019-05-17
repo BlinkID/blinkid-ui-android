@@ -1,23 +1,17 @@
 package com.microblink.documentscanflow.recognition.implementations
 
 import com.microblink.documentscanflow.isNotEmpty
-import com.microblink.documentscanflow.recognition.BaseTwoSideRecognition
-import com.microblink.documentscanflow.recognition.ResultValidator
-import com.microblink.entities.recognizers.Recognizer
+import com.microblink.documentscanflow.recognition.TwoSideRecognition
 import com.microblink.entities.recognizers.blinkid.brunei.BruneiResidencePermitBackRecognizer
 import com.microblink.entities.recognizers.blinkid.brunei.BruneiResidencePermitFrontRecognizer
 import com.microblink.documentscanflow.recognition.resultentry.ResultKey.*
 
 
-class BruneiResidencePermitRecognition: BaseTwoSideRecognition() {
+class BruneiResidencePermitRecognition :
+    TwoSideRecognition<BruneiResidencePermitFrontRecognizer.Result, BruneiResidencePermitBackRecognizer.Result>() {
 
-    private val frontRecognizer by lazy { BruneiResidencePermitFrontRecognizer() }
-    private val backRecognizer by lazy { BruneiResidencePermitBackRecognizer() }
-
-    private val frontResult by lazy { frontRecognizer.result }
-    private val backResult by lazy { backRecognizer.result }
-
-    override fun createValidator() = ResultValidator()
+    override val frontRecognizer by lazy { BruneiResidencePermitFrontRecognizer() }
+    override val backRecognizer by lazy { BruneiResidencePermitBackRecognizer() }
 
     override fun extractFields() {
         if (frontResult.isNotEmpty()) {
@@ -52,8 +46,5 @@ class BruneiResidencePermitRecognition: BaseTwoSideRecognition() {
         }
         return null
     }
-
-    override fun getSingleSideRecognizers(): List<Recognizer<*>> = listOf(frontRecognizer, backRecognizer)
-
 
 }

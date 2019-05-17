@@ -1,12 +1,9 @@
 package com.microblink.documentscanflow.recognition.implementations
 
-import com.microblink.documentscanflow.recognition.resultentry.ResultKey.*
-import com.microblink.documentscanflow.isEmpty
-import com.microblink.documentscanflow.recognition.BaseRecognition
 import com.microblink.documentscanflow.recognition.SingleSideRecognition
+import com.microblink.documentscanflow.recognition.resultentry.ResultKey.*
 import com.microblink.documentscanflow.recognition.util.FormattingUtils
 import com.microblink.documentscanflow.recognition.util.StringCombiner
-import com.microblink.entities.recognizers.Recognizer
 import com.microblink.entities.recognizers.blinkid.switzerland.SwitzerlandPassportRecognizer
 
 class SwitzerlandPassportRecognition: SingleSideRecognition<SwitzerlandPassportRecognizer.Result>() {

@@ -1,11 +1,9 @@
 package com.microblink.documentscanflow.recognition.implementations
 
-import com.microblink.documentscanflow.recognition.resultentry.ResultKey.*
 import com.microblink.documentscanflow.isNotEmpty
-import com.microblink.documentscanflow.recognition.BaseTwoSideRecognition
 import com.microblink.documentscanflow.recognition.ResultValidator
 import com.microblink.documentscanflow.recognition.TwoSideRecognition
-import com.microblink.entities.recognizers.Recognizer
+import com.microblink.documentscanflow.recognition.resultentry.ResultKey.*
 import com.microblink.entities.recognizers.blinkid.malaysia.MalaysiaMyKadBackRecognizer
 import com.microblink.entities.recognizers.blinkid.malaysia.MalaysiaMyKadFrontRecognizer
 
@@ -21,17 +19,21 @@ class MalaysiaMyKadRecognition
                 .match(frontResult.birthDate.date, backResult.dateOfBirth.date)
     }
 
-    override fun extractData(frontResult: MalaysiaMyKadFrontRecognizer.Result, backResult: MalaysiaMyKadBackRecognizer.Result): String? {
-        var title: String? = null
+    override fun extractFields() {
         if (frontResult.isNotEmpty()) {
             extractFrontSide()
-            title = frontResult.fullName
         }
         if (backResult.isNotEmpty()) {
             extractBackSide()
-            if (title == null) title = backResult.nric
         }
-        return title
+    }
+
+    override fun getResultTitle(): String? {
+        return when {
+            frontResult.isNotEmpty() -> frontResult.fullName
+            backResult.isNotEmpty() -> backResult.nric
+            else -> null
+        }
     }
 
     private fun extractFrontSide() {

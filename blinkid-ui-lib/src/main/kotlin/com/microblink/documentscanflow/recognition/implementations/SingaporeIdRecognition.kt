@@ -1,55 +1,18 @@
 package com.microblink.documentscanflow.recognition.implementations
 
+import com.microblink.documentscanflow.recognition.CombinedRecognition
 import com.microblink.documentscanflow.recognition.resultentry.ResultKey.*
-import com.microblink.documentscanflow.isEmpty
-import com.microblink.documentscanflow.isNotEmpty
-import com.microblink.documentscanflow.recognition.BaseTwoSideRecognition
-import com.microblink.documentscanflow.recognition.ResultValidator
-import com.microblink.entities.recognizers.Recognizer
 import com.microblink.entities.recognizers.blinkid.singapore.SingaporeCombinedRecognizer
 import com.microblink.entities.recognizers.blinkid.singapore.SingaporeIdBackRecognizer
 import com.microblink.entities.recognizers.blinkid.singapore.SingaporeIdFrontRecognizer
 
-class SingaporeIdRecognition: BaseTwoSideRecognition() {
+class SingaporeIdRecognition: CombinedRecognition<SingaporeIdFrontRecognizer.Result, SingaporeIdBackRecognizer.Result, SingaporeCombinedRecognizer.Result>() {
 
-    val frontRecognizer by lazy { SingaporeIdFrontRecognizer() }
-    val backRecognizer by lazy { SingaporeIdBackRecognizer() }
+    override val frontRecognizer by lazy { SingaporeIdFrontRecognizer() }
+    override val backRecognizer by lazy { SingaporeIdBackRecognizer() }
+    override val combRecognizer by lazy { SingaporeCombinedRecognizer() }
 
-    val frontResult by lazy { frontRecognizer.result }
-    val backResult by lazy { backRecognizer.result }
-
-    val combinedRecognizer by lazy { SingaporeCombinedRecognizer() }
-    val combinedResult by lazy { combinedRecognizer.result }
-
-    override fun getSingleSideRecognizers(): List<Recognizer<*>> {
-        return listOf(frontRecognizer, backRecognizer)
-    }
-
-    override fun getCombinedRecognizer(): Recognizer<*>? {
-        return combinedRecognizer
-    }
-
-    override fun createValidator(): ResultValidator {
-        return ResultValidator().match(combinedResult)
-    }
-
-    override fun extractFields() {
-        if (combinedResult.isNotEmpty()) {
-            extractCombinedResult()
-        }
-        extractFrontSide()
-        extractBackSide()
-    }
-
-    override fun getResultTitle(): String? {
-        return if (combinedResult.isNotEmpty()) {
-            combinedResult.name
-        } else {
-            frontResult.name
-        }
-    }
-
-    private fun extractCombinedResult() {
+    override fun extractCombinedResult(combinedResult: SingaporeCombinedRecognizer.Result): String? {
         add(DOCUMENT_NUMBER, combinedResult.identityCardNumber)
         add(FULL_NAME, combinedResult.name)
         add(RACE, combinedResult.race)
@@ -59,29 +22,24 @@ class SingaporeIdRecognition: BaseTwoSideRecognition() {
         add(BLOOD_GROUP, combinedResult.bloodGroup)
         add(DATE_OF_ISSUE, combinedResult.dateOfIssue)
         add(ADDRESS, combinedResult.address)
+        return combinedResult.name
     }
 
-    private fun extractFrontSide() {
-        if (frontResult.isEmpty()) {
-            return
-        }
-
+    override fun extractFrontResult(frontResult: SingaporeIdFrontRecognizer.Result): String? {
         add(DOCUMENT_NUMBER, frontResult.identityCardNumber)
         add(FULL_NAME, frontResult.name)
         add(RACE, frontResult.race)
         add(DATE_OF_BIRTH, frontResult.dateOfBirth)
         add(SEX, frontResult.sex)
         add(COUNTRY_OF_BIRTH, frontResult.countryOfBirth)
+        return frontResult.name
     }
 
-    private fun extractBackSide() {
-        if (backResult.isEmpty()) {
-            return
-        }
-
+    override fun extractBackResult(backResult: SingaporeIdBackRecognizer.Result): String? {
         add(DOCUMENT_NUMBER, backResult.cardNumber)
         add(DATE_OF_ISSUE, backResult.dateOfIssue)
         add(ADDRESS, backResult.address)
+        return null
     }
     
 }
