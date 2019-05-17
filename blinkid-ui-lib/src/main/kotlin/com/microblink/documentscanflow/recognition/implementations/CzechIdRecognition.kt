@@ -11,7 +11,7 @@ class CzechIdRecognition : CombinedRecognition<CzechiaIdFrontRecognizer.Result, 
 
     override val frontRecognizer by lazy { CzechiaIdFrontRecognizer() }
     override val backRecognizer by lazy { CzechiaIdBackRecognizer() }
-    override val combRecognizer by lazy { CzechiaCombinedRecognizer() }
+    override val combinedRecognizer by lazy { CzechiaCombinedRecognizer() }
 
     override fun extractCombinedResult(combinedResult: CzechiaCombinedRecognizer.Result): String? {
         add(LAST_NAME, combinedResult.surname)

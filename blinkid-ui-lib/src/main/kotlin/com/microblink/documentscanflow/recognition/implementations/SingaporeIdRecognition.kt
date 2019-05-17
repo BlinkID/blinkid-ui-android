@@ -10,7 +10,7 @@ class SingaporeIdRecognition: CombinedRecognition<SingaporeIdFrontRecognizer.Res
 
     override val frontRecognizer by lazy { SingaporeIdFrontRecognizer() }
     override val backRecognizer by lazy { SingaporeIdBackRecognizer() }
-    override val combRecognizer by lazy { SingaporeCombinedRecognizer() }
+    override val combinedRecognizer by lazy { SingaporeCombinedRecognizer() }
 
     override fun extractCombinedResult(combinedResult: SingaporeCombinedRecognizer.Result): String? {
         add(DOCUMENT_NUMBER, combinedResult.identityCardNumber)

@@ -13,7 +13,7 @@ class JordanIdRecognition :
 
     override val frontRecognizer by lazy { JordanIdFrontRecognizer() }
     override val backRecognizer by lazy { JordanIdBackRecognizer() }
-    override val combRecognizer by lazy { JordanCombinedRecognizer() }
+    override val combinedRecognizer by lazy { JordanCombinedRecognizer() }
 
     override fun extractCombinedResult(combinedResult: JordanCombinedRecognizer.Result): String? {
         add(FULL_NAME, combinedResult.name)

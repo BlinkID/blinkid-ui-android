@@ -30,9 +30,9 @@ import com.microblink.results.date.DateResult
 
 sealed class BaseRecognition(val isFullySupported: Boolean = true) {
 
-    protected val resultEntries: MutableSet<ResultEntry<*>> = LinkedHashSet()
     protected var shouldValidate = false
 
+    private val resultEntries: MutableSet<ResultEntry<*>> = LinkedHashSet()
     private lateinit var entryBuilder: ResultEntry.Builder
     private var faceImage: Image? = null
     private var signatureImage: Image? = null
@@ -65,9 +65,9 @@ sealed class BaseRecognition(val isFullySupported: Boolean = true) {
         setupDone = true
     }
 
-    fun canScanBothSides() = getSingleSideRecognizers().size == 2 || getCombinedRecognizer() != null
+    abstract fun canScanBothSides(): Boolean
 
-    open fun setupRecognizers() {
+    protected open fun setupRecognizers() {
         // nothing, override if needed
     }
 
@@ -94,8 +94,6 @@ sealed class BaseRecognition(val isFullySupported: Boolean = true) {
 
         return result
     }
-
-    open fun getCombinedRecognizer(): Recognizer<*>? = null
 
     abstract fun getSingleSideRecognizers(): List<Recognizer<*>>
 
@@ -142,13 +140,9 @@ sealed class BaseRecognition(val isFullySupported: Boolean = true) {
         }
     }
 
-     private fun getAllRecognizers(): List<Recognizer<*>> {
+    protected open fun getAllRecognizers(): List<Recognizer<*>> {
         val allRecognizers = mutableListOf<Recognizer<*>>()
         allRecognizers.addAll(getSingleSideRecognizers())
-        if (getCombinedRecognizer() != null) {
-            allRecognizers.add(getCombinedRecognizer()!!)
-        }
-
         return allRecognizers
     }
 
@@ -184,7 +178,7 @@ sealed class BaseRecognition(val isFullySupported: Boolean = true) {
 
     protected fun addDateOfExpiry(date: Date?) {
         if (date != null) {
-            resultEntries.add(entryBuilder.build(ResultKey.DATE_OF_EXPIRY,
+            resultEntries.add(entryBuilder.build(DATE_OF_EXPIRY,
                     date,
                     ResultEntry.Builder.DateCheckType.IN_FUTURE))
         }
@@ -231,6 +225,7 @@ abstract class SingleSideRecognition<FrontResult : Recognizer.Result>
 
     abstract fun extractData(result: FrontResult): String?
 
+    override fun canScanBothSides() = false
 }
 
 abstract class SingleSideWithId1CardDetectorRecognition<FrontResult : Recognizer.Result>
@@ -239,6 +234,8 @@ abstract class SingleSideWithId1CardDetectorRecognition<FrontResult : Recognizer
     private val cardDetectorRecognizer by lazy { buildId1CardDetectorRecognizer() }
 
     override fun getSingleSideRecognizers() = listOf(recognizer, cardDetectorRecognizer)
+
+    override fun canScanBothSides() = true
 }
 
 abstract class TwoSideRecognition<FrontResult : Recognizer.Result, BackResult : Recognizer.Result>
@@ -270,6 +267,7 @@ abstract class TwoSideRecognition<FrontResult : Recognizer.Result, BackResult : 
 
     abstract fun getResultTitle(): String?
 
+    override fun canScanBothSides() = true
 }
 
 abstract class CombinedRecognition<FrontResult : Recognizer.Result,
@@ -279,15 +277,22 @@ abstract class CombinedRecognition<FrontResult : Recognizer.Result,
 
     abstract val frontRecognizer: Recognizer<FrontResult>
     abstract val backRecognizer: Recognizer<BackResult>
-    abstract val combRecognizer: Recognizer<CombinedResult>
+    abstract val combinedRecognizer: Recognizer<CombinedResult>
 
     val frontResult by lazy { frontRecognizer.result }
     val backResult by lazy { backRecognizer.result }
-    val combinedResult by lazy { combRecognizer.result }
+    val combinedResult by lazy { combinedRecognizer.result }
+
+    override fun canScanBothSides() = true
 
     override fun getSingleSideRecognizers() = listOf(frontRecognizer, backRecognizer)
 
-    override fun getCombinedRecognizer() = combRecognizer
+    override fun getAllRecognizers(): List<Recognizer<*>> {
+        val allRecognizers = mutableListOf<Recognizer<*>>()
+        allRecognizers.addAll(getSingleSideRecognizers())
+        allRecognizers.add(combinedRecognizer)
+        return allRecognizers
+    }
 
     override fun extractData(): String? {
         if (shouldValidate) {
@@ -314,9 +319,9 @@ abstract class CombinedRecognition<FrontResult : Recognizer.Result,
 
 class GenericRecognition(isFullySupported: Boolean, private val recognizerProvider: RecognizerProvider) : BaseRecognition(isFullySupported) {
 
-    override fun getSingleSideRecognizers(): List<Recognizer<*>> {
-        return recognizerProvider.recognizers
-    }
+    override fun getSingleSideRecognizers() = recognizerProvider.recognizers
+
+    override fun canScanBothSides() = recognizerProvider.recognizers.size == 2
 
     override fun setupRecognizers() {
         for (recognizer in recognizerProvider.recognizers) {
@@ -339,7 +344,7 @@ class GenericRecognition(isFullySupported: Boolean, private val recognizerProvid
                         extractMrzResult(recognizer.result.mrzResult)
                         result = buildMrtdTitle(recognizer.result.mrzResult)
                     }
-                    is Pdf417Recognizer -> add(ResultKey.BARCODE_DATA, recognizer.result.stringData)
+                    is Pdf417Recognizer -> add(BARCODE_DATA, recognizer.result.stringData)
                 }
             }
         }

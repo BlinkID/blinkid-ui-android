@@ -12,7 +12,7 @@ class CroatiaIdRecognition
 
     override val frontRecognizer by lazy { CroatiaIdFrontRecognizer() }
     override val backRecognizer by lazy { CroatiaIdBackRecognizer() }
-    override val combRecognizer by lazy { CroatiaCombinedRecognizer() }
+    override val combinedRecognizer by lazy { CroatiaCombinedRecognizer() }
 
     override fun extractCombinedResult(combinedResult: CroatiaCombinedRecognizer.Result): String? {
         add(LAST_NAME, combinedResult.lastName)

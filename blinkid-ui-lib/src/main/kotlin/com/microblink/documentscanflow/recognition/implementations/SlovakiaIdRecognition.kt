@@ -12,7 +12,7 @@ class SlovakiaIdRecognition:
 
     override val frontRecognizer by lazy { SlovakiaIdFrontRecognizer() }
     override val backRecognizer by lazy { SlovakiaIdBackRecognizer() }
-    override val combRecognizer by lazy { SlovakiaCombinedRecognizer() }
+    override val combinedRecognizer by lazy { SlovakiaCombinedRecognizer() }
 
     override fun extractCombinedResult(combinedResult: SlovakiaCombinedRecognizer.Result): String? {
         add(LAST_NAME, combinedResult.lastName)
