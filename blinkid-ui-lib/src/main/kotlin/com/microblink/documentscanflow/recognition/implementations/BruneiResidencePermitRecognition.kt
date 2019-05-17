@@ -1,5 +1,6 @@
 package com.microblink.documentscanflow.recognition.implementations
 
+import com.microblink.documentscanflow.buildTitle
 import com.microblink.documentscanflow.isNotEmpty
 import com.microblink.documentscanflow.recognition.TwoSideRecognition
 import com.microblink.entities.recognizers.blinkid.brunei.BruneiResidencePermitBackRecognizer
@@ -39,7 +40,7 @@ class BruneiResidencePermitRecognition :
 
     override fun getResultTitle(): String? {
         if (backResult.isNotEmpty()) {
-            return buildMrtdTitle(backResult.mrzResult)
+            return backResult.mrzResult.buildTitle()
         }
         if (frontResult.isNotEmpty()) {
             return frontResult.fullName

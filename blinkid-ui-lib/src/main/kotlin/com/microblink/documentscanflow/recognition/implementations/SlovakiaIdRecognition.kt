@@ -1,5 +1,6 @@
 package com.microblink.documentscanflow.recognition.implementations
 
+import com.microblink.documentscanflow.buildTitle
 import com.microblink.documentscanflow.recognition.CombinedRecognition
 import com.microblink.documentscanflow.recognition.resultentry.ResultKey.*
 import com.microblink.documentscanflow.recognition.util.FormattingUtils
@@ -50,7 +51,7 @@ class SlovakiaIdRecognition:
         add(ADDRESS, backResult.address)
         add(PLACE_OF_BIRTH, backResult.placeOfBirth)
         extractMrzResult(backResult.mrzResult)
-        return buildMrtdTitle(backResult.mrzResult)
+        return backResult.mrzResult.buildTitle()
     }
 
 }

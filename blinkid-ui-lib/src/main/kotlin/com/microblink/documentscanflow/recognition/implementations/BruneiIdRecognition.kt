@@ -1,5 +1,6 @@
 package com.microblink.documentscanflow.recognition.implementations
 
+import com.microblink.documentscanflow.buildTitle
 import com.microblink.documentscanflow.isNotEmpty
 import com.microblink.documentscanflow.recognition.TwoSideRecognition
 import com.microblink.documentscanflow.recognition.resultentry.ResultKey.*
@@ -37,7 +38,7 @@ class BruneiIdRecognition: TwoSideRecognition<BruneiIdFrontRecognizer.Result, Br
 
     override fun getResultTitle(): String? {
         if (backResult.isNotEmpty()) {
-            return buildMrtdTitle(backResult.mrzResult)
+            return backResult.mrzResult.buildTitle()
         }
         if (frontResult.isNotEmpty()) {
             return frontResult.fullName

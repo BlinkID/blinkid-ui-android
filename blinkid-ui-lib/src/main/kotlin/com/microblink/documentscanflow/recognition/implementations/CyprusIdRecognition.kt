@@ -1,5 +1,6 @@
 package com.microblink.documentscanflow.recognition.implementations
 
+import com.microblink.documentscanflow.buildTitle
 import com.microblink.documentscanflow.isNotEmpty
 import com.microblink.documentscanflow.recognition.TwoSideRecognition
 import com.microblink.documentscanflow.recognition.resultentry.ResultKey.IDENTITY_NUMBER
@@ -23,7 +24,7 @@ class CyprusIdRecognition : TwoSideRecognition<CyprusIdFrontRecognizer.Result, C
 
     override fun getResultTitle(): String? {
         if (backResult.isNotEmpty()) {
-            return buildMrtdTitle(backResult.mrzResult)
+            return backResult.mrzResult.buildTitle()
         }
         return null
     }

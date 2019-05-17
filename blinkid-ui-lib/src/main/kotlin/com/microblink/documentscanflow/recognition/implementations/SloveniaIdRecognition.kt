@@ -1,5 +1,6 @@
 package com.microblink.documentscanflow.recognition.implementations
 
+import com.microblink.documentscanflow.buildTitle
 import com.microblink.documentscanflow.recognition.CombinedRecognition
 import com.microblink.documentscanflow.recognition.resultentry.ResultKey.*
 import com.microblink.documentscanflow.recognition.util.FormattingUtils
@@ -43,7 +44,7 @@ class SloveniaIdRecognition: CombinedRecognition<SloveniaIdFrontRecognizer.Resul
         add(ADDRESS, backResult.address)
         add(AUTHORITY, backResult.administrativeUnit)
         add(DATE_OF_ISSUE, backResult.dateOfIssue)
-        return buildMrtdTitle(backResult.mrzResult)
+        return backResult.mrzResult.buildTitle()
     }
 
 }

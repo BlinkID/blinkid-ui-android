@@ -1,5 +1,6 @@
 package com.microblink.documentscanflow.recognition.implementations
 
+import com.microblink.documentscanflow.buildTitle
 import com.microblink.documentscanflow.isNotEmpty
 import com.microblink.documentscanflow.recognition.TwoSideRecognition
 import com.microblink.documentscanflow.recognition.resultentry.ResultKey.*
@@ -28,7 +29,7 @@ class KuwaitIdRecognition : TwoSideRecognition<KuwaitIdFrontRecognizer.Result, K
         if (frontResult.isNotEmpty()) {
             return frontResult.name
         } else if (backResult.isNotEmpty()) {
-            return buildMrtdTitle(backResult.mrzResult)
+            return backResult.mrzResult.buildTitle()
         }
 
         return null

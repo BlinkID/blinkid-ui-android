@@ -1,6 +1,7 @@
 package com.microblink.documentscanflow.recognition.implementations
 
 import com.microblink.documentscanflow.buildId2VerticalCardDetectorRecognizer
+import com.microblink.documentscanflow.buildTitle
 import com.microblink.documentscanflow.isNotEmpty
 import com.microblink.documentscanflow.recognition.TwoSideRecognition
 import com.microblink.entities.recognizers.blinkid.germany.GermanyIdOldRecognizer
@@ -18,7 +19,7 @@ class GermanyOldIdRecognition : TwoSideRecognition<GermanyIdOldRecognizer.Result
     }
 
     override fun getResultTitle(): String? {
-        return if (frontResult.isNotEmpty()) buildMrtdTitle(frontResult.mrzResult)
+        return if (frontResult.isNotEmpty()) frontResult.mrzResult.buildTitle()
         else null
     }
 

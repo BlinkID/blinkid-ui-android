@@ -1,5 +1,6 @@
 package com.microblink.documentscanflow.recognition.implementations
 
+import com.microblink.documentscanflow.buildTitle
 import com.microblink.documentscanflow.recognition.CombinedRecognition
 import com.microblink.documentscanflow.recognition.resultentry.ResultKey.*
 import com.microblink.documentscanflow.recognition.util.FormattingUtils
@@ -45,7 +46,7 @@ class GermanyIdRecognition : CombinedRecognition<GermanyIdFrontRecognizer.Result
         add(AUTHORITY, backResult.authority)
         add(DATE_OF_ISSUE, backResult.dateOfIssue)
         add(ADDRESS, backResult.fullAddress)
-        return buildMrtdTitle(backResult.mrzResult)
+        return backResult.mrzResult.buildTitle()
     }
     
 }

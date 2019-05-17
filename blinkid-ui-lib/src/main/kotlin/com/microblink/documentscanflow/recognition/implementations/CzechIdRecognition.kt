@@ -1,5 +1,6 @@
 package com.microblink.documentscanflow.recognition.implementations
 
+import com.microblink.documentscanflow.buildTitle
 import com.microblink.documentscanflow.recognition.CombinedRecognition
 import com.microblink.documentscanflow.recognition.util.FormattingUtils
 import com.microblink.entities.recognizers.blinkid.czechia.CzechiaCombinedRecognizer
@@ -46,7 +47,7 @@ class CzechIdRecognition : CombinedRecognition<CzechiaIdFrontRecognizer.Result, 
         add(ADDRESS, backResult.permanentStay)
         add(PERSONAL_NUMBER, backResult.personalNumber)
         add(ISSUING_AUTHORITY, backResult.authority)
-        return buildMrtdTitle(backResult.mrzResult)
+        return backResult.mrzResult.buildTitle()
     }
     
 }

@@ -1,5 +1,6 @@
 package com.microblink.documentscanflow.recognition
 
+import com.microblink.documentscanflow.*
 import com.microblink.documentscanflow.buildId1CardDetectorRecognizer
 import com.microblink.documentscanflow.buildId2VerticalCardDetectorRecognizer
 import com.microblink.documentscanflow.isEmpty
@@ -206,8 +207,6 @@ sealed class BaseRecognition(val isFullySupported: Boolean = true) {
         }
     }
 
-    protected fun buildMrtdTitle(result: MrzResult): String = result.primaryId + " " + result.secondaryId
-
 }
 
 abstract class SingleSideRecognition<FrontResult : Recognizer.Result>
@@ -338,11 +337,11 @@ class GenericRecognition(isFullySupported: Boolean, private val recognizerProvid
                 when (recognizer) {
                     is MrtdRecognizer -> {
                         extractMrzResult(recognizer.result.mrzResult)
-                        result = buildMrtdTitle(recognizer.result.mrzResult)
+                        result = recognizer.result.mrzResult.buildTitle()
                     }
                     is PassportRecognizer -> {
                         extractMrzResult(recognizer.result.mrzResult)
-                        result = buildMrtdTitle(recognizer.result.mrzResult)
+                        result = recognizer.result.mrzResult.buildTitle()
                     }
                     is Pdf417Recognizer -> add(BARCODE_DATA, recognizer.result.stringData)
                 }

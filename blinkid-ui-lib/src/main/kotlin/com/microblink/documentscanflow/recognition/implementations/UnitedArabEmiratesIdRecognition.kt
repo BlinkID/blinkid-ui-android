@@ -1,5 +1,6 @@
 package com.microblink.documentscanflow.recognition.implementations
 
+import com.microblink.documentscanflow.buildTitle
 import com.microblink.documentscanflow.isNotEmpty
 import com.microblink.documentscanflow.recognition.ResultValidator
 import com.microblink.documentscanflow.recognition.TwoSideRecognition
@@ -35,7 +36,7 @@ class UnitedArabEmiratesIdRecognition: TwoSideRecognition<UnitedArabEmiratesIdFr
             return frontResult.name
         }
         if (backResult.isNotEmpty()) {
-            return buildMrtdTitle(backResult.mrzResult)
+            return backResult.mrzResult.buildTitle()
         }
         return null
     }
