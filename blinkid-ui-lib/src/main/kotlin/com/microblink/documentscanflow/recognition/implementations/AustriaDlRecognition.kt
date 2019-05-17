@@ -1,26 +1,15 @@
 package com.microblink.documentscanflow.recognition.implementations
 
-import com.microblink.documentscanflow.buildId1CardDetectorRecognizer
-import com.microblink.documentscanflow.isEmpty
-import com.microblink.documentscanflow.recognition.BaseRecognition
+import com.microblink.documentscanflow.recognition.SingleSideWithId1CardDetectorRecognition
 import com.microblink.documentscanflow.recognition.resultentry.ResultKey.*
 import com.microblink.documentscanflow.recognition.util.FormattingUtils
-import com.microblink.entities.recognizers.Recognizer
 import com.microblink.entities.recognizers.blinkid.austria.AustriaDlFrontRecognizer
 
-class AustriaDlRecognition : BaseRecognition() {
+class AustriaDlRecognition : SingleSideWithId1CardDetectorRecognition<AustriaDlFrontRecognizer.Result>() {
 
-    private val frontRecognizer by lazy { AustriaDlFrontRecognizer() }
-    private val backRecognizer by lazy { buildId1CardDetectorRecognizer() }
+    override val recognizer by lazy { AustriaDlFrontRecognizer() }
 
-    override fun getSingleSideRecognizers() = listOf<Recognizer<*>>(frontRecognizer, backRecognizer)
-
-    override fun extractData(): String? {
-        val result = frontRecognizer.result
-        if (result.isEmpty()) {
-            return null
-        }
-
+    override fun extractData(result: AustriaDlFrontRecognizer.Result): String? {
         result.apply {
             add(LAST_NAME, name)
             add(FIRST_NAME, firstName)
@@ -35,4 +24,5 @@ class AustriaDlRecognition : BaseRecognition() {
 
         return FormattingUtils.formatResultTitle(result.firstName, result.name)
     }
+
 }

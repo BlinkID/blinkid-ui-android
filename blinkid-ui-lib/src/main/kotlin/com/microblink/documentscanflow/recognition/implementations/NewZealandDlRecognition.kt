@@ -4,25 +4,16 @@ import com.microblink.documentscanflow.recognition.resultentry.ResultKey.*
 import com.microblink.documentscanflow.buildId1CardDetectorRecognizer
 import com.microblink.documentscanflow.isEmpty
 import com.microblink.documentscanflow.recognition.BaseRecognition
+import com.microblink.documentscanflow.recognition.SingleSideWithId1CardDetectorRecognition
 import com.microblink.documentscanflow.recognition.util.FormattingUtils
 import com.microblink.entities.recognizers.Recognizer
 import com.microblink.entities.recognizers.blinkid.newzealand.NewZealandDlFrontRecognizer
 
-class NewZealandDlRecognition : BaseRecognition() {
+class NewZealandDlRecognition : SingleSideWithId1CardDetectorRecognition<NewZealandDlFrontRecognizer.Result>() {
 
-    val frontRecognizer by lazy { NewZealandDlFrontRecognizer() }
-    val backRecognizer by lazy { buildId1CardDetectorRecognizer() }
+    override val recognizer by lazy { NewZealandDlFrontRecognizer() }
 
-    override fun getSingleSideRecognizers(): List<Recognizer<*>> {
-        return listOf(frontRecognizer, backRecognizer)
-    }
-
-    override fun extractData(): String? {
-        val result = frontRecognizer.result
-        if (result.isEmpty()) {
-            return null
-        }
-
+    override fun extractData(result: NewZealandDlFrontRecognizer.Result): String? {
         val firstName = result.firstNames
         val lastName = result.surname
 
@@ -33,7 +24,7 @@ class NewZealandDlRecognition : BaseRecognition() {
         add(DATE_OF_ISSUE, result.dateOfIssue)
         addDateOfExpiry(result.dateOfExpiry.date)
         add(ADDRESS, result.address)
-        
+
         return FormattingUtils.formatResultTitle(firstName, lastName)
     }
     

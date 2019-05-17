@@ -4,24 +4,15 @@ import com.microblink.documentscanflow.recognition.resultentry.ResultKey.*
 import com.microblink.documentscanflow.buildId1CardDetectorRecognizer
 import com.microblink.documentscanflow.isEmpty
 import com.microblink.documentscanflow.recognition.BaseRecognition
+import com.microblink.documentscanflow.recognition.SingleSideWithId1CardDetectorRecognition
 import com.microblink.entities.recognizers.Recognizer
 import com.microblink.entities.recognizers.blinkid.hongkong.HongKongIdFrontRecognizer
 
-class HongKongIdRecognition : BaseRecognition() {
+class HongKongIdRecognition : SingleSideWithId1CardDetectorRecognition<HongKongIdFrontRecognizer.Result>() {
 
-    private val recognizer by lazy { HongKongIdFrontRecognizer() }
-    private val recognizerBack by lazy { buildId1CardDetectorRecognizer() }
+    override val recognizer by lazy { HongKongIdFrontRecognizer() }
 
-    override fun getSingleSideRecognizers(): List<Recognizer<*>> {
-        return listOf(recognizer, recognizerBack)
-    }
-
-    override fun extractData(): String? {
-        val result = recognizer.result
-        if (result.isEmpty()) {
-            return null
-        }
-
+    override fun extractData(result: HongKongIdFrontRecognizer.Result): String? {
         val fullName = result.fullName
 
         add(FULL_NAME, fullName)
@@ -30,7 +21,7 @@ class HongKongIdRecognition : BaseRecognition() {
         add(DATE_OF_BIRTH, result.dateOfBirth)
         add(DATE_OF_ISSUE, result.dateOfIssue)
         add(RESIDENTIAL_STATUS, result.residentialStatus)
-        
+
         return fullName
     }
 

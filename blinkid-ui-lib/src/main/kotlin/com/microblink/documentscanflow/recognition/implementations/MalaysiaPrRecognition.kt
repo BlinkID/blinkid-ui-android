@@ -1,31 +1,20 @@
 package com.microblink.documentscanflow.recognition.implementations
 
 import com.microblink.documentscanflow.recognition.resultentry.ResultKey.*
-import com.microblink.documentscanflow.buildId1CardDetectorRecognizer
-import com.microblink.documentscanflow.isNotEmpty
-import com.microblink.documentscanflow.recognition.BaseRecognition
-import com.microblink.entities.recognizers.Recognizer
+import com.microblink.documentscanflow.recognition.SingleSideWithId1CardDetectorRecognition
 import com.microblink.entities.recognizers.blinkid.malaysia.MalaysiaMyPrFrontRecognizer
 
-class MalaysiaPrRecognition: BaseRecognition(true) {
+class MalaysiaPrRecognition: SingleSideWithId1CardDetectorRecognition<MalaysiaMyPrFrontRecognizer.Result>() {
 
-    val frontRecognizer by lazy { MalaysiaMyPrFrontRecognizer() }
-    val backRecognizer by lazy { buildId1CardDetectorRecognizer() }
+    override val recognizer by lazy { MalaysiaMyPrFrontRecognizer() }
 
-    val result by lazy { frontRecognizer.result }
-
-    override fun getSingleSideRecognizers(): List<Recognizer<*>> = listOf(frontRecognizer, backRecognizer)
-
-    override fun extractData(): String? {
-        if (result.isNotEmpty()) {
-            add(FULL_NAME, result.fullName)
-            add(DATE_OF_BIRTH, result.birthDate)
-            add(SEX, result.sex)
-            add(RELIGION, result.religion)
-            add(NRIC_NUMBER, result.nric)
-            add(ADDRESS, result.fullAddress)
-        }
-
+    override fun extractData(result: MalaysiaMyPrFrontRecognizer.Result): String? {
+        add(FULL_NAME, result.fullName)
+        add(DATE_OF_BIRTH, result.birthDate)
+        add(SEX, result.sex)
+        add(RELIGION, result.religion)
+        add(NRIC_NUMBER, result.nric)
+        add(ADDRESS, result.fullAddress)
         return result.fullName
     }
 

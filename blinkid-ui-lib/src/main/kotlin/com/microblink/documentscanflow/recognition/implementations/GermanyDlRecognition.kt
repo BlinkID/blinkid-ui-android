@@ -1,55 +1,39 @@
 package com.microblink.documentscanflow.recognition.implementations
 
 import com.microblink.documentscanflow.recognition.resultentry.ResultKey.*
-import com.microblink.documentscanflow.isEmpty
-import com.microblink.documentscanflow.recognition.BaseRecognition
+import com.microblink.documentscanflow.isNotEmpty
+import com.microblink.documentscanflow.recognition.TwoSideRecognition
 import com.microblink.documentscanflow.recognition.util.FormattingUtils
-import com.microblink.entities.recognizers.Recognizer
 import com.microblink.entities.recognizers.blinkid.germany.GermanyDlBackRecognizer
 import com.microblink.entities.recognizers.blinkid.germany.GermanyDlFrontRecognizer
 
-class GermanyDlRecognition : BaseRecognition() {
+class GermanyDlRecognition : TwoSideRecognition<GermanyDlFrontRecognizer.Result, GermanyDlBackRecognizer.Result>() {
 
-    private val frontRecognizer by lazy { GermanyDlFrontRecognizer() }
-    private val backRecognizer by lazy { GermanyDlBackRecognizer() }
+    override val frontRecognizer by lazy { GermanyDlFrontRecognizer() }
+    override val backRecognizer by lazy { GermanyDlBackRecognizer() }
 
-    private var title: String? = null
+    override fun extractData(frontResult: GermanyDlFrontRecognizer.Result, backResult: GermanyDlBackRecognizer.Result): String? {
+        var title: String? = null
+        if (frontResult.isNotEmpty()) {
+            val firstName = frontResult.firstName
+            val lastName = frontResult.lastName
 
-    override fun getSingleSideRecognizers() = listOf<Recognizer<*>>(frontRecognizer, backRecognizer)
+            add(FIRST_NAME, firstName)
+            add(LAST_NAME, lastName)
+            add(LICENCE_NUMBER, frontResult.licenceNumber)
+            add(LICENCE_CATEGORIES, frontResult.licenceCategories)
+            add(PLACE_OF_BIRTH, frontResult.placeOfBirth)
+            add(DATE_OF_BIRTH, frontResult.dateOfBirth)
+            add(DATE_OF_ISSUE, frontResult.dateOfIssue)
+            add(ISSUING_AUTHORITY, frontResult.issuingAuthority)
+            addDateOfExpiry(frontResult.dateOfExpiry.date)
 
-    override fun extractData(): String? {
-        extractFrontSide()
-        extractBackSide()
-        return title
-    }
-
-    private fun extractFrontSide() {
-        val frontResult = frontRecognizer.result
-        if (frontResult.resultState != Recognizer.Result.State.Valid) {
-            return
+            title = FormattingUtils.formatResultTitle(firstName, lastName)
         }
-
-        val firstName = frontResult.firstName
-        val lastName = frontResult.lastName
-
-        add(FIRST_NAME, firstName)
-        add(LAST_NAME, lastName)
-        add(LICENCE_NUMBER, frontResult.licenceNumber)
-        add(LICENCE_CATEGORIES, frontResult.licenceCategories)
-        add(PLACE_OF_BIRTH, frontResult.placeOfBirth)
-        add(DATE_OF_BIRTH, frontResult.dateOfBirth)
-        add(DATE_OF_ISSUE, frontResult.dateOfIssue)
-        add(ISSUING_AUTHORITY, frontResult.issuingAuthority)
-        addDateOfExpiry(frontResult.dateOfExpiry.date)
-
-        title = FormattingUtils.formatResultTitle(firstName, lastName)
-    }
-
-    private fun extractBackSide() {
-        val backResult = backRecognizer.result
-        if (!backResult.isEmpty()) {
+        if (backResult.isNotEmpty()) {
             add(DATE_OF_ISSUE_FOR_B_CATEGORY, backResult.dateOfIssueB10)
         }
+        return title
     }
 
 }

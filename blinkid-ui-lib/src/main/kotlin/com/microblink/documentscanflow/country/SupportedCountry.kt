@@ -3,6 +3,7 @@ package com.microblink.documentscanflow.country
 import com.microblink.documentscanflow.R
 import com.microblink.documentscanflow.document.*
 import com.microblink.documentscanflow.recognition.BaseRecognition
+import com.microblink.documentscanflow.recognition.GenericRecognition
 import com.microblink.documentscanflow.recognition.implementations.*
 import com.microblink.entities.recognizers.blinkid.eudl.EudlCountry
 

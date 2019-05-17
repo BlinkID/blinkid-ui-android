@@ -1,23 +1,14 @@
 package com.microblink.documentscanflow.recognition.implementations
 
 import com.microblink.documentscanflow.recognition.resultentry.ResultKey.*
-import com.microblink.documentscanflow.buildId1CardDetectorRecognizer
-import com.microblink.documentscanflow.isEmpty
-import com.microblink.documentscanflow.recognition.BaseRecognition
-import com.microblink.entities.recognizers.Recognizer
+import com.microblink.documentscanflow.recognition.SingleSideWithId1CardDetectorRecognition
 import com.microblink.entities.recognizers.blinkid.mexico.MexicoVoterIdFrontRecognizer
 
-class MexicoIdRecognition : BaseRecognition() {
+class MexicoIdRecognition : SingleSideWithId1CardDetectorRecognition<MexicoVoterIdFrontRecognizer.Result>() {
 
-    val frontRecognizer by lazy { MexicoVoterIdFrontRecognizer() }
-    val backRecognizer by lazy { buildId1CardDetectorRecognizer() }
+    override val recognizer by lazy { MexicoVoterIdFrontRecognizer() }
 
-    override fun extractData(): String? {
-        val result = frontRecognizer.result
-        if (result.isEmpty()) {
-            return null
-        }
-
+    override fun extractData(result: MexicoVoterIdFrontRecognizer.Result): String? {
         add(FULL_NAME, result.fullName)
         add(ADDRESS, result.address)
         add(CURP, result.curp)
@@ -26,7 +17,5 @@ class MexicoIdRecognition : BaseRecognition() {
 
         return result.fullName
     }
-
-    override fun getSingleSideRecognizers() = listOf<Recognizer<*>>(frontRecognizer, backRecognizer)
 
 }
