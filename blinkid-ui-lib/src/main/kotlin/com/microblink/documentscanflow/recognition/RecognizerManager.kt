@@ -28,8 +28,8 @@ internal class RecognizerManager(private val recognitionConfig: RecognitionConfi
             addSingleSideRecognizer(recognizer)
         }
 
-        if (recognition is CombinedRecognition<*, *, *>) {
-            addCombinedRecognizer(recognition.combinedRecognizer)
+        if (recognition.combinedRecognizer != null) {
+            addCombinedRecognizer(recognition.combinedRecognizer!!)
         }
     }
 

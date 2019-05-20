@@ -42,6 +42,8 @@ sealed class BaseRecognition(val isFullySupported: Boolean = true) {
 
     private var setupDone = false
 
+    open val combinedRecognizer: Recognizer<*>? = null
+
     fun setup() {
         if (setupDone) {
             return
@@ -276,7 +278,7 @@ abstract class CombinedRecognition<FrontResult : Recognizer.Result,
 
     abstract val frontRecognizer: Recognizer<FrontResult>
     abstract val backRecognizer: Recognizer<BackResult>
-    abstract val combinedRecognizer: Recognizer<CombinedResult>
+    abstract override val combinedRecognizer: Recognizer<CombinedResult>
 
     val frontResult by lazy { frontRecognizer.result }
     val backResult by lazy { backRecognizer.result }
