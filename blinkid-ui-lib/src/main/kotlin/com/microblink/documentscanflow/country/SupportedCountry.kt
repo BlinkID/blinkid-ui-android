@@ -187,6 +187,12 @@ enum class SupportedCountry(override val code: String,
             },
             documentNameOverrides =  mapOf(
                     DocumentType.ID to R.string.mb_custom_pink_id
+            ),
+            documentPriorityOverride = arrayOf(
+                    DocumentType.EMPLOYMENT_PASS,
+                    DocumentType.S_PASS,
+                    DocumentType.BLUE_ID,
+                    DocumentType.ID
             )),
 
     SLOVAKIA("sk",
