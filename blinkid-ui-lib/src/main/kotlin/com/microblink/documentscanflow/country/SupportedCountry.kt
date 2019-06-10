@@ -178,6 +178,9 @@ enum class SupportedCountry(override val code: String,
 
     SINGAPORE("sg",
             recognitions {
+                employmentPass = GenericRecognition.faceId1(false)
+                sPass = GenericRecognition.faceId1(false)
+                blueId = GenericRecognition.faceId1(false)
                 id = SingaporeIdRecognition()
                 drivingLicence = SingaporeDlRecognition()
             }),
