@@ -4,12 +4,14 @@ import com.microblink.documentscanflow.R
 import com.microblink.documentscanflow.document.DocumentType
 import com.microblink.documentscanflow.recognition.BaseRecognition
 import java.util.*
+import kotlin.Comparator
 
 interface Country {
 
     val code: String
     val recognitionsByDocumentType: Map<DocumentType, BaseRecognition>
     val documentNameOverrides: Map<DocumentType, Int>
+    val documentPriorityOverride: Array<DocumentType>
 
     /**
      * Returns the name of this country, localized to the current locale (current app language).
@@ -27,7 +29,30 @@ interface Country {
     }
 
     fun getSupportedDocumentTypes(): List<DocumentType> {
-        return recognitionsByDocumentType.keys.toList()
+        if (documentPriorityOverride.isEmpty()) {
+            return recognitionsByDocumentType.keys.toList()
+        }
+
+        return recognitionsByDocumentType.keys.toList().sortedWith(
+                Comparator { documentType1, documentType2 ->
+                    // keep in mind that sorting is in ascending order, elements
+                    // with higher priority should be at the beginning of sorted list:
+                    // if priorities are equal return 0, else if documentType1 has greater priority
+                    // return -1, else return 1
+                    val index1 = documentPriorityOverride.indexOf(documentType1)
+                    val index2 = documentPriorityOverride.indexOf(documentType2)
+                    return@Comparator when {
+                        index1 == index2 -> 0
+                        index1 == -1 -> 1 // document type 1 does not exist in the priority array
+                        index2 == -1 -> -1 // document type 2 does not exist in the priority array
+                        else -> if (index2 > index1) { // document type on lower index has greater priority
+                            -1
+                        } else {
+                            1
+                        }
+                    }
+                }
+        )
     }
 
     fun getDocumentNameStringId(documentType: DocumentType): Int {

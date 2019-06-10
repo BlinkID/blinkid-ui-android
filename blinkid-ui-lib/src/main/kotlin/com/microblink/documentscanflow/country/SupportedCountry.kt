@@ -8,7 +8,8 @@ import com.microblink.entities.recognizers.blinkid.eudl.EudlCountry
 
 enum class SupportedCountry(override val code: String,
                             override val recognitionsByDocumentType: Map<DocumentType, BaseRecognition>,
-                            override val documentNameOverrides: Map<DocumentType, Int> = LinkedHashMap())
+                            override val documentNameOverrides: Map<DocumentType, Int> = LinkedHashMap(),
+                            override val documentPriorityOverride: Array<DocumentType> = emptyArray())
     : Country {
 
     AUSTRALIA("au",
