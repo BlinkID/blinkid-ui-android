@@ -14,6 +14,15 @@ enum class DocumentType {
     NEW_ID,
     TEMPORARY_RESIDENT_ID,
     PERMANENT_RESIDENT_ID,
-    VICTORIA_DL
+
+    // country specific:
+
+    // Australia
+    VICTORIA_DL,
+
+    // Singapore
+    BLUE_ID,
+    EMPLOYMENT_PASS,
+    S_PASS
 
 }

@@ -86,6 +86,24 @@ internal class RecognitionsBuilder {
             addRecognition(DocumentType.VICTORIA_DL, value)
         }
 
+    var blueId: BaseRecognition? = null
+        set(value) {
+            field = value
+            addRecognition(DocumentType.BLUE_ID, value)
+        }
+
+    var employmentPass: BaseRecognition? = null
+        set(value) {
+            field = value
+            addRecognition(DocumentType.EMPLOYMENT_PASS, value)
+        }
+
+    var sPass: BaseRecognition? = null
+        set(value) {
+            field = value
+            addRecognition(DocumentType.S_PASS, value)
+        }
+
     init {
         id = GenericRecognition.id
         drivingLicence = GenericRecognition.drivingLicence

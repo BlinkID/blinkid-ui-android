@@ -10,6 +10,7 @@ interface Country {
     val code: String
     val recognitionsByDocumentType: Map<DocumentType, BaseRecognition>
     val documentNameOverrides: Map<DocumentType, Int>
+    val documentPriorityOverride: Array<DocumentType>
 
     /**
      * Returns the name of this country, localized to the current locale (current app language).
@@ -27,7 +28,20 @@ interface Country {
     }
 
     fun getSupportedDocumentTypes(): List<DocumentType> {
-        return recognitionsByDocumentType.keys.toList()
+        if (documentPriorityOverride.isEmpty()) {
+            return recognitionsByDocumentType.keys.toList()
+        }
+
+        val separatedDocumentTypes = recognitionsByDocumentType.keys.partition {
+            documentPriorityOverride.contains(it)
+        }
+
+        return mutableListOf<DocumentType>().apply {
+            // first add sorted elements that are in the documentPriorityOverride array
+            addAll(separatedDocumentTypes.first.sortedBy { documentPriorityOverride.indexOf(it) })
+            // then add remaining elements, without changing their order
+            addAll(separatedDocumentTypes.second)
+        }
     }
 
     fun getDocumentNameStringId(documentType: DocumentType): Int {
@@ -48,6 +62,10 @@ interface Country {
             DocumentType.TEMPORARY_RESIDENT_ID -> R.string.mb_temporary_resident_id
             DocumentType.PERMANENT_RESIDENT_ID -> R.string.mb_permanent_resident_id
             DocumentType.VICTORIA_DL -> R.string.mb_victoria_dl
+            DocumentType.BLUE_ID -> R.string.mb_blue_id_card
+            DocumentType.EMPLOYMENT_PASS -> R.string.mb_employment_pass
+            DocumentType.S_PASS -> R.string.mb_s_pass
+
         }
     }
 
