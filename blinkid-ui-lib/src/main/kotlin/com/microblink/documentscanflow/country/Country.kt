@@ -4,7 +4,6 @@ import com.microblink.documentscanflow.R
 import com.microblink.documentscanflow.document.DocumentType
 import com.microblink.documentscanflow.recognition.BaseRecognition
 import java.util.*
-import kotlin.Comparator
 
 interface Country {
 
@@ -33,26 +32,16 @@ interface Country {
             return recognitionsByDocumentType.keys.toList()
         }
 
-        return recognitionsByDocumentType.keys.toList().sortedWith(
-                Comparator { documentType1, documentType2 ->
-                    // keep in mind that sorting is in ascending order, elements
-                    // with higher priority should be at the beginning of sorted list:
-                    // if priorities are equal return 0, else if documentType1 has greater priority
-                    // return -1, else return 1
-                    val index1 = documentPriorityOverride.indexOf(documentType1)
-                    val index2 = documentPriorityOverride.indexOf(documentType2)
-                    return@Comparator when {
-                        index1 == index2 -> 0
-                        index1 == -1 -> 1 // document type 1 does not exist in the priority array
-                        index2 == -1 -> -1 // document type 2 does not exist in the priority array
-                        else -> if (index2 > index1) { // document type on lower index has greater priority
-                            -1
-                        } else {
-                            1
-                        }
-                    }
-                }
-        )
+        val separatedDocumentTypes = recognitionsByDocumentType.keys.partition {
+            documentPriorityOverride.contains(it)
+        }
+
+        return mutableListOf<DocumentType>().apply {
+            // first add sorted elements that are in the documentPriorityOverride array
+            addAll(separatedDocumentTypes.first.sortedBy { documentPriorityOverride.indexOf(it) })
+            // then add remaining elements, without changing their order
+            addAll(separatedDocumentTypes.second)
+        }
     }
 
     fun getDocumentNameStringId(documentType: DocumentType): Int {
