@@ -183,7 +183,10 @@ enum class SupportedCountry(override val code: String,
                 blueId = GenericRecognition.faceId1(false)
                 id = SingaporeIdRecognition()
                 drivingLicence = SingaporeDlRecognition()
-            }),
+            },
+            documentNameOverrides =  mapOf(
+                    DocumentType.ID to R.string.mb_custom_pink_id
+            )),
 
     SLOVAKIA("sk",
             recognitions {

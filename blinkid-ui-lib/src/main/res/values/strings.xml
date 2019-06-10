@@ -21,6 +21,7 @@
   <string name="mb_custom_mykas" translatable="false">MyKAS</string>
   <string name="mb_custom_mypr" translatable="false">MyPR</string>
   <string name="mb_custom_mytentera" translatable="false">MyTentera</string>
+  <string name="mb_custom_pink_id" translatable="false">Pink ID card</string>
   <string name="mb_instructions_scan_front">Scan the front side of the selected document or choose another.</string>
   <string name="mb_instructions_scan_back">Scan the back side.</string>
   <string name="mb_instructions_scan_any_side">Scan the selected document or choose another.</string>
