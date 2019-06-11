@@ -21,8 +21,6 @@ enum class DocumentType {
     VICTORIA_DL,
 
     // Singapore
-    BLUE_ID,
-    EMPLOYMENT_PASS,
-    S_PASS
+    WORK_PASS
 
 }

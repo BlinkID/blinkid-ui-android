@@ -179,20 +179,16 @@ enum class SupportedCountry(override val code: String,
 
     SINGAPORE("sg",
             recognitions {
-                employmentPass = GenericRecognition.faceId1(false)
-                sPass = GenericRecognition.faceId1(false)
-                blueId = GenericRecognition.faceId1(false)
                 id = SingaporeIdRecognition()
+                workPass = GenericRecognition.faceId1(false)
                 drivingLicence = SingaporeDlRecognition()
             },
             documentNameOverrides =  mapOf(
-                    DocumentType.ID to R.string.mb_custom_pink_id
+                    DocumentType.ID to R.string.mb_custom_id_blue_pink
             ),
             documentPriorityOverride = arrayOf(
-                    DocumentType.EMPLOYMENT_PASS,
-                    DocumentType.S_PASS,
-                    DocumentType.BLUE_ID,
-                    DocumentType.ID
+                    DocumentType.ID,
+                    DocumentType.WORK_PASS
             )),
 
     SLOVAKIA("sk",
