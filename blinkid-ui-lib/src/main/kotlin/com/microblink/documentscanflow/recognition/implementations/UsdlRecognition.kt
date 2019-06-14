@@ -7,31 +7,31 @@ import com.microblink.entities.recognizers.blinkid.documentface.DocumentFaceReco
 import com.microblink.documentscanflow.recognition.resultentry.ResultKey.*
 import com.microblink.entities.recognizers.blinkbarcode.usdl.UsdlKeys
 
-open class UsdlRecognition : TwoSideRecognition<UsdlRecognizer.Result, DocumentFaceRecognizer.Result>() {
+open class UsdlRecognition : TwoSideRecognition<DocumentFaceRecognizer.Result, UsdlRecognizer.Result>() {
 
-    override val frontRecognizer by lazy { UsdlRecognizer() }
-    override val backRecognizer by lazy { DocumentFaceRecognizer() }
+    override val frontRecognizer by lazy { DocumentFaceRecognizer() }
+    override val backRecognizer by lazy { UsdlRecognizer() }
 
     override fun extractFields() {
-        if (frontResult.isNotEmpty()) {
-            add(FIRST_NAME, frontResult.firstName)
-            add(LAST_NAME, frontResult.lastName)
-            add(FULL_NAME, frontResult.fullName)
-            add(DATE_OF_BIRTH, frontResult.dateOfBirth)
-            add(DATE_OF_ISSUE, frontResult.dateOfIssue)
-            addDateOfExpiry(frontResult.dateOfExpiry.date)
-            add(DOCUMENT_NUMBER, frontResult.getField(UsdlKeys.CustomerIdNumber))
-            add(ADDRESS, frontResult.address)
-            add(SEX, frontResult.sex)
-            add(VEHICLE_CLASS, frontResult.vehicleClass)
-            add(ENDORSEMENTS, frontResult.endorsements)
-            add(DRIVER_RESTRICTIONS, frontResult.restrictions)
-            add(BARCODE_DATA, frontResult.rawStringData)
+        if (backResult.isNotEmpty()) {
+            add(FIRST_NAME, backResult.firstName)
+            add(LAST_NAME, backResult.lastName)
+            add(FULL_NAME, backResult.fullName)
+            add(DATE_OF_BIRTH, backResult.dateOfBirth)
+            add(DATE_OF_ISSUE, backResult.dateOfIssue)
+            addDateOfExpiry(backResult.dateOfExpiry.date)
+            add(DOCUMENT_NUMBER, backResult.getField(UsdlKeys.CustomerIdNumber))
+            add(ADDRESS, backResult.address)
+            add(SEX, backResult.sex)
+            add(VEHICLE_CLASS, backResult.vehicleClass)
+            add(ENDORSEMENTS, backResult.endorsements)
+            add(DRIVER_RESTRICTIONS, backResult.restrictions)
+            add(BARCODE_DATA, backResult.rawStringData)
         }
     }
 
     override fun getResultTitle(): String? {
-        return if (frontResult.isNotEmpty()) frontResult.fullName
+        return if (backResult.isNotEmpty()) backResult.fullName
         else null
     }
 
