@@ -9,12 +9,13 @@ To see it in action, check our [demo app](https://play.google.com/store/apps/det
 New to _BlinkID_? Take a look at [BlinkID SDK](https://github.com/BlinkID/blinkid-android) first.
 
 ## <a name="quickStart"></a> Quick Start
-Add JitPack repository to your root build.gradle file
+Add Microblink and JitPack repositories to your root build.gradle file
 
 ```
 allprojects {
 	repositories {
 		...
+		maven { url 'http://maven.microblink.com' }
 		maven { url 'https://jitpack.io' }
 	}
 }
