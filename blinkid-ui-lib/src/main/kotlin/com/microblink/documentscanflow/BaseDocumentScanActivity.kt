@@ -394,7 +394,7 @@ abstract class BaseDocumentScanActivity : AppCompatActivity(), ScanResultListene
     }
 
     @CallSuper
-    override fun onConfigurationChanged(newConfig: Configuration?) {
+    override fun onConfigurationChanged(newConfig: Configuration) {
         super.onConfigurationChanged(newConfig)
         recognizerView.changeConfiguration(newConfig)
         ocrView.setHostActivityOrientation(recognizerView.hostScreenOrientation)
