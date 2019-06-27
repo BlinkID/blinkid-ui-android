@@ -28,7 +28,6 @@ import android.view.MenuItem
 import android.view.View
 import android.view.WindowManager
 import android.view.animation.AccelerateDecelerateInterpolator
-import android.widget.TableLayout
 import com.microblink.documentscanflow.country.CountryFactory
 import com.microblink.documentscanflow.document.Document
 import com.microblink.documentscanflow.document.DocumentType
@@ -74,7 +73,6 @@ import com.microblink.view.recognition.ScanResultListener
 import kotlinx.android.synthetic.main.mb_activity_scan_document.*
 import kotlinx.android.synthetic.main.mb_include_scan_bottom_container.*
 import kotlinx.android.synthetic.main.mb_include_splash_overlay.*
-import java.lang.Exception
 import java.util.*
 import kotlin.math.max
 
@@ -84,11 +82,12 @@ abstract class BaseDocumentScanActivity : AppCompatActivity(), ScanResultListene
             by lazy { CameraPermissionManager(this) }
     protected val scanSuccessPlayer
             by lazy { createScanSuccessSoundPlayer() }
+    protected val documentChooser
+            by lazy { createDocumentChooser() }
 
     private val scanFlowListener by lazy {createScanFlowListener()}
     private val frameListener by lazy {createFrameListener()}
     private val splashOverlaySettings by lazy { createSplashOverlaySettings() }
-    private val documentChooser by lazy { createDocumentChooser() }
     private val scanTimeoutHandler by lazy { createScanTimeoutHandler() }
     private val torchButtonHandler = TorchButtonHandler()
     private val recognizerManager by lazy { RecognizerManager(createRecognitionConfig(), getFrameGrabberMode(), createFrameCallback()) }
@@ -280,11 +279,7 @@ abstract class BaseDocumentScanActivity : AppCompatActivity(), ScanResultListene
         documentTypeTabs.removeAllTabs()
 
         val country = document.country
-        for (docType in country.getSupportedDocumentTypes()) {
-            if (!documentChooser.isDocumentTypeSupportedForCountry(docType, country)) {
-                continue
-            }
-
+        for (docType in documentChooser.getAllowedDocumentTypes(country)) {
             val documentName = country.getDocumentNameStringId(docType)
             val tab = documentTypeTabs.newTab().setText(documentName).setTag(docType)
             documentTypeTabs.addTab(tab)
@@ -530,7 +525,7 @@ abstract class BaseDocumentScanActivity : AppCompatActivity(), ScanResultListene
                 val country = CountryFactory.getCountryForCode(countryCode)
                 if (country != null) {
                     val oldDocumentType = currentDocument.documentType
-                    val newDocumentType = if (documentChooser.isDocumentTypeSupportedForCountry(oldDocumentType, country)) {
+                    val newDocumentType = if (oldDocumentType in documentChooser.getAllowedDocumentTypes(country)) {
                         oldDocumentType
                     } else {
                         documentChooser.getDefaultDocumentTypeForCountry(country)

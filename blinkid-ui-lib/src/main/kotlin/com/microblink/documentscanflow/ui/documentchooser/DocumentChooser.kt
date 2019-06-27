@@ -11,12 +11,12 @@ interface DocumentChooser {
 
     fun shouldShowDocumentTypeTabs() : Boolean
 
-    fun isDocumentTypeSupportedForCountry(documentType: DocumentType, country: Country) : Boolean
-
     fun getDefaultDocumentTypeForCountry(country: Country) : DocumentType
 
     fun geChooseCountryLabel(): String
 
     fun onChooseCountryClick(currentDocument : Document)
+
+    fun getAllowedDocumentTypes(country: Country): List<DocumentType>
 
 }

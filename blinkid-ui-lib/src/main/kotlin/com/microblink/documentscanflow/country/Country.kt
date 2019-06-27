@@ -10,7 +10,6 @@ interface Country {
     val code: String
     val recognitionsByDocumentType: Map<DocumentType, BaseRecognition>
     val documentNameOverrides: Map<DocumentType, Int>
-    val documentPriorityOverride: Array<DocumentType>
 
     /**
      * Returns the name of this country, localized to the current locale (current app language).
@@ -27,22 +26,7 @@ interface Country {
                 ?: throw IllegalArgumentException("This county does not support $documentType")
     }
 
-    fun getSupportedDocumentTypes(): List<DocumentType> {
-        if (documentPriorityOverride.isEmpty()) {
-            return recognitionsByDocumentType.keys.toList()
-        }
-
-        val separatedDocumentTypes = recognitionsByDocumentType.keys.partition {
-            documentPriorityOverride.contains(it)
-        }
-
-        return mutableListOf<DocumentType>().apply {
-            // first add sorted elements that are in the documentPriorityOverride array
-            addAll(separatedDocumentTypes.first.sortedBy { documentPriorityOverride.indexOf(it) })
-            // then add remaining elements, without changing their order
-            addAll(separatedDocumentTypes.second)
-        }
-    }
+    fun getSupportedDocumentTypes() = recognitionsByDocumentType.keys.toList()
 
     fun getDocumentNameStringId(documentType: DocumentType): Int {
         val overriddenName = documentNameOverrides[documentType]
