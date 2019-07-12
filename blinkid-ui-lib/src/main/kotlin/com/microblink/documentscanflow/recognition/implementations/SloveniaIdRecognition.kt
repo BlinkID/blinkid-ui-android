@@ -26,6 +26,7 @@ class SloveniaIdRecognition: CombinedRecognition<SloveniaIdFrontRecognizer.Resul
         addDateOfExpiry(combinedResult.dateOfExpiry.date)
         add(DATE_OF_ISSUE, combinedResult.dateOfIssue)
         add(ISSUING_AUTHORITY, combinedResult.administrativeUnit)
+        add(DATE_OF_EXPIRY_PERMANENT, combinedResult.isDateOfExpiryPermanent)
         return FormattingUtils.formatResultTitle(combinedResult.givenNames, combinedResult.surname)
     }
 
@@ -36,6 +37,7 @@ class SloveniaIdRecognition: CombinedRecognition<SloveniaIdFrontRecognizer.Resul
         add(NATIONALITY, frontResult.nationality)
         add(DATE_OF_BIRTH, frontResult.dateOfBirth)
         addDateOfExpiry(frontResult.dateOfExpiry.date)
+        add(DATE_OF_EXPIRY_PERMANENT, frontResult.isDateOfExpiryPermanent)
         return FormattingUtils.formatResultTitle(frontResult.givenNames, frontResult.surname)
     }
 
