@@ -15,6 +15,7 @@ import com.microblink.entities.detectors.quad.document.DocumentSpecification
 import com.microblink.entities.detectors.quad.document.DocumentSpecificationPreset
 import com.microblink.entities.processors.imageReturn.ImageReturnProcessor
 import com.microblink.entities.recognizers.Recognizer
+import com.microblink.entities.recognizers.blinkid.mrtd.MrzResult
 import com.microblink.entities.recognizers.detector.DetectorRecognizer
 import com.microblink.entities.recognizers.templating.ProcessorGroup
 import com.microblink.entities.recognizers.templating.TemplatingClass
@@ -77,10 +78,11 @@ internal fun ViewGroup.inflate(@LayoutRes layoutRes: Int, attachToRoot: Boolean 
     return LayoutInflater.from(context).inflate(layoutRes, this, attachToRoot)
 }
 
-internal fun Recognizer.Result<*>.isEmpty() = this.resultState == Recognizer.Result.State.Empty
+internal fun Recognizer.Result.isEmpty() = this.resultState == Recognizer.Result.State.Empty
 
-internal fun Recognizer.Result<*>.isNotEmpty() = this.resultState != Recognizer.Result.State.Empty
+internal fun Recognizer.Result.isNotEmpty() = this.resultState != Recognizer.Result.State.Empty
 
+internal fun MrzResult.buildTitle() = "$primaryId $secondaryId"
 
 internal fun buildId1CardDetectorRecognizer() =
         buildDetectorRecognizerFromPreset(DocumentSpecificationPreset.DOCUMENT_SPECIFICATION_PRESET_ID1_CARD)

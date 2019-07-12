@@ -1,22 +1,15 @@
 package com.microblink.documentscanflow.recognition.implementations
 
-import com.microblink.documentscanflow.recognition.resultentry.ResultKey.*
 import com.microblink.documentscanflow.isNotEmpty
-import com.microblink.documentscanflow.recognition.BaseTwoSideRecognition
-import com.microblink.documentscanflow.recognition.ResultValidator
-import com.microblink.entities.recognizers.Recognizer
+import com.microblink.documentscanflow.recognition.TwoSideRecognition
+import com.microblink.documentscanflow.recognition.resultentry.ResultKey.*
 import com.microblink.entities.recognizers.blinkid.malaysia.MalaysiaMyKadBackRecognizer
 import com.microblink.entities.recognizers.blinkid.malaysia.MalaysiaMyKasFrontRecognizer
 
-class MalaysiaKasRecognition: BaseTwoSideRecognition() {
+class MalaysiaKasRecognition: TwoSideRecognition<MalaysiaMyKasFrontRecognizer.Result, MalaysiaMyKadBackRecognizer.Result>() {
 
-    val frontRecognizer by lazy { MalaysiaMyKasFrontRecognizer() }
-    val backRecognizer by lazy { MalaysiaMyKadBackRecognizer() }
-
-    val frontResult by lazy { frontRecognizer.result }
-    val backResult by lazy { backRecognizer.result }
-
-    override fun createValidator() = ResultValidator()
+    override val frontRecognizer by lazy { MalaysiaMyKasFrontRecognizer() }
+    override val backRecognizer by lazy { MalaysiaMyKadBackRecognizer() }
 
     override fun extractFields() {
         if (frontResult.isNotEmpty()) {
@@ -49,7 +42,5 @@ class MalaysiaKasRecognition: BaseTwoSideRecognition() {
         }
         return null
     }
-
-    override fun getSingleSideRecognizers(): List<Recognizer<*, *>> = listOf(frontRecognizer, backRecognizer)
 
 }

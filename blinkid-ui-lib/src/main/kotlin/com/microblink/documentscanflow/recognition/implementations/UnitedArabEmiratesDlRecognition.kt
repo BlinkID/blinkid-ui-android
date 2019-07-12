@@ -1,26 +1,14 @@
 package com.microblink.documentscanflow.recognition.implementations
 
-import com.microblink.documentscanflow.buildId1CardDetectorRecognizer
-import com.microblink.documentscanflow.isEmpty
-import com.microblink.documentscanflow.recognition.BaseRecognition
-import com.microblink.entities.recognizers.Recognizer
+import com.microblink.documentscanflow.recognition.SingleSideWithId1CardDetectorRecognition
 import com.microblink.entities.recognizers.blinkid.unitedArabEmirates.UnitedArabEmiratesDlFrontRecognizer
 import com.microblink.documentscanflow.recognition.resultentry.ResultKey.*
 
-class UnitedArabEmiratesDlRecognition : BaseRecognition() {
+class UnitedArabEmiratesDlRecognition : SingleSideWithId1CardDetectorRecognition<UnitedArabEmiratesDlFrontRecognizer.Result>() {
 
-    private val frontRecognizer by lazy { UnitedArabEmiratesDlFrontRecognizer() }
-    private val backRecognizer by lazy { buildId1CardDetectorRecognizer() }
+    override val recognizer by lazy { UnitedArabEmiratesDlFrontRecognizer() }
 
-    override fun getSingleSideRecognizers() = listOf<Recognizer<*, *>>(frontRecognizer, backRecognizer)
-
-    override fun extractData(): String? {
-        val result = frontRecognizer.result
-
-        if (result.isEmpty()) {
-            return null
-        }
-
+    override fun extractData(result: UnitedArabEmiratesDlFrontRecognizer.Result): String? {
         add(LICENCE_NUMBER, result.licenseNumber)
         add(AUTHORITY, result.licensingAuthority)
         add(FULL_NAME, result.name)
@@ -32,4 +20,5 @@ class UnitedArabEmiratesDlRecognition : BaseRecognition() {
 
         return result.name
     }
+
 }

@@ -1,27 +1,19 @@
 package com.microblink.documentscanflow.recognition.implementations
 
-import com.microblink.documentscanflow.recognition.resultentry.ResultKey.*
+import com.microblink.documentscanflow.buildTitle
 import com.microblink.documentscanflow.isNotEmpty
-import com.microblink.documentscanflow.recognition.BaseTwoSideRecognition
-import com.microblink.documentscanflow.recognition.ResultValidator
-import com.microblink.entities.recognizers.Recognizer
+import com.microblink.documentscanflow.recognition.TwoSideRecognition
+import com.microblink.documentscanflow.recognition.resultentry.ResultKey.*
 import com.microblink.entities.recognizers.blinkid.kuwait.KuwaitIdBackRecognizer
 import com.microblink.entities.recognizers.blinkid.kuwait.KuwaitIdFrontRecognizer
 
-class KuwaitIdRecognition : BaseTwoSideRecognition() {
+class KuwaitIdRecognition : TwoSideRecognition<KuwaitIdFrontRecognizer.Result, KuwaitIdBackRecognizer.Result>() {
 
-    private val frontRecognizer by lazy { KuwaitIdFrontRecognizer() }
-    private val backRecognizer by lazy { KuwaitIdBackRecognizer() }
-
-    private val frontResult by lazy { frontRecognizer.result }
-    private val backResult by lazy { backRecognizer.result }
+    override val frontRecognizer by lazy { KuwaitIdFrontRecognizer() }
+    override val backRecognizer by lazy { KuwaitIdBackRecognizer() }
 
     override fun setupRecognizers() {
         backRecognizer.setExtractSerialNo(true)
-    }
-
-    override fun createValidator(): ResultValidator {
-        return ResultValidator()
     }
 
     override fun extractFields() {
@@ -37,14 +29,10 @@ class KuwaitIdRecognition : BaseTwoSideRecognition() {
         if (frontResult.isNotEmpty()) {
             return frontResult.name
         } else if (backResult.isNotEmpty()) {
-            return buildMrtdTitle(backResult.mrzResult)
+            return backResult.mrzResult.buildTitle()
         }
 
         return null
-    }
-
-    override fun getSingleSideRecognizers(): List<Recognizer<*, *>> {
-        return listOf(frontRecognizer, backRecognizer)
     }
 
     private fun extractBackSide() {

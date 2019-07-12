@@ -1,49 +1,21 @@
 package com.microblink.documentscanflow.recognition.implementations
 
-import com.microblink.documentscanflow.isEmpty
-import com.microblink.documentscanflow.isNotEmpty
-import com.microblink.documentscanflow.recognition.BaseTwoSideRecognition
-import com.microblink.documentscanflow.recognition.ResultValidator
+import com.microblink.documentscanflow.recognition.CombinedRecognition
 import com.microblink.documentscanflow.recognition.resultentry.ResultKey.*
 import com.microblink.documentscanflow.recognition.util.FormattingUtils
 import com.microblink.documentscanflow.sanitizeMRZString
-import com.microblink.entities.recognizers.Recognizer
 import com.microblink.entities.recognizers.blinkid.jordan.JordanCombinedRecognizer
 import com.microblink.entities.recognizers.blinkid.jordan.JordanIdBackRecognizer
 import com.microblink.entities.recognizers.blinkid.jordan.JordanIdFrontRecognizer
 
-class JordanIdRecognition : BaseTwoSideRecognition() {
+class JordanIdRecognition :
+    CombinedRecognition<JordanIdFrontRecognizer.Result, JordanIdBackRecognizer.Result, JordanCombinedRecognizer.Result>() {
 
-    val frontRecognizer by lazy { JordanIdFrontRecognizer() }
-    val backRecognizer by lazy { JordanIdBackRecognizer() }
+    override val frontRecognizer by lazy { JordanIdFrontRecognizer() }
+    override val backRecognizer by lazy { JordanIdBackRecognizer() }
+    override val combinedRecognizer by lazy { JordanCombinedRecognizer() }
 
-    val frontResult by lazy { frontRecognizer.result }
-    val backResult by lazy { backRecognizer.result }
-
-    val combinedRecognizer by lazy { JordanCombinedRecognizer() }
-    val combinedResult by lazy { combinedRecognizer.result }
-
-    override fun getSingleSideRecognizers(): List<Recognizer<*, *>> {
-        return listOf(frontRecognizer, backRecognizer)
-    }
-
-    override fun getCombinedRecognizer(): Recognizer<*, *>? {
-        return combinedRecognizer
-    }
-
-    override fun createValidator(): ResultValidator {
-        return ResultValidator().match(combinedResult)
-    }
-
-    override fun extractFields() {
-        if (combinedResult.isNotEmpty()) {
-            extractCombinedResult()
-        }
-        extractFrontSide()
-        extractBackSide()
-    }
-
-    private fun extractCombinedResult() {
+    override fun extractCombinedResult(combinedResult: JordanCombinedRecognizer.Result): String? {
         add(FULL_NAME, combinedResult.name)
         add(NATIONAL_NUMBER, combinedResult.nationalNumber)
         add(SEX, combinedResult.sex)
@@ -52,40 +24,24 @@ class JordanIdRecognition : BaseTwoSideRecognition() {
         add(DOCUMENT_NUMBER, combinedResult.documentNumber)
         add(ISSUER, combinedResult.issuedBy)
         addDateOfExpiry(combinedResult.dateOfExpiry.date)
+        return combinedResult.name
     }
 
-    private fun extractFrontSide() {
-        if (frontResult.isEmpty()) {
-            return
-        }
+    override fun extractFrontResult(frontResult: JordanIdFrontRecognizer.Result): String? {
         add(FULL_NAME, frontResult.name)
         add(NATIONAL_NUMBER, frontResult.nationalNumber)
         add(SEX, frontResult.sex)
         add(DATE_OF_BIRTH, frontResult.dateOfBirth)
+        return frontResult.name
     }
-    
-    private fun extractBackSide() {
-        if (backResult.isEmpty()) {
-            return
-        }
+
+    override fun extractBackResult(backResult: JordanIdBackRecognizer.Result): String? {
         add(NATIONALITY, backResult.mrzResult.nationality)
         add(DOCUMENT_NUMBER, backResult.mrzResult.documentNumber.sanitizeMRZString())
         add(ISSUER, backResult.mrzResult.issuer)
         addDateOfExpiry(backResult.mrzResult.dateOfExpiry.date)
         extractMrzResult(backResult.mrzResult)
-    }
-    
-    override fun getResultTitle(): String? {
-        if (combinedResult.isNotEmpty()) {
-            return combinedResult.name
-        }
-        if (frontResult.isNotEmpty()) {
-            return frontResult.name
-        }
-        if (backResult.isNotEmpty()) {
-            return FormattingUtils.formatResultTitle(backResult.mrzResult.primaryId, backResult.mrzResult.secondaryId)
-        }
-        return null
+        return FormattingUtils.formatResultTitle(backResult.mrzResult.primaryId, backResult.mrzResult.secondaryId)
     }
 
 }

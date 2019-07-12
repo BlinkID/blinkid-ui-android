@@ -1,28 +1,16 @@
 package com.microblink.documentscanflow.recognition.implementations
 
+import com.microblink.documentscanflow.recognition.SingleSideWithId1CardDetectorRecognition
 import com.microblink.documentscanflow.recognition.resultentry.ResultKey.*
-import com.microblink.documentscanflow.buildId1CardDetectorRecognizer
-import com.microblink.documentscanflow.isEmpty
-import com.microblink.documentscanflow.recognition.BaseRecognition
 import com.microblink.documentscanflow.recognition.util.FormattingUtils
-import com.microblink.entities.recognizers.Recognizer
 import com.microblink.entities.recognizers.blinkid.eudl.EudlCountry
 import com.microblink.entities.recognizers.blinkid.eudl.EudlRecognizer
 
-class EudlRecognition(eudlCountry: EudlCountry) : BaseRecognition() {
+class EudlRecognition(eudlCountry: EudlCountry) : SingleSideWithId1CardDetectorRecognition<EudlRecognizer.Result>() {
 
-    val recognizer by lazy { EudlRecognizer(eudlCountry) }
-    private val backRecognizer by lazy { buildId1CardDetectorRecognizer() }
+    override val recognizer by lazy { EudlRecognizer(eudlCountry) }
 
-    override fun getSingleSideRecognizers() = listOf<Recognizer<*, *>>(recognizer, backRecognizer)
-
-
-    override fun extractData(): String? {
-        val result = recognizer.result
-        if (result.isEmpty()) {
-            return null
-        }
-
+    override fun extractData(result: EudlRecognizer.Result): String? {
         val firstName = result.firstName
         val lastName = result.lastName
 
@@ -34,7 +22,7 @@ class EudlRecognition(eudlCountry: EudlCountry) : BaseRecognition() {
         addDateOfExpiry(result.expiryDate.date)
         add(DRIVER_NUMBER, result.driverNumber)
         add(ISSUING_AUTHORITY, result.issuingAuthority)
-        
+
         return FormattingUtils.formatResultTitle(firstName, lastName)
     }
 

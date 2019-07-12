@@ -174,7 +174,7 @@ abstract class BaseDocumentScanActivity : AppCompatActivity(), ScanResultListene
         }
 
         var delay = minimumDelay
-        for (recognizer: Recognizer<*, *> in activeRecognizers) {
+        for (recognizer: Recognizer<*> in activeRecognizers) {
             var actualRecognizer = recognizer
             if (actualRecognizer is SuccessFrameGrabberRecognizer) {
                 actualRecognizer = actualRecognizer.slaveRecognizer

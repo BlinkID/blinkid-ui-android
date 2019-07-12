@@ -1,7 +1,7 @@
 package com.microblink.documentscanflow.document
 
 import com.microblink.documentscanflow.recognition.BaseRecognition
-import com.microblink.documentscanflow.recognition.implementations.GenericRecognition
+import com.microblink.documentscanflow.recognition.GenericRecognition
 import java.util.LinkedHashMap
 
 internal class RecognitionsBuilder {

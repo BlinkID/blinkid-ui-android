@@ -1,27 +1,14 @@
 package com.microblink.documentscanflow.recognition.implementations
 
 import com.microblink.documentscanflow.recognition.resultentry.ResultKey.*
-import com.microblink.documentscanflow.buildId1CardDetectorRecognizer
-import com.microblink.documentscanflow.isEmpty
-import com.microblink.documentscanflow.recognition.BaseRecognition
-import com.microblink.entities.recognizers.Recognizer
+import com.microblink.documentscanflow.recognition.SingleSideWithId1CardDetectorRecognition
 import com.microblink.entities.recognizers.blinkid.malaysia.MalaysiaMyTenteraFrontRecognizer
 
-class MalaysiaTenteraRecognition : BaseRecognition() {
+class MalaysiaTenteraRecognition : SingleSideWithId1CardDetectorRecognition<MalaysiaMyTenteraFrontRecognizer.Result>() {
 
-    private val recognizerFront by lazy { MalaysiaMyTenteraFrontRecognizer() }
-    private val recognizerBack by lazy { buildId1CardDetectorRecognizer() }
+    override val recognizer by lazy { MalaysiaMyTenteraFrontRecognizer() }
 
-    override fun getSingleSideRecognizers(): List<Recognizer<*, *>> {
-        return listOf(recognizerFront, recognizerBack)
-    }
-
-    override fun extractData(): String? {
-        val result = recognizerFront.result
-        if (result.isEmpty()) {
-            return null
-        }
-
+    override fun extractData(result: MalaysiaMyTenteraFrontRecognizer.Result): String? {
         add(FULL_NAME, result.fullName)
         add(ARMY_NUMBER, result.armyNumber)
         add(ADDRESS, result.fullAddress)
@@ -29,7 +16,7 @@ class MalaysiaTenteraRecognition : BaseRecognition() {
         add(SEX, result.sex)
         add(RELIGION, result.religion)
         add(NRIC_NUMBER, result.nric)
-        
+
         return result.fullName
     }
     

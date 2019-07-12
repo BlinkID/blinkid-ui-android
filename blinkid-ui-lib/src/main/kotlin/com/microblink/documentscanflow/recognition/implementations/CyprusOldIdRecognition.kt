@@ -1,23 +1,16 @@
 package com.microblink.documentscanflow.recognition.implementations
 
 import com.microblink.documentscanflow.isNotEmpty
-import com.microblink.documentscanflow.recognition.BaseTwoSideRecognition
-import com.microblink.documentscanflow.recognition.ResultValidator
+import com.microblink.documentscanflow.recognition.TwoSideRecognition
+import com.microblink.documentscanflow.recognition.resultentry.ResultKey.*
 import com.microblink.documentscanflow.recognition.util.FormattingUtils
-import com.microblink.entities.recognizers.Recognizer
 import com.microblink.entities.recognizers.blinkid.cyprus.CyprusOldIdBackRecognizer
 import com.microblink.entities.recognizers.blinkid.cyprus.CyprusOldIdFrontRecognizer
-import com.microblink.documentscanflow.recognition.resultentry.ResultKey.*
 
-class CyprusOldIdRecognition : BaseTwoSideRecognition() {
+class CyprusOldIdRecognition : TwoSideRecognition<CyprusOldIdFrontRecognizer.Result, CyprusOldIdBackRecognizer.Result>() {
 
-    private val frontRecognizer by lazy { CyprusOldIdFrontRecognizer() }
-    private val backRecognizer by lazy { CyprusOldIdBackRecognizer() }
-
-    private val frontResult by lazy { frontRecognizer.result }
-    private val backResult by lazy { backRecognizer.result }
-
-    override fun createValidator() = ResultValidator()
+    override val frontRecognizer by lazy { CyprusOldIdFrontRecognizer() }
+    override val backRecognizer by lazy { CyprusOldIdBackRecognizer() }
 
     override fun extractFields() {
         if (frontResult.isNotEmpty()) {
@@ -35,8 +28,6 @@ class CyprusOldIdRecognition : BaseTwoSideRecognition() {
         }
         return null
     }
-
-    override fun getSingleSideRecognizers() = listOf<Recognizer<*, *>>(frontRecognizer, backRecognizer)
 
     private fun extractFront(result: CyprusOldIdFrontRecognizer.Result) {
         add(IDENTITY_NUMBER, result.idNumber)

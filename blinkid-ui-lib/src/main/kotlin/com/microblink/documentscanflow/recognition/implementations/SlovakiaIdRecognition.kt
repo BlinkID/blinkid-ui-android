@@ -1,48 +1,21 @@
 package com.microblink.documentscanflow.recognition.implementations
 
+import com.microblink.documentscanflow.buildTitle
+import com.microblink.documentscanflow.recognition.CombinedRecognition
 import com.microblink.documentscanflow.recognition.resultentry.ResultKey.*
-import com.microblink.documentscanflow.isEmpty
-import com.microblink.documentscanflow.isNotEmpty
-import com.microblink.documentscanflow.recognition.BaseTwoSideRecognition
 import com.microblink.documentscanflow.recognition.util.FormattingUtils
-import com.microblink.documentscanflow.recognition.ResultValidator
-import com.microblink.entities.recognizers.Recognizer
 import com.microblink.entities.recognizers.blinkid.slovakia.SlovakiaCombinedRecognizer
 import com.microblink.entities.recognizers.blinkid.slovakia.SlovakiaIdBackRecognizer
 import com.microblink.entities.recognizers.blinkid.slovakia.SlovakiaIdFrontRecognizer
 
-class SlovakiaIdRecognition: BaseTwoSideRecognition() {
+class SlovakiaIdRecognition:
+    CombinedRecognition<SlovakiaIdFrontRecognizer.Result, SlovakiaIdBackRecognizer.Result, SlovakiaCombinedRecognizer.Result>() {
 
-    val frontRecognizer by lazy { SlovakiaIdFrontRecognizer() }
-    val backRecognizer by lazy { SlovakiaIdBackRecognizer() }
+    override val frontRecognizer by lazy { SlovakiaIdFrontRecognizer() }
+    override val backRecognizer by lazy { SlovakiaIdBackRecognizer() }
+    override val combinedRecognizer by lazy { SlovakiaCombinedRecognizer() }
 
-    val frontResult by lazy { frontRecognizer.result }
-    val backResult by lazy { backRecognizer.result }
-
-    val combinedRecognizer by lazy { SlovakiaCombinedRecognizer() }
-    val combinedResult by lazy { combinedRecognizer.result }
-
-    override fun getSingleSideRecognizers(): List<Recognizer<*, *>> {
-        return listOf(frontRecognizer, backRecognizer)
-    }
-
-    override fun getCombinedRecognizer(): Recognizer<*, *>? {
-        return combinedRecognizer
-    }
-
-    override fun createValidator(): ResultValidator {
-        return ResultValidator().match(combinedResult)
-    }
-
-    override fun extractFields() {
-        if (combinedResult.isNotEmpty()) {
-            extractCombinedResult()
-        }
-        extractFrontSide()
-        extractBackSide()
-    }
-
-    private fun extractCombinedResult() {
+    override fun extractCombinedResult(combinedResult: SlovakiaCombinedRecognizer.Result): String? {
         add(LAST_NAME, combinedResult.lastName)
         add(FIRST_NAME, combinedResult.firstName)
         add(NATIONALITY, combinedResult.nationality)
@@ -57,13 +30,10 @@ class SlovakiaIdRecognition: BaseTwoSideRecognition() {
         add(ISSUING_AUTHORITY, combinedResult.issuedBy)
         add(DATE_OF_ISSUE, combinedResult.dateOfIssue)
         addDateOfExpiry(combinedResult.dateOfExpiry.date)
+        return FormattingUtils.formatResultTitle(combinedResult.firstName, combinedResult.lastName)
     }
 
-    private fun extractFrontSide() {
-        if (frontResult.isEmpty()) {
-            return
-        }
-
+    override fun extractFrontResult(frontResult: SlovakiaIdFrontRecognizer.Result): String? {
         add(LAST_NAME, frontResult.lastName)
         add(FIRST_NAME, frontResult.firstName)
         add(NATIONALITY, frontResult.nationality)
@@ -74,29 +44,14 @@ class SlovakiaIdRecognition: BaseTwoSideRecognition() {
         add(ISSUER, frontResult.issuedBy)
         addDateOfExpiry(frontResult.dateOfExpiry.date)
         add(DATE_OF_ISSUE, frontResult.dateOfIssue)
+        return FormattingUtils.formatResultTitle(frontResult.firstName, frontResult.lastName)
     }
 
-    private fun extractBackSide() {
-        if (backResult.isEmpty()) {
-            return
-        }
-
+    override fun extractBackResult(backResult: SlovakiaIdBackRecognizer.Result): String? {
         add(ADDRESS, backResult.address)
         add(PLACE_OF_BIRTH, backResult.placeOfBirth)
         extractMrzResult(backResult.mrzResult)
-    }
-    
-    override fun getResultTitle(): String? {
-        if (combinedResult.isNotEmpty()) {
-            return FormattingUtils.formatResultTitle(combinedResult.firstName, combinedResult.lastName)
-        }
-        if (frontResult.isNotEmpty()) {
-            return FormattingUtils.formatResultTitle(frontResult.firstName, frontResult.lastName)
-        }
-        if (backResult.isNotEmpty()) {
-            return buildMrtdTitle(backResult.mrzResult)
-        }
-        return null
+        return backResult.mrzResult.buildTitle()
     }
 
 }

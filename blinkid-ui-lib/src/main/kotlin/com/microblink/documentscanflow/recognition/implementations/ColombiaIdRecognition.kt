@@ -1,26 +1,18 @@
 package com.microblink.documentscanflow.recognition.implementations
 
-import com.microblink.documentscanflow.recognition.resultentry.ResultKey.*
 import com.microblink.documentscanflow.isNotEmpty
-import com.microblink.documentscanflow.recognition.BaseTwoSideRecognition
-import com.microblink.documentscanflow.recognition.util.FormattingUtils
 import com.microblink.documentscanflow.recognition.ResultValidator
-import com.microblink.entities.recognizers.Recognizer
+import com.microblink.documentscanflow.recognition.TwoSideRecognition
+import com.microblink.documentscanflow.recognition.resultentry.ResultKey.*
+import com.microblink.documentscanflow.recognition.util.FormattingUtils
 import com.microblink.entities.recognizers.blinkid.colombia.ColombiaIdBackRecognizer
 import com.microblink.entities.recognizers.blinkid.colombia.ColombiaIdFrontRecognizer
 
 class ColombiaIdRecognition
-    : BaseTwoSideRecognition() {
+    : TwoSideRecognition<ColombiaIdFrontRecognizer.Result, ColombiaIdBackRecognizer.Result>() {
 
-    val frontRecognizer by lazy { ColombiaIdFrontRecognizer() }
-    val backRecognizer by lazy { ColombiaIdBackRecognizer() }
-
-    val frontResult by lazy { frontRecognizer.result }
-    val backResult by lazy { backRecognizer.result  }
-
-    override fun getSingleSideRecognizers(): List<Recognizer<*, *>> {
-        return listOf(frontRecognizer, backRecognizer)
-    }
+    override val frontRecognizer by lazy { ColombiaIdFrontRecognizer() }
+    override val backRecognizer by lazy { ColombiaIdBackRecognizer() }
 
     override fun createValidator(): ResultValidator {
         val frontDocNumberWithoutDots = frontResult.documentNumber.replace(".", "")
