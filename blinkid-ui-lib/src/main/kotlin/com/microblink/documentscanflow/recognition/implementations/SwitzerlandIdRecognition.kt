@@ -5,6 +5,7 @@ import com.microblink.documentscanflow.isNotEmpty
 import com.microblink.documentscanflow.recognition.util.FormattingUtils
 import com.microblink.documentscanflow.recognition.ResultValidator
 import com.microblink.documentscanflow.recognition.TwoSideRecognition
+import com.microblink.documentscanflow.recognition.extract
 import com.microblink.documentscanflow.recognition.util.StringCombiner
 import com.microblink.entities.recognizers.Recognizer
 import com.microblink.entities.recognizers.blinkid.switzerland.SwitzerlandIdBackRecognizer
@@ -33,7 +34,7 @@ class SwitzerlandIdRecognition: TwoSideRecognition<SwitzerlandIdFrontRecognizer.
     }
     
     private fun extractBackSide() {
-        extractMrzResult(backResult.mrzResult)
+        extract(backResult.mrzResult)
         add(PLACE_OF_ORIGIN, backResult.placeOfOrigin)
         add(AUTHORITY, backResult.authority)
         add(DATE_OF_ISSUE, backResult.dateOfIssue)

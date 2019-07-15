@@ -21,6 +21,9 @@ enum class DocumentType {
     VICTORIA_DL,
 
     // Singapore
-    WORK_PASS
+    WORK_PASS,
+
+    // USA
+    UNDER_21_ID
 
 }

@@ -2,6 +2,7 @@ package com.microblink.documentscanflow.recognition.implementations
 
 import com.microblink.documentscanflow.buildTitle
 import com.microblink.documentscanflow.recognition.CombinedRecognition
+import com.microblink.documentscanflow.recognition.extract
 import com.microblink.documentscanflow.recognition.resultentry.ResultKey.*
 import com.microblink.documentscanflow.recognition.util.FormattingUtils
 import com.microblink.entities.recognizers.blinkid.austria.AustriaCombinedRecognizer
@@ -42,7 +43,7 @@ class AustriaIdRecognition
     }
 
     override fun extractBackResult(backResult: AustriaIdBackRecognizer.Result): String? {
-        extractMrzResult(backResult.mrzResult)
+        extract(backResult.mrzResult)
         add(PLACE_OF_BIRTH, backResult.placeOfBirth)
         add(ISSUING_AUTHORITY, backResult.issuingAuthority)
         add(DATE_OF_ISSUE, backResult.dateOfIssuance)

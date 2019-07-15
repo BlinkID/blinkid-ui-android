@@ -3,6 +3,7 @@ package com.microblink.documentscanflow.recognition.implementations
 import com.microblink.documentscanflow.buildTitle
 import com.microblink.documentscanflow.recognition.resultentry.ResultKey.*
 import com.microblink.documentscanflow.recognition.CombinedRecognition
+import com.microblink.documentscanflow.recognition.extract
 import com.microblink.documentscanflow.recognition.util.FormattingUtils
 import com.microblink.entities.recognizers.blinkid.croatia.CroatiaCombinedRecognizer
 import com.microblink.entities.recognizers.blinkid.croatia.CroatiaIdBackRecognizer
@@ -47,7 +48,7 @@ class CroatiaIdRecognition
         add(ADDRESS, backResult.residence)
         add(ISSUING_AUTHORITY, backResult.issuedBy)
         add(DATE_OF_ISSUE, backResult.dateOfIssue)
-        extractMrzResult(backResult.mrzResult)
+        extract(backResult.mrzResult)
 
         return backResult.mrzResult.buildTitle()
     }

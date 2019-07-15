@@ -1,6 +1,7 @@
 package com.microblink.documentscanflow.recognition.implementations
 
 import com.microblink.documentscanflow.recognition.CombinedRecognition
+import com.microblink.documentscanflow.recognition.extract
 import com.microblink.documentscanflow.recognition.resultentry.ResultKey.*
 import com.microblink.documentscanflow.recognition.util.FormattingUtils
 import com.microblink.documentscanflow.sanitizeMRZString
@@ -40,7 +41,7 @@ class JordanIdRecognition :
         add(DOCUMENT_NUMBER, backResult.mrzResult.documentNumber.sanitizeMRZString())
         add(ISSUER, backResult.mrzResult.issuer)
         addDateOfExpiry(backResult.mrzResult.dateOfExpiry.date)
-        extractMrzResult(backResult.mrzResult)
+        extract(backResult.mrzResult)
         return FormattingUtils.formatResultTitle(backResult.mrzResult.primaryId, backResult.mrzResult.secondaryId)
     }
 

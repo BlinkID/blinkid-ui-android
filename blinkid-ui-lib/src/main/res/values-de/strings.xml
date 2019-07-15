@@ -30,4 +30,6 @@
   <string name="mb_title_activity_country_choose">Land auswählen</string>
   <string name="mb_work_pass">Arbeitsgang</string>
   <string name="mb_custom_id_blue_pink">ID (blau &amp; rosa)</string>
+  <string name="mb_under_21_id">Unter-21-ID</string>
+  <string name="mb_voter_id">Wähler-ID</string>
 </resources>

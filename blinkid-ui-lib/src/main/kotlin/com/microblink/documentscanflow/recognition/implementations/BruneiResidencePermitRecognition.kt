@@ -3,6 +3,7 @@ package com.microblink.documentscanflow.recognition.implementations
 import com.microblink.documentscanflow.buildTitle
 import com.microblink.documentscanflow.isNotEmpty
 import com.microblink.documentscanflow.recognition.TwoSideRecognition
+import com.microblink.documentscanflow.recognition.extract
 import com.microblink.entities.recognizers.blinkid.brunei.BruneiResidencePermitBackRecognizer
 import com.microblink.entities.recognizers.blinkid.brunei.BruneiResidencePermitFrontRecognizer
 import com.microblink.documentscanflow.recognition.resultentry.ResultKey.*
@@ -32,7 +33,7 @@ class BruneiResidencePermitRecognition :
     }
 
     private fun extractBack(result: BruneiResidencePermitBackRecognizer.Result) {
-        extractMrzResult(result.mrzResult)
+        extract(result.mrzResult)
         add(DATE_OF_ISSUE, result.dateOfIssue)
         add(ADDRESS, result.address)
         add(RACE, result.race)

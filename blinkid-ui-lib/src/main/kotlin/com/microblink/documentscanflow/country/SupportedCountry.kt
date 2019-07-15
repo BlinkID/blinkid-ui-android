@@ -238,6 +238,7 @@ enum class SupportedCountry(override val code: String,
             recognitions {
                 id = UsdlRecognition()
                 drivingLicence = UsdlRecognition()
+                under21Id = UsdlUnder21Recognition()
             })
 }
 

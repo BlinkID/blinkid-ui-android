@@ -92,6 +92,12 @@ internal class RecognitionsBuilder {
             addRecognition(DocumentType.WORK_PASS, value)
         }
 
+    var under21Id: BaseRecognition? = null
+        set(value) {
+            field = value
+            addRecognition(DocumentType.UNDER_21_ID, value)
+        }
+
     init {
         id = GenericRecognition.id
         drivingLicence = GenericRecognition.drivingLicence

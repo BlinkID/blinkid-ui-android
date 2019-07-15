@@ -1,16 +1,15 @@
 package com.microblink.documentscanflow.recognition.implementations
 
+import com.microblink.documentscanflow.buildId1VerticalCardDetectorRecognizer
 import com.microblink.documentscanflow.isNotEmpty
 import com.microblink.documentscanflow.recognition.TwoSideRecognition
 import com.microblink.documentscanflow.recognition.extract
 import com.microblink.entities.recognizers.blinkbarcode.usdl.UsdlRecognizer
-import com.microblink.entities.recognizers.blinkid.documentface.DocumentFaceRecognizer
-import com.microblink.documentscanflow.recognition.resultentry.ResultKey.*
-import com.microblink.entities.recognizers.blinkbarcode.usdl.UsdlKeys
+import com.microblink.entities.recognizers.detector.DetectorRecognizer
 
-open class UsdlRecognition : TwoSideRecognition<DocumentFaceRecognizer.Result, UsdlRecognizer.Result>() {
+class UsdlUnder21Recognition : TwoSideRecognition<DetectorRecognizer.Result, UsdlRecognizer.Result>() {
 
-    override val frontRecognizer by lazy { DocumentFaceRecognizer() }
+    override val frontRecognizer by lazy { buildId1VerticalCardDetectorRecognizer() }
     override val backRecognizer by lazy { UsdlRecognizer() }
 
     override fun extractFields() = extract(backResult)
@@ -19,5 +18,7 @@ open class UsdlRecognition : TwoSideRecognition<DocumentFaceRecognizer.Result, U
         return if (backResult.isNotEmpty()) backResult.fullName
         else null
     }
+
+    override fun isForVerticalDocument() = true
 
 }

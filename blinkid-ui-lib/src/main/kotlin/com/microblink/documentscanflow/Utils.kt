@@ -87,6 +87,9 @@ internal fun MrzResult.buildTitle() = "$primaryId $secondaryId"
 internal fun buildId1CardDetectorRecognizer() =
         buildDetectorRecognizerFromPreset(DocumentSpecificationPreset.DOCUMENT_SPECIFICATION_PRESET_ID1_CARD)
 
+internal fun buildId1VerticalCardDetectorRecognizer() =
+        buildDetectorRecognizerFromPreset(DocumentSpecificationPreset.DOCUMENT_SPECIFICATION_PRESET_ID1_VERTICAL_CARD)
+
 internal fun buildId2VerticalCardDetectorRecognizer() =
         buildDetectorRecognizerFromPreset(DocumentSpecificationPreset.DOCUMENT_SPECIFICATION_PRESET_ID2_VERTICAL_CARD)
 

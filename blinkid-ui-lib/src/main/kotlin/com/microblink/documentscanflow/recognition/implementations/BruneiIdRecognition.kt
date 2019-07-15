@@ -3,6 +3,7 @@ package com.microblink.documentscanflow.recognition.implementations
 import com.microblink.documentscanflow.buildTitle
 import com.microblink.documentscanflow.isNotEmpty
 import com.microblink.documentscanflow.recognition.TwoSideRecognition
+import com.microblink.documentscanflow.recognition.extract
 import com.microblink.documentscanflow.recognition.resultentry.ResultKey.*
 import com.microblink.entities.recognizers.blinkid.brunei.BruneiIdBackRecognizer
 import com.microblink.entities.recognizers.blinkid.brunei.BruneiIdFrontRecognizer
@@ -30,7 +31,7 @@ class BruneiIdRecognition: TwoSideRecognition<BruneiIdFrontRecognizer.Result, Br
     }
 
     private fun extractBack(result: BruneiIdBackRecognizer.Result) {
-        extractMrzResult(result.mrzResult)
+        extract(result.mrzResult)
         add(DATE_OF_ISSUE, result.dateOfIssue)
         add(ADDRESS, result.address)
         add(RACE, result.race)

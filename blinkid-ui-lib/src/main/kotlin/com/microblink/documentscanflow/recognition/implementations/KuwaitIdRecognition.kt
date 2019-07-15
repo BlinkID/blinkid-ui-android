@@ -3,6 +3,7 @@ package com.microblink.documentscanflow.recognition.implementations
 import com.microblink.documentscanflow.buildTitle
 import com.microblink.documentscanflow.isNotEmpty
 import com.microblink.documentscanflow.recognition.TwoSideRecognition
+import com.microblink.documentscanflow.recognition.extract
 import com.microblink.documentscanflow.recognition.resultentry.ResultKey.*
 import com.microblink.entities.recognizers.blinkid.kuwait.KuwaitIdBackRecognizer
 import com.microblink.entities.recognizers.blinkid.kuwait.KuwaitIdFrontRecognizer
@@ -36,7 +37,7 @@ class KuwaitIdRecognition : TwoSideRecognition<KuwaitIdFrontRecognizer.Result, K
     }
 
     private fun extractBackSide() {
-        extractMrzResult(backResult.mrzResult)
+        extract(backResult.mrzResult)
         add(SERIAL_NUMBER, backResult.serialNo)
     }
 

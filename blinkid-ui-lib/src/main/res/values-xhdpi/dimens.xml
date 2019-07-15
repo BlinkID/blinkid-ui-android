@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="mb_padding_country_select_container_top">16dp</dimen>
+    <dimen name="mb_padding_country_select_container_bottom">8dp</dimen>
+    <dimen name="mb_height_doc_type_tabs">48dp</dimen>
+</resources>

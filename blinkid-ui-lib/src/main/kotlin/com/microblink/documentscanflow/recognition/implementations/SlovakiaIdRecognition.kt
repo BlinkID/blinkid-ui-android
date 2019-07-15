@@ -2,6 +2,7 @@ package com.microblink.documentscanflow.recognition.implementations
 
 import com.microblink.documentscanflow.buildTitle
 import com.microblink.documentscanflow.recognition.CombinedRecognition
+import com.microblink.documentscanflow.recognition.extract
 import com.microblink.documentscanflow.recognition.resultentry.ResultKey.*
 import com.microblink.documentscanflow.recognition.util.FormattingUtils
 import com.microblink.entities.recognizers.blinkid.slovakia.SlovakiaCombinedRecognizer
@@ -50,7 +51,7 @@ class SlovakiaIdRecognition:
     override fun extractBackResult(backResult: SlovakiaIdBackRecognizer.Result): String? {
         add(ADDRESS, backResult.address)
         add(PLACE_OF_BIRTH, backResult.placeOfBirth)
-        extractMrzResult(backResult.mrzResult)
+        extract(backResult.mrzResult)
         return backResult.mrzResult.buildTitle()
     }
 

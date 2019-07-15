@@ -2,6 +2,7 @@ package com.microblink.documentscanflow.recognition.implementations
 
 import com.microblink.documentscanflow.buildTitle
 import com.microblink.documentscanflow.recognition.CombinedRecognition
+import com.microblink.documentscanflow.recognition.extract
 import com.microblink.documentscanflow.recognition.util.FormattingUtils
 import com.microblink.entities.recognizers.blinkid.czechia.CzechiaCombinedRecognizer
 import com.microblink.entities.recognizers.blinkid.czechia.CzechiaIdBackRecognizer
@@ -43,7 +44,7 @@ class CzechIdRecognition : CombinedRecognition<CzechiaIdFrontRecognizer.Result, 
     }
 
     override fun extractBackResult(backResult: CzechiaIdBackRecognizer.Result): String? {
-        extractMrzResult(backResult.mrzResult)
+        extract(backResult.mrzResult)
         add(ADDRESS, backResult.permanentStay)
         add(PERSONAL_NUMBER, backResult.personalNumber)
         add(ISSUING_AUTHORITY, backResult.authority)

@@ -129,6 +129,8 @@ abstract class BaseDocumentScanActivity : AppCompatActivity(), ScanResultListene
 
     @UiThread
     protected fun updateDocument(newDocument: Document) {
+        scanFrameLayout.setIsForVerticalCard(newDocument.getRecognition().isForVerticalDocument())
+
         val oldDocument = currentDocument
         val isSameCountry = oldDocument.country == newDocument.country
         currentDocument = newDocument
