@@ -9,8 +9,8 @@ import com.microblink.entities.recognizers.blinkid.nigeria.NigeriaVoterIdBackRec
 
 class NigeriaVoterIdRecognition: TwoSideRecognition<DocumentFaceRecognizer.Result, NigeriaVoterIdBackRecognizer.Result>() {
 
-    override val frontRecognizer = DocumentFaceRecognizer()
-    override val backRecognizer = NigeriaVoterIdBackRecognizer()
+    override val frontRecognizer by lazy { DocumentFaceRecognizer() }
+    override val backRecognizer by lazy { NigeriaVoterIdBackRecognizer() }
 
     override fun extractFields() {
         if (backResult.isEmpty()) return
