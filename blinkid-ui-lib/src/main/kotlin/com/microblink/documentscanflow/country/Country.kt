@@ -48,6 +48,7 @@ interface Country {
             DocumentType.VICTORIA_DL -> R.string.mb_victoria_dl
             DocumentType.WORK_PASS -> R.string.mb_work_pass
             DocumentType.UNDER_21_ID -> R.string.mb_under_21_id
+            DocumentType.VOTER_ID -> R.string.mb_voter_id
         }
     }
 

@@ -14,6 +14,7 @@ enum class DocumentType {
     NEW_ID,
     TEMPORARY_RESIDENT_ID,
     PERMANENT_RESIDENT_ID,
+    VOTER_ID,
 
     // country specific:
 
