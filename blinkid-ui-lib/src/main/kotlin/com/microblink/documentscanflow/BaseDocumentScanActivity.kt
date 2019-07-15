@@ -73,7 +73,6 @@ import com.microblink.view.recognition.ScanResultListener
 import kotlinx.android.synthetic.main.mb_activity_scan_document.*
 import kotlinx.android.synthetic.main.mb_include_scan_bottom_container.*
 import kotlinx.android.synthetic.main.mb_include_splash_overlay.*
-import java.lang.Exception
 import java.util.*
 import kotlin.math.max
 
@@ -83,11 +82,12 @@ abstract class BaseDocumentScanActivity : AppCompatActivity(), ScanResultListene
             by lazy { CameraPermissionManager(this) }
     protected val scanSuccessPlayer
             by lazy { createScanSuccessSoundPlayer() }
+    protected val documentChooser
+            by lazy { createDocumentChooser() }
 
     private val scanFlowListener by lazy {createScanFlowListener()}
     private val frameListener by lazy {createFrameListener()}
     private val splashOverlaySettings by lazy { createSplashOverlaySettings() }
-    private val documentChooser by lazy { createDocumentChooser() }
     private val scanTimeoutHandler by lazy { createScanTimeoutHandler() }
     private val torchButtonHandler = TorchButtonHandler()
     private val recognizerManager by lazy { RecognizerManager(createRecognitionConfig(), getFrameGrabberMode(), createFrameCallback()) }
@@ -129,6 +129,8 @@ abstract class BaseDocumentScanActivity : AppCompatActivity(), ScanResultListene
 
     @UiThread
     protected fun updateDocument(newDocument: Document) {
+        scanFrameLayout.setIsForVerticalCard(newDocument.getRecognition().isForVerticalDocument())
+
         val oldDocument = currentDocument
         val isSameCountry = oldDocument.country == newDocument.country
         currentDocument = newDocument
@@ -174,7 +176,7 @@ abstract class BaseDocumentScanActivity : AppCompatActivity(), ScanResultListene
         }
 
         var delay = minimumDelay
-        for (recognizer: Recognizer<*, *> in activeRecognizers) {
+        for (recognizer: Recognizer<*> in activeRecognizers) {
             var actualRecognizer = recognizer
             if (actualRecognizer is SuccessFrameGrabberRecognizer) {
                 actualRecognizer = actualRecognizer.slaveRecognizer
@@ -279,11 +281,7 @@ abstract class BaseDocumentScanActivity : AppCompatActivity(), ScanResultListene
         documentTypeTabs.removeAllTabs()
 
         val country = document.country
-        for (docType in country.getSupportedDocumentTypes()) {
-            if (!documentChooser.isDocumentTypeSupportedForCountry(docType, country)) {
-                continue
-            }
-
+        for (docType in documentChooser.getAllowedDocumentTypes(country)) {
             val documentName = country.getDocumentNameStringId(docType)
             val tab = documentTypeTabs.newTab().setText(documentName).setTag(docType)
             documentTypeTabs.addTab(tab)
@@ -293,12 +291,10 @@ abstract class BaseDocumentScanActivity : AppCompatActivity(), ScanResultListene
             }
         }
 
-        documentTypeTabs.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
-            override fun onTabReselected(tab: TabLayout.Tab?) {
-            }
+        documentTypeTabs.addOnTabSelectedListener(object : TabLayout.BaseOnTabSelectedListener<TabLayout.Tab> {
+            override fun onTabReselected(tab: TabLayout.Tab?) {}
 
-            override fun onTabUnselected(tab: TabLayout.Tab?) {
-            }
+            override fun onTabUnselected(tab: TabLayout.Tab?) {}
 
             override fun onTabSelected(tab: TabLayout.Tab?) {
                 val docType = tab?.tag as DocumentType
@@ -394,7 +390,7 @@ abstract class BaseDocumentScanActivity : AppCompatActivity(), ScanResultListene
     }
 
     @CallSuper
-    override fun onConfigurationChanged(newConfig: Configuration?) {
+    override fun onConfigurationChanged(newConfig: Configuration) {
         super.onConfigurationChanged(newConfig)
         recognizerView.changeConfiguration(newConfig)
         ocrView.setHostActivityOrientation(recognizerView.hostScreenOrientation)
@@ -531,7 +527,7 @@ abstract class BaseDocumentScanActivity : AppCompatActivity(), ScanResultListene
                 val country = CountryFactory.getCountryForCode(countryCode)
                 if (country != null) {
                     val oldDocumentType = currentDocument.documentType
-                    val newDocumentType = if (documentChooser.isDocumentTypeSupportedForCountry(oldDocumentType, country)) {
+                    val newDocumentType = if (oldDocumentType in documentChooser.getAllowedDocumentTypes(country)) {
                         oldDocumentType
                     } else {
                         documentChooser.getDefaultDocumentTypeForCountry(country)

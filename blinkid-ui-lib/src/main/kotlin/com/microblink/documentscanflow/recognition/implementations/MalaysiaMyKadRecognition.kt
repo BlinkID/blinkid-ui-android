@@ -1,25 +1,17 @@
 package com.microblink.documentscanflow.recognition.implementations
 
-import com.microblink.documentscanflow.recognition.resultentry.ResultKey.*
 import com.microblink.documentscanflow.isNotEmpty
-import com.microblink.documentscanflow.recognition.BaseTwoSideRecognition
 import com.microblink.documentscanflow.recognition.ResultValidator
-import com.microblink.entities.recognizers.Recognizer
+import com.microblink.documentscanflow.recognition.TwoSideRecognition
+import com.microblink.documentscanflow.recognition.resultentry.ResultKey.*
 import com.microblink.entities.recognizers.blinkid.malaysia.MalaysiaMyKadBackRecognizer
 import com.microblink.entities.recognizers.blinkid.malaysia.MalaysiaMyKadFrontRecognizer
 
 class MalaysiaMyKadRecognition
-    : BaseTwoSideRecognition() {
+    : TwoSideRecognition<MalaysiaMyKadFrontRecognizer.Result, MalaysiaMyKadBackRecognizer.Result>() {
 
-    val frontRecognizer by lazy { MalaysiaMyKadFrontRecognizer() }
-    val backRecognizer by lazy { MalaysiaMyKadBackRecognizer() }
-
-    val frontResult by lazy { frontRecognizer.result }
-    val backResult by lazy { backRecognizer.result }
-
-    override fun getSingleSideRecognizers(): List<Recognizer<*, *>> {
-        return listOf(frontRecognizer, backRecognizer)
-    }
+    override val frontRecognizer by lazy { MalaysiaMyKadFrontRecognizer() }
+    override val backRecognizer by lazy { MalaysiaMyKadBackRecognizer() }
 
     override fun createValidator(): ResultValidator {
         return ResultValidator()
@@ -37,12 +29,11 @@ class MalaysiaMyKadRecognition
     }
 
     override fun getResultTitle(): String? {
-        if (frontResult.isNotEmpty()) {
-            return frontResult.fullName
-        } else if (backResult.isNotEmpty()) {
-            return backResult.nric
+        return when {
+            frontResult.isNotEmpty() -> frontResult.fullName
+            backResult.isNotEmpty() -> backResult.nric
+            else -> null
         }
-        return null
     }
 
     private fun extractFrontSide() {

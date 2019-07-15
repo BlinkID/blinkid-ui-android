@@ -1,21 +1,18 @@
 package com.microblink.documentscanflow.recognition.implementations
 
+import com.microblink.documentscanflow.buildTitle
 import com.microblink.documentscanflow.isNotEmpty
-import com.microblink.documentscanflow.recognition.BaseTwoSideRecognition
-import com.microblink.documentscanflow.recognition.ResultValidator
-import com.microblink.entities.recognizers.Recognizer
-import com.microblink.entities.recognizers.blinkid.brunei.*
+import com.microblink.documentscanflow.recognition.TwoSideRecognition
+import com.microblink.documentscanflow.recognition.extract
 import com.microblink.documentscanflow.recognition.resultentry.ResultKey.*
+import com.microblink.entities.recognizers.blinkid.brunei.BruneiTemporaryResidencePermitBackRecognizer
+import com.microblink.entities.recognizers.blinkid.brunei.BruneiTemporaryResidencePermitFrontRecognizer
 
-class BruneiTemporaryResidencePermitRecognition: BaseTwoSideRecognition() {
+class BruneiTemporaryResidencePermitRecognition :
+    TwoSideRecognition<BruneiTemporaryResidencePermitFrontRecognizer.Result, BruneiTemporaryResidencePermitBackRecognizer.Result>() {
 
-    private val frontRecognizer by lazy { BruneiTemporaryResidencePermitFrontRecognizer() }
-    private val backRecognizer by lazy { BruneiTemporaryResidencePermitBackRecognizer() }
-
-    private val frontResult by lazy { frontRecognizer.result }
-    private val backResult by lazy { backRecognizer.result }
-
-    override fun createValidator() = ResultValidator()
+    override val frontRecognizer by lazy { BruneiTemporaryResidencePermitFrontRecognizer() }
+    override val backRecognizer by lazy { BruneiTemporaryResidencePermitBackRecognizer() }
 
     override fun extractFields() {
         if (frontResult.isNotEmpty()) {
@@ -36,7 +33,7 @@ class BruneiTemporaryResidencePermitRecognition: BaseTwoSideRecognition() {
     }
 
     private fun extractBack(result: BruneiTemporaryResidencePermitBackRecognizer.Result) {
-        extractMrzResult(result.mrzResult)
+        extract(result.mrzResult)
         add(DATE_OF_ISSUE, result.dateOfIssue)
         add(PASSPORT_NUMBER, result.passportNumber)
         add(EMPLOYER_ADDRESS, result.address)
@@ -44,15 +41,12 @@ class BruneiTemporaryResidencePermitRecognition: BaseTwoSideRecognition() {
 
     override fun getResultTitle(): String? {
         if (backResult.isNotEmpty()) {
-            return buildMrtdTitle(backResult.mrzResult)
+            return backResult.mrzResult.buildTitle()
         }
         if (frontResult.isNotEmpty()) {
             return frontResult.fullName
         }
         return null
     }
-
-    override fun getSingleSideRecognizers(): List<Recognizer<*, *>> = listOf(frontRecognizer, backRecognizer)
-
 
 }

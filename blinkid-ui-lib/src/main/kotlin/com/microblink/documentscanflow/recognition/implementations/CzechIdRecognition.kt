@@ -1,69 +1,21 @@
 package com.microblink.documentscanflow.recognition.implementations
 
-import com.microblink.documentscanflow.isNotEmpty
-import com.microblink.documentscanflow.recognition.BaseTwoSideRecognition
-import com.microblink.documentscanflow.recognition.ResultValidator
+import com.microblink.documentscanflow.buildTitle
+import com.microblink.documentscanflow.recognition.CombinedRecognition
+import com.microblink.documentscanflow.recognition.extract
 import com.microblink.documentscanflow.recognition.util.FormattingUtils
-import com.microblink.entities.recognizers.Recognizer
 import com.microblink.entities.recognizers.blinkid.czechia.CzechiaCombinedRecognizer
 import com.microblink.entities.recognizers.blinkid.czechia.CzechiaIdBackRecognizer
 import com.microblink.entities.recognizers.blinkid.czechia.CzechiaIdFrontRecognizer
 import com.microblink.documentscanflow.recognition.resultentry.ResultKey.*
 
-class CzechIdRecognition : BaseTwoSideRecognition() {
+class CzechIdRecognition : CombinedRecognition<CzechiaIdFrontRecognizer.Result, CzechiaIdBackRecognizer.Result, CzechiaCombinedRecognizer.Result>() {
 
-    val frontRecognizer by lazy { CzechiaIdFrontRecognizer() }
-    val backRecognizer by lazy { CzechiaIdBackRecognizer() }
+    override val frontRecognizer by lazy { CzechiaIdFrontRecognizer() }
+    override val backRecognizer by lazy { CzechiaIdBackRecognizer() }
+    override val combinedRecognizer by lazy { CzechiaCombinedRecognizer() }
 
-    val frontResult by lazy { frontRecognizer.result }
-    val backResult by lazy { backRecognizer.result }
-
-    val combinedRecognizer by lazy { CzechiaCombinedRecognizer() }
-    val combinedResult by lazy { combinedRecognizer.result }
-
-    override fun getSingleSideRecognizers(): List<Recognizer<*, *>> {
-        return listOf(frontRecognizer, backRecognizer)
-    }
-
-    override fun getCombinedRecognizer(): Recognizer<*, *>? {
-        return combinedRecognizer
-    }
-
-    override fun createValidator(): ResultValidator {
-        return ResultValidator().match(combinedResult)
-    }
-
-    override fun extractFields() {
-        if (combinedResult.isNotEmpty()) {
-            extractCombinedResult()
-        }
-
-        if (frontResult.isNotEmpty()) {
-            extractFrontSide()
-        }
-       
-        if(backResult.isNotEmpty()) {
-            extractBackSide()
-        }
-    }
-
-    override fun getResultTitle(): String? {
-        if (combinedResult.isNotEmpty()) {
-            return FormattingUtils.formatResultTitle(combinedResult.givenNames, combinedResult.surname)
-        }
-
-        if (backResult.isNotEmpty()) {
-            return buildMrtdTitle(backResult.mrzResult)
-        }
-
-        if (frontResult.isNotEmpty()) {
-            return FormattingUtils.formatResultTitle(frontResult.givenNames, frontResult.surname)
-        }
-
-        return null
-    }
-
-    private fun extractCombinedResult() {
+    override fun extractCombinedResult(combinedResult: CzechiaCombinedRecognizer.Result): String? {
         add(LAST_NAME, combinedResult.surname)
         add(FIRST_NAME, combinedResult.givenNames)
         add(DOCUMENT_NUMBER, combinedResult.documentNumber)
@@ -76,9 +28,10 @@ class CzechIdRecognition : BaseTwoSideRecognition() {
         add(NATIONALITY, combinedResult.nationality)
         addDateOfExpiry(combinedResult.dateOfExpiry.date)
         add(DATE_OF_ISSUE, combinedResult.dateOfIssue)
+        return FormattingUtils.formatResultTitle(combinedResult.givenNames, combinedResult.surname)
     }
 
-    private fun extractFrontSide() {
+    override fun extractFrontResult(frontResult: CzechiaIdFrontRecognizer.Result): String? {
         add(LAST_NAME, frontResult.surname)
         add(FIRST_NAME, frontResult.givenNames)
         add(DOCUMENT_NUMBER, frontResult.documentNumber)
@@ -87,13 +40,15 @@ class CzechIdRecognition : BaseTwoSideRecognition() {
         add(DATE_OF_BIRTH, frontResult.dateOfBirth)
         add(DATE_OF_ISSUE, frontResult.dateOfIssue)
         addDateOfExpiry(frontResult.dateOfExpiry.date)
+        return FormattingUtils.formatResultTitle(frontResult.givenNames, frontResult.surname)
     }
-    
-    private fun extractBackSide() {
-        extractMrzResult(backResult.mrzResult)
+
+    override fun extractBackResult(backResult: CzechiaIdBackRecognizer.Result): String? {
+        extract(backResult.mrzResult)
         add(ADDRESS, backResult.permanentStay)
         add(PERSONAL_NUMBER, backResult.personalNumber)
         add(ISSUING_AUTHORITY, backResult.authority)
+        return backResult.mrzResult.buildTitle()
     }
     
 }

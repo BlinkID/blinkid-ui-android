@@ -1,25 +1,14 @@
 package com.microblink.documentscanflow.recognition.implementations
 
 import com.microblink.documentscanflow.recognition.resultentry.ResultKey.*
-import com.microblink.documentscanflow.buildId1CardDetectorRecognizer
-import com.microblink.documentscanflow.isEmpty
-import com.microblink.documentscanflow.recognition.BaseRecognition
-import com.microblink.entities.recognizers.Recognizer
+import com.microblink.documentscanflow.recognition.SingleSideWithId1CardDetectorRecognition
 import com.microblink.entities.recognizers.blinkid.singapore.SingaporeDlFrontRecognizer
 
-class SingaporeDlRecognition : BaseRecognition() {
+class SingaporeDlRecognition : SingleSideWithId1CardDetectorRecognition<SingaporeDlFrontRecognizer.Result>() {
 
-    private val frontRecognizer by lazy { SingaporeDlFrontRecognizer() }
-    private val backRecognizer by lazy { buildId1CardDetectorRecognizer() }
+    override val recognizer by lazy { SingaporeDlFrontRecognizer() }
 
-    override fun getSingleSideRecognizers() = listOf<Recognizer<*, *>>(frontRecognizer, backRecognizer)
-
-    override fun extractData(): String? {
-        val result = frontRecognizer.result
-        if (result.isEmpty()) {
-            return null
-        }
-
+    override fun extractData(result: SingaporeDlFrontRecognizer.Result): String? {
         add(DOCUMENT_NUMBER, result.licenceNumber)
         add(FULL_NAME, result.name)
         add(DATE_OF_BIRTH, result.birthDate)
@@ -28,4 +17,5 @@ class SingaporeDlRecognition : BaseRecognition() {
 
         return result.name
     }
+
 }

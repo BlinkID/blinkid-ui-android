@@ -1,7 +1,7 @@
 package com.microblink.documentscanflow.document
 
 import com.microblink.documentscanflow.recognition.BaseRecognition
-import com.microblink.documentscanflow.recognition.implementations.GenericRecognition
+import com.microblink.documentscanflow.recognition.GenericRecognition
 import java.util.LinkedHashMap
 
 internal class RecognitionsBuilder {
@@ -84,6 +84,24 @@ internal class RecognitionsBuilder {
         set(value) {
             field = value
             addRecognition(DocumentType.VICTORIA_DL, value)
+        }
+
+    var workPass: BaseRecognition? = null
+        set(value) {
+            field = value
+            addRecognition(DocumentType.WORK_PASS, value)
+        }
+
+    var under21Id: BaseRecognition? = null
+        set(value) {
+            field = value
+            addRecognition(DocumentType.UNDER_21_ID, value)
+        }
+
+    var voterId: BaseRecognition? = null
+        set(value) {
+            field = value
+            addRecognition(DocumentType.VOTER_ID, value)
         }
 
     init {

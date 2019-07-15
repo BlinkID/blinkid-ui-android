@@ -1,23 +1,17 @@
 package com.microblink.documentscanflow.recognition.implementations
 
+import com.microblink.documentscanflow.buildTitle
 import com.microblink.documentscanflow.isNotEmpty
-import com.microblink.documentscanflow.recognition.BaseTwoSideRecognition
-import com.microblink.documentscanflow.recognition.ResultValidator
-import com.microblink.documentscanflow.recognition.resultentry.ResultKey
+import com.microblink.documentscanflow.recognition.TwoSideRecognition
+import com.microblink.documentscanflow.recognition.extract
 import com.microblink.documentscanflow.recognition.resultentry.ResultKey.*
-import com.microblink.entities.recognizers.Recognizer
 import com.microblink.entities.recognizers.blinkid.brunei.BruneiIdBackRecognizer
 import com.microblink.entities.recognizers.blinkid.brunei.BruneiIdFrontRecognizer
 
-class BruneiIdRecognition: BaseTwoSideRecognition() {
+class BruneiIdRecognition: TwoSideRecognition<BruneiIdFrontRecognizer.Result, BruneiIdBackRecognizer.Result>() {
 
-    private val frontRecognizer by lazy { BruneiIdFrontRecognizer() }
-    private val backRecognizer by lazy { BruneiIdBackRecognizer() }
-
-    private val frontResult by lazy { frontRecognizer.result }
-    private val backResult by lazy { backRecognizer.result }
-
-    override fun createValidator() = ResultValidator()
+    override val frontRecognizer by lazy { BruneiIdFrontRecognizer() }
+    override val backRecognizer by lazy { BruneiIdBackRecognizer() }
 
     override fun extractFields() {
         if (frontResult.isNotEmpty()) {
@@ -31,13 +25,13 @@ class BruneiIdRecognition: BaseTwoSideRecognition() {
     private fun extractFront(result: BruneiIdFrontRecognizer.Result) {
         add(FULL_NAME, result.fullName)
         add(DOCUMENT_NUMBER, result.documentNumber)
-        add(ResultKey.DATE_OF_BIRTH, result.dateOfBirth)
-        add(ResultKey.PLACE_OF_BIRTH, result.placeOfBirth)
-        add(ResultKey.SEX, result.sex)
+        add(DATE_OF_BIRTH, result.dateOfBirth)
+        add(PLACE_OF_BIRTH, result.placeOfBirth)
+        add(SEX, result.sex)
     }
 
     private fun extractBack(result: BruneiIdBackRecognizer.Result) {
-        extractMrzResult(result.mrzResult)
+        extract(result.mrzResult)
         add(DATE_OF_ISSUE, result.dateOfIssue)
         add(ADDRESS, result.address)
         add(RACE, result.race)
@@ -45,15 +39,12 @@ class BruneiIdRecognition: BaseTwoSideRecognition() {
 
     override fun getResultTitle(): String? {
         if (backResult.isNotEmpty()) {
-            return buildMrtdTitle(backResult.mrzResult)
+            return backResult.mrzResult.buildTitle()
         }
         if (frontResult.isNotEmpty()) {
             return frontResult.fullName
         }
         return null
     }
-
-    override fun getSingleSideRecognizers(): List<Recognizer<*, *>> = listOf(frontRecognizer, backRecognizer)
-
 
 }

@@ -1,28 +1,17 @@
 package com.microblink.documentscanflow.recognition.implementations
 
+import com.microblink.documentscanflow.recognition.SingleSideRecognition
 import com.microblink.documentscanflow.recognition.resultentry.ResultKey.*
-import com.microblink.documentscanflow.isEmpty
-import com.microblink.documentscanflow.recognition.BaseRecognition
 import com.microblink.documentscanflow.recognition.util.FormattingUtils
 import com.microblink.documentscanflow.recognition.util.StringCombiner
-import com.microblink.entities.recognizers.Recognizer
 import com.microblink.entities.recognizers.blinkid.switzerland.SwitzerlandPassportRecognizer
 
-class SwitzerlandPassportRecognition: BaseRecognition() {
+class SwitzerlandPassportRecognition: SingleSideRecognition<SwitzerlandPassportRecognizer.Result>() {
 
     private val mStringCombiner by lazy { StringCombiner(StringCombiner.Country.SWITZERLAND) }
-    private val recognizer by lazy { SwitzerlandPassportRecognizer() }
+    override val recognizer by lazy { SwitzerlandPassportRecognizer() }
 
-    override fun getSingleSideRecognizers(): List<Recognizer<*, *>> {
-        return listOf(recognizer)
-    }
-
-    override fun extractData(): String? {
-        val result = recognizer.result
-        if (result.isEmpty()) {
-            return null
-        }
-
+    override fun extractData(result: SwitzerlandPassportRecognizer.Result): String? {
         val firstName = mStringCombiner.combineMRZString(result.mrzResult.secondaryId, result.givenName)
         val lastName = mStringCombiner.combineMRZString(result.mrzResult.primaryId, result.surname)
 
@@ -39,5 +28,4 @@ class SwitzerlandPassportRecognition: BaseRecognition() {
 
         return FormattingUtils.formatResultTitle(firstName, lastName)
     }
-
 }

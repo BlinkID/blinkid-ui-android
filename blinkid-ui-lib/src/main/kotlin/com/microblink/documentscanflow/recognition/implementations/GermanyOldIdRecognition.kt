@@ -1,30 +1,27 @@
 package com.microblink.documentscanflow.recognition.implementations
 
 import com.microblink.documentscanflow.buildId2VerticalCardDetectorRecognizer
-import com.microblink.documentscanflow.isEmpty
-import com.microblink.documentscanflow.recognition.BaseRecognition
-import com.microblink.entities.recognizers.Recognizer
+import com.microblink.documentscanflow.buildTitle
+import com.microblink.documentscanflow.isNotEmpty
+import com.microblink.documentscanflow.recognition.TwoSideRecognition
+import com.microblink.documentscanflow.recognition.extract
 import com.microblink.entities.recognizers.blinkid.germany.GermanyIdOldRecognizer
+import com.microblink.entities.recognizers.detector.DetectorRecognizer
 
-class GermanyOldIdRecognition : BaseRecognition() {
+class GermanyOldIdRecognition : TwoSideRecognition<GermanyIdOldRecognizer.Result, DetectorRecognizer.Result>() {
 
-    val recognizer by lazy { GermanyIdOldRecognizer() }
-    val backRecognizer by lazy {
+    override val frontRecognizer by lazy { GermanyIdOldRecognizer() }
+    override val backRecognizer by lazy {
         buildId2VerticalCardDetectorRecognizer()
     }
 
-    override fun getSingleSideRecognizers(): List<Recognizer<*, *>> {
-        return listOf(recognizer, backRecognizer)
+    override fun extractFields() {
+        if (frontResult.isNotEmpty()) extract(frontResult.mrzResult)
     }
 
-    override fun extractData(): String? {
-        val result = recognizer.result
-        if (result.isEmpty()) {
-            return null
-        }
-
-        extractMrzResult(result.mrzResult)
-        return buildMrtdTitle(result.mrzResult)
+    override fun getResultTitle(): String? {
+        return if (frontResult.isNotEmpty()) frontResult.mrzResult.buildTitle()
+        else null
     }
 
 }

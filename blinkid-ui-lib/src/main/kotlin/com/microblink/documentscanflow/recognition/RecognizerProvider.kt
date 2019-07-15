@@ -6,6 +6,6 @@ abstract class RecognizerProvider {
 
     val recognizers by lazy { createRecognizers()}
 
-    protected abstract fun createRecognizers(): List<Recognizer<*, *>>
+    protected abstract fun createRecognizers(): List<Recognizer<*>>
 
 }

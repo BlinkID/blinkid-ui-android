@@ -2,29 +2,21 @@ package com.microblink.documentscanflow.recognition.implementations
 
 import com.microblink.documentscanflow.recognition.resultentry.ResultKey.*
 import com.microblink.documentscanflow.isNotEmpty
-import com.microblink.documentscanflow.recognition.BaseTwoSideRecognition
 import com.microblink.documentscanflow.recognition.util.FormattingUtils
 import com.microblink.documentscanflow.recognition.ResultValidator
+import com.microblink.documentscanflow.recognition.TwoSideRecognition
+import com.microblink.documentscanflow.recognition.extract
 import com.microblink.documentscanflow.recognition.util.StringCombiner
 import com.microblink.entities.recognizers.Recognizer
 import com.microblink.entities.recognizers.blinkid.switzerland.SwitzerlandIdBackRecognizer
 import com.microblink.entities.recognizers.blinkid.switzerland.SwitzerlandIdFrontRecognizer
 
-class SwitzerlandIdRecognition: BaseTwoSideRecognition() {
+class SwitzerlandIdRecognition: TwoSideRecognition<SwitzerlandIdFrontRecognizer.Result, SwitzerlandIdBackRecognizer.Result>() {
 
-    val frontRecognizer by lazy { SwitzerlandIdFrontRecognizer() }
-    val backRecognizer by lazy { SwitzerlandIdBackRecognizer() }
+    override val frontRecognizer by lazy { SwitzerlandIdFrontRecognizer() }
+    override val backRecognizer by lazy { SwitzerlandIdBackRecognizer() }
 
-    val frontResult by lazy { frontRecognizer.result }
-    val backResult by lazy { backRecognizer.result }
-
-    override fun getSingleSideRecognizers(): List<Recognizer<*, *>> {
-        return listOf(frontRecognizer, backRecognizer)
-    }
-
-    override fun createValidator(): ResultValidator {
-        return ResultValidator().match(frontResult.dateOfBirth.date, backResult.mrzResult.dateOfBirth.date)
-    }
+    override fun createValidator() = ResultValidator().match(frontResult.dateOfBirth.date, backResult.mrzResult.dateOfBirth.date)
 
     override fun extractFields() {
         if (frontResult.isNotEmpty()) {
@@ -42,7 +34,7 @@ class SwitzerlandIdRecognition: BaseTwoSideRecognition() {
     }
     
     private fun extractBackSide() {
-        extractMrzResult(backResult.mrzResult)
+        extract(backResult.mrzResult)
         add(PLACE_OF_ORIGIN, backResult.placeOfOrigin)
         add(AUTHORITY, backResult.authority)
         add(DATE_OF_ISSUE, backResult.dateOfIssue)
@@ -52,7 +44,7 @@ class SwitzerlandIdRecognition: BaseTwoSideRecognition() {
         var firstName: String? = ""
         var lastName: String? = ""
         when {
-            isCombinedScan(frontResult, backResult) -> {
+            isTwoSideScan(frontResult, backResult) -> {
                 val stringCombiner = StringCombiner(StringCombiner.Country.SWITZERLAND)
                 firstName = stringCombiner.combineMRZString(backResult.mrzResult.secondaryId, frontResult.givenName)
                 lastName = stringCombiner.combineMRZString(backResult.mrzResult.primaryId, frontResult.surname)
@@ -68,5 +60,8 @@ class SwitzerlandIdRecognition: BaseTwoSideRecognition() {
         }
         return FormattingUtils.formatResultTitle(firstName, lastName)
     }
+
+    private fun isTwoSideScan(frontResult: Recognizer.Result, backResult: Recognizer.Result) =
+        frontResult.isNotEmpty() && backResult.isNotEmpty()
 
 }

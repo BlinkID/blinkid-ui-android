@@ -14,6 +14,17 @@ enum class DocumentType {
     NEW_ID,
     TEMPORARY_RESIDENT_ID,
     PERMANENT_RESIDENT_ID,
-    VICTORIA_DL
+    VOTER_ID,
+
+    // country specific:
+
+    // Australia
+    VICTORIA_DL,
+
+    // Singapore
+    WORK_PASS,
+
+    // USA
+    UNDER_21_ID
 
 }
