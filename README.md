@@ -24,7 +24,7 @@ Include BlinkID UI dependency in your app level build.gradle file
 	
 ```
 dependencies {
-	implementation 'com.github.BlinkID:blinkid-ui-android:v4.9.1.0'
+	implementation 'com.github.BlinkID:blinkid-ui-android:v4.10.0.0'
 }
 ```
 
@@ -66,7 +66,7 @@ In your scan activity, override `createScanTimeoutHandler()` and return your own
 In your scan activity, override `createScanLineAnimator()` and return your own implementation. If you want to disable the animation, just return `new EmptyScanLineAnimator()`. If you just want to change line color, provide `mbScanIconScanLine` attribute in your scan activity theme.
 
 ### How do I limit selection to specific countries and document types?
-In your scan activity, override `createDocumentChooser()` and return your own subclass of `DefaultDocumentChooser`, in which you'll override `getCountryFilter()` to return your desired filter and override `isDocumentTypeSupportedForCountry()` where you'll need to return whether a document type is supported for a specific country.
+In your scan activity, override `createDocumentChooser()` and return your own subclass of `DefaultDocumentChooser`, in which you'll override `getCountryFilter()` to return your desired filter and override `getAllowedDocumentTypes()` to return only allowed document types for a specific country.
 
 ### How do I use custom country selection activity?
 In your scan activity, override `createDocumentChooser()` and return your own implementation. Start your country selection activity in `onChooseCountryClick()`.
