@@ -2,6 +2,7 @@ package com.microblink.documentscanflow.recognition.implementations
 
 import com.microblink.documentscanflow.buildTitle
 import com.microblink.documentscanflow.recognition.CombinedRecognition
+import com.microblink.documentscanflow.recognition.extract
 import com.microblink.documentscanflow.recognition.resultentry.ResultKey.*
 import com.microblink.documentscanflow.recognition.util.FormattingUtils
 import com.microblink.entities.recognizers.blinkid.slovenia.SloveniaCombinedRecognizer
@@ -26,6 +27,7 @@ class SloveniaIdRecognition: CombinedRecognition<SloveniaIdFrontRecognizer.Resul
         addDateOfExpiry(combinedResult.dateOfExpiry.date)
         add(DATE_OF_ISSUE, combinedResult.dateOfIssue)
         add(ISSUING_AUTHORITY, combinedResult.administrativeUnit)
+        add(DATE_OF_EXPIRY_PERMANENT, combinedResult.isDateOfExpiryPermanent)
         return FormattingUtils.formatResultTitle(combinedResult.givenNames, combinedResult.surname)
     }
 
@@ -36,11 +38,12 @@ class SloveniaIdRecognition: CombinedRecognition<SloveniaIdFrontRecognizer.Resul
         add(NATIONALITY, frontResult.nationality)
         add(DATE_OF_BIRTH, frontResult.dateOfBirth)
         addDateOfExpiry(frontResult.dateOfExpiry.date)
+        add(DATE_OF_EXPIRY_PERMANENT, frontResult.isDateOfExpiryPermanent)
         return FormattingUtils.formatResultTitle(frontResult.givenNames, frontResult.surname)
     }
 
     override fun extractBackResult(backResult: SloveniaIdBackRecognizer.Result): String? {
-        extractMrzResult(backResult.mrzResult)
+        extract(backResult.mrzResult)
         add(ADDRESS, backResult.address)
         add(AUTHORITY, backResult.administrativeUnit)
         add(DATE_OF_ISSUE, backResult.dateOfIssue)

@@ -4,6 +4,7 @@ import com.microblink.documentscanflow.buildTitle
 import com.microblink.documentscanflow.isNotEmpty
 import com.microblink.documentscanflow.recognition.ResultValidator
 import com.microblink.documentscanflow.recognition.TwoSideRecognition
+import com.microblink.documentscanflow.recognition.extract
 import com.microblink.documentscanflow.recognition.resultentry.ResultKey.*
 import com.microblink.documentscanflow.sanitizeMRZString
 import com.microblink.entities.recognizers.blinkid.unitedArabEmirates.UnitedArabEmiratesIdBackRecognizer
@@ -27,7 +28,7 @@ class UnitedArabEmiratesIdRecognition: TwoSideRecognition<UnitedArabEmiratesIdFr
             add(NATIONALITY, frontResult.nationality)
         }
         if (backResult.isNotEmpty()) {
-            extractMrzResult(backResult.mrzResult)
+            extract(backResult.mrzResult)
         }
     }
 

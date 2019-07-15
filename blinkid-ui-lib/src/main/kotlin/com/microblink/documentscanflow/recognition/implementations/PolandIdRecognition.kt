@@ -2,6 +2,7 @@ package com.microblink.documentscanflow.recognition.implementations
 
 import com.microblink.documentscanflow.buildTitle
 import com.microblink.documentscanflow.recognition.CombinedRecognition
+import com.microblink.documentscanflow.recognition.extract
 import com.microblink.documentscanflow.recognition.resultentry.ResultKey.*
 import com.microblink.documentscanflow.recognition.util.FormattingUtils
 import com.microblink.entities.recognizers.blinkid.poland.PolandCombinedRecognizer
@@ -38,7 +39,7 @@ class PolandIdRecognition: CombinedRecognition<PolandIdFrontRecognizer.Result, P
     }
 
     override fun extractBackResult(backResult: PolandIdBackRecognizer.Result): String? {
-        extractMrzResult(backResult.mrzResult)
+        extract(backResult.mrzResult)
         return backResult.mrzResult.buildTitle()
     }
 

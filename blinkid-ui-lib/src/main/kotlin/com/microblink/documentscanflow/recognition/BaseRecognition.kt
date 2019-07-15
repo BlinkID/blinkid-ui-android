@@ -70,6 +70,8 @@ sealed class BaseRecognition(val isFullySupported: Boolean = true) {
 
     abstract fun canScanBothSides(): Boolean
 
+    open fun isForVerticalDocument() = false
+
     protected open fun setupRecognizers() {
         // nothing, override if needed
     }
@@ -151,61 +153,39 @@ sealed class BaseRecognition(val isFullySupported: Boolean = true) {
 
     protected abstract fun extractData(): String?
 
-    protected fun add(key: ResultKey, value: String?) {
+    internal fun add(key: ResultKey, value: String?) {
         if (!value.isNullOrEmpty()) {
             resultEntries.add(entryBuilder.build(key, value))
         }
     }
 
-    protected fun add(key: ResultKey, value: Boolean) {
+    internal fun add(key: ResultKey, value: Boolean) {
         resultEntries.add(entryBuilder.build(key, value))
     }
 
-    protected fun add(key: ResultKey, value: Int, unit: String) {
+    internal fun add(key: ResultKey, value: Int, unit: String) {
         resultEntries.add(entryBuilder.build(key, value, unit))
     }
 
-    protected fun add(key: ResultKey, value: Date?) {
+    internal fun add(key: ResultKey, value: Date?) {
         if (value != null) {
             resultEntries.add(entryBuilder.build(key, value))
         }
     }
 
-    protected fun add(key: ResultKey, value: DateResult?) {
+    internal fun add(key: ResultKey, value: DateResult?) {
         if (value != null ) {
             add(key, value.date)
         }
     }
 
-    protected fun addDateOfExpiry(dateResult: DateResult) = addDateOfExpiry(dateResult.date)
+    internal fun addDateOfExpiry(dateResult: DateResult) = addDateOfExpiry(dateResult.date)
 
-    protected fun addDateOfExpiry(date: Date?) {
+    internal fun addDateOfExpiry(date: Date?) {
         if (date != null) {
             resultEntries.add(entryBuilder.build(DATE_OF_EXPIRY,
                     date,
                     ResultEntry.Builder.DateCheckType.IN_FUTURE))
-        }
-    }
-
-    protected fun extractMrzResult(mrzResult: MrzResult) {
-        add(PRIMARY_ID, mrzResult.primaryId)
-        add(SECONDARY_ID, mrzResult.secondaryId)
-        add(DATE_OF_BIRTH, mrzResult.dateOfBirth.date)
-        add(SEX, mrzResult.gender)
-        add(NATIONALITY, mrzResult.nationality)
-        add(DOCUMENT_CODE, mrzResult.documentCode)
-        add(ISSUER, mrzResult.issuer)
-        addDateOfExpiry(mrzResult.dateOfExpiry.date)
-        add(OPTIONAL_FIELD_2, mrzResult.opt2)
-        add(MRZ_TEXT, mrzResult.mrzText)
-
-        if (mrzResult.documentType == MrtdDocumentType.MRTD_TYPE_GREEN_CARD) {
-            add(ALIEN_NUMBER, mrzResult.alienNumber)
-            add(APPLICATION_RECEIPT_NUMBER, mrzResult.applicationReceiptNumber)
-            add(IMMIGRANT_CASE_NUMBER, mrzResult.immigrantCaseNumber)
-        } else {
-            add(DOCUMENT_NUMBER, mrzResult.documentNumber)
-            add(OPTIONAL_FIELD_1, mrzResult.opt1)
         }
     }
 
@@ -338,11 +318,11 @@ class GenericRecognition(isFullySupported: Boolean, private val recognizerProvid
             if (recognizer.result.isNotEmpty()) {
                 when (recognizer) {
                     is MrtdRecognizer -> {
-                        extractMrzResult(recognizer.result.mrzResult)
+                        extract(recognizer.result.mrzResult)
                         result = recognizer.result.mrzResult.buildTitle()
                     }
                     is PassportRecognizer -> {
-                        extractMrzResult(recognizer.result.mrzResult)
+                        extract(recognizer.result.mrzResult)
                         result = recognizer.result.mrzResult.buildTitle()
                     }
                     is Pdf417Recognizer -> add(BARCODE_DATA, recognizer.result.stringData)

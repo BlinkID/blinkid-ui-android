@@ -28,4 +28,8 @@
   <string name="mb_supported_countries_label">Choisissez parmi plus de 150 documents</string>
   <string name="mb_action_search">Chercher</string>
   <string name="mb_title_activity_country_choose">Choisissez le pays</string>
+  <string name="mb_work_pass">Passe professionnel</string>
+  <string name="mb_custom_id_blue_pink">Identifiant (bleu et rose)</string>
+  <string name="mb_under_21_id">Pièce d\'identité moins de 21 ans</string>
+  <string name="mb_voter_id">Carte d\'électeur</string>
 </resources>

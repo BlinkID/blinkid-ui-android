@@ -26,9 +26,7 @@ interface Country {
                 ?: throw IllegalArgumentException("This county does not support $documentType")
     }
 
-    fun getSupportedDocumentTypes(): List<DocumentType> {
-        return recognitionsByDocumentType.keys.toList()
-    }
+    fun getSupportedDocumentTypes() = recognitionsByDocumentType.keys.toList()
 
     fun getDocumentNameStringId(documentType: DocumentType): Int {
         val overriddenName = documentNameOverrides[documentType]
@@ -48,6 +46,9 @@ interface Country {
             DocumentType.TEMPORARY_RESIDENT_ID -> R.string.mb_temporary_resident_id
             DocumentType.PERMANENT_RESIDENT_ID -> R.string.mb_permanent_resident_id
             DocumentType.VICTORIA_DL -> R.string.mb_victoria_dl
+            DocumentType.WORK_PASS -> R.string.mb_work_pass
+            DocumentType.UNDER_21_ID -> R.string.mb_under_21_id
+            DocumentType.VOTER_ID -> R.string.mb_voter_id
         }
     }
 

@@ -18,7 +18,7 @@
         <android.support.design.widget.TabLayout
             android:id="@+id/documentTypeTabs"
             android:layout_width="match_parent"
-            android:layout_height="48dp"
+            android:layout_height="@dimen/mb_height_doc_type_tabs"
             android:background="?attr/mbScanBgColorDocTypeSelection"
             android:clipToPadding="false"
             android:paddingLeft="@dimen/mb_padding_small"
@@ -39,8 +39,8 @@
             android:layout_height="wrap_content"
             android:background="?attr/mbScanBgDrawableChooseCountry"
             android:orientation="vertical"
-            android:paddingTop="@dimen/mb_padding_standard"
-            android:paddingBottom="@dimen/mb_padding_small">
+            android:paddingTop="@dimen/mb_padding_country_select_container_top"
+            android:paddingBottom="@dimen/mb_padding_country_select_container_bottom">
 
             <TextView
                 android:id="@+id/countryLabel"

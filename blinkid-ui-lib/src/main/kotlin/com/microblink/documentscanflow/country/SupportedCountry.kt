@@ -153,6 +153,7 @@ enum class SupportedCountry(override val code: String,
             "ng",
             recognitions {
                 drivingLicence = NigeriaDlRecognition()
+                voterId = NigeriaVoterIdRecognition()
             }
     ),
 
@@ -180,8 +181,12 @@ enum class SupportedCountry(override val code: String,
     SINGAPORE("sg",
             recognitions {
                 id = SingaporeIdRecognition()
+                workPass = GenericRecognition.faceId1(false)
                 drivingLicence = SingaporeDlRecognition()
-            }),
+            },
+            documentNameOverrides =  mapOf(
+                    DocumentType.ID to R.string.mb_custom_id_blue_pink
+            )),
 
     SLOVAKIA("sk",
             recognitions {
@@ -234,6 +239,7 @@ enum class SupportedCountry(override val code: String,
             recognitions {
                 id = UsdlRecognition()
                 drivingLicence = UsdlRecognition()
+                under21Id = UsdlUnder21Recognition()
             })
 }
 

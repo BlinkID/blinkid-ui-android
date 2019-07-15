@@ -2,6 +2,7 @@ package com.microblink.documentscanflow.recognition.implementations
 
 import com.microblink.documentscanflow.buildTitle
 import com.microblink.documentscanflow.recognition.SingleSideRecognition
+import com.microblink.documentscanflow.recognition.extract
 import com.microblink.entities.recognizers.blinkid.romania.RomaniaIdFrontRecognizer
 
 class RomaniaIdRecognition: SingleSideRecognition<RomaniaIdFrontRecognizer.Result>() {
@@ -22,7 +23,7 @@ class RomaniaIdRecognition: SingleSideRecognition<RomaniaIdFrontRecognizer.Resul
     }
 
     override fun extractData(result: RomaniaIdFrontRecognizer.Result): String? {
-        extractMrzResult(result.mrzResult)
+        extract(result.mrzResult)
         return result.mrzResult.buildTitle()
     }
 
