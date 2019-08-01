@@ -1,13 +1,14 @@
 package com.microblink.documentscanflow.recognition
 
 import com.microblink.documentscanflow.*
-import com.microblink.documentscanflow.buildId1CardDetectorRecognizer
-import com.microblink.documentscanflow.buildId2VerticalCardDetectorRecognizer
 import com.microblink.documentscanflow.isEmpty
 import com.microblink.documentscanflow.isNotEmpty
 import com.microblink.documentscanflow.recognition.resultentry.ResultEntry
 import com.microblink.documentscanflow.recognition.resultentry.ResultKey
 import com.microblink.documentscanflow.recognition.resultentry.ResultKey.*
+import com.microblink.entities.detectors.quad.document.DocumentDetector
+import com.microblink.entities.detectors.quad.document.DocumentSpecification
+import com.microblink.entities.detectors.quad.document.DocumentSpecificationPreset
 import com.microblink.entities.processors.imageReturn.ImageReturnProcessor
 import com.microblink.entities.recognizers.Recognizer
 import com.microblink.entities.recognizers.blinkbarcode.pdf417.Pdf417Recognizer
@@ -15,16 +16,19 @@ import com.microblink.entities.recognizers.blinkid.documentface.DocumentFaceReco
 import com.microblink.entities.recognizers.blinkid.imageoptions.FaceImageOptions
 import com.microblink.entities.recognizers.blinkid.imageoptions.FullDocumentImageOptions
 import com.microblink.entities.recognizers.blinkid.imageoptions.SignatureImageOptions
+import com.microblink.entities.recognizers.blinkid.imageoptions.dpi.FullDocumentImageDpiOptions
 import com.microblink.entities.recognizers.blinkid.imageresult.CombinedFullDocumentImageResult
 import com.microblink.entities.recognizers.blinkid.imageresult.FaceImageResult
 import com.microblink.entities.recognizers.blinkid.imageresult.FullDocumentImageResult
 import com.microblink.entities.recognizers.blinkid.imageresult.SignatureImageResult
-import com.microblink.entities.recognizers.blinkid.mrtd.MrtdDocumentType
 import com.microblink.entities.recognizers.blinkid.mrtd.MrtdRecognizer
-import com.microblink.entities.recognizers.blinkid.mrtd.MrzResult
 import com.microblink.entities.recognizers.blinkid.passport.PassportRecognizer
 import com.microblink.entities.recognizers.detector.DetectorRecognizer
+import com.microblink.entities.recognizers.templating.ProcessorGroup
+import com.microblink.entities.recognizers.templating.TemplatingClass
+import com.microblink.entities.recognizers.templating.dewarpPolicies.DPIBasedDewarpPolicy
 import com.microblink.entities.settings.GlareDetectorOptions
+import com.microblink.geometry.Rectangle
 import com.microblink.image.Image
 import com.microblink.results.date.Date
 import com.microblink.results.date.DateResult
@@ -62,6 +66,9 @@ sealed class BaseRecognition(val isFullySupported: Boolean = true) {
             if (recognizer is GlareDetectorOptions) {
                 recognizer.setDetectGlare(true)
             }
+            if (recognizer is FullDocumentImageDpiOptions) {
+                recognizer.fullDocumentImageDpi = FULL_DOCUMENT_IMAGE_DPI
+            }
         }
 
         setupRecognizers()
@@ -70,7 +77,7 @@ sealed class BaseRecognition(val isFullySupported: Boolean = true) {
 
     abstract fun canScanBothSides(): Boolean
 
-    open fun isForVerticalDocument() = false
+    open fun isForVerticalDocument(scanFlowState: ScanFlowState) = false
 
     protected open fun setupRecognizers() {
         // nothing, override if needed
@@ -335,13 +342,9 @@ class GenericRecognition(isFullySupported: Boolean, private val recognizerProvid
     companion object {
 
         val residencePermit = faceMrtd(true)
-
         val id = faceMrtd(false)
-
         val drivingLicence = faceId1(false)
-
         val passport = passport()
-
         val visa = mrtd(true)
 
         private fun passport(): GenericRecognition {
@@ -402,3 +405,34 @@ class GenericRecognition(isFullySupported: Boolean, private val recognizerProvid
         }
     }
 }
+
+internal fun buildId1CardDetectorRecognizer() =
+        buildDetectorRecognizerFromPreset(DocumentSpecificationPreset.DOCUMENT_SPECIFICATION_PRESET_ID1_CARD)
+
+internal fun buildId1VerticalCardDetectorRecognizer() =
+        buildDetectorRecognizerFromPreset(DocumentSpecificationPreset.DOCUMENT_SPECIFICATION_PRESET_ID1_VERTICAL_CARD)
+
+internal fun buildId2VerticalCardDetectorRecognizer() =
+        buildDetectorRecognizerFromPreset(DocumentSpecificationPreset.DOCUMENT_SPECIFICATION_PRESET_ID2_VERTICAL_CARD)
+
+private fun buildDetectorRecognizerFromPreset(documentSpecPreset: DocumentSpecificationPreset): DetectorRecognizer {
+    val documentSpec = DocumentSpecification.createFromPreset(documentSpecPreset)
+    val documentDetector = DocumentDetector(documentSpec)
+    documentDetector.numStableDetectionsThreshold = 5
+
+    val detectorRecognizer = DetectorRecognizer(documentDetector)
+    val imageReturnProcessor = ImageReturnProcessor()
+    val processorGroup = ProcessorGroup(
+            Rectangle(0f, 0f, 1f, 1f),
+            DPIBasedDewarpPolicy(FULL_DOCUMENT_IMAGE_DPI),
+            imageReturnProcessor
+    )
+
+    val documentClass = TemplatingClass()
+    documentClass.setClassificationProcessorGroups(processorGroup)
+    detectorRecognizer.setTemplatingClasses(documentClass)
+
+    return detectorRecognizer
+}
+
+private const val FULL_DOCUMENT_IMAGE_DPI = 300

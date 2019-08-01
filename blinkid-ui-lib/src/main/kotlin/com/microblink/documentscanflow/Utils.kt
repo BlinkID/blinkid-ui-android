@@ -84,35 +84,6 @@ internal fun Recognizer.Result.isNotEmpty() = this.resultState != Recognizer.Res
 
 internal fun MrzResult.buildTitle() = "$primaryId $secondaryId"
 
-internal fun buildId1CardDetectorRecognizer() =
-        buildDetectorRecognizerFromPreset(DocumentSpecificationPreset.DOCUMENT_SPECIFICATION_PRESET_ID1_CARD)
-
-internal fun buildId1VerticalCardDetectorRecognizer() =
-        buildDetectorRecognizerFromPreset(DocumentSpecificationPreset.DOCUMENT_SPECIFICATION_PRESET_ID1_VERTICAL_CARD)
-
-internal fun buildId2VerticalCardDetectorRecognizer() =
-        buildDetectorRecognizerFromPreset(DocumentSpecificationPreset.DOCUMENT_SPECIFICATION_PRESET_ID2_VERTICAL_CARD)
-
-private fun buildDetectorRecognizerFromPreset(documentSpecPreset: DocumentSpecificationPreset): DetectorRecognizer {
-    val documentSpec = DocumentSpecification.createFromPreset(documentSpecPreset)
-    val documentDetector = DocumentDetector(documentSpec)
-    documentDetector.numStableDetectionsThreshold = 5
-
-    val detectorRecognizer = DetectorRecognizer(documentDetector)
-    val imageReturnProcessor = ImageReturnProcessor()
-    val processorGroup = ProcessorGroup(
-            Rectangle(0f, 0f, 1f, 1f),
-            DPIBasedDewarpPolicy(200),
-            imageReturnProcessor
-    )
-
-    val documentClass = TemplatingClass()
-    documentClass.setClassificationProcessorGroups(processorGroup)
-    detectorRecognizer.setTemplatingClasses(documentClass)
-
-    return detectorRecognizer
-}
-
 internal fun Calendar.currentDate() = Date(get(Calendar.DAY_OF_MONTH), get(Calendar.MONTH) + 1, get(Calendar.YEAR))
 
 
