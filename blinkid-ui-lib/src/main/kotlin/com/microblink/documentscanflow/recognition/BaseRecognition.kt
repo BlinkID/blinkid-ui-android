@@ -1,11 +1,12 @@
 package com.microblink.documentscanflow.recognition
 
-import com.microblink.documentscanflow.*
-import com.microblink.documentscanflow.isEmpty
+import com.microblink.documentscanflow.ScanFlowState
+import com.microblink.documentscanflow.buildTitle
 import com.microblink.documentscanflow.isNotEmpty
 import com.microblink.documentscanflow.recognition.resultentry.ResultEntry
 import com.microblink.documentscanflow.recognition.resultentry.ResultKey
-import com.microblink.documentscanflow.recognition.resultentry.ResultKey.*
+import com.microblink.documentscanflow.recognition.resultentry.ResultKey.BARCODE_DATA
+import com.microblink.documentscanflow.recognition.resultentry.ResultKey.DATE_OF_EXPIRY
 import com.microblink.entities.detectors.quad.document.DocumentDetector
 import com.microblink.entities.detectors.quad.document.DocumentSpecification
 import com.microblink.entities.detectors.quad.document.DocumentSpecificationPreset
@@ -23,6 +24,7 @@ import com.microblink.entities.recognizers.blinkid.imageresult.FullDocumentImage
 import com.microblink.entities.recognizers.blinkid.imageresult.SignatureImageResult
 import com.microblink.entities.recognizers.blinkid.mrtd.MrtdRecognizer
 import com.microblink.entities.recognizers.blinkid.passport.PassportRecognizer
+import com.microblink.entities.recognizers.blinkid.visa.VisaRecognizer
 import com.microblink.entities.recognizers.detector.DetectorRecognizer
 import com.microblink.entities.recognizers.templating.ProcessorGroup
 import com.microblink.entities.recognizers.templating.TemplatingClass
@@ -208,8 +210,7 @@ abstract class SingleSideRecognition<FrontResult : Recognizer.Result>
     override fun getSingleSideRecognizers(): List<Recognizer<*>> = listOf(recognizer)
 
     override fun extractData() =
-        if (result.isEmpty()) null
-        else extractData(result)
+        if (result.isNotEmpty()) extractData(result) else null
 
     abstract fun extractData(result: FrontResult): String?
 
@@ -332,6 +333,10 @@ class GenericRecognition(isFullySupported: Boolean, private val recognizerProvid
                         extract(recognizer.result.mrzResult)
                         result = recognizer.result.mrzResult.buildTitle()
                     }
+                    is VisaRecognizer -> {
+                        extract(recognizer.result.mrzResult)
+                        result = recognizer.result.mrzResult.buildTitle()
+                    }
                     is Pdf417Recognizer -> add(BARCODE_DATA, recognizer.result.stringData)
                 }
             }
@@ -345,11 +350,17 @@ class GenericRecognition(isFullySupported: Boolean, private val recognizerProvid
         val id = faceMrtd(false)
         val drivingLicence = faceId1(false)
         val passport = passport()
-        val visa = mrtd(true)
+        val visa = visa()
 
         private fun passport(): GenericRecognition {
             return GenericRecognition(true, object: RecognizerProvider() {
                 override fun createRecognizers() = listOf(PassportRecognizer())
+            })
+        }
+
+        private fun visa(): GenericRecognition {
+            return GenericRecognition(true, object: RecognizerProvider() {
+                override fun createRecognizers() = listOf(VisaRecognizer())
             })
         }
 
