@@ -1,9 +1,9 @@
 package com.microblink.documentscanflow.recognition.implementations
 
-import com.microblink.documentscanflow.buildId2VerticalCardDetectorRecognizer
 import com.microblink.documentscanflow.buildTitle
 import com.microblink.documentscanflow.isNotEmpty
 import com.microblink.documentscanflow.recognition.TwoSideRecognition
+import com.microblink.documentscanflow.recognition.buildId2VerticalCardDetectorRecognizer
 import com.microblink.documentscanflow.recognition.extract
 import com.microblink.entities.recognizers.blinkid.germany.GermanyIdOldRecognizer
 import com.microblink.entities.recognizers.detector.DetectorRecognizer
