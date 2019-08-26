@@ -5,8 +5,6 @@ import com.microblink.documentscanflow.recognition.TwoSideRecognition
 import com.microblink.documentscanflow.recognition.extract
 import com.microblink.entities.recognizers.blinkbarcode.usdl.UsdlRecognizer
 import com.microblink.entities.recognizers.blinkid.documentface.DocumentFaceRecognizer
-import com.microblink.documentscanflow.recognition.resultentry.ResultKey.*
-import com.microblink.entities.recognizers.blinkbarcode.usdl.UsdlKeys
 
 open class UsdlRecognition : TwoSideRecognition<DocumentFaceRecognizer.Result, UsdlRecognizer.Result>() {
 

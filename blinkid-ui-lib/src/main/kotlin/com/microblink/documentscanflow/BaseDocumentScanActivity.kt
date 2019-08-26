@@ -129,8 +129,6 @@ abstract class BaseDocumentScanActivity : AppCompatActivity(), ScanResultListene
 
     @UiThread
     protected fun updateDocument(newDocument: Document) {
-        scanFrameLayout.setIsForVerticalCard(newDocument.getRecognition().isForVerticalDocument())
-
         val oldDocument = currentDocument
         val isSameCountry = oldDocument.country == newDocument.country
         currentDocument = newDocument
@@ -312,14 +310,22 @@ abstract class BaseDocumentScanActivity : AppCompatActivity(), ScanResultListene
         recognizerManager.clear()
         instructionsHandler.clear(shouldClearHandlerScanFlowState)
 
-        scanFlowState = if(shouldScanBothDocumentSides()) {
+        val newScanFlowState = if(shouldScanBothDocumentSides()) {
             ScanFlowState.FRONT_SIDE_SCAN
         } else {
             ScanFlowState.ANY_SIDE_SCAN
         }
+        updateScanFlowState(newScanFlowState)
 
         prepareScanning(currentDocument)
         startScanningNextSide()
+    }
+
+    private fun updateScanFlowState(newScanFlowState: ScanFlowState) {
+        scanFlowState = newScanFlowState
+        runOnUiThread {
+            scanFrameLayout.setIsForVerticalCard(currentDocument.getRecognition().isForVerticalDocument(newScanFlowState))
+        }
     }
 
     @AnyThread
@@ -423,7 +429,7 @@ abstract class BaseDocumentScanActivity : AppCompatActivity(), ScanResultListene
         scanTimeoutHandler.startTimer()
         scanFlowListener.onFirstSideScanned(recognitionResult, null)
 
-        scanFlowState = ScanFlowState.BACK_SIDE_SCAN
+        updateScanFlowState(ScanFlowState.BACK_SIDE_SCAN)
         runOnUiThread {
             val delay = instructionsHandler.updateSideInstructions(currentDocument, scanFlowState)
             scanLineAnimator.onScanPause()
@@ -484,7 +490,7 @@ abstract class BaseDocumentScanActivity : AppCompatActivity(), ScanResultListene
         val successFrame = recognizerManager.getSuccessFrame(scanFlowState)
         val recognitionResult = currentDocument.getRecognition().extractResult(false)
         scanFlowListener.onFirstSideScanned(recognitionResult, successFrame)
-        scanFlowState = ScanFlowState.BACK_SIDE_SCAN
+        updateScanFlowState(ScanFlowState.BACK_SIDE_SCAN)
 
         runOnUiThread {
             val cardFlippingDelay = startScanningNextSide()
