@@ -63,9 +63,7 @@ internal class InstructionsHandler(private val context: Context,
     @UiThread
     fun setAnySideInstructions(newDocument: Document) {
         document = newDocument
-
-        delayedTextUpdateRunnable = Runnable { updateInstructionsIfChanged(R.string.mb_instructions_scan_any_side) }
-        instructionsTextSwitcher.postDelayed(delayedTextUpdateRunnable, FIRST_INSTRUCTIONS_DURATION)
+        updateInstructionsIfChanged(R.string.mb_instructions_scan_any_side)
     }
 
     @UiThread
@@ -90,9 +88,7 @@ internal class InstructionsHandler(private val context: Context,
     }
 
     private fun switchToFrontSide() {
-        delayedTextUpdateRunnable = Runnable { updateInstructionsIfChanged(R.string.mb_instructions_scan_front) }
-        instructionsTextSwitcher.postDelayed(delayedTextUpdateRunnable, FIRST_INSTRUCTIONS_DURATION)
-
+        updateInstructionsIfChanged(R.string.mb_instructions_scan_front)
     }
 
     private fun flipToBackSide() {
@@ -137,7 +133,6 @@ internal class InstructionsHandler(private val context: Context,
         const val FLIP_DELAY = 1500L
         const val BACK_SIDE_INSTRUCTIONS_DELAY = 1000L
         const val GLARE_INSTRUCTIONS_DURATION = 2000L
-        const val FIRST_INSTRUCTIONS_DURATION = 1000L
     }
 
 }

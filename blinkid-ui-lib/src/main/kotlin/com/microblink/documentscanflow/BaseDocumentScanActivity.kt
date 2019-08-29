@@ -241,7 +241,7 @@ abstract class BaseDocumentScanActivity : AppCompatActivity(), ScanResultListene
                     bottomContainer.translationY = bottomContainer.height.toFloat()
                     bottomContainer.animate()
                             .translationY(0f)
-                            .setStartDelay(InstructionsHandler.FIRST_INSTRUCTIONS_DURATION + 100)
+                            .setStartDelay(splashOverlaySettings.getDurationMillis() + 500)
                             .setDuration(500)
                             .setInterpolator(AccelerateDecelerateInterpolator())
                             .start()
@@ -367,7 +367,6 @@ abstract class BaseDocumentScanActivity : AppCompatActivity(), ScanResultListene
     override fun onResume() {
         super.onResume()
         // always restart scanning when resuming activity, must be called after recognizer_view.resume()
-        restartScanning()
         torchButtonHandler.isTorchEnabled = false
 
         if (splashOverlaySettings.isEnabled()) {
@@ -549,8 +548,8 @@ abstract class BaseDocumentScanActivity : AppCompatActivity(), ScanResultListene
     }
 
     @UiThread
-    private fun restartScanning(shouldClearHandlerScanFlowState: Boolean = true) {
-        recognizerView.resetRecognitionState()
+    protected open fun restartScanning(shouldClearHandlerScanFlowState: Boolean = true) {
+        recognizerView.resumeScanning(true)
         startScan(shouldClearHandlerScanFlowState)
     }
 
@@ -650,8 +649,7 @@ abstract class BaseDocumentScanActivity : AppCompatActivity(), ScanResultListene
                     recognizerView.setMeteringAreas(arrayOf(RectF(0.33f, 0.33f, 0.66f, 0.66f)), true)
                 }
 
-                pauseScanning()
-                resumeScanning()
+                restartScanning()
             }
 
             override fun onCameraPreviewStopped() {}
