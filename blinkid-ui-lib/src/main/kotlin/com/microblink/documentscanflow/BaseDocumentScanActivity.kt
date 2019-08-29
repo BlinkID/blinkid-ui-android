@@ -467,7 +467,6 @@ abstract class BaseDocumentScanActivity : AppCompatActivity(), ScanResultListene
         try {
             val extractorResult = recognition.extractResult(shouldScanBothDocumentSides())
             scanFlowListener.onEntireDocumentScanned(extractorResult, recognizerManager.getSuccessFrame(scanFlowState))
-            resumeScanningImmediately()
         } catch (e: ResultMergeException) {
             onSidesNotMatching()
         }
