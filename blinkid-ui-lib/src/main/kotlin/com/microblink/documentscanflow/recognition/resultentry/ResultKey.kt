@@ -44,6 +44,7 @@ enum class ResultKey(val stringResId: Int) {
     SERIAL_NUMBER(R.string.keySerialNumber),
     PERSONAL_NUMBER(R.string.keyPersonalNumber),
     PASSPORT_NUMBER(R.string.keyPassportNumber),
+    DOCUMENT_ADDITIONAL_NUMBER(R.string.keyDocumentAdditionalNumber),
 
     //Address
     CITY(R.string.keyCity),
@@ -52,6 +53,7 @@ enum class ResultKey(val stringResId: Int) {
     PRINCIPAL_RESIDENCE_AT_ISSUANCE(R.string.keyPrincipalResidenceAtIssuance),
     FACULTY_ADDRESS(R.string.keyFacultyAddress),
     RESIDENTIAL_STATUS(R.string.keyResidentialStatus),
+    ADDITIONAL_ADDRESS_INFORMATION(R.string.keyAdditionalAddressInformation),
 
     //Nationality
     NATIONALITY(R.string.keyNationality),

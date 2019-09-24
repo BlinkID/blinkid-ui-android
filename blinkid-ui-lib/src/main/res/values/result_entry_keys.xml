@@ -72,5 +72,7 @@
   <string name="keyVehicleClass">Vehicle class</string>
   <string name="keyEndorsements">Endorsements</string>
   <string name="keyLicenceType">Licence type</string>
+  <string name="keyAdditionalAddressInformation">Additional Address Information</string>
+  <string name="keyDocumentAdditionalNumber">Document additional number</string>
 
 </resources>
