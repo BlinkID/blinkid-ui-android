@@ -125,7 +125,7 @@ enum class SupportedCountry(override val code: String,
             recognitions {
                 id = MalaysiaMyKadRecognition()
                 drivingLicence = MalaysiaDlRecognition()
-                passport = GenericRecognition.mrtd(true)
+                passport = GenericRecognition.mrtd(true, true)
                 immigratorId = MalaysiaIkadRecognition()
                 militaryId = MalaysiaTenteraRecognition()
                 temporaryResidentId = MalaysiaKasRecognition()

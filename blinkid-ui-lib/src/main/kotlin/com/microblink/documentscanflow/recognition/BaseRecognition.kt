@@ -364,9 +364,11 @@ class GenericRecognition(isFullySupported: Boolean, private val recognizerProvid
             })
         }
 
-        fun mrtd(isFullySupported: Boolean): GenericRecognition {
+        fun mrtd(isFullySupported: Boolean, shouldAllowSpecialCharacters: Boolean = false): GenericRecognition {
             return GenericRecognition(isFullySupported, object: RecognizerProvider() {
-                override fun createRecognizers() = listOf(MrtdRecognizer())
+                override fun createRecognizers() = listOf(MrtdRecognizer().apply {
+                    isAllowSpecialCharacters = shouldAllowSpecialCharacters
+                })
             })
         }
 
