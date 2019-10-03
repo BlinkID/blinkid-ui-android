@@ -11,4 +11,5 @@
     <color name="textPrimaryLight">#FFFFFF</color>
     <color name="textSecondaryLight">#AAFFFFFF</color>
 
+    <color name="ic_launcher_background">#FFFFFF</color>
 </resources>
