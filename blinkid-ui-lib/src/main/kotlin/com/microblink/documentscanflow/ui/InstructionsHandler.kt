@@ -1,7 +1,7 @@
 package com.microblink.documentscanflow.ui
 
 import android.animation.AnimatorSet
-import android.support.annotation.UiThread
+import androidx.annotation.UiThread
 import android.view.View
 import com.microblink.documentscanflow.R
 import com.microblink.documentscanflow.ScanFlowState

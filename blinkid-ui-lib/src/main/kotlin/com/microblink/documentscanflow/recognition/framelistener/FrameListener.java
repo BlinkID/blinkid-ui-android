@@ -1,6 +1,6 @@
 package com.microblink.documentscanflow.recognition.framelistener;
 
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 import com.microblink.image.Image;
 
 public interface FrameListener {

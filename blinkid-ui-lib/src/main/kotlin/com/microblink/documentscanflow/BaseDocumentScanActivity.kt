@@ -2,7 +2,7 @@ package com.microblink.documentscanflow
 
 import android.annotation.TargetApi
 import android.app.Activity
-import android.arch.lifecycle.Lifecycle
+import androidx.lifecycle.Lifecycle
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
@@ -17,12 +17,12 @@ import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Parcel
-import android.support.annotation.AnyThread
-import android.support.annotation.CallSuper
-import android.support.annotation.UiThread
-import android.support.design.widget.TabLayout
-import android.support.v7.app.AlertDialog
-import android.support.v7.app.AppCompatActivity
+import androidx.annotation.AnyThread
+import androidx.annotation.CallSuper
+import androidx.annotation.UiThread
+import com.google.android.material.tabs.TabLayout
+import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View

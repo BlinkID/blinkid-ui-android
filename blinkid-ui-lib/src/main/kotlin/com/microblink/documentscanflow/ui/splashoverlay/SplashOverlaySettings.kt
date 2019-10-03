@@ -1,7 +1,7 @@
 package com.microblink.documentscanflow.ui.splashoverlay
 
-import android.support.annotation.ColorRes
-import android.support.annotation.DrawableRes
+import androidx.annotation.ColorRes
+import androidx.annotation.DrawableRes
 
 interface SplashOverlaySettings {
 

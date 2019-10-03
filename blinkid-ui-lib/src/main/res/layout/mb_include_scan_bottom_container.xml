@@ -15,7 +15,7 @@
         android:orientation="vertical"
         tools:ignore="UselessParent"> <!-- slide from bottom animation wont work if merged with parent-->
 
-        <android.support.design.widget.TabLayout
+        <com.google.android.material.tabs.TabLayout
             android:id="@+id/documentTypeTabs"
             android:layout_width="match_parent"
             android:layout_height="@dimen/mb_height_doc_type_tabs"

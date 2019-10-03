@@ -1,7 +1,7 @@
 package com.microblink.documentscanflow.document
 
 import android.content.Context
-import android.support.v4.util.ObjectsCompat
+import androidx.core.util.ObjectsCompat
 import com.microblink.documentscanflow.country.Country
 
 class Document(val country: Country, val documentType: DocumentType) {

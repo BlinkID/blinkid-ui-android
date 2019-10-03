@@ -1,9 +1,9 @@
 package com.microblink.documentscanflow
 
 import android.content.Context
-import android.support.annotation.AttrRes
-import android.support.annotation.ColorInt
-import android.support.annotation.LayoutRes
+import androidx.annotation.AttrRes
+import androidx.annotation.ColorInt
+import androidx.annotation.LayoutRes
 import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View

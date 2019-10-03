@@ -3,8 +3,8 @@ package com.microblink;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import com.microblink.documentscanflow.BaseDocumentScanActivity;
 import com.microblink.documentscanflow.ScanFlowListener;
