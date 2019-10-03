@@ -128,7 +128,7 @@ public class ScanActivity extends BaseDocumentScanActivity {
 
             @Override
             public long getDurationMillis() {
-                return TimeUnit.SECONDS.toMillis(2);
+                return TimeUnit.SECONDS.toMillis(1);
             }
 
             @Override
