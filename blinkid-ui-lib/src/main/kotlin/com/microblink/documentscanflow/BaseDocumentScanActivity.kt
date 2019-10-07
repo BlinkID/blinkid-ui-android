@@ -305,8 +305,6 @@ abstract class BaseDocumentScanActivity : AppCompatActivity(), ScanResultListene
     private fun startScan(shouldClearHandlerScanFlowState: Boolean = true) {
         scanFlowListener.onScanStarted()
 
-        scanLineAnimator.onScanStart()
-
         recognizerManager.clear()
         instructionsHandler.clear(shouldClearHandlerScanFlowState)
 
@@ -319,6 +317,8 @@ abstract class BaseDocumentScanActivity : AppCompatActivity(), ScanResultListene
 
         prepareScanning(currentDocument)
         startScanningNextSide()
+
+        scanLineAnimator.onScanStart()
     }
 
     private fun updateScanFlowState(newScanFlowState: ScanFlowState) {
