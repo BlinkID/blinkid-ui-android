@@ -13,6 +13,7 @@ import com.microblink.entities.detectors.quad.document.DocumentSpecificationPres
 import com.microblink.entities.processors.imageReturn.ImageReturnProcessor
 import com.microblink.entities.recognizers.Recognizer
 import com.microblink.entities.recognizers.blinkbarcode.pdf417.Pdf417Recognizer
+import com.microblink.entities.recognizers.blinkid.DataMatchResult
 import com.microblink.entities.recognizers.blinkid.documentface.DocumentFaceRecognizer
 import com.microblink.entities.recognizers.blinkid.imageoptions.FaceImageOptions
 import com.microblink.entities.recognizers.blinkid.imageoptions.FullDocumentImageOptions
@@ -285,7 +286,7 @@ abstract class CombinedRecognition<FrontResult : Recognizer.Result,
 
     override fun extractData(): String? {
         if (shouldValidate) {
-            val isValid = (combinedResult as com.microblink.entities.recognizers.blinkid.CombinedResult).isDocumentDataMatch
+            val isValid = (combinedResult as com.microblink.entities.recognizers.blinkid.CombinedResult).documentDataMatch == DataMatchResult.Success
             if (!isValid) {
                 throw ResultMergeException()
             }

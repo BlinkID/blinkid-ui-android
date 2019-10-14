@@ -3,6 +3,7 @@ package com.microblink.documentscanflow.recognition
 import com.microblink.documentscanflow.compareTo
 import com.microblink.documentscanflow.recognition.util.StringCombiner
 import com.microblink.entities.recognizers.blinkid.CombinedResult
+import com.microblink.entities.recognizers.blinkid.DataMatchResult
 import com.microblink.results.date.Date
 import com.microblink.results.date.DateResult
 
@@ -13,7 +14,7 @@ internal class ResultValidator {
         private set
 
     fun match(combinedResult: CombinedResult?): ResultValidator {
-        isResultValid = combinedResult?.isDocumentDataMatch ?: false
+        isResultValid = combinedResult?.documentDataMatch == DataMatchResult.Success
         return this
     }
 
