@@ -13,7 +13,7 @@
   <string name="mb_permanent_resident_id">Permanent resident ID</string>
   <string name="mb_temporary_resident_id">Temporary resident ID</string>
   <string name="mb_victoria_dl">Victoria driver\'s license</string>
-  <string name="mb_work_pass">Work pass</string>
+  <string name="mb_work_pass">Employment pass</string>
   <string name="mb_under_21_id">Under 21 ID</string>
   <string name="mb_voter_id">Voter ID</string>
   <string name="mb_custom_mykad" translatable="false">MyKad</string>
