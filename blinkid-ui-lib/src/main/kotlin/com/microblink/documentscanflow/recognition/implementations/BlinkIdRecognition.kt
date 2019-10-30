@@ -69,7 +69,7 @@ class BlinkIdRecognition(isFullySupported: Boolean = true) :
             add(ResultKey.ENDORSEMENTS, driverLicenseDetailedInfo.endorsements)
             add(ResultKey.DRIVER_RESTRICTIONS, driverLicenseDetailedInfo.restrictions)
 
-            mrzResult.add()
+            addMrzResults(mrzResult)
 
             var title = if (mrzResult.isMrzParsed) {
                 add(ResultKey.SECONDARY_ID, mrzResult.secondaryId)
@@ -115,7 +115,7 @@ class BlinkIdRecognition(isFullySupported: Boolean = true) :
             add(ResultKey.ENDORSEMENTS, driverLicenseDetailedInfo.endorsements)
             add(ResultKey.DRIVER_RESTRICTIONS, driverLicenseDetailedInfo.restrictions)
 
-            mrzResult.add()
+            addMrzResults(mrzResult)
 
             var title = if (mrzResult.isMrzParsed) {
                 add(ResultKey.SECONDARY_ID, mrzResult.secondaryId)
@@ -138,21 +138,23 @@ class BlinkIdRecognition(isFullySupported: Boolean = true) :
         }
     }
 
-    private fun MrzResult.add() {
-        if (isMrzParsed) {
-            add(ResultKey.ALIEN_NUMBER, alienNumber)
-            add(ResultKey.APPLICATION_RECEIPT_NUMBER, applicationReceiptNumber)
-            add(ResultKey.DOCUMENT_CODE, documentCode)
-            add(ResultKey.DOCUMENT_NUMBER, documentNumber)
-            add(ResultKey.SEX, gender)
-            add(ResultKey.IMMIGRANT_CASE_NUMBER, immigrantCaseNumber)
-            add(ResultKey.ISSUER, issuer)
-            add(ResultKey.MRZ_TEXT, mrzText)
-            add(ResultKey.NATIONALITY, nationality)
-            add(ResultKey.OPTIONAL_FIELD_1, opt1)
-            add(ResultKey.OPTIONAL_FIELD_2, opt2)
-            add(ResultKey.DATE_OF_BIRTH, dateOfBirth)
-            addDateOfExpiry(dateOfExpiry.date)
+    private fun addMrzResults(mrzResult: MrzResult) {
+        mrzResult.apply {
+            if (isMrzParsed) {
+                add(ResultKey.ALIEN_NUMBER, alienNumber)
+                add(ResultKey.APPLICATION_RECEIPT_NUMBER, applicationReceiptNumber)
+                add(ResultKey.DOCUMENT_CODE, documentCode)
+                add(ResultKey.DOCUMENT_NUMBER, documentNumber)
+                add(ResultKey.SEX, gender)
+                add(ResultKey.IMMIGRANT_CASE_NUMBER, immigrantCaseNumber)
+                add(ResultKey.ISSUER, issuer)
+                add(ResultKey.MRZ_TEXT, mrzText)
+                add(ResultKey.NATIONALITY, nationality)
+                add(ResultKey.OPTIONAL_FIELD_1, opt1)
+                add(ResultKey.OPTIONAL_FIELD_2, opt2)
+                add(ResultKey.DATE_OF_BIRTH, dateOfBirth)
+                addDateOfExpiry(dateOfExpiry.date)
+            }
         }
     }
 }
