@@ -1,115 +1,141 @@
 package com.microblink.documentscanflow.recognition.implementations
 
-import com.microblink.documentscanflow.recognition.CombinedRecognition
+import com.microblink.documentscanflow.isNotEmpty
+import com.microblink.documentscanflow.recognition.BaseRecognition
+import com.microblink.documentscanflow.recognition.ResultMergeException
 import com.microblink.documentscanflow.recognition.resultentry.ResultKey
 import com.microblink.documentscanflow.recognition.util.FormattingUtils
+import com.microblink.entities.recognizers.Recognizer
+import com.microblink.entities.recognizers.blinkid.DataMatchResult
 import com.microblink.entities.recognizers.blinkid.generic.BlinkIdCombinedRecognizer
 import com.microblink.entities.recognizers.blinkid.generic.BlinkIdRecognizer
 import com.microblink.entities.recognizers.blinkid.mrtd.MrzResult
 
-class BlinkIdRecognition :
-    CombinedRecognition<BlinkIdRecognizer.Result, BlinkIdRecognizer.Result, BlinkIdCombinedRecognizer.Result>() {
+class BlinkIdRecognition(isFullySupported: Boolean = true) :
+    BaseRecognition(isFullySupported) {
 
-
-    override val frontRecognizer by lazy { BlinkIdRecognizer() }
-    override val backRecognizer by lazy { BlinkIdRecognizer() }
+    val frontRecognizer by lazy { BlinkIdRecognizer() }
     override val combinedRecognizer by lazy { BlinkIdCombinedRecognizer() }
 
-    override fun extractCombinedResult(combinedResult: BlinkIdCombinedRecognizer.Result): String? {
-        // empty field
-        add(ResultKey.SEX, combinedResult.sex)
-        add(ResultKey.ADDRESS, combinedResult.address)
-        add(ResultKey.PLACE_OF_BIRTH, combinedResult.placeOfBirth)
-        add(ResultKey.NATIONALITY, combinedResult.nationality)
-        add(ResultKey.RACE, combinedResult.race)
-        add(ResultKey.RELIGION, combinedResult.religion)
-        add(ResultKey.OCCUPATION, combinedResult.profession)
-        add(ResultKey.MARITAL_STATUS, combinedResult.maritalStatus)
-        add(ResultKey.RESIDENTIAL_STATUS, combinedResult.residentialStatus)
-        add(ResultKey.EMPLOYER, combinedResult.employer)
-        add(ResultKey.DOCUMENT_NUMBER, combinedResult.documentNumber)
-        add(ResultKey.PERSONAL_NUMBER, combinedResult.personalIdNumber)
-        add(ResultKey.ISSUING_AUTHORITY, combinedResult.issuingAuthority)
-        add(ResultKey.DATE_OF_BIRTH, combinedResult.dateOfBirth)
-        add(ResultKey.DATE_OF_ISSUE, combinedResult.dateOfIssue)
-        addDateOfExpiry(combinedResult.dateOfExpiry.date)
+    override fun canScanBothSides() = true
 
-        add(ResultKey.VEHICLE_CLASS, combinedResult.driverLicenseDetailedInfo.vehicleClass)
-        add(ResultKey.ENDORSEMENTS, combinedResult.driverLicenseDetailedInfo.endorsements)
-        add(ResultKey.DRIVER_RESTRICTIONS, combinedResult.driverLicenseDetailedInfo.restrictions)
+    override fun getSingleSideRecognizers() = listOf(frontRecognizer)
 
-        combinedResult.mrzResult.add()
-
-        var title = if (combinedResult.mrzResult.isMrzParsed) {
-            add(ResultKey.SECONDARY_ID, combinedResult.mrzResult.secondaryId)
-            add(ResultKey.PRIMARY_ID, combinedResult.mrzResult.primaryId)
-
-            FormattingUtils.formatResultTitle(combinedResult.mrzResult.secondaryId, combinedResult.mrzResult.primaryId)
-        } else {
-            add(ResultKey.FIRST_NAME, combinedResult.firstName)
-            add(ResultKey.LAST_NAME, combinedResult.lastName)
-
-            FormattingUtils.formatResultTitle(combinedResult.firstName, combinedResult.lastName)
-        }
-
-        if (combinedResult.fullName.isNotEmpty()) {
-            add(ResultKey.FULL_NAME, combinedResult.fullName)
-            title = combinedResult.fullName
-        }
-
-        return title
+    override fun getAllRecognizers(): List<Recognizer<*>> {
+        val allRecognizers = mutableListOf<Recognizer<*>>()
+        allRecognizers.addAll(getSingleSideRecognizers())
+        allRecognizers.add(combinedRecognizer)
+        return allRecognizers
     }
 
-    override fun extractFrontResult(frontResult: BlinkIdRecognizer.Result): String? {
-        return frontResult.add()
+    override fun extractData(): String? {
+        val frontResult = frontRecognizer.result
+        val combinedResult = combinedRecognizer.result
+
+        if (shouldValidate) {
+            val isValid =
+                (combinedResult as com.microblink.entities.recognizers.blinkid.CombinedResult).documentDataMatch == DataMatchResult.Success
+            if (!isValid) {
+                throw ResultMergeException()
+            }
+        }
+        return when {
+            frontResult.isNotEmpty() -> extractFrontResult(frontResult)
+            combinedResult.isNotEmpty() -> extractCombinedResult(combinedResult)
+            else -> null
+        }
     }
 
-    override fun extractBackResult(backResult: BlinkIdRecognizer.Result): String? {
-        return backResult.add()
+    private fun extractCombinedResult(combinedResult: BlinkIdCombinedRecognizer.Result): String? {
+        combinedResult.apply {
+            add(ResultKey.SEX, sex)
+            add(ResultKey.ADDRESS, address)
+            add(ResultKey.PLACE_OF_BIRTH, placeOfBirth)
+            add(ResultKey.NATIONALITY, nationality)
+            add(ResultKey.RACE, race)
+            add(ResultKey.RELIGION, religion)
+            add(ResultKey.OCCUPATION, profession)
+            add(ResultKey.MARITAL_STATUS, maritalStatus)
+            add(ResultKey.RESIDENTIAL_STATUS, residentialStatus)
+            add(ResultKey.EMPLOYER, employer)
+            add(ResultKey.DOCUMENT_NUMBER, documentNumber)
+            add(ResultKey.PERSONAL_NUMBER, personalIdNumber)
+            add(ResultKey.ISSUING_AUTHORITY, issuingAuthority)
+            add(ResultKey.DATE_OF_BIRTH, dateOfBirth)
+            add(ResultKey.DATE_OF_ISSUE, dateOfIssue)
+            addDateOfExpiry(dateOfExpiry.date)
+
+            add(ResultKey.VEHICLE_CLASS, driverLicenseDetailedInfo.vehicleClass)
+            add(ResultKey.ENDORSEMENTS, driverLicenseDetailedInfo.endorsements)
+            add(ResultKey.DRIVER_RESTRICTIONS, driverLicenseDetailedInfo.restrictions)
+
+            mrzResult.add()
+
+            var title = if (mrzResult.isMrzParsed) {
+                add(ResultKey.SECONDARY_ID, mrzResult.secondaryId)
+                add(ResultKey.PRIMARY_ID, mrzResult.primaryId)
+
+                FormattingUtils.formatResultTitle(mrzResult.secondaryId, mrzResult.primaryId)
+            } else {
+                add(ResultKey.FIRST_NAME, firstName)
+                add(ResultKey.LAST_NAME, lastName)
+
+                FormattingUtils.formatResultTitle(firstName, lastName)
+            }
+
+            if (fullName.isNotEmpty()) {
+                add(ResultKey.FULL_NAME, fullName)
+                title = fullName
+            }
+
+            return title
+        }
     }
 
-    private fun BlinkIdRecognizer.Result.add(): String? {
-        add(ResultKey.SEX, sex)
-        add(ResultKey.ADDRESS, address)
-        add(ResultKey.PLACE_OF_BIRTH, placeOfBirth)
-        add(ResultKey.NATIONALITY, nationality)
-        add(ResultKey.RACE, race)
-        add(ResultKey.RELIGION, religion)
-        add(ResultKey.OCCUPATION, profession)
-        add(ResultKey.MARITAL_STATUS, maritalStatus)
-        add(ResultKey.RESIDENTIAL_STATUS, residentialStatus)
-        add(ResultKey.EMPLOYER, employer)
-        add(ResultKey.DOCUMENT_NUMBER, documentNumber)
-        add(ResultKey.PERSONAL_NUMBER, personalIdNumber)
-        add(ResultKey.ISSUING_AUTHORITY, issuingAuthority)
-        add(ResultKey.DATE_OF_BIRTH, dateOfBirth)
-        add(ResultKey.DATE_OF_ISSUE, dateOfIssue)
-        addDateOfExpiry(dateOfExpiry.date)
+    private fun extractFrontResult(frontResult: BlinkIdRecognizer.Result): String? {
+        frontResult.apply {
+            add(ResultKey.SEX, sex)
+            add(ResultKey.ADDRESS, address)
+            add(ResultKey.PLACE_OF_BIRTH, placeOfBirth)
+            add(ResultKey.NATIONALITY, nationality)
+            add(ResultKey.RACE, race)
+            add(ResultKey.RELIGION, religion)
+            add(ResultKey.OCCUPATION, profession)
+            add(ResultKey.MARITAL_STATUS, maritalStatus)
+            add(ResultKey.RESIDENTIAL_STATUS, residentialStatus)
+            add(ResultKey.EMPLOYER, employer)
+            add(ResultKey.DOCUMENT_NUMBER, documentNumber)
+            add(ResultKey.PERSONAL_NUMBER, personalIdNumber)
+            add(ResultKey.ISSUING_AUTHORITY, issuingAuthority)
+            add(ResultKey.DATE_OF_BIRTH, dateOfBirth)
+            add(ResultKey.DATE_OF_ISSUE, dateOfIssue)
+            addDateOfExpiry(dateOfExpiry.date)
 
-        add(ResultKey.VEHICLE_CLASS, driverLicenseDetailedInfo.vehicleClass)
-        add(ResultKey.ENDORSEMENTS, driverLicenseDetailedInfo.endorsements)
-        add(ResultKey.DRIVER_RESTRICTIONS, driverLicenseDetailedInfo.restrictions)
+            add(ResultKey.VEHICLE_CLASS, driverLicenseDetailedInfo.vehicleClass)
+            add(ResultKey.ENDORSEMENTS, driverLicenseDetailedInfo.endorsements)
+            add(ResultKey.DRIVER_RESTRICTIONS, driverLicenseDetailedInfo.restrictions)
 
-        mrzResult.add()
+            mrzResult.add()
 
-        var title = if (mrzResult.isMrzParsed) {
-            add(ResultKey.SECONDARY_ID, mrzResult.secondaryId)
-            add(ResultKey.PRIMARY_ID, mrzResult.primaryId)
+            var title = if (mrzResult.isMrzParsed) {
+                add(ResultKey.SECONDARY_ID, mrzResult.secondaryId)
+                add(ResultKey.PRIMARY_ID, mrzResult.primaryId)
 
-            FormattingUtils.formatResultTitle(mrzResult.secondaryId, mrzResult.primaryId)
-        } else {
-            add(ResultKey.FIRST_NAME, firstName)
-            add(ResultKey.LAST_NAME, lastName)
+                FormattingUtils.formatResultTitle(mrzResult.secondaryId, mrzResult.primaryId)
+            } else {
+                add(ResultKey.FIRST_NAME, firstName)
+                add(ResultKey.LAST_NAME, lastName)
 
-            FormattingUtils.formatResultTitle(firstName, lastName)
+                FormattingUtils.formatResultTitle(firstName, lastName)
+            }
+
+            if (fullName.isNotEmpty()) {
+                add(ResultKey.FULL_NAME, fullName)
+                title = fullName
+            }
+
+            return title
         }
-
-        if (fullName.isNotEmpty()) {
-            add(ResultKey.FULL_NAME, fullName)
-            title = fullName
-        }
-
-        return title
     }
 
     private fun MrzResult.add() {
