@@ -36,7 +36,7 @@ import com.microblink.image.Image
 import com.microblink.results.date.Date
 import com.microblink.results.date.DateResult
 
-sealed class BaseRecognition(val isFullySupported: Boolean = true) {
+abstract class BaseRecognition(val isFullySupported: Boolean = true) {
 
     protected var shouldValidate = false
 
