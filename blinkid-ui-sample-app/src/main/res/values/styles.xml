@@ -16,6 +16,7 @@
         <item name="mbScanIconColorSelectCountry">@color/textPrimaryLight</item>
         <item name="mbScanIconScanLine">@color/accentLight</item>
         <item name="mbScanBgColorCardFlip">@color/primary</item>
+        <item name="mbScanIconColorHook">@color/accentDark</item>
     </style>
 
     <!--

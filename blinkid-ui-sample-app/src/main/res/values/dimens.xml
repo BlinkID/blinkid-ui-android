@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="mb_hook_length_vertical">10dp</dimen>
+    <dimen name="mb_hook_length_horizontal">10dp</dimen>
+    <dimen name="mb_hook_stroke_width">3dp</dimen>
+</resources>
