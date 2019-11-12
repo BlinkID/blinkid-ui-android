@@ -1,16 +1,23 @@
 package com.microblink.documentscanflow.country
 
 import com.microblink.documentscanflow.R
-import com.microblink.documentscanflow.document.*
+import com.microblink.documentscanflow.document.DocumentType
+import com.microblink.documentscanflow.document.RecognitionsBuilder
 import com.microblink.documentscanflow.recognition.BaseRecognition
 import com.microblink.documentscanflow.recognition.GenericRecognition
 import com.microblink.documentscanflow.recognition.implementations.*
+import com.microblink.documentscanflow.recognition.implementations.BlinkIdRecognition
 import com.microblink.entities.recognizers.blinkid.eudl.EudlCountry
 
 enum class SupportedCountry(override val code: String,
                             override val recognitionsByDocumentType: Map<DocumentType, BaseRecognition>,
                             override val documentNameOverrides: Map<DocumentType, Int> = LinkedHashMap())
     : Country {
+
+    ALBANIA("al",
+            recognitions {
+                id = BlinkIdRecognition()
+            }),
 
     AUSTRALIA("au",
             recognitions {
@@ -25,23 +32,54 @@ enum class SupportedCountry(override val code: String,
                 passport = AustriaPassportRecognition()
             }),
 
+    BAHRAIN("bh",
+            recognitions {
+                id = BlinkIdRecognition()
+            }),
+
+    BANGLADESH("bd",
+            recognitions {
+                id = BlinkIdRecognition()
+            }),
+
     BELGIUM("be",
             recognitions {
-                id = BelgiumIdRecognition()
+                id = BlinkIdRecognition()
+            }),
+
+    BOSNIA_AND_HERZEGOVINA("ba",
+            recognitions {
+                id = BlinkIdRecognition()
             }),
 
     BRUNEI("bn",
             recognitions {
-                id = BruneiIdRecognition()
+                id = BlinkIdRecognition()
                 residencePermit = BruneiResidencePermitRecognition()
                 temporaryResidencePermit = BruneiTemporaryResidencePermitRecognition()
                 militaryId = BruneiMilitaryIdRecognition()
+            }),
+
+    BULGARIA("bg",
+            recognitions {
+                id = BlinkIdRecognition()
+                drivingLicence = BlinkIdWithDetectorRecognition()
+            }),
+
+    CAMBODIA("kh",
+            recognitions {
+                id = BlinkIdWithDetectorRecognition()
             }),
 
     CANADA("ca",
             recognitions {
                 id = UsdlRecognition()
                 drivingLicence = UsdlRecognition()
+            }),
+
+    CHILE("cl",
+            recognitions {
+                id = BlinkIdRecognition()
             }),
 
     COLOMBIA("co",
@@ -70,6 +108,11 @@ enum class SupportedCountry(override val code: String,
                 oldId = GenericRecognition.mrtdId2Vertical(true)
             }),
 
+    DOMINICAN_REPUBLIC("do",
+            recognitions {
+               id = BlinkIdRecognition()
+            }),
+
     EGYPT("eg",
             recognitions {
                 id = EgyptIdRecognition()
@@ -78,7 +121,13 @@ enum class SupportedCountry(override val code: String,
     FRANCE("fr",
             recognitions {
                 id = GenericRecognition.mrtdId1(false)
+                drivingLicence = BlinkIdWithDetectorRecognition()
                 residencePermit = GenericRecognition.residencePermit
+            }),
+
+    GEORGIA("ge",
+            recognitions {
+                id = BlinkIdRecognition()
             }),
 
     GERMANY("de",
@@ -86,7 +135,7 @@ enum class SupportedCountry(override val code: String,
                 id = GermanyIdRecognition()
                 drivingLicence = GermanyDlRecognition()
                 oldId = GermanyOldIdRecognition()
-                residencePermit = GenericRecognition.residencePermit
+                residencePermit = BlinkIdRecognition()
             }),
 
     HONG_KONG("hk",
@@ -94,10 +143,16 @@ enum class SupportedCountry(override val code: String,
                 id = HongKongIdRecognition()
             }),
 
+    HUNGARY("hu",
+            recognitions {
+                id = BlinkIdRecognition()
+                drivingLicence = BlinkIdWithDetectorRecognition()
+            }),
+
     INDONESIA("id",
             recognitions {
-                id = IndonesiaIdRecognition()
-                drivingLicence = GenericRecognition.faceId1(true)
+                id = BlinkIdWithDetectorRecognition()
+                drivingLicence = BlinkIdWithDetectorRecognition()
             }),
 
     IRELAND("ie",
@@ -116,9 +171,19 @@ enum class SupportedCountry(override val code: String,
                 newId = JordanIdRecognition()
             }),
 
+    KOSOVO("xk",
+            recognitions {
+                id = BlinkIdRecognition()
+            }),
+
     KUWAIT("kw",
             recognitions {
                 id = KuwaitIdRecognition()
+            }),
+
+    LITHUANIA("lt",
+            recognitions {
+                id = BlinkIdRecognition()
             }),
 
     MALAYSIA("my",
@@ -138,6 +203,11 @@ enum class SupportedCountry(override val code: String,
                     DocumentType.TEMPORARY_RESIDENT_ID to R.string.mb_custom_mykas,
                     DocumentType.PERMANENT_RESIDENT_ID to R.string.mb_custom_mypr
             )),
+
+    MALTA("mt",
+            recognitions {
+                id = BlinkIdRecognition()
+            }),
 
     MEXICO("mx",
             recognitions {
@@ -162,11 +232,25 @@ enum class SupportedCountry(override val code: String,
             }
     ),
 
+    PHILIPPINES("ph",
+            recognitions {
+                id = BlinkIdWithDetectorRecognition()
+                drivingLicence = BlinkIdWithDetectorRecognition()
+            },
+            documentNameOverrides = mapOf(
+                DocumentType.ID to R.string.mb_multipurpose_id
+            )),
+
     POLAND("pl",
             recognitions {
                 id = PolandIdRecognition()
-                drivingLicence = GenericRecognition.faceId1(true)
+                drivingLicence = BlinkIdWithDetectorRecognition()
                 residencePermit = GenericRecognition.residencePermit
+            }),
+
+    PORTUGAL("pt",
+            recognitions {
+                id = BlinkIdRecognition()
             }),
 
     QATAR("qa",
@@ -177,17 +261,20 @@ enum class SupportedCountry(override val code: String,
     ROMANIA("ro",
             recognitions {
                 id = RomaniaIdRecognition()
+                drivingLicence = BlinkIdWithDetectorRecognition()
             }),
-    SWEDEN("se",
+
+    SERBIA("rs",
             recognitions {
-                drivingLicence = SwedenDlRecognition()
+                id = BlinkIdRecognition()
+                drivingLicence = BlinkIdWithDetectorRecognition()
             }),
 
     SINGAPORE("sg",
             recognitions {
                 id = SingaporeIdRecognition()
-                workPass = GenericRecognition.faceId1(false)
-                drivingLicence = SingaporeDlRecognition()
+                workPass = BlinkIdWithDetectorRecognition()
+                drivingLicence = BlinkIdWithDetectorRecognition()
             },
             documentNameOverrides =  mapOf(
                     DocumentType.ID to R.string.mb_custom_id_blue_pink
@@ -216,7 +303,14 @@ enum class SupportedCountry(override val code: String,
 
     SPAIN("es",
             recognitions {
+                id = BlinkIdRecognition()
                 drivingLicence = SpainDlRecognition()
+            }),
+
+    SWEDEN("se",
+            recognitions {
+                id = BlinkIdRecognition()
+                drivingLicence = SwedenDlRecognition()
             }),
 
     SWITZERLAND("ch",
@@ -227,16 +321,23 @@ enum class SupportedCountry(override val code: String,
                 residencePermit = GenericRecognition.residencePermit
             }),
 
+    TURKEY("tr",
+            recognitions {
+                id = BlinkIdRecognition()
+                drivingLicence = BlinkIdWithDetectorRecognition()
+            }),
+
     UNITED_ARAB_EMIRATES("ae",
             recognitions {
                 id = UnitedArabEmiratesIdRecognition()
                 drivingLicence = UnitedArabEmiratesDlRecognition()
             }),
 
+        
     UNITED_KINGDOM("gb",
             recognitions {
                 drivingLicence = EudlRecognition(EudlCountry.EUDL_COUNTRY_UK)
-                residencePermit = GenericRecognition.residencePermit
+                residencePermit = BlinkIdRecognition()
                 id = UNSUPPORTED
             }),
 
@@ -245,6 +346,11 @@ enum class SupportedCountry(override val code: String,
                 id = UsdlRecognition()
                 drivingLicence = UsdlRecognition()
                 under21Id = UsdlUnder21Recognition()
+            }),
+
+    UKRAINE("ua",
+            recognitions {
+                id = BlinkIdRecognition()
             })
 }
 

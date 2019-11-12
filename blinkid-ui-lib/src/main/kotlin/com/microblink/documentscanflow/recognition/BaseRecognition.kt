@@ -286,7 +286,7 @@ abstract class CombinedRecognition<FrontResult : Recognizer.Result,
 
     override fun extractData(): String? {
         if (shouldValidate) {
-            val isValid = (combinedResult as com.microblink.entities.recognizers.blinkid.CombinedResult).documentDataMatch == DataMatchResult.Success
+            val isValid = (combinedResult as com.microblink.entities.recognizers.blinkid.CombinedResult).documentDataMatch != DataMatchResult.Failed
             if (!isValid) {
                 throw ResultMergeException()
             }
