@@ -14,7 +14,7 @@ internal class ResultValidator {
         private set
 
     fun match(combinedResult: CombinedResult?): ResultValidator {
-        isResultValid = combinedResult?.documentDataMatch == DataMatchResult.Success
+        isResultValid = combinedResult?.documentDataMatch != DataMatchResult.Failed
         return this
     }
 
