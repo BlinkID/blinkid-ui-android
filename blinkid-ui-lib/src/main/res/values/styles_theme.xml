@@ -53,7 +53,6 @@
     </style>
 
     <style name="MbToolbarTheme" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
-        <item name="colorAccent">#000000</item>
     </style>
 
     <style name="MbToolbarTheme.Transparent">
