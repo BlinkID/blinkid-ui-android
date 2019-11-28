@@ -3,7 +3,6 @@
       xmlns:tools="http://schemas.android.com/tools" tools:context=".MainActivity">
 
     <item android:id="@+id/action_torch"
-          android:title="@string/mb_light"
           android:orderInCategory="200"
           android:icon="@drawable/mb_ic_torch_off"
           android:menuCategory="secondary"
