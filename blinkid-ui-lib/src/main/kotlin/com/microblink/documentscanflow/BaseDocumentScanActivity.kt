@@ -285,7 +285,11 @@ abstract class BaseDocumentScanActivity : AppCompatActivity(), ScanResultListene
             documentTypeTabs.addTab(tab)
             if (docType == document.documentType) {
                 // delay to give it enough time to scroll
-                handler.postDelayed({ tab.select() }, 200)
+                handler.postDelayed({
+                    if (tab.parent != null) {
+                        tab.select()
+                    }
+                }, 200)
             }
         }
 
