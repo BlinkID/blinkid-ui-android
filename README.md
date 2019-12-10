@@ -25,7 +25,7 @@ Include BlinkID UI dependency in your app level build.gradle file
 	
 ```
 dependencies {
-	implementation 'com.github.BlinkID:blinkid-ui-android:v4.11.1.0'
+	implementation 'com.github.BlinkID:blinkid-ui-android:v4.11.1.1'
 }
 ```
 
