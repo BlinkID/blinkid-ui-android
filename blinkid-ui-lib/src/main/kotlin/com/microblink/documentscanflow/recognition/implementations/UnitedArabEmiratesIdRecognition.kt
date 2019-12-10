@@ -42,4 +42,10 @@ class UnitedArabEmiratesIdRecognition: TwoSideRecognition<UnitedArabEmiratesIdFr
         return null
     }
 
+    override fun setupRecognizers() {
+        // glare detection is known to be causing issues, disable it
+        frontRecognizer.setDetectGlare(false)
+        backRecognizer.setDetectGlare(false)
+    }
+
 }
