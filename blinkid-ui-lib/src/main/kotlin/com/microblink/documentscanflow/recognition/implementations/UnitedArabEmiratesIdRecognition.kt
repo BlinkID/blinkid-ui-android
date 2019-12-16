@@ -22,13 +22,14 @@ class UnitedArabEmiratesIdRecognition: TwoSideRecognition<UnitedArabEmiratesIdFr
     }
 
     override fun extractFields() {
+        if (backResult.isNotEmpty()) {
+            extract(backResult.mrzResult)
+        }
+
         if (frontResult.isNotEmpty()) {
             add(FULL_NAME, frontResult.name)
             add(IDENTITY_NUMBER, frontResult.idNumber)
             add(NATIONALITY, frontResult.nationality)
-        }
-        if (backResult.isNotEmpty()) {
-            extract(backResult.mrzResult)
         }
     }
 
