@@ -195,12 +195,16 @@ enum class SupportedCountry(override val code: String,
                 militaryId = MalaysiaTenteraRecognition()
                 temporaryResidentId = MalaysiaKasRecognition()
                 permanentResidentId = MalaysiaPrRecognition()
+                policeId = GenericRecognition.faceId1(false)
+                childId = GenericRecognition.faceId1(false)
             },
             documentNameOverrides =  mapOf(
                     DocumentType.ID to R.string.mb_custom_mykad,
                     DocumentType.IMMIGRATOR_ID to R.string.mb_custom_ikad,
                     DocumentType.MILITARY_ID to R.string.mb_custom_mytentera,
                     DocumentType.TEMPORARY_RESIDENT_ID to R.string.mb_custom_mykas,
+                    DocumentType.POLICE_ID to R.string.mb_custom_mypolis,
+                    DocumentType.CHILD_ID to R.string.mb_custom_mykid,
                     DocumentType.PERMANENT_RESIDENT_ID to R.string.mb_custom_mypr
             )),
 

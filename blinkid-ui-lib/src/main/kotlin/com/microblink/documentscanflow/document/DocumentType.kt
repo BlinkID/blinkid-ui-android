@@ -10,6 +10,8 @@ enum class DocumentType {
     RESIDENCE_PERMIT,
     TEMPORARY_RESIDENCE_PERMIT,
     IMMIGRATOR_ID,
+    CHILD_ID,
+    POLICE_ID,
     MILITARY_ID,
     NEW_ID,
     TEMPORARY_RESIDENT_ID,
@@ -25,6 +27,6 @@ enum class DocumentType {
     WORK_PASS,
 
     // USA
-    UNDER_21_ID
+    UNDER_21_ID;
 
 }

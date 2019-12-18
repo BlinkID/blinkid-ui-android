@@ -80,6 +80,18 @@ internal class RecognitionsBuilder {
             addRecognition(DocumentType.PERMANENT_RESIDENT_ID, value)
         }
 
+    var childId: BaseRecognition? = null
+        set(value) {
+            field = value
+            addRecognition(DocumentType.CHILD_ID, value)
+        }
+
+    var policeId: BaseRecognition? = null
+        set(value) {
+            field = value
+            addRecognition(DocumentType.POLICE_ID, value)
+        }
+
     var victoriaDl: BaseRecognition? = null
         set(value) {
             field = value

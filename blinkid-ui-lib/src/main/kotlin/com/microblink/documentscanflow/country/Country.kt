@@ -49,6 +49,8 @@ interface Country {
             DocumentType.WORK_PASS -> R.string.mb_work_pass
             DocumentType.UNDER_21_ID -> R.string.mb_under_21_id
             DocumentType.VOTER_ID -> R.string.mb_voter_id
+            DocumentType.CHILD_ID -> 0 //update once it's used for countries other than MY
+            DocumentType.POLICE_ID -> 0 //update once it's used for countries other than MY
         }
     }
 
