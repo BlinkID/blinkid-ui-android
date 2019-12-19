@@ -17,6 +17,7 @@ enum class DocumentType {
     TEMPORARY_RESIDENT_ID,
     PERMANENT_RESIDENT_ID,
     VOTER_ID,
+    WORK_PASS,
 
     // country specific:
 
@@ -24,7 +25,10 @@ enum class DocumentType {
     VICTORIA_DL,
 
     // Singapore
-    WORK_PASS,
+    ENTREPASS,
+
+    // Indonesia
+    KITAS,
 
     // USA
     UNDER_21_ID;

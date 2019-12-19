@@ -116,6 +116,18 @@ internal class RecognitionsBuilder {
             addRecognition(DocumentType.VOTER_ID, value)
         }
 
+    var enterpass: BaseRecognition? = null
+        set(value) {
+            field = value
+            addRecognition(DocumentType.ENTREPASS, value)
+        }
+
+    var kitas: BaseRecognition? = null
+        set(value) {
+            field = value
+            addRecognition(DocumentType.KITAS, value)
+        }
+
     init {
         id = GenericRecognition.id
         drivingLicence = GenericRecognition.drivingLicence

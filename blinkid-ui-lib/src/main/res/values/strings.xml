@@ -13,7 +13,7 @@
   <string name="mb_permanent_resident_id">Permanent resident ID</string>
   <string name="mb_temporary_resident_id">Temporary resident ID</string>
   <string name="mb_victoria_dl">Victoria driver\'s license</string>
-  <string name="mb_work_pass">Employment pass</string>
+  <string name="mb_work_pass">Work pass</string>
   <string name="mb_under_21_id">Under 21 ID</string>
   <string name="mb_voter_id">Voter ID</string>
   <string name="mb_custom_mykad" translatable="false">MyKad</string>
@@ -24,7 +24,10 @@
   <string name="mb_custom_mykid" translatable="false">MyKid</string>
   <string name="mb_custom_mypolis" translatable="false">MyPolis</string>
   <string name="mb_custom_id_blue_pink">ID (blue &amp; pink)</string>
+  <string name="mb_custom_employment_pass">Employment pass</string>
   <string name="mb_multipurpose_id">Multipurpose ID</string>
+  <string name="mb_custom_kitas" translatable="false">Kitas</string>
+  <string name="mb_custom_entrepass" translatable="false">EntrePass</string>
   <string name="mb_instructions_scan_front">Scan the front side of the selected document or choose another.</string>
   <string name="mb_instructions_scan_back">Scan the back side.</string>
   <string name="mb_instructions_scan_any_side">Scan the selected document or choose another.</string>
