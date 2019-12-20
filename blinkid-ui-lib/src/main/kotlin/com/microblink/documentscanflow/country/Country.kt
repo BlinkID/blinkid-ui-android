@@ -51,7 +51,6 @@ interface Country {
             DocumentType.VOTER_ID -> R.string.mb_voter_id
             DocumentType.CHILD_ID -> 0 //update once it's used for countries other than MY
             DocumentType.POLICE_ID -> 0 //update once it's used for countries other than MY
-            DocumentType.ENTREPASS -> R.string.mb_custom_entrepass
             DocumentType.KITAS -> R.string.mb_custom_kitas
         }
     }

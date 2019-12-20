@@ -285,13 +285,11 @@ enum class SupportedCountry(override val code: String,
     SINGAPORE("sg",
             recognitions {
                 id = SingaporeIdRecognition()
-                workPass = BlinkIdWithDetectorRecognition()
+                workPass = GenericRecognition.faceId1(false)
                 drivingLicence = BlinkIdWithDetectorRecognition()
-                enterpass = GenericRecognition.faceId1(false)
             },
             documentNameOverrides =  mapOf(
-                    DocumentType.ID to R.string.mb_custom_id_blue_pink,
-                    DocumentType.WORK_PASS to R.string.mb_custom_employment_pass
+                    DocumentType.ID to R.string.mb_custom_id_blue_pink
             )),
 
     SLOVAKIA("sk",

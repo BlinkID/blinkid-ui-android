@@ -24,9 +24,6 @@ enum class DocumentType {
     // Australia
     VICTORIA_DL,
 
-    // Singapore
-    ENTREPASS,
-
     // Indonesia
     KITAS,
 
