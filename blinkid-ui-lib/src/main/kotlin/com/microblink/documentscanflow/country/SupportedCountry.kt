@@ -271,6 +271,11 @@ enum class SupportedCountry(override val code: String,
                 drivingLicence = BlinkIdWithDetectorRecognition()
             }),
 
+    SAUDI_ARABIA("sa",
+            recognitions {
+                id = GenericRecognition.faceId1(false)
+            }
+    ),
     SERBIA("rs",
             recognitions {
                 id = BlinkIdRecognition()
