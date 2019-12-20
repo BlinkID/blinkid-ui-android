@@ -197,7 +197,7 @@ enum class SupportedCountry(override val code: String,
                 temporaryResidentId = MalaysiaKasRecognition()
                 permanentResidentId = MalaysiaPrRecognition()
                 policeId = GenericRecognition.faceId1(false)
-                childId = GenericRecognition.faceId1(false)
+                childId = BlinkIdWithDetectorRecognition()
             },
             documentNameOverrides =  mapOf(
                     DocumentType.ID to R.string.mb_custom_mykad,
