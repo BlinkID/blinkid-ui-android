@@ -25,7 +25,7 @@
   <string name="mb_camera_error">Die Kamera ist beschäftigt, möglicherweise wird sie von einem anderen Programm verwendet. Schließen Sie andere Programme und / oder starten Sie Ihr Gerät neu.</string>
   <string name="mb_title_error_starting">Fehler beim Starten</string>
   <string name="mb_title_not_supported">Nicht unterstützt</string>
-  <string name="mb_supported_countries_label">Wählen Sie zwischen mehr als 150 Dokumenten</string>
+  <string name="mb_supported_countries_label">Wählen Sie zwischen mehr als 250 Dokumenten</string>
   <string name="mb_action_search">Suche</string>
   <string name="mb_title_activity_country_choose">Land auswählen</string>
   <string name="mb_work_pass">Arbeitsgang</string>

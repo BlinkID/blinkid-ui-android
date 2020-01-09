@@ -40,7 +40,7 @@
   <string name="mb_camera_error">Camera is busy, another program might be using it. Close other programs and/or restart your device.</string>
   <string name="mb_title_error_starting">Error starting</string>
   <string name="mb_title_not_supported">Not supported</string>
-  <string name="mb_supported_countries_label">Choose between 150+ documents</string>
+  <string name="mb_supported_countries_label">Choose between 250+ documents</string>
   <string name="mb_action_search">Search</string>
   <string name="mb_title_activity_country_choose">Select country</string>
 </resources>

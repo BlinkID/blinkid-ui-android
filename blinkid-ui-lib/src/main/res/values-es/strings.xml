@@ -25,7 +25,7 @@
   <string name="mb_camera_error">La cámara no está disponible, puede que la esté usando otro programa. Cierre los demás programas o reinicie su dispositivo.</string>
   <string name="mb_title_error_starting">Error al iniciar</string>
   <string name="mb_title_not_supported">No es compatible</string>
-  <string name="mb_supported_countries_label">Elija entre más de 150 documentos</string>
+  <string name="mb_supported_countries_label">Elija entre más de 250 documentos</string>
   <string name="mb_action_search">Buscar</string>
   <string name="mb_title_activity_country_choose">Seleccionar país</string>
   <string name="mb_work_pass">Pase de trabajo</string>

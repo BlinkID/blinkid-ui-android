@@ -25,7 +25,7 @@
   <string name="mb_camera_error">La caméra est occupée, un autre programme l’utilise peut-être. Fermez les autres programmes et / ou redémarrez votre appareil.</string>
   <string name="mb_title_error_starting">Erreur de démarrage</string>
   <string name="mb_title_not_supported">Non supporté</string>
-  <string name="mb_supported_countries_label">Choisissez parmi plus de 150 documents</string>
+  <string name="mb_supported_countries_label">Choisissez parmi plus de 250 documents</string>
   <string name="mb_action_search">Chercher</string>
   <string name="mb_title_activity_country_choose">Choisissez le pays</string>
   <string name="mb_work_pass">Passe professionnel</string>
