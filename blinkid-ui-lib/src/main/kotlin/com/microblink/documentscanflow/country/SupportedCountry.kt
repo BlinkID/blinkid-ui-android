@@ -232,11 +232,17 @@ enum class SupportedCountry(override val code: String,
     NIGERIA(
             "ng",
             recognitions {
+                id = GenericRecognition.faceId1(false)
                 drivingLicence = NigeriaDlRecognition()
                 voterId = NigeriaVoterIdRecognition()
             }
     ),
-
+    PANAMA(
+            "pa",
+            recognitions {
+                id = GenericRecognition.faceId1(false)
+            }
+    ),
     PHILIPPINES("ph",
             recognitions {
                 id = BlinkIdWithDetectorRecognition()
@@ -345,7 +351,6 @@ enum class SupportedCountry(override val code: String,
                 drivingLicence = UnitedArabEmiratesDlRecognition()
             }),
 
-        
     UNITED_KINGDOM("gb",
             recognitions {
                 drivingLicence = EudlRecognition(EudlCountry.EUDL_COUNTRY_UK)
@@ -363,7 +368,14 @@ enum class SupportedCountry(override val code: String,
     UKRAINE("ua",
             recognitions {
                 id = BlinkIdRecognition()
-            })
+            }),
+
+    VENEZUELA(
+            "ve",
+            recognitions {
+                id = GenericRecognition.faceId1(false)
+            }
+    )
 }
 
 private val UNSUPPORTED = null
