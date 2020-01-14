@@ -1,10 +1,15 @@
 package com.microblink.documentscanflow.recognition
 
+import android.os.Parcel
+import android.os.Parcelable
 import com.microblink.documentscanflow.ScanFlowState
 import com.microblink.documentscanflow.recognition.config.RecognitionConfig
 import com.microblink.documentscanflow.recognition.framelistener.FrameGrabberMode
 import com.microblink.entities.recognizers.Recognizer
 import com.microblink.entities.recognizers.RecognizerBundle
+import com.microblink.entities.recognizers.blinkid.generic.BlinkIdCombinedRecognizer
+import com.microblink.entities.recognizers.blinkid.generic.BlinkIdRecognizer
+import com.microblink.entities.recognizers.classifier.ClassifierCallback
 import com.microblink.entities.recognizers.framegrabber.FrameCallback
 import com.microblink.entities.recognizers.framegrabber.FrameGrabberRecognizer
 import com.microblink.entities.recognizers.successframe.SuccessFrameGrabberRecognizer
@@ -13,7 +18,8 @@ import com.microblink.recognition.RecognitionSuccessType
 
 internal class RecognizerManager(private val recognitionConfig: RecognitionConfig,
                                  private val frameGrabberMode: FrameGrabberMode,
-                                 frameCallback: FrameCallback) {
+                                 frameCallback: FrameCallback,
+                                 private val onDocumentNotSupported: () -> Unit) {
 
     private val singleSideSuccessFrameRecognizers: MutableList<SuccessFrameGrabberRecognizer> = mutableListOf()
     private val singleSideRecognizers: MutableList<Recognizer<*>> = mutableListOf()
@@ -26,10 +32,17 @@ internal class RecognizerManager(private val recognitionConfig: RecognitionConfi
     fun addRecognizers(recognition: BaseRecognition) {
         for (recognizer in recognition.getSingleSideRecognizers()) {
             addSingleSideRecognizer(recognizer)
+            if (recognizer is BlinkIdRecognizer) {
+                recognizer.setClassifierCallback(MyClassifierCallback(onDocumentNotSupported))
+            }
         }
 
         if (recognition.combinedRecognizer != null) {
+            val recognizer = recognition.combinedRecognizer
             addCombinedRecognizer(recognition.combinedRecognizer!!)
+            if (recognizer is BlinkIdCombinedRecognizer) {
+                recognizer.setClassifierCallback(MyClassifierCallback(onDocumentNotSupported))
+            }
         }
     }
 
@@ -110,7 +123,8 @@ internal class RecognizerManager(private val recognitionConfig: RecognitionConfi
             frameGrabberMode == FrameGrabberMode.NOTHING -> null
             canUseCombinedRecognizer(scanFlowState) -> combinedSuccessFrameRecognizer!!.result.successFrame
             singleSideSuccessFrameRecognizers.size == 1 -> getSuccessFrameAt(0)
-            scanFlowState == ScanFlowState.ANY_SIDE_SCAN -> getSuccessFrameAt(0) ?: getSuccessFrameAt(1)
+            scanFlowState == ScanFlowState.ANY_SIDE_SCAN -> getSuccessFrameAt(0)
+                    ?: getSuccessFrameAt(1)
             else -> getSuccessFrameAt(getIndexForSide(scanFlowState))
         }
     }
@@ -139,6 +153,32 @@ internal class RecognizerManager(private val recognitionConfig: RecognitionConfi
                 onSuccess()
             else ->
                 onRestartRequired()
+        }
+    }
+
+    class MyClassifierCallback(private val onDocumentNotSupported: () -> Unit) : ClassifierCallback {
+
+        private var unsupportedDocumentFrameCount = 0
+
+        override fun writeToParcel(parcel: Parcel, flags: Int) {}
+
+        override fun describeContents() = 0
+
+        override fun onDocumentSupportStatus(isDocumentSupported: Boolean) {
+            if (!isDocumentSupported) unsupportedDocumentFrameCount++
+            if (unsupportedDocumentFrameCount == 3) {
+                onDocumentNotSupported()
+            }
+        }
+
+        companion object CREATOR : Parcelable.Creator<MyClassifierCallback> {
+            override fun createFromParcel(parcel: Parcel): MyClassifierCallback {
+                return MyClassifierCallback {}
+            }
+
+            override fun newArray(size: Int): Array<MyClassifierCallback?> {
+                return arrayOfNulls(size)
+            }
         }
     }
 

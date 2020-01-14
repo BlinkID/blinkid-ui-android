@@ -90,7 +90,11 @@ abstract class BaseDocumentScanActivity : AppCompatActivity(), ScanResultListene
     private val splashOverlaySettings by lazy { createSplashOverlaySettings() }
     private val scanTimeoutHandler by lazy { createScanTimeoutHandler() }
     private val torchButtonHandler = TorchButtonHandler()
-    private val recognizerManager by lazy { RecognizerManager(createRecognitionConfig(), getFrameGrabberMode(), createFrameCallback()) }
+    private val recognizerManager by lazy {
+        RecognizerManager(createRecognitionConfig(), getFrameGrabberMode(), createFrameCallback()) {
+            scanFlowListener.onDocumentNotSupported()
+        }
+    }
     private val cameraErrorHandler by lazy { CameraErrorHandler(this) {finish()} }
     private val instructionsHandler by lazy { InstructionsHandler(this, currentDocument, scanFrameLayout.scanInstructionsTv, scanFrameLayout.flipCardView) }
     private val scanLineAnimator by lazy { createScanLineAnimator() }
@@ -485,6 +489,7 @@ abstract class BaseDocumentScanActivity : AppCompatActivity(), ScanResultListene
                     resumeScanning()
                 }
                 .show()
+        scanFlowListener.onDocumentSidesNotMatching()
     }
 
     private fun onFirstSideScanned() {
@@ -610,6 +615,7 @@ abstract class BaseDocumentScanActivity : AppCompatActivity(), ScanResultListene
                 if (!isFinishing) {
                     dialogBuilder.show()
                 }
+                scanFlowListener.onTimeout()
             }
 
             fun onRetry() {

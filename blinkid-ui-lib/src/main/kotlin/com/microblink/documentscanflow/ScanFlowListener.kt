@@ -14,4 +14,10 @@ interface ScanFlowListener {
 
     fun onSelectedDocumentChanged(oldDocument: Document, newDocument: Document)
 
+    fun onTimeout()
+
+    fun onDocumentSidesNotMatching()
+
+    fun onDocumentNotSupported()
+
 }
