@@ -15,6 +15,7 @@ import com.microblink.entities.recognizers.Recognizer
 import com.microblink.entities.recognizers.blinkbarcode.pdf417.Pdf417Recognizer
 import com.microblink.entities.recognizers.blinkid.DataMatchResult
 import com.microblink.entities.recognizers.blinkid.documentface.DocumentFaceRecognizer
+import com.microblink.entities.recognizers.blinkid.generic.BlinkIdRecognizer
 import com.microblink.entities.recognizers.blinkid.imageoptions.FaceImageOptions
 import com.microblink.entities.recognizers.blinkid.imageoptions.FullDocumentImageOptions
 import com.microblink.entities.recognizers.blinkid.imageoptions.SignatureImageOptions
@@ -26,6 +27,8 @@ import com.microblink.entities.recognizers.blinkid.imageresult.SignatureImageRes
 import com.microblink.entities.recognizers.blinkid.mrtd.MrtdRecognizer
 import com.microblink.entities.recognizers.blinkid.passport.PassportRecognizer
 import com.microblink.entities.recognizers.blinkid.visa.VisaRecognizer
+import com.microblink.entities.recognizers.classifier.ClassifierCallback
+import com.microblink.entities.recognizers.classifier.ClassifierCallbackOptions
 import com.microblink.entities.recognizers.detector.DetectorRecognizer
 import com.microblink.entities.recognizers.templating.ProcessorGroup
 import com.microblink.entities.recognizers.templating.TemplatingClass
@@ -51,7 +54,7 @@ abstract class BaseRecognition(val isFullySupported: Boolean = true) {
 
     open val combinedRecognizer: Recognizer<*>? = null
 
-    fun setup() {
+    fun setup(classifierCallback: ClassifierCallback) {
         if (setupDone) {
             return
         }
@@ -71,6 +74,9 @@ abstract class BaseRecognition(val isFullySupported: Boolean = true) {
             }
             if (recognizer is FullDocumentImageDpiOptions) {
                 recognizer.fullDocumentImageDpi = FULL_DOCUMENT_IMAGE_DPI
+            }
+            if (recognizer is ClassifierCallbackOptions) {
+                recognizer.setClassifierCallback(classifierCallback)
             }
         }
 

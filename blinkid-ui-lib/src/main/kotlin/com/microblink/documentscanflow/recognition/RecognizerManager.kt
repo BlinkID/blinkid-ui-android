@@ -18,8 +18,7 @@ import com.microblink.recognition.RecognitionSuccessType
 
 internal class RecognizerManager(private val recognitionConfig: RecognitionConfig,
                                  private val frameGrabberMode: FrameGrabberMode,
-                                 frameCallback: FrameCallback,
-                                 private val onDocumentNotSupported: () -> Unit) {
+                                 frameCallback: FrameCallback) {
 
     private val singleSideSuccessFrameRecognizers: MutableList<SuccessFrameGrabberRecognizer> = mutableListOf()
     private val singleSideRecognizers: MutableList<Recognizer<*>> = mutableListOf()
@@ -32,17 +31,10 @@ internal class RecognizerManager(private val recognitionConfig: RecognitionConfi
     fun addRecognizers(recognition: BaseRecognition) {
         for (recognizer in recognition.getSingleSideRecognizers()) {
             addSingleSideRecognizer(recognizer)
-            if (recognizer is BlinkIdRecognizer) {
-                recognizer.setClassifierCallback(MyClassifierCallback(onDocumentNotSupported))
-            }
         }
 
         if (recognition.combinedRecognizer != null) {
-            val recognizer = recognition.combinedRecognizer
             addCombinedRecognizer(recognition.combinedRecognizer!!)
-            if (recognizer is BlinkIdCombinedRecognizer) {
-                recognizer.setClassifierCallback(MyClassifierCallback(onDocumentNotSupported))
-            }
         }
     }
 
@@ -153,32 +145,6 @@ internal class RecognizerManager(private val recognitionConfig: RecognitionConfi
                 onSuccess()
             else ->
                 onRestartRequired()
-        }
-    }
-
-    class MyClassifierCallback(private val onDocumentNotSupported: () -> Unit) : ClassifierCallback {
-
-        private var unsupportedDocumentFrameCount = 0
-
-        override fun writeToParcel(parcel: Parcel, flags: Int) {}
-
-        override fun describeContents() = 0
-
-        override fun onDocumentSupportStatus(isDocumentSupported: Boolean) {
-            if (!isDocumentSupported) unsupportedDocumentFrameCount++
-            if (unsupportedDocumentFrameCount == 3) {
-                onDocumentNotSupported()
-            }
-        }
-
-        companion object CREATOR : Parcelable.Creator<MyClassifierCallback> {
-            override fun createFromParcel(parcel: Parcel): MyClassifierCallback {
-                return MyClassifierCallback {}
-            }
-
-            override fun newArray(size: Int): Array<MyClassifierCallback?> {
-                return arrayOfNulls(size)
-            }
         }
     }
 

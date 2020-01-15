@@ -13,10 +13,7 @@ import android.graphics.PorterDuff
 import android.graphics.Rect
 import android.graphics.RectF
 import android.media.AudioManager
-import android.os.Build
-import android.os.Bundle
-import android.os.Handler
-import android.os.Parcel
+import android.os.*
 import androidx.annotation.AnyThread
 import androidx.annotation.CallSuper
 import androidx.annotation.UiThread
@@ -53,6 +50,7 @@ import com.microblink.documentscanflow.ui.splashoverlay.InvisibleSplashOverlaySe
 import com.microblink.documentscanflow.ui.splashoverlay.SplashOverlaySettings
 import com.microblink.entities.recognizers.Recognizer
 import com.microblink.entities.recognizers.blinkid.documentface.DocumentFaceRecognizer
+import com.microblink.entities.recognizers.classifier.ClassifierCallback
 import com.microblink.entities.recognizers.detector.DetectorRecognizer
 import com.microblink.entities.recognizers.framegrabber.FrameCallback
 import com.microblink.entities.recognizers.successframe.SuccessFrameGrabberRecognizer
@@ -91,9 +89,7 @@ abstract class BaseDocumentScanActivity : AppCompatActivity(), ScanResultListene
     private val scanTimeoutHandler by lazy { createScanTimeoutHandler() }
     private val torchButtonHandler = TorchButtonHandler()
     private val recognizerManager by lazy {
-        RecognizerManager(createRecognitionConfig(), getFrameGrabberMode(), createFrameCallback()) {
-            scanFlowListener.onDocumentNotSupported()
-        }
+        RecognizerManager(createRecognitionConfig(), getFrameGrabberMode(), createFrameCallback())
     }
     private val cameraErrorHandler by lazy { CameraErrorHandler(this) {finish()} }
     private val instructionsHandler by lazy { InstructionsHandler(this, currentDocument, scanFrameLayout.scanInstructionsTv, scanFrameLayout.flipCardView) }
@@ -565,7 +561,9 @@ abstract class BaseDocumentScanActivity : AppCompatActivity(), ScanResultListene
     private fun prepareScanning(document: Document) {
         val recognition = document.getRecognition()
 
-        recognition.setup()
+        recognition.setup(MyClassifierCallback {
+            scanFlowListener.onDocumentNotSupported()
+        })
         recognizerManager.addRecognizers(recognition)
     }
 
@@ -678,6 +676,32 @@ abstract class BaseDocumentScanActivity : AppCompatActivity(), ScanResultListene
             override fun onAutofocusStarted(focusAreas: Array<out Rect>?) {}
 
             override fun onAutofocusStopped(focusAreas: Array<out Rect>?) {}
+        }
+    }
+
+    class MyClassifierCallback(private val onDocumentNotSupported: () -> Unit) : ClassifierCallback {
+
+        private var unsupportedDocumentFrameCount = 0
+
+        override fun writeToParcel(parcel: Parcel, flags: Int) {}
+
+        override fun describeContents() = 0
+
+        override fun onDocumentSupportStatus(isDocumentSupported: Boolean) {
+            if (!isDocumentSupported) unsupportedDocumentFrameCount++
+            if (unsupportedDocumentFrameCount == 3) {
+                onDocumentNotSupported()
+            }
+        }
+
+        companion object CREATOR : Parcelable.Creator<MyClassifierCallback> {
+            override fun createFromParcel(parcel: Parcel): MyClassifierCallback {
+                return MyClassifierCallback {}
+            }
+
+            override fun newArray(size: Int): Array<MyClassifierCallback?> {
+                return arrayOfNulls(size)
+            }
         }
     }
 
