@@ -27,6 +27,7 @@
   <string name="mb_custom_employment_pass">Employment pass</string>
   <string name="mb_multipurpose_id">Multipurpose ID</string>
   <string name="mb_custom_kitas" translatable="false">Kitas</string>
+  <string name="mb_custom_pan_card" translatable="false">PAN Card</string>
   <string name="mb_custom_entrepass" translatable="false">EntrePass</string>
   <string name="mb_instructions_scan_front">Scan the front side of the selected document or choose another.</string>
   <string name="mb_instructions_scan_back">Scan the back side.</string>

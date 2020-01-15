@@ -19,6 +19,16 @@ enum class SupportedCountry(override val code: String,
                 id = BlinkIdRecognition()
             }),
 
+    ALGERIA("dz",
+            recognitions {
+                id = BlinkIdRecognition()
+            }),
+
+    ARGENTINA("ar",
+            recognitions {
+                drivingLicence = BlinkIdWithDetectorRecognition()
+            }),
+
     AUSTRALIA("au",
             recognitions {
                 id = UNSUPPORTED
@@ -104,13 +114,13 @@ enum class SupportedCountry(override val code: String,
     CZECHIA("cz",
             recognitions {
                 id = CzechIdRecognition()
-                drivingLicence = GenericRecognition.faceId1(true)
+                drivingLicence = BlinkIdWithDetectorRecognition()
                 oldId = GenericRecognition.mrtdId2Vertical(true)
             }),
 
     DOMINICAN_REPUBLIC("do",
             recognitions {
-               id = BlinkIdRecognition()
+                id = BlinkIdRecognition()
             }),
 
     EGYPT("eg",
@@ -138,6 +148,11 @@ enum class SupportedCountry(override val code: String,
                 residencePermit = BlinkIdRecognition()
             }),
 
+    GREECE("gr",
+            recognitions {
+                drivingLicence = BlinkIdWithDetectorRecognition()
+            }),
+
     HONG_KONG("hk",
             recognitions {
                 id = HongKongIdRecognition()
@@ -147,6 +162,12 @@ enum class SupportedCountry(override val code: String,
             recognitions {
                 id = BlinkIdRecognition()
                 drivingLicence = BlinkIdWithDetectorRecognition()
+            }),
+
+    INDIA("in",
+            recognitions {
+                id = BlinkIdWithDetectorRecognition()
+                panCard = BlinkIdWithDetectorRecognition()
             }),
 
     INDONESIA("id",
@@ -161,8 +182,14 @@ enum class SupportedCountry(override val code: String,
                 drivingLicence = IrelandDlRecognition()
             }),
 
+    ISRAEL("il",
+            recognitions {
+                drivingLicence = BlinkIdWithDetectorRecognition()
+            }),
+
     ITALY("it",
             recognitions {
+                id = BlinkIdWithMrtdRecognition()
                 oldId = GenericRecognition.mrtdId1(false)
                 drivingLicence = ItalyDlRecognition()
             }),
@@ -199,7 +226,7 @@ enum class SupportedCountry(override val code: String,
                 policeId = GenericRecognition.faceId1(false)
                 childId = BlinkIdWithDetectorRecognition()
             },
-            documentNameOverrides =  mapOf(
+            documentNameOverrides = mapOf(
                     DocumentType.ID to R.string.mb_custom_mykad,
                     DocumentType.IMMIGRATOR_ID to R.string.mb_custom_ikad,
                     DocumentType.MILITARY_ID to R.string.mb_custom_mytentera,
@@ -209,9 +236,19 @@ enum class SupportedCountry(override val code: String,
                     DocumentType.PERMANENT_RESIDENT_ID to R.string.mb_custom_mypr
             )),
 
+    MALDIVES("mv",
+            recognitions {
+                id = BlinkIdRecognition()
+            }),
+
     MALTA("mt",
             recognitions {
                 id = BlinkIdRecognition()
+            }),
+
+    MAURITIUS("mu",
+            recognitions {
+                id = BlinkIdWithDetectorRecognition()
             }),
 
     MEXICO("mx",
@@ -229,20 +266,26 @@ enum class SupportedCountry(override val code: String,
                 drivingLicence = NewZealandDlRecognition()
             }),
 
-    NIGERIA(
-            "ng",
+    NIGERIA("ng",
             recognitions {
                 id = GenericRecognition.faceId1(false)
                 drivingLicence = NigeriaDlRecognition()
                 voterId = NigeriaVoterIdRecognition()
             }
     ),
-    PANAMA(
-            "pa",
+
+    PANAMA("pa",
             recognitions {
                 id = GenericRecognition.faceId1(false)
             }
     ),
+
+    PARAGUAY("py",
+            recognitions {
+                id = BlinkIdRecognition()
+            }
+    ),
+
     PHILIPPINES("ph",
             recognitions {
                 id = BlinkIdWithDetectorRecognition()
@@ -251,7 +294,7 @@ enum class SupportedCountry(override val code: String,
                 workPass = GenericRecognition.faceId1(false)
             },
             documentNameOverrides = mapOf(
-                DocumentType.ID to R.string.mb_multipurpose_id
+                    DocumentType.ID to R.string.mb_multipurpose_id
             )),
 
     POLAND("pl",
@@ -266,9 +309,16 @@ enum class SupportedCountry(override val code: String,
                 id = BlinkIdRecognition()
             }),
 
+    PUERTO_RICO("pr",
+            recognitions {
+                drivingLicence = BlinkIdWithDetectorRecognition()
+            }
+    ),
+
     QATAR("qa",
             recognitions {
                 id = GenericRecognition.faceId1(false)
+                drivingLicence = BlinkIdWithDetectorRecognition()
             }),
 
     ROMANIA("ro",
@@ -277,11 +327,18 @@ enum class SupportedCountry(override val code: String,
                 drivingLicence = BlinkIdWithDetectorRecognition()
             }),
 
+    RUSSIA("ru",
+            recognitions {
+                drivingLicence = BlinkIdWithDetectorRecognition()
+            }
+    ),
+
     SAUDI_ARABIA("sa",
             recognitions {
                 id = GenericRecognition.faceId1(false)
             }
     ),
+
     SERBIA("rs",
             recognitions {
                 id = BlinkIdRecognition()
@@ -294,28 +351,28 @@ enum class SupportedCountry(override val code: String,
                 workPass = GenericRecognition.faceId1(false)
                 drivingLicence = BlinkIdWithDetectorRecognition()
             },
-            documentNameOverrides =  mapOf(
+            documentNameOverrides = mapOf(
                     DocumentType.ID to R.string.mb_custom_id_blue_pink
             )),
 
     SLOVAKIA("sk",
             recognitions {
                 id = SlovakiaIdRecognition()
-                drivingLicence = GenericRecognition.faceId1(true)
+                drivingLicence = BlinkIdWithDetectorRecognition()
             }),
 
     SLOVENIA("si",
             recognitions {
                 id = SloveniaIdRecognition()
-                drivingLicence = GenericRecognition.faceId1(true)
+                drivingLicence = BlinkIdWithDetectorRecognition()
                 residencePermit = GenericRecognition.residencePermit
             }),
 
     SOUTH_AFRICA("za",
             recognitions {
-                id = GenericRecognition.facePdf417(true)
-                drivingLicence = GenericRecognition.facePdf417(false)
-                passport =GenericRecognition.mrtd(true)
+                id = BlinkIdRecognition()
+                drivingLicence = BlinkIdWithPdf417Recognition()
+                passport = GenericRecognition.mrtd(true)
                 visa = GenericRecognition.id1(false)
             }),
 
@@ -339,11 +396,29 @@ enum class SupportedCountry(override val code: String,
                 residencePermit = GenericRecognition.residencePermit
             }),
 
+    THAILAND("th",
+            recognitions {
+                id = BlinkIdWithDetectorRecognition()
+            }
+    ),
+
+    TUNISIA("tn",
+            recognitions {
+                id = BlinkIdWithDetectorRecognition()
+            }
+    ),
+
     TURKEY("tr",
             recognitions {
                 id = BlinkIdRecognition()
                 drivingLicence = BlinkIdWithDetectorRecognition()
             }),
+
+    UGANDA("ug",
+            recognitions {
+                id = BlinkIdRecognition()
+            }
+    ),
 
     UNITED_ARAB_EMIRATES("ae",
             recognitions {
@@ -370,10 +445,15 @@ enum class SupportedCountry(override val code: String,
                 id = BlinkIdRecognition()
             }),
 
-    VENEZUELA(
-            "ve",
+    VENEZUELA("ve",
             recognitions {
                 id = GenericRecognition.faceId1(false)
+            }
+    ),
+
+    VIETNAM("vn",
+            recognitions {
+                id = BlinkIdRecognition()
             }
     )
 }

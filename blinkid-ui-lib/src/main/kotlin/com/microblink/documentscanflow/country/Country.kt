@@ -52,6 +52,7 @@ interface Country {
             DocumentType.CHILD_ID -> 0 //update once it's used for countries other than MY
             DocumentType.POLICE_ID -> 0 //update once it's used for countries other than MY
             DocumentType.KITAS -> R.string.mb_custom_kitas
+            DocumentType.PAN_CARD -> R.string.mb_custom_pan_card
         }
     }
 

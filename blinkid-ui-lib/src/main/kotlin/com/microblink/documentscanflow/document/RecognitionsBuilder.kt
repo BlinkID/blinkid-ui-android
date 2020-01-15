@@ -122,6 +122,12 @@ internal class RecognitionsBuilder {
             addRecognition(DocumentType.KITAS, value)
         }
 
+    var panCard: BaseRecognition? = null
+        set(value) {
+            field = value
+            addRecognition(DocumentType.PAN_CARD, value)
+        }
+
     init {
         id = GenericRecognition.id
         drivingLicence = GenericRecognition.drivingLicence

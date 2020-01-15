@@ -28,6 +28,8 @@ enum class DocumentType {
     KITAS,
 
     // USA
-    UNDER_21_ID;
+    UNDER_21_ID,
 
+    // India
+    PAN_CARD
 }
