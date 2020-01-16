@@ -27,7 +27,7 @@ class UnitedArabEmiratesIdRecognition: TwoSideRecognition<UnitedArabEmiratesIdFr
         }
 
         if (frontResult.isNotEmpty()) {
-            add(FULL_NAME, frontResult.name)
+            add(FULL_NAME, frontResult.name.replace("\n", " "))
             add(IDENTITY_NUMBER, frontResult.idNumber)
             add(NATIONALITY, frontResult.nationality)
         }
@@ -35,7 +35,7 @@ class UnitedArabEmiratesIdRecognition: TwoSideRecognition<UnitedArabEmiratesIdFr
 
     override fun getResultTitle(): String? {
         if (frontResult.isNotEmpty()) {
-            return frontResult.name
+            return frontResult.name.replace("\n", " ")
         }
         if (backResult.isNotEmpty()) {
             return backResult.mrzResult.buildTitle()
