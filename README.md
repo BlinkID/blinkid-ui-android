@@ -1,3 +1,6 @@
+# Deprecated
+### We recommend that you use the latest version of [BlinkID SDK](https://github.com/BlinkID/blinkid-android) as it allows you to scan all supported documents without the need for country and document type selection steps.
+
 # BlinkID UI for Android
 [![Release](https://jitpack.io/v/BlinkID/blinkid-ui-android.svg)](https://jitpack.io/#BlinkID/blinkid-ui-android)
 
